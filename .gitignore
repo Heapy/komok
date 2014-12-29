@@ -1,0 +1,12 @@
+# Idea configs
+.idea
+*.iml
+*.iws
+*.ipr
+
+# Gradle specific files
+.gradle
+build
+
+# Common files
+*.log
