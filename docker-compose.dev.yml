@@ -1,0 +1,19 @@
+# docker-compose -f docker-compose.dev.yml up -d
+version: "2.4"
+services:
+  vipassana_database:
+    image: postgres:14.5
+    container_name: vipassana_database
+    restart: always
+    mem_limit: 128m
+    memswap_limit: 0m
+    environment:
+      POSTGRES_PASSWORD: "vipassana"
+      POSTGRES_USER: "vipassana"
+      POSTGRES_DB: "vipassana"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:9557:5432"
+volumes:
+  pgdata:

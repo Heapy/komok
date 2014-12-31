@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vipassana</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- https://github.com/audreyr/favicon-cheat-sheet -->
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+<!--    <meta name="msapplication-TileImage" content="/favicon-144.png">-->
+<!--    <link rel="icon" href="/favicon-32.png" sizes="32x32">-->
+<!--    <link rel="icon" href="/favicon-16.png" sizes="16x16">-->
+<!--    <link rel="shortcut icon" href="/favicon.ico">-->
+<!--    <link rel="shortcut icon" sizes="196x196" href="/favicon-196.png">-->
+<!--    <link rel="mask-icon" href="mask-favicon.svg" color="#009DD9">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/favicon-180.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" href="/favicon-152.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/favicon-152.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon-144.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/favicon-120.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/favicon-114.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/favicon-76.png">-->
+<!--    <link rel="apple-touch-icon-precomposed" href="/favicon-57.png">-->
+</head>
+<body>
+<div id="root">
+</div>
+<script>
+    var socket;
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:9556/ws");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                window.location.reload();
+            }
+            console.log(event.data);
+        };
+    } else {
+        alert("Your browser does not support Websockets");
+    }
+</script>
+</body>
+</html>
