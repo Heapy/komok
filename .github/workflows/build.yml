@@ -20,13 +20,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
-          java-version: "11"
+          java-version: "17"
           distribution: "zulu"
       - run: ./gradlew check distTar
       - uses: actions/upload-artifact@v2
         with:
           name: "Backend Application"
-          path: "backend/build/distributions/backend.tar"
+          path: "build/distributions/backend.tar"
           retention-days: 1
   build-frontend:
     name: "Build Frontend Application"
@@ -57,13 +57,15 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: "Backend Application"
-          path: "backend/build/distributions/"
+          path: "build/distributions/"
       - name: "Untar files"
-        run: mkdir -p backend/build/install && tar -xvf backend/build/distributions/backend.tar -C $_
+        run: mkdir -p build/install && tar -xvf build/distributions/backend.tar -C $_
       - uses: actions/download-artifact@v2
         with:
           name: "Frontend Application"
           path: "frontend/dist/"
+      - name: "Set up QEMU"
+        uses: docker/setup-qemu-action@v1
       - name: "Set up Docker Buildx"
         uses: docker/setup-buildx-action@v1
       - name: "Login to GHCR"
@@ -75,6 +77,7 @@ jobs:
       - name: "Build and push"
         uses: docker/build-push-action@v2
         with:
+          platforms: linux/amd64,linux/arm64
           context: .
           push: true
           tags: |
