@@ -1,0 +1,18 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #333;
+    --text-color: #fff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #ccc;
+    --text-color: #555;
+  }
+}
+
+.hello_world {
+  background: var(--background-color);
+  color: var(--text-color);
+}
