@@ -1,12 +1,13 @@
-# Idea configs
-.idea
+# Intellij Idea
+/.idea/
+out/
 *.iml
 *.iws
 *.ipr
 
-# Gradle specific files
+# Gradle
 .gradle
-build
+build/
 
-# Common files
-*.log
+# Project
+.env

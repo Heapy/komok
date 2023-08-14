@@ -1,9 +1,0 @@
-language: java
-
-jdk:
-  - oraclejdk8
-
-notifications:
-  slack:
-    rooms:
-      - koals:vRyzEXS6YDSzD564IFja0bLu#natrus
