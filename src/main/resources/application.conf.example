@@ -1,0 +1,17 @@
+server {
+    port = 9556
+    host = "127.0.0.1"
+    resources = "./frontend/dist"
+}
+
+jwt {
+    secret = "477d4C7HAXLpEeYzZgSuHp2PVPMu5XY"
+}
+
+jdbc {
+    user = "komok"
+    password = "komok"
+    database = "komok"
+    host = "127.0.0.1"
+    port = 9557
+}

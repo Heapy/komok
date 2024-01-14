@@ -1,0 +1,18 @@
+### Run ping
+GET http://127.0.0.1:9556/ping/heapyhop
+
+> {%
+    client.test("Response has body", () => {
+        client.assert(response.status === 200)
+        client.assert(response.body === "Pong: heapyhop")
+    })
+%}
+
+### Get person
+GET http://127.0.0.1:9556/person/ruslan
+
+### Get index.html
+GET http://127.0.0.1:9556
+
+### Head index.html
+HEAD http://127.0.0.1:9556

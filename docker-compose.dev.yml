@@ -1,0 +1,18 @@
+# docker-compose -f docker-compose.dev.yml up -d
+services:
+  komok_database:
+    image: postgres:16.1
+    container_name: komok_database
+    restart: always
+    mem_limit: 128m
+    memswap_limit: 0m
+    environment:
+      POSTGRES_PASSWORD: "komok"
+      POSTGRES_USER: "komok"
+      POSTGRES_DB: "komok"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:9557:5432"
+volumes:
+  pgdata:

@@ -1,0 +1,13 @@
+# Intellij Idea
+/.idea/
+out/
+*.iml
+*.iws
+*.ipr
+
+# Gradle
+.gradle
+build/
+
+# Project
+src/main/resources/application.conf

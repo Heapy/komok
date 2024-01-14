@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2020",
+    "module": "commonjs",
+    "jsx": "react",
+    "sourceMap": true,
+    "importHelpers": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    "esModuleInterop": true,
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

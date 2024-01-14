@@ -1,0 +1,39 @@
+{
+  "name": "komok",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.tsx",
+  "scripts": {
+    "setup": "yarn set version berry",
+    "start": "webpack --watch --mode development --env NODE_ENV=development --env SOURCE_MAP=eval-source-map",
+    "build": "webpack --mode production --env NODE_ENV=production --env SOURCE_MAP=source-map"
+  },
+  "repository": "git+https://github.com/Heapy/komok.git",
+  "author": "Ruslan Ibragimov",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Heapy/komok/issues"
+  },
+  "homepage": "https://github.com/Heapy/komok#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "compression-webpack-plugin": "^10.0.0",
+    "css-loader": "^6.9.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.7.7",
+    "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tslib": "^2.6.2"
+  }
+}
