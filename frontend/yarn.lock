@@ -148,12 +148,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.11.0":
+"@types/node@npm:*":
   version: 20.11.0
   resolution: "@types/node@npm:20.11.0"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 560aa850dfccb83326f9cba125459f6c3fb0c71ec78f22c61e4d248f1df78bd25fd6792cef573dfbdc49c882f8e38bb1a82ca87e0e28ff2513629c704c2b02af
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.11.2":
+  version: 20.11.2
+  resolution: "@types/node@npm:20.11.2"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 11a935f6676f78e1ced4805f9653891d1fc78ecafd78c7352d289be8c1829c88ebfe45ffd6b4687bbfc73edd0e177746d8cefff651a9f13199ac2dd3ca1076b7
   languageName: node
   linkType: hard
 
@@ -173,7 +182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.47":
+"@types/react@npm:*":
   version: 18.2.47
   resolution: "@types/react@npm:18.2.47"
   dependencies:
@@ -181,6 +190,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: e98ea1827fe60636d0f7ce206397159a29fc30613fae43e349e32c10ad3c0b7e0ed2ded2f3239e07bd5a3cba8736b6114ba196acccc39905ca4a06f56a8d2841
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.48":
+  version: 18.2.48
+  resolution: "@types/react@npm:18.2.48"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 7e89f18ea2928b1638f564b156d692894dcb9352a7e0a807873c97e858abe1f23dbd165a25dd088a991344e973fdeef88ba5724bfb64504b74072cbc9c220c3a
   languageName: node
   linkType: hard
 
@@ -742,15 +762,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compression-webpack-plugin@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "compression-webpack-plugin@npm:10.0.0"
+"compression-webpack-plugin@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "compression-webpack-plugin@npm:11.0.0"
   dependencies:
-    schema-utils: "npm:^4.0.0"
-    serialize-javascript: "npm:^6.0.0"
+    schema-utils: "npm:^4.2.0"
+    serialize-javascript: "npm:^6.0.2"
   peerDependencies:
     webpack: ^5.1.0
-  checksum: 9a804645dacb6f1b2e836434258cee374ecc6b589594177a3e3da5b0f8e09b0e2c2c7ca22f47d2214ee88d4e598c9754cd7e2a2081664e55ce6ad425464713e3
+  checksum: 02a9b286daae9e050ef20612f7fed10e3353f612fb6b13c3d287b5fe22000c9fb3154cf4988547354e9d5788a6a30f00d61c39e339a3907506e3d14ea2da1026
   languageName: node
   linkType: hard
 
@@ -1482,17 +1502,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^20.11.0"
-    "@types/react": "npm:^18.2.47"
+    "@types/node": "npm:^20.11.2"
+    "@types/react": "npm:^18.2.48"
     "@types/react-dom": "npm:^18.2.18"
-    compression-webpack-plugin: "npm:^10.0.0"
+    compression-webpack-plugin: "npm:^11.0.0"
     css-loader: "npm:^6.9.0"
     html-webpack-plugin: "npm:^5.6.0"
     mini-css-extract-plugin: "npm:^2.7.7"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     sass: "npm:^1.69.7"
-    sass-loader: "npm:^13.3.3"
+    sass-loader: "npm:^14.0.0"
     style-loader: "npm:^3.3.4"
     ts-loader: "npm:^9.5.1"
     tslib: "npm:^2.6.2"
@@ -2172,27 +2192,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^13.3.3":
-  version: 13.3.3
-  resolution: "sass-loader@npm:13.3.3"
+"sass-loader@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "sass-loader@npm:14.0.0"
   dependencies:
     neo-async: "npm:^2.6.2"
   peerDependencies:
-    fibers: ">= 3.1.0"
     node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
     sass: ^1.3.0
     sass-embedded: "*"
     webpack: ^5.0.0
   peerDependenciesMeta:
-    fibers:
-      optional: true
     node-sass:
       optional: true
     sass:
       optional: true
     sass-embedded:
       optional: true
-  checksum: 5e955a4ffce35ee0a46fce677ce51eaa69587fb5371978588c83af00f49e7edc36dcf3bb559cbae27681c5e24a71284463ebe03a1fb65e6ecafa1db0620e3fc8
+  checksum: 40729573560feb1a368c984198f655b287495470fa5b5a47f6bc6ab0c474c1bd973ccccbb855d3320a91020a64913e5f0d8905e224ea13e6766d9abbb5085a41
   languageName: node
   linkType: hard
 
@@ -2229,7 +2246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^4.0.0":
+"schema-utils@npm:^4.0.0, schema-utils@npm:^4.2.0":
   version: 4.2.0
   resolution: "schema-utils@npm:4.2.0"
   dependencies:
@@ -2252,7 +2269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serialize-javascript@npm:^6.0.0, serialize-javascript@npm:^6.0.1":
+"serialize-javascript@npm:^6.0.1, serialize-javascript@npm:^6.0.2":
   version: 6.0.2
   resolution: "serialize-javascript@npm:6.0.2"
   dependencies:
