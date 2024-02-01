@@ -147,3 +147,10 @@
   - Distributed search engine
 * [Hubzilla](https://zotlabs.org/page/hubzilla/hubzilla-project)
   - Nomadic identity - **Research**
+
+## License
+
+This project is licensed under the terms of
+the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html).
+
+<img src=".readme/AGPLv3_Logo.svg" width="150">

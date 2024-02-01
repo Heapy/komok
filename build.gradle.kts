@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
+    jacoco
     application
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
@@ -64,4 +65,15 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)
     runtimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestReport)
 }
