@@ -1,9 +1,9 @@
 [versions]
 hikari = "5.1.0"
-flyway = "10.6.0"
+flyway = "10.7.1"
 jooq = "3.19.3"
-junit = "5.10.1"
-junit-platform = "1.10.1"
+junit = "5.10.2"
+junit-platform = "1.10.2"
 logback = "1.4.14"
 mockk = "1.13.9"
 kotlin = "1.9.22"
