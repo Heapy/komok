@@ -157,12 +157,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.19":
-  version: 20.11.19
-  resolution: "@types/node@npm:20.11.19"
+"@types/node@npm:^20.11.20":
+  version: 20.11.20
+  resolution: "@types/node@npm:20.11.20"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: f451ef0a1d78f29c57bad7b77e49ebec945f2a6d0d7a89851d7e185ee9fe7ad94d651c0dfbcb7858c9fa791310c8b40a881e2260f56bd3c1b7e7ae92723373ae
+  checksum: 8e8de211e6d54425c603388a9b5cc9c434101985d0a1c88aabbf65d10df2b1fccd71855c20e61ae8a75c7aea56cb0f64e722cf7914cff1247d0b62ce21996ac4
   languageName: node
   linkType: hard
 
@@ -193,14 +193,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.56":
-  version: 18.2.56
-  resolution: "@types/react@npm:18.2.56"
+"@types/react@npm:^18.2.59":
+  version: 18.2.59
+  resolution: "@types/react@npm:18.2.59"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: a6dab9569799538a9e01d340a721ef1a6f5532bd11cae8d8ab9af00dab2edcafaa00950f7bf2f9ae5bbb1839d890e9ac6eb1ea1186200894b7178dde7b503269
+  checksum: adbac5d78d755ce0f05fc91917b49344e127aaadf0515fa28dd19e3050514eeae6988ab04610fe403a6d7eb58b8dee7816c019d960373dfa22b008f842d7eaf8
   languageName: node
   linkType: hard
 
@@ -1508,8 +1508,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^20.11.19"
-    "@types/react": "npm:^18.2.56"
+    "@types/node": "npm:^20.11.20"
+    "@types/react": "npm:^18.2.59"
     "@types/react-dom": "npm:^18.2.19"
     compression-webpack-plugin: "npm:^11.0.0"
     css-loader: "npm:^6.10.0"
@@ -1517,7 +1517,7 @@ __metadata:
     mini-css-extract-plugin: "npm:^2.8.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
-    sass: "npm:^1.71.0"
+    sass: "npm:^1.71.1"
     sass-loader: "npm:^14.1.1"
     style-loader: "npm:^3.3.4"
     ts-loader: "npm:^9.5.1"
@@ -2225,16 +2225,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.71.0":
-  version: 1.71.0
-  resolution: "sass@npm:1.71.0"
+"sass@npm:^1.71.1":
+  version: 1.71.1
+  resolution: "sass@npm:1.71.1"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: a20ff6e59ed560a01175adc75a4fbafa5bbfbc4d6f0c89225348d54bc9e53a0c519105d1ae595a9216fc2fe9001d3bd7629ed10ccd6fceeb42b07e8393694627
+  checksum: 59d79a6e106747746792b0c71908ae0aecdaf9b794d5724ee64e5249412f0d8ebe7ee2bf12946618848f14f949c4f6b530d82da3e62ab31c71198c6f73002130
   languageName: node
   linkType: hard
 
