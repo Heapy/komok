@@ -1,7 +1,7 @@
 [versions]
 hikari = "5.1.0"
 flyway = "10.8.1"
-jooq = "3.19.3"
+jooq = "3.19.4"
 junit = "5.10.2"
 junit-platform = "1.10.2"
 logback = "1.5.0"
@@ -9,7 +9,7 @@ mockk = "1.13.9"
 kotlin = "1.9.22"
 kotlinx-coroutines = "1.8.0"
 kotlinx-serialization = "1.6.3"
-postgresql = "42.7.1"
+postgresql = "42.7.2"
 
 [libraries]
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
