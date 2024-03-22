@@ -1,4 +1,4 @@
-package io.heapy.komok.server
+package io.heapy.komok.business
 
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
@@ -23,8 +23,17 @@ fun Application.configureWebSockets() {
                     is Frame.Text -> {
                         val text = frame.readText()
                         outgoing.send(Frame.Text("YOU SAID: $text"))
-                        if (text.equals("bye", ignoreCase = true)) {
-                            close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
+                        if (text.equals(
+                                "bye",
+                                ignoreCase = true,
+                            )
+                        ) {
+                            close(
+                                CloseReason(
+                                    CloseReason.Codes.NORMAL,
+                                    "Client said BYE",
+                                ),
+                            )
                         }
                     }
 

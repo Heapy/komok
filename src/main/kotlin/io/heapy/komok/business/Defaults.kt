@@ -1,6 +1,6 @@
 @file:OptIn(KtorExperimentalLocationsAPI::class)
 
-package io.heapy.komok.server
+package io.heapy.komok.business
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

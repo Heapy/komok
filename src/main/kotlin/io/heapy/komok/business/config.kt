@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package io.heapy.komok.server
+package io.heapy.komok.business
 
 import kotlinx.serialization.Serializable
 

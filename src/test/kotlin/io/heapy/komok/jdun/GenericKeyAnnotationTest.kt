@@ -18,7 +18,10 @@ internal class GenericKeyAnnotationTest {
     @Test
     fun `annotation not preserved`() {
         assertThrows<AssertionFailedError> {
-            assertEquals(1, typeOf<@Foo String>().annotations.size)
+            assertEquals(
+                1,
+                typeOf<@Foo String>().annotations.size,
+            )
         }
     }
 }

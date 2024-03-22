@@ -1,8 +1,15 @@
 # komok [![Build](https://github.com/Heapy/komok/actions/workflows/build.yml/badge.svg)](https://github.com/Heapy/komok/actions/workflows/build.yml)
 
+## Local-First challenges
+
+1. Represent every change in the system like event
+2. Build event log
+3. Use CRDT to merge events from different sources
+4. Sync events between devices
+
 ## Project goals
 
-- Help to collect information in single place and connect it;
+- Help to collect information in a single place and connect it;
 - Prioritize and schedule tasks (task can be anything, from learning and coding to resting and playing games);
 - Help to focus by removing multiple sources of distraction, and consolidate them in single system that care about user, not profit.
 
@@ -153,4 +160,4 @@
 This project is licensed under the terms of
 the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
-<img src=".readme/AGPLv3_Logo.svg" width="150">
+<img src=".readme/AGPLv3_Logo.svg" width="150" alt="AGPLv3 Logo">

@@ -1,6 +1,6 @@
 @file:OptIn(KtorExperimentalLocationsAPI::class)
 
-package io.heapy.komok.server.routes
+package io.heapy.komok.business.routes
 
 import io.heapy.komok.database.tables.daos.PersonDao
 import io.ktor.server.application.*

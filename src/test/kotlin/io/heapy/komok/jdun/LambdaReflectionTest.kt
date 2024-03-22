@@ -2,8 +2,8 @@ package io.heapy.komok.jdun
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.lang.RuntimeException
 import kotlin.reflect.jvm.ExperimentalReflectionOnLambdas
-import kotlin.reflect.jvm.internal.KotlinReflectionInternalError
 import kotlin.reflect.jvm.reflect
 
 /**
@@ -16,9 +16,13 @@ internal class LambdaReflectionTest {
         val lambda = { a: String, b: Int -> a + b }
 
         // Since feature not yet implemented in Kotlin
-        assertThrows<KotlinReflectionInternalError> {
+        assertThrows<RuntimeException> {
             val reflection = lambda.reflect()
-            reflection?.call("Hello ", 42)
+                ?: error("Reflection for lambda is null")
+            reflection.call(
+                "Hello ",
+                42,
+            )
         }
     }
 }
