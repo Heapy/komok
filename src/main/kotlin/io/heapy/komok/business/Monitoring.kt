@@ -1,4 +1,4 @@
-package io.heapy.komok.server
+package io.heapy.komok.business
 
 import io.ktor.server.application.*
 import io.ktor.server.metrics.micrometer.*

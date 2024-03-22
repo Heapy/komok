@@ -1,4 +1,4 @@
-package io.heapy.komok.database
+package io.heapy.komok.store
 
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.Serializable

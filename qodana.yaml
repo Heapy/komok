@@ -1,0 +1,9 @@
+version: "1.0"
+linter: jetbrains/qodana-jvm-community:2023.3
+include:
+  - name: UnusedSymbol
+  - name: UnusedReceiverParameter
+exclude:
+  - name: 'All'
+    paths:
+      - src/main/kotlin/io/heapy/komok/database
