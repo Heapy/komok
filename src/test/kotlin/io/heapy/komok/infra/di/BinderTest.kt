@@ -127,7 +127,7 @@ class SingletonZeroArgBinderTest {
     fun test() =
         runTest {
             val module by module {
-                provide<Test1>({ Test1() })
+                provideInstance<Test1>({ Test1() })
                 provide(::TestRoot)
             }
 
@@ -231,7 +231,7 @@ class ObjectBindingTest {
     object ToBind
 
     private val obj by module {
-        provide<ToBind>({ ToBind })
+        provideInstance<ToBind>({ ToBind })
     }
 
     @Test
@@ -258,7 +258,7 @@ class CircularDependencyTest {
 
     private val module1: ModuleProvider by module {
         dependency(module3)
-        provide<HelloWorld>({ HelloWorld() })
+        provideInstance<HelloWorld>({ HelloWorld() })
     }
     private val module2 by module {
         dependency(module1)

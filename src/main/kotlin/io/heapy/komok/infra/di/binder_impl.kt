@@ -376,19 +376,7 @@ fun printCircularDependencyGraph(
     }
 }
 
-// Spring:
-// Unit ->
-// load -> List<BeanDefinition> ->
-// postProcess ->  List<BeanDefinition> ->
-// instantiate -> List<Bean> ->
-// preInitialize (BPP) -> List<Bean> ->
-// initialize -> List<Bean> ->
-// postInitialize (BPP) -> List<Bean> ->
-// run
-
 // 3. Support override of dependencies (through optional wrapping?, i.e. override particular case of decoration)
-
-// TODO: Support reconciliation
 
 // TODO: Provide configuration overview - like what classes overwrite by other classes. modules loaded. etc
 // Configuration should be exported as data class
@@ -401,18 +389,12 @@ fun printCircularDependencyGraph(
 // https://rise4fun.com/agl
 // Komok visualizer site -> past json(dot files?) from terminal to visualize dependency graph!!!
 
-// Scopes
-// We support only singleton scope, since other scopes can be implemented in user space based on singleton scope
-// And session/request scope should be managed by underline request framework.
-// Inject Provider of any bean (useful for custom scopes)
-
 // start/stop functions
 // order problem: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/DependsOn.html
-
-// warmUp function - top level function that can be executed before server will be started
+// auto-mocks in tests, i.e. provide mocks for all dependencies of module, auto `confirmVerified` for all mocks
 
 @ModuleDSL
-inline fun <reified I : Any> Binder.provide(
+inline fun <reified I : Any> Binder.provideInstance(
     noinline provider: suspend () -> I,
     crossinline customizer: Binding<I>.() -> Binding<I> = { this },
 ) {

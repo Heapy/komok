@@ -2,7 +2,6 @@
 
 package io.heapy.komok.business.routes
 
-import io.heapy.komok.database.tables.daos.PersonDao
 import io.ktor.server.application.*
 import io.ktor.server.locations.*
 import io.ktor.server.response.*
@@ -17,7 +16,7 @@ class PersonRequest(val name: String)
 fun Routing.person(dslContext: DSLContext) {
     get<PersonRequest> {
         val person = withContext(Dispatchers.IO) {
-            PersonDao(dslContext.configuration()).fetchByName(it.name).single()
+            it.name
         }
         call.respond(person.toString())
     }

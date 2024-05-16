@@ -19,7 +19,6 @@ import io.ktor.server.response.*
 import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.days
 
-
 fun Application.defaults(
     jwtConfiguration: JwtConfiguration,
 ) {

@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
@@ -12,15 +13,11 @@ repositories {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
-
-        languageVersion = KotlinVersion.KOTLIN_2_0.version
-        apiVersion = KotlinVersion.KOTLIN_2_0.version
-
-        freeCompilerArgs = freeCompilerArgs + listOf(
-            "-Xcontext-receivers",
-        )
+    compilerOptions {
+        jvmTarget.set(JVM_21)
+        languageVersion.set(KotlinVersion.KOTLIN_2_0)
+        apiVersion.set(KotlinVersion.KOTLIN_2_0)
+        freeCompilerArgs.add("-Xcontext-receivers")
     }
 }
 

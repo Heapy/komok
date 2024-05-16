@@ -108,9 +108,9 @@ internal class DefaultKomok(
         type: GenericKey<T>,
     ): R {
         val komokModule by module {
-            provide<KomokEnv>({ DefaultKomokEnv(env) })
-            provide<KomokProps>({ DefaultKomokProps(props) })
-            provide<KomokArgs>({ DefaultKomokArgs(args.toList()) })
+            provideInstance<KomokEnv>({ DefaultKomokEnv(env) })
+            provideInstance<KomokProps>({ DefaultKomokProps(props) })
+            provideInstance<KomokArgs>({ DefaultKomokArgs(args.toList()) })
         }
 
         val komokModuleProvider = object : ModuleProvider {

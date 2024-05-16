@@ -15,7 +15,7 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.http.content.*
 import io.ktor.server.routing.*
-import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.hocon.Hocon
 import kotlinx.serialization.hocon.decodeFromConfig

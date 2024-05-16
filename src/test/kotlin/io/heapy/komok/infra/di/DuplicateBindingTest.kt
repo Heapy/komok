@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 private val module1 by module {
-    provide<String>({ "Hello" })
+    provideInstance<String>({ "Hello" })
 }
 
 private val module2 by module {
-    provide<String>({ "World" })
+    provideInstance<String>({ "World" })
     dependency(module1)
 }
 
 private val withDuplication by module {
-    provide<String>({ "Hello" })
-    provide<String>({ "World" })
+    provideInstance<String>({ "Hello" })
+    provideInstance<String>({ "World" })
 }
 
 class DuplicateBindingTest {
