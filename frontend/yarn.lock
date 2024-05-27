@@ -193,13 +193,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.3.2":
-  version: 18.3.2
-  resolution: "@types/react@npm:18.3.2"
+"@types/react@npm:^18.3.3":
+  version: 18.3.3
+  resolution: "@types/react@npm:18.3.3"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/9fb2f1fcf7e889ee4ea7c3c5978df595c66e770e5fd3a245dbdd2589b9b911524c11dab25a6275d8af4e336e4cb5fa850d447884b84c335a187a338c89df99ba
+  checksum: 10c0/fe455f805c5da13b89964c3d68060cebd43e73ec15001a68b34634604a78140e6fc202f3f61679b9d809dde6d7a7c2cb3ed51e0fd1462557911db09879b55114
   languageName: node
   linkType: hard
 
@@ -791,9 +791,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "css-loader@npm:7.1.1"
+"css-loader@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "css-loader@npm:7.1.2"
   dependencies:
     icss-utils: "npm:^5.1.0"
     postcss: "npm:^8.4.33"
@@ -811,7 +811,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/ebb4ffe68e9df0036fcce66ae182648d4d16b2fdfdc04a5bf7d7783776d389a23be161bb7139a3f842dc75466882544f46d2183bc9399d0bacf83b66a1802b41
+  checksum: 10c0/edec9ed71e3c416c9c6ad41c138834c94baf7629de3b97a3337ae8cec4a45e05c57bdb7c4b4d267229fc04b8970d0d1c0734ded8dcd0ac8c7c286b36facdbbf0
   languageName: node
   linkType: hard
 
@@ -1525,11 +1525,11 @@ __metadata:
   resolution: "komok@workspace:."
   dependencies:
     "@types/node": "npm:^20.12.12"
-    "@types/react": "npm:^18.3.2"
+    "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     bulma: "npm:^1.0.1"
     compression-webpack-plugin: "npm:^11.1.0"
-    css-loader: "npm:^7.1.1"
+    css-loader: "npm:^7.1.2"
     html-webpack-plugin: "npm:^5.6.0"
     mini-css-extract-plugin: "npm:^2.9.0"
     react: "npm:^18.3.1"
