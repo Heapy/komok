@@ -83,7 +83,6 @@ data class BindingWithModule<T>(
     internal val binding: Binding<T>,
     internal val module: Module,
 ) : Binding<T> {
-
     override val key: GenericKey<T>
         get() = binding.key
 }
@@ -97,11 +96,6 @@ data class ProviderBinding<T>(
     override val key: GenericKey<T>,
     @PublishedApi internal val provider: KFunction<T>,
 ) : Binding<T>
-
-data class MultiBinding<T>(
-    override val key: GenericKey<Set<T>>,
-    internal val bindings: List<Binding<out T>>,
-) : Binding<Set<T>>
 
 internal class KomokContext(
     private val definitions: Map<Key, BindingWithModule<*>>,
@@ -187,62 +181,27 @@ private fun processBindings(
     module.bindings.forEach { binding ->
         val processedBinding = bindings[binding.key]
 
-        when (binding) {
-            is MultiBinding<*> -> {
-                when (val processed = processedBinding?.binding) {
-                    null -> bindings[binding.key] = BindingWithModule(
-                        module = module,
-                        binding = MultiBinding(
-                            key = binding.key as GenericKey<Set<*>>,
-                            bindings = listOf(
-                                BindingWithModule(
-                                    module = module,
-                                    binding = binding.bindings.single(),
-                                ),
-                            ),
-                        ),
-                    )
+        if (processedBinding == null) {
+            bindings[binding.key] = BindingWithModule(
+                module = module,
+                binding = binding,
+            )
+        } else {
+            val processed = processedBinding.module.source
+            val current = module.source
 
-                    is MultiBinding<*> -> bindings[binding.key] = BindingWithModule(
-                        module = module,
-                        binding = MultiBinding(
-                            key = processed.key as GenericKey<Set<*>>,
-                            bindings = processed.bindings + BindingWithModule(
-                                module = module,
-                                binding = binding.bindings.single(),
-                            ),
-                        ),
-                    )
-
-                    else -> throw ContextException("Same type [$binding] provided as a singleton and as a Set.")
-                }
-            }
-
-            else -> {
-                if (processedBinding == null) {
-                    bindings[binding.key] = BindingWithModule(
-                        module = module,
-                        binding = binding,
-                    )
-                } else {
-                    val processed = processedBinding.module.source
-                    val current = module.source
-
-                    if (current == processed) {
-                        throw ContextException("Binding [${processedBinding.key}] duplicated in module [$current].")
-                    } else {
-                        throw ContextException(
-                            "Binding [${processedBinding.key}] already present in module " + "[$processed]. Current module: [$current]",
-                        )
-                    }
-                }
+            if (current == processed) {
+                throw ContextException("Binding [${processedBinding.key}] duplicated in module [$current].")
+            } else {
+                throw ContextException(
+                    "Binding [${processedBinding.key}] already present in module " + "[$processed]. Current module: [$current]",
+                )
             }
         }
     }
 }
 
 interface ExecutionContext {
-
     val definitions: Map<Key, BindingWithModule<*>>
     val stack: MutableList<Key>
     val instances: MutableMap<Key, Any?>
@@ -308,17 +267,6 @@ internal suspend fun ExecutionContext.createType(
                         actualBinding.provider.callBy(params)
                     }
                 }
-
-                is MultiBinding<*> -> {
-                    actualBinding.bindings
-                        .map { multiBinding ->
-                            createType(
-                                key = multiBinding.key,
-                                saveInstance = false,
-                            )
-                        }
-                        .toSet()
-                }
             }
             stack.remove(key)
 
@@ -351,7 +299,6 @@ fun printCircularDependencyGraph(
                     is ZeroArgProviderBinding -> "provider [${binding.provider::class}]"
                     is ProviderBinding -> "provider [${binding.provider::class}]"
                     is BindingWithModule -> throw ContextException("Binding with Module shouldn't be a part of cycle")
-                    is MultiBinding<*> -> "multibinding"
                 }
                 append(desc)
             }
@@ -369,7 +316,6 @@ fun printCircularDependencyGraph(
                 is ZeroArgProviderBinding -> "provider [${binding.provider::class}]"
                 is ProviderBinding -> "provider [${binding.provider::class}]"
                 is BindingWithModule -> throw ContextException("Binding with Module shouldn't be a part of cycle")
-                is MultiBinding<*> -> "multibinding"
             }
             append(desc)
         }
@@ -417,42 +363,4 @@ inline fun <reified I> Binder.provide(
     ).also {
         contribute(customizer(it))
     }
-}
-
-@ModuleDSL
-inline fun <reified I : Any> Binder.provideSet(
-    noinline provider: suspend () -> I,
-    crossinline customizer: Binding<I>.() -> Binding<I> = { this },
-) {
-    MultiBinding(
-        key = genericKey<Set<I>>(),
-        bindings = listOf(
-            customizer(
-                ZeroArgProviderBinding(
-                    key = genericKey<I>(),
-                    provider = provider,
-                ),
-            ),
-        ),
-    ).also {
-        contribute(it)
-    }
-}
-
-@ModuleDSL
-inline fun <reified I : Any> Binder.provideSet(
-    provider: KFunction<I>,
-    crossinline customizer: Binding<I>.() -> Binding<I> = { this },
-) {
-    MultiBinding(
-        key = genericKey<Set<I>>(),
-        bindings = listOf(
-            customizer(
-                ProviderBinding(
-                    key = genericKey<I>(),
-                    provider = provider,
-                ),
-            ),
-        ),
-    ).also { contribute(it) }
 }

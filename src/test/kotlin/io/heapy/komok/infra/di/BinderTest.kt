@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -284,24 +283,4 @@ class IsProviderUtilityTest {
         assertTrue(genericKey<Provider<String>>().isProvider())
         assertFalse(genericKey<String>().isProvider())
     }
-}
-
-@Disabled("Not implemented")
-class MultiBindingTest {
-    private val module1 by module {
-        provideSet({ 1 })
-        provideSet({ 2 })
-        provideSet({ 3 })
-        provideSet({ 4 })
-        provideSet({ 5 })
-    }
-
-    @Test
-    fun `collect all values`() =
-        runTest {
-            createContextAndGet(
-                genericKey<Set<Int>>(),
-                module1,
-            )
-        }
 }
