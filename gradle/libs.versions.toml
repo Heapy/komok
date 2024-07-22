@@ -1,6 +1,6 @@
 [versions]
 hikari = "5.1.0"
-flyway = "10.15.2"
+flyway = "10.16.0"
 jooq = "3.19.10"
 junit = "5.10.3"
 junit-platform = "1.10.3"
