@@ -1,8 +1,15 @@
 # komok [![Build](https://github.com/Heapy/komok/actions/workflows/build.yml/badge.svg)](https://github.com/Heapy/komok/actions/workflows/build.yml)
 
+## Local-First challenges
+
+1. Represent every change in the system like event
+2. Build event log
+3. Use CRDT to merge events from different sources
+4. Sync events between devices
+
 ## Project goals
 
-- Help to collect information in single place and connect it;
+- Help to collect information in a single place and connect it;
 - Prioritize and schedule tasks (task can be anything, from learning and coding to resting and playing games);
 - Help to focus by removing multiple sources of distraction, and consolidate them in single system that care about user, not profit.
 
@@ -123,7 +130,7 @@
 
 * [Jetbrains OMEA](https://www.jetbrains.com/omea/)
   - email
-  - contacts 
+  - contacts
   - documents
   - files
   - blogs
@@ -147,3 +154,42 @@
   - Distributed search engine
 * [Hubzilla](https://zotlabs.org/page/hubzilla/hubzilla-project)
   - Nomadic identity - **Research**
+
+## License
+
+This project utilizes two distinct licenses for different components to reflect
+our philosophy and intentions:
+
+### Libraries
+
+All libraries within this project are shared under the **Apache License 2.0**.
+We believe these libraries provide generally useful functionality and represent
+a better approach compared to existing solutions on the market.
+By using the Apache License 2.0, we ensure that these libraries can be freely
+used in commercial projects, encouraging broader adoption and innovation.
+
+List of libraries:
+
+- `io.heapy.komol:komok-tech-di`
+- `io.heapy.komol:komok-tech-di-lib`
+
+### Application Code
+
+The application code of this project is licensed under the **GNU Affero General
+Public License v3.0 (AGPL-3.0)**. This choice reflects our commitment to
+fostering an open and collaborative community around the core application.
+By using the AGPL-3.0, we ensure that any company using this code must
+contribute back to the community, promoting transparency and continuous
+improvement in the project.
+
+<img src=".readme/AGPLv3_Logo.svg" width="150" alt="AGPLv3 Logo">
+
+For more detailed information on the terms and conditions of each license, please refer to the
+following links:
+
+- [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html)
+
+By contributing to or using this project, you agree to adhere to the terms of
+the respective licenses.
+

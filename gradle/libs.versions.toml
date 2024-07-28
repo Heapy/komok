@@ -1,31 +1,39 @@
 [versions]
+flyway = "10.16.0"
 hikari = "5.1.0"
-flyway = "10.5.0"
-jooq = "3.19.1"
-junit = "5.10.1"
-junit-platform = "1.10.1"
-logback = "1.4.14"
-mockk = "1.13.9"
-kotlin = "1.9.22"
-kotlinx-coroutines = "1.7.3"
-kotlinx-serialization = "1.6.2"
-postgresql = "42.7.1"
+jooq = "3.19.10"
+junit = "5.10.3"
+junit-platform = "1.10.3"
+kotlin = "2.0.20-Beta2"
+kotlinpoet = "1.18.1"
+kotlinx-coroutines = "1.8.1"
+kotlinx-serialization = "1.7.1"
+ksp = "2.0.20-Beta2-1.0.23"
+logback = "1.5.6"
+mockk = "1.13.12"
+postgresql = "42.7.3"
+slf4j = "2.0.13"
 
 [libraries]
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 
-jooq-core = { module = "org.jooq:jooq", version.ref = "jooq" }
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+
 jooq-codegen = { module = "org.jooq:jooq-codegen", version.ref = "jooq" }
+jooq-core = { module = "org.jooq:jooq", version.ref = "jooq" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 
-hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+kotlin-poet = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
 kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
@@ -33,6 +41,10 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

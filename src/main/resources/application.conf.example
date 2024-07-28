@@ -5,7 +5,8 @@ server {
 }
 
 jwt {
-    secret = "477d4C7HAXLpEeYzZgSuHp2PVPMu5XY"
+    # openssl rand -hex 64
+    secret = "a3d8515f0e5b563aa6f44d1253bb05155ca39f12577f97b31259bf42921b1763aa662dc0aa82aaa6414d848d0c822d2a69c10b9047432c547810fbfad4a0df83"
 }
 
 jdbc {

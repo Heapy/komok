@@ -4,11 +4,15 @@
 package io.heapy.komok.database
 
 
-import io.heapy.komok.database.tables.Person
+import io.heapy.komok.database.sequences.ENTITY_ID_SEQ
+import io.heapy.komok.database.sequences.ENTITY_ID_SEQ1
+import io.heapy.komok.database.tables.Entity
+import io.heapy.komok.database.tables.Iface
 
 import kotlin.collections.List
 
 import org.jooq.Catalog
+import org.jooq.Sequence
 import org.jooq.Table
 import org.jooq.impl.SchemaImpl
 
@@ -27,13 +31,24 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     }
 
     /**
-     * The table <code>public.person</code>.
+     * The table <code>public.entity</code>.
      */
-    val PERSON: Person get() = Person.PERSON
+    val ENTITY: Entity get() = Entity.ENTITY
+
+    /**
+     * The table <code>public.iface</code>.
+     */
+    val IFACE: Iface get() = Iface.IFACE
 
     override fun getCatalog(): Catalog = DefaultCatalog.DEFAULT_CATALOG
 
+    override fun getSequences(): List<Sequence<*>> = listOf(
+        ENTITY_ID_SEQ,
+        ENTITY_ID_SEQ1
+    )
+
     override fun getTables(): List<Table<*>> = listOf(
-        Person.PERSON
+        Entity.ENTITY,
+        Iface.IFACE
     )
 }

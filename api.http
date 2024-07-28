@@ -1,10 +1,10 @@
 ### Run ping
-GET http://127.0.0.1:9556/ping/heapyhop
+GET http://127.0.0.1:9556/api/healthcheck
 
 > {%
     client.test("Response has body", () => {
         client.assert(response.status === 200)
-        client.assert(response.body === "Pong: heapyhop")
+        client.assert(response.body.status === "OK")
     })
 %}
 
@@ -16,3 +16,50 @@ GET http://127.0.0.1:9556
 
 ### Head index.html
 HEAD http://127.0.0.1:9556
+
+### Insert new entity
+POST http://127.0.0.1:9556/api/entity
+Content-Type: application/json
+
+{
+    "title": "New entity",
+    "text": "New entity text",
+    "date": "2021-01-01",
+    "readStatus": false
+}
+
+### Get latest entities
+GET http://127.0.0.1:9556/api/entity
+
+### Update new entity
+PUT http://127.0.0.1:9556/api/entity
+Content-Type: application/json
+
+{
+    "id": 2
+}
+
+
+
+
+### Insert new entity
+POST http://127.0.0.1:9556/api/mongo/entity
+Content-Type: application/json
+
+{
+    "title": "New entity",
+    "text": "New entity text",
+    "date": "2021-01-01",
+    "readStatus": false
+}
+
+### Get latest entities
+GET http://127.0.0.1:9556/api/mongo/entity
+
+### Update new entity
+PUT http://127.0.0.1:9556/api/mongo/entity
+Content-Type: application/json
+
+{
+    "id": "66a34c9bb2c34e1fab6e6077"
+}

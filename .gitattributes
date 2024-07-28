@@ -1,0 +1,5 @@
+*.kt            text diff=kotlin
+*.gradle.kts    text diff=kotlin
+
+gradlew         text eol=lf
+*.bat           text eol=crlf

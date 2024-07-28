@@ -4,11 +4,17 @@
 package io.heapy.komok.database.tables.references
 
 
-import io.heapy.komok.database.tables.Person
+import io.heapy.komok.database.tables.Entity
+import io.heapy.komok.database.tables.Iface
 
 
 
 /**
- * The table <code>public.person</code>.
+ * The table <code>public.entity</code>.
  */
-val PERSON: Person = Person.PERSON
+val ENTITY: Entity = Entity.ENTITY
+
+/**
+ * The table <code>public.iface</code>.
+ */
+val IFACE: Iface = Iface.IFACE

@@ -9,5 +9,8 @@ out/
 .gradle
 build/
 
+# Kotlin
+/.kotlin/
+
 # Project
 src/main/resources/application.conf
