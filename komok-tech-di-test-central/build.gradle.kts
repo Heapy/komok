@@ -28,6 +28,6 @@ tasks
 
 dependencies {
     implementation(libs.logback)
-    ksp("io.heapy.komok:komok-tech-di:1.0.1")
-    implementation("io.heapy.komok:komok-tech-di-lib:1.0.1")
+    ksp("io.heapy.komok:komok-tech-di:1.0.2")
+    implementation("io.heapy.komok:komok-tech-di-lib:1.0.2")
 }

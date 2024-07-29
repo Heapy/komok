@@ -54,8 +54,8 @@ dependencies {
 
     implementation(libs.logback)
 
-    implementation("io.netty:netty-all:4.1.111.Final")
-    implementation("io.undertow:undertow-core:2.3.14.Final")
+    implementation("io.netty:netty-all:4.1.112.Final")
+    implementation("io.undertow:undertow-core:2.3.15.Final")
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.1.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
     implementation("io.ktor:ktor-client-cio:2.3.12")
