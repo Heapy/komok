@@ -12,4 +12,11 @@ dependencies {
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiTest)
     implementation(projects.komokTechDiLib)
+
+    implementation(libs.junit.jupiter)
+    runtimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
