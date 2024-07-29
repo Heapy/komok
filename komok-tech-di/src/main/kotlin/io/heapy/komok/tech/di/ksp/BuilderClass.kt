@@ -14,6 +14,7 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.buildCodeBlock
 import com.squareup.kotlinpoet.ksp.toClassName
+import com.squareup.kotlinpoet.ksp.toTypeName
 
 fun String.builderClassName(): String =
     "${this}Builder"
@@ -172,6 +173,7 @@ private fun TypeSpec.Builder.addDependentModules(
             .builder(
                 dependencyPropertyName,
             )
+            .addAnnotation(moduleDslMarker)
             .addParameter(
                 "initializer",
                 LambdaTypeName.get(
@@ -210,7 +212,7 @@ private fun TypeSpec.Builder.addModuleProperties(
                         .parameterizedBy(
                             moduleProperty.type
                                 .resolve()
-                                .toClassName(),
+                                .toTypeName(),
                         )
                         .copy(nullable = true),
                     PRIVATE,
@@ -225,13 +227,14 @@ private fun TypeSpec.Builder.addModuleProperties(
                 .builder(
                     moduleProperty.simpleName.asString(),
                 )
+                .addAnnotation(moduleDslMarker)
                 .addParameter(
                     "initializer",
                     LambdaTypeName.get(
                         receiver = null,
                         returnType = moduleProperty.type
                             .resolve()
-                            .toClassName(),
+                            .toTypeName(),
                     ),
                 )
                 .addCode(

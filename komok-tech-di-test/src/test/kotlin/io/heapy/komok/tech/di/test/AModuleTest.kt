@@ -19,7 +19,8 @@ class AModuleTest {
     @Test
     fun `test default override create module`() {
         val aModule = createAModule {
-            bModule {}
+            bModule {
+            }
         }
 
         val output = aModule.aService.map("Output: ")

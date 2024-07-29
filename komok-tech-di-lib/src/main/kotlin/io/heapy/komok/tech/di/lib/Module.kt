@@ -8,4 +8,4 @@ package io.heapy.komok.tech.di.lib
 annotation class Module
 
 @DslMarker
-annotation class ModuleDSL
+annotation class KomokModuleDsl

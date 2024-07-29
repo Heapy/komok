@@ -12,6 +12,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.buildCodeBlock
 import com.squareup.kotlinpoet.ksp.toClassName
+import com.squareup.kotlinpoet.ksp.toTypeName
 
 fun String.overrideClassName(): String =
     "${this}Override"
@@ -47,7 +48,7 @@ fun generateOverrideClass(
                             .parameterizedBy(
                                 it.type
                                     .resolve()
-                                    .toClassName(),
+                                    .toTypeName(),
                             )
                             .copy(nullable = true),
                     )
@@ -112,7 +113,7 @@ fun generateOverrideClass(
                             moduleProperty.simpleName.asString(),
                             moduleProperty.type
                                 .resolve()
-                                .toClassName(),
+                                .toTypeName(),
                             OVERRIDE,
                         )
                         .delegate(

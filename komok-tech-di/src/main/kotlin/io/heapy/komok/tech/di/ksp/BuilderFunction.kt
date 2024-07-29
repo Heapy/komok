@@ -48,6 +48,7 @@ fun generateBuilderFunction(
 
     return FunSpec
         .builder("create$className")
+        .addAnnotation(moduleDslMarker)
         .addParameter(
             "builder",
             LambdaTypeName.get(
