@@ -1,5 +1,5 @@
 [versions]
-flyway = "10.16.0"
+flyway = "10.17.0"
 hikari = "5.1.0"
 jooq = "3.19.10"
 junit = "5.10.3"
