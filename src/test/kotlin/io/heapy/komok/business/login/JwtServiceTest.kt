@@ -1,33 +1,37 @@
 package io.heapy.komok.business.login
 
-import com.typesafe.config.ConfigFactory
 import io.heapy.komok.KomokBaseTest
 import io.heapy.komok.TestTimeSourceContext
 import io.heapy.komok.UnitTest
-import io.heapy.komok.User
+import io.heapy.komok.auth.common.User
+import io.heapy.komok.configuration.buildMockKomokConfiguration
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 import java.time.Instant
+import kotlin.time.Duration.Companion.minutes
 
 class JwtServiceTest : KomokBaseTest {
     context(TestTimeSourceContext)
     @UnitTest
     fun `jwt token generated using configuration`() {
+        val mockConfig = {
+            buildMockKomokConfiguration {
+                add(
+                    deserializer = JwtConfiguration.serializer(),
+                    value = JwtConfiguration(
+                        audience = "audience",
+                        issuer = "issuer",
+                        expiration = 10.minutes,
+                        realm = "realm",
+                        secret = "3b785e0ba085f91708b64b97c8131b49cc6b31e045a118c78c23bac9c1f04b8d26a6208a9e37ca65b535b6af42866b8e16bee15fb69485ae5dfadc371b731860",
+                    ),
+                )
+            }
+        }
+
         val module = createJwtModule {
             configurationModule {
-                config {
-                    ConfigFactory.parseString(
-                        """
-                            jwt {
-                                audience = "audience"
-                                issuer = "issuer"
-                                expiration = 10 minutes
-                                realm = "realm"
-                                secret = "3b785e0ba085f91708b64b97c8131b49cc6b31e045a118c78c23bac9c1f04b8d26a6208a9e37ca65b535b6af42866b8e16bee15fb69485ae5dfadc371b731860"
-                            }
-                        """.trimIndent(),
-                    )
-                }
+                config(mockConfig)
             }
         }
 
@@ -47,21 +51,24 @@ class JwtServiceTest : KomokBaseTest {
 
     @UnitTest
     fun `jwt require minimum secret size`() {
+        val mockConfig = {
+            buildMockKomokConfiguration {
+                add(
+                    deserializer = JwtConfiguration.serializer(),
+                    value = JwtConfiguration(
+                        audience = "audience",
+                        issuer = "issuer",
+                        expiration = 10.minutes,
+                        realm = "realm",
+                        secret = "3b785e0ba085f91708b64b97c8131b49cc6b31e045a118c78c23bac9c1f04b8d26a6208a9e37ca65b535b6af42866b8e16bee15fb69485ae5dfadc371b73186",
+                    ),
+                )
+            }
+        }
+
         val module = createJwtModule {
             configurationModule {
-                config {
-                    ConfigFactory.parseString(
-                        """
-                            jwt {
-                                audience = "audience"
-                                issuer = "issuer"
-                                expiration = 10 minutes
-                                realm = "realm"
-                                secret = "3b785e0ba085f91708b64b97c8131b49cc6b31e045a118c78c23bac9c1f04b8d26a6208a9e37ca65b535b6af42866b8e16bee15fb69485ae5dfadc371b73186"
-                            }
-                        """.trimIndent(),
-                    )
-                }
+                config(mockConfig)
             }
         }
 

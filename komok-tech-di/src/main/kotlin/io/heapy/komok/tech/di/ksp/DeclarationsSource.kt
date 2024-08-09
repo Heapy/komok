@@ -14,7 +14,7 @@ fun getDeclarationsWithDependencies(
             declaration: KSClassDeclaration,
         ) {
             val primaryConstructor = declaration.primaryConstructor
-                ?: error("Primary constructor not found for ${declaration.simpleName.asString()}")
+                ?: error("DR: Primary constructor not found for ${declaration.simpleName.asString()}")
 
             val constructorClasses = primaryConstructor.parameters
                 .map { parameter ->

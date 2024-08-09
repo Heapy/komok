@@ -3,23 +3,23 @@ package io.heapy.komok
 
 import io.heapy.komok.business.ServerModule
 import io.heapy.komok.infra.uptime.JvmUptime
-import io.heapy.komok.infra.di.EntryPoint
-import io.heapy.komok.infra.logging.Logger
+import io.heapy.komok.logging.Logger
 import io.heapy.komok.infra.uptime.JvmUptimeModule
 import io.heapy.komok.tech.di.lib.Module
+import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.*
 
-suspend fun main() {
+fun main() {
     createApplicationModule {}
-        .komokServer
+        .komokApplication
         .run()
 }
 
-class KomokServer(
-    private val server: ApplicationEngine,
+class KomokApplication(
+    private val server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>,
     private val jvmUptime: JvmUptime,
-) : EntryPoint<Unit> {
-    override suspend fun run() {
+) {
+    fun run() {
         val uptime = jvmUptime.uptime()
         log.info("Application started. JVM running for $uptime")
         server.start(wait = true)
@@ -34,8 +34,8 @@ open class ApplicationModule(
 
     private val jvmUptimeModule: JvmUptimeModule,
 ) {
-    open val komokServer by lazy {
-        KomokServer(
+    open val komokApplication by lazy {
+        KomokApplication(
             server = serverModule.server,
             jvmUptime = jvmUptimeModule.jvmUptime,
         )

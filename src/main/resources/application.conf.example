@@ -16,3 +16,11 @@ jdbc {
     host = "127.0.0.1"
     port = 9557
 }
+
+mongo {
+    username = "komok"
+    password = "komok"
+    database = "komok"
+    host = "127.0.0.1"
+    port = 27017
+}

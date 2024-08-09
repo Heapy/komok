@@ -13,7 +13,7 @@ fun dependencies(
         .toTypedArray()
 
     return Dependencies(
-        aggregating = false,
+        aggregating = true,
         sources = sources,
     )
 }

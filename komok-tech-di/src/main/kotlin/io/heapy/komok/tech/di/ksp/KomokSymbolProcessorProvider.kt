@@ -9,6 +9,7 @@ class KomokSymbolProcessorProvider : SymbolProcessorProvider {
         environment: SymbolProcessorEnvironment,
     ): SymbolProcessor {
         return KomokSymbolProcessor(
+            logger = environment.logger,
             codeGenerator = environment.codeGenerator,
         )
     }

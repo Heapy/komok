@@ -1,9 +1,7 @@
 package io.heapy.komok.wip
 
-import io.heapy.komok.TransactionContext
-import io.heapy.komok.User
-import io.heapy.komok.UserContext
-import org.jooq.DSLContext
+import io.heapy.komok.auth.common.User
+import io.heapy.komok.auth.common.UserContext
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -25,18 +23,6 @@ inline operator fun <reified T> ContextProviders.plus(
 
 interface ContextProvider<T> {
     fun <R> context(body: T.() -> R): R
-}
-
-class TransactionContextProvider(
-    private val dslContext: DSLContext,
-) : ContextProvider<TransactionContext> {
-    override fun <R> context(
-        body: TransactionContext.() -> R,
-    ): R {
-        return dslContext.transactionResult { cfg ->
-            TransactionContext(cfg.dsl()).body()
-        }
-    }
 }
 
 inline fun <reified T : Any, R> ContextProviders.runWithContexts(

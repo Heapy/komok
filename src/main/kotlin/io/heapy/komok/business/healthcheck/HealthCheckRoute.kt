@@ -1,10 +1,8 @@
 package io.heapy.komok.business.healthcheck
 
-import io.heapy.komok.infra.server.KomokRoute
-import io.ktor.server.application.call
+import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.response.respond
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
+import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 
 class HealthCheckRoute : KomokRoute {
@@ -13,7 +11,7 @@ class HealthCheckRoute : KomokRoute {
 
     private val status = HealthCheckResponse("OK")
 
-    override fun Route.install() {
+    override fun Routing.install() {
         get("/api/healthcheck") {
             call.respond(status)
         }

@@ -1,32 +1,17 @@
 # docker-compose -f docker-compose.dev.yml up -d
 services:
-  komok_database:
-    image: postgres:16.2
-    container_name: komok_database
-    restart: always
-    mem_limit: 128m
-    memswap_limit: 0m
-    environment:
-      POSTGRES_PASSWORD: "komok"
-      POSTGRES_USER: "komok"
-      POSTGRES_DB: "komok"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - "127.0.0.1:9557:5432"
   komok_database_mg:
     image: "mongo:latest"
     container_name: komok_database_mg
     restart: always
-    mem_limit: 128m
+    mem_limit: 512m
     memswap_limit: 0m
     environment:
       MONGO_INITDB_ROOT_USERNAME: "komok"
       MONGO_INITDB_ROOT_PASSWORD: "komok"
     volumes:
-        - mongo-data:/data/db
+        - "komok-mg-data:/data/db"
     ports:
       - "27017:27017"
 volumes:
-  pgdata:
-  mongo-data:
+  komok-mg-data:

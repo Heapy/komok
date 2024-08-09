@@ -30,6 +30,7 @@ tasks
 
 tasks.test {
     useJUnitPlatform()
+    maxHeapSize = "2048m"
 }
 
 application {
@@ -38,40 +39,38 @@ application {
 }
 
 dependencies {
-    implementation(projects.database)
-    implementation(projects.komokDao)
+    implementation(projects.komokAuthCommon)
+    implementation(projects.komokConfiguration)
+    implementation(projects.komokLogging)
+    implementation(projects.komokDaoMg)
+    implementation(projects.komokServerCommon)
+
+    implementation(libs.bouncycastle.bcpkix)
 
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiLib)
 
-    implementation(kotlin("reflect"))
-
     implementation(libs.kotlinx.coroutines.jdk8)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.serialization.hocon)
 
-    implementation(libs.hikari)
+    implementation(libs.netty)
 
-    implementation(libs.logback)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.cio)
+    implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.websockets)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.server.auth.jwt)
+    implementation(libs.ktor.server.metrics.micrometer)
+    implementation(libs.micrometer.registry.prometheus)
+    implementation(libs.ktor.server.call.logging)
+    implementation(libs.ktor.server.default.headers)
+    implementation(libs.ktor.server.caching.headers)
+    implementation(libs.ktor.server.status.pages)
 
-    implementation("io.netty:netty-all:4.1.112.Final")
-    implementation("io.undertow:undertow-core:2.3.15.Final")
-    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.1.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
-    implementation("io.ktor:ktor-client-cio:2.3.12")
-    implementation("io.ktor:ktor-server-content-negotiation:2.3.12")
-    implementation("io.ktor:ktor-server-cio:2.3.12")
-    implementation("io.ktor:ktor-server-locations:2.3.12")
-    implementation("io.ktor:ktor-server-websockets:2.3.12")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.12")
-    implementation("io.ktor:ktor-server-auth-jwt:2.3.12")
-    implementation("io.ktor:ktor-server-metrics-micrometer:2.3.12")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.13.2")
-    implementation("io.ktor:ktor-server-call-logging:2.3.12")
-    implementation("io.ktor:ktor-server-default-headers:2.3.12")
-    implementation("io.ktor:ktor-server-caching-headers:2.3.12")
-    implementation("io.ktor:ktor-server-status-pages:2.3.12")
-
+    testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)

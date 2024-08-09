@@ -1,20 +1,28 @@
 [versions]
+bouncycastle = "1.78.1"
 flyway = "10.17.0"
 hikari = "5.1.0"
 jooq = "3.19.10"
 junit = "5.10.3"
 junit-platform = "1.10.3"
+komok = "1.0.2"
 kotlin = "2.0.20-RC"
 kotlinpoet = "1.18.1"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.7.1"
 ksp = "2.0.20-RC-1.0.24"
+ktor = "3.0.0-beta-2"
 logback = "1.5.6"
+micrometer = "1.13.2"
 mockk = "1.13.12"
+mongo = "5.1.2"
+netty = "4.2.0.Alpha2"
 postgresql = "42.7.3"
 slf4j = "2.0.13"
 
 [libraries]
+bouncycastle-bcpkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
+
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 
 hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
@@ -24,6 +32,9 @@ jooq-core = { module = "org.jooq:jooq", version.ref = "jooq" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+
+komok-tech-di = { module = "io.heapy.komok:komok-tech-di", version.ref = "komok" }
+komok-tech-di-lib = { module = "io.heapy.komok:komok-tech-di-lib", version.ref = "komok" }
 
 kotlin-poet = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 
@@ -35,9 +46,33 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
+ktor-server-resources = { group = "io.ktor", name = "ktor-server-resources", version.ref = "ktor" }
+ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-server-auth-jwt = { group = "io.ktor", name = "ktor-server-auth-jwt", version.ref = "ktor" }
+ktor-server-metrics-micrometer = { group = "io.ktor", name = "ktor-server-metrics-micrometer", version.ref = "ktor" }
+ktor-server-call-logging = { group = "io.ktor", name = "ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-default-headers = { group = "io.ktor", name = "ktor-server-default-headers", version.ref = "ktor" }
+ktor-server-caching-headers = { group = "io.ktor", name = "ktor-server-caching-headers", version.ref = "ktor" }
+ktor-server-status-pages = { group = "io.ktor", name = "ktor-server-status-pages", version.ref = "ktor" }
+ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host", version.ref = "ktor" }
+
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
+
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+mongo = { module = "org.mongodb:mongodb-driver-kotlin-coroutine", version.ref = "mongo" }
+
+netty = { module = "io.netty:netty-all", version.ref = "netty" }
+netty-kqueue = { module = "io.netty:netty-transport-native-kqueue", version.ref = "netty" }
+netty-epoll = { module = "io.netty:netty-transport-native-epoll", version.ref = "netty" }
+netty-iouring = { module = "io.netty:netty-transport-native-io_uring", version.ref = "netty" }
 
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 

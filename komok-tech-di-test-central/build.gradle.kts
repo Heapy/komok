@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
-    kotlin("jvm").version("2.0.20-Beta2")
-    id("com.google.devtools.ksp").version("2.0.20-Beta2-1.0.23")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ksp)
 }
 
 repositories {
@@ -28,6 +28,6 @@ tasks
 
 dependencies {
     implementation(libs.logback)
-    ksp("io.heapy.komok:komok-tech-di:1.0.2")
-    implementation("io.heapy.komok:komok-tech-di-lib:1.0.2")
+    ksp(libs.komok.tech.di)
+    implementation(libs.komok.tech.di.lib)
 }

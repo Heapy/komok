@@ -3,12 +3,9 @@ package io.heapy.komok.business.login
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.heapy.komok.TimeSourceContext
-import io.heapy.komok.User
-import io.heapy.komok.configuration.ConfigurationModule
+import io.heapy.komok.auth.common.User
+import io.heapy.komok.configuration.ConfigModule
 import io.heapy.komok.tech.di.lib.Module
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.hocon.Hocon
-import kotlinx.serialization.hocon.decodeFromConfig
 import java.time.temporal.ChronoUnit
 
 interface JwtService {
@@ -47,22 +44,22 @@ private class DefaultJwtService(
 
 @Module
 open class JwtModule(
-    private val configurationModule: ConfigurationModule,
+    private val configModule: ConfigModule,
 ) {
-    @OptIn(ExperimentalSerializationApi::class)
-    open val jwtConfiguration by lazy {
-        Hocon
-            .decodeFromConfig<JwtConfiguration>(configurationModule.config.getConfig("jwt"))
-            .also { config ->
-                require(config.secret.length >= 128) {
-                    "Secret must be at least 128 characters long"
-                }
+    open val config: JwtConfiguration by lazy {
+        configModule.config.read(
+            deserializer = JwtConfiguration.serializer(),
+            path = "jwt",
+        ).also { config ->
+            require(config.secret.length >= 128) {
+                "Secret must be at least 128 characters long"
             }
+        }
     }
 
-    open val jwtService by lazy<JwtService> {
+    open val jwtService: JwtService by lazy {
         DefaultJwtService(
-            jwtConfiguration = jwtConfiguration,
+            jwtConfiguration = config,
         )
     }
 }

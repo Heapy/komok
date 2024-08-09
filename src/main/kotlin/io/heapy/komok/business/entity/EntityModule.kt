@@ -1,60 +1,44 @@
 package io.heapy.komok.business.entity
 
-import io.heapy.komok.dao.MongoModule
-import io.heapy.komok.store.DatabaseModule
+import io.heapy.komok.dao.mg.MongoModule
+import io.heapy.komok.server.common.KomokRoutes
 import io.heapy.komok.tech.di.lib.Module
 
 @Module
 open class EntityModule(
-    private val databaseModule: DatabaseModule,
     private val mongoModule: MongoModule,
 ) {
-    open val entityDao by lazy {
-        EntityDao()
+    open val routes by lazy {
+        KomokRoutes(
+            routes = listOf(
+                entityInsertRoute,
+                getLatestUnreadRoute,
+                updateStatusRoute,
+            ),
+        )
     }
 
-    open val mongoEntityDao by lazy {
+    open val entityDao by lazy {
         MongoEntityDao(
             database = mongoModule.komokDatabase,
         )
     }
 
-    open val mongoEntityInsertRoute by lazy {
-        MongoEntityInsertRoute(
-            mongoEntityDao = mongoEntityDao,
-        )
-    }
-
     open val entityInsertRoute by lazy {
-        EntityInsertRoute(
-            dslContext = databaseModule.dslContext,
-            entityDao = entityDao,
+        MongoEntityInsertRoute(
+            mongoEntityDao = entityDao,
         )
     }
 
     open val getLatestUnreadRoute by lazy {
-        GetLatestUnreadRoute(
-            dslContext = databaseModule.dslContext,
-            entityDao = entityDao,
-        )
-    }
-
-    open val mongoGetLatestUnreadRoute by lazy {
         MongoGetLatestUnreadRoute(
-            mongoEntityDao = mongoEntityDao,
+            mongoEntityDao = entityDao,
         )
     }
 
     open val updateStatusRoute by lazy {
-        UpdateStatusRoute(
-            dslContext = databaseModule.dslContext,
-            entityDao = entityDao,
-        )
-    }
-
-    open val mongoUpdateStatusRoute by lazy {
         MongoUpdateStatusRoute(
-            mongoEntityDao = mongoEntityDao,
+            mongoEntityDao = entityDao,
         )
     }
 }

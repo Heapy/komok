@@ -11,7 +11,6 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.buildCodeBlock
-import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 
 fun String.overrideClassName(): String =
@@ -25,7 +24,7 @@ fun generateOverrideClass(
     val packageName = module.packageName.asString()
 
     val primaryConstructor = module.primaryConstructor
-        ?: error("Primary constructor not found for $className")
+        ?: error("OCG: Primary constructor not found for $className")
 
     val constructor = FunSpec
         .constructorBuilder()
@@ -36,7 +35,7 @@ fun generateOverrideClass(
                         ?: error("Parameter name not found"),
                     it.type
                         .resolve()
-                        .toClassName(),
+                        .toTypeName(),
                 )
             }
 
@@ -129,7 +128,7 @@ fun generateOverrideClass(
                                 )
                                 unindent()
                                 add("}\n")
-                                add(
+                                addStatement(
                                     "log.debug(\"init %N: {}\", result.duration)\n",
                                     moduleProperty.simpleName.asString(),
                                 )

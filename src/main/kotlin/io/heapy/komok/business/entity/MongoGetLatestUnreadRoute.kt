@@ -1,12 +1,10 @@
 package io.heapy.komok.business.entity
 
-import io.heapy.komok.User
-import io.heapy.komok.UserContext
-import io.heapy.komok.infra.server.KomokRoute
-import io.ktor.server.application.call
+import io.heapy.komok.auth.common.User
+import io.heapy.komok.auth.common.UserContext
+import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.response.respond
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
+import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 
 class MongoGetLatestUnreadRoute(
@@ -17,7 +15,7 @@ class MongoGetLatestUnreadRoute(
         val entities: List<String>,
     )
 
-    override fun Route.install() {
+    override fun Routing.install() {
         get("/mongo/entity") {
             val req = call.parameters["page"]?.toIntOrNull() ?: 0
 
