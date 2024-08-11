@@ -11,17 +11,14 @@ fun String.flattenClassName(): String =
     "${this}Flatten"
 
 fun generateFlattenModuleClass(
-    graph: Map<KSClassDeclaration, List<KSClassDeclaration>>,
     module: KSClassDeclaration,
     moduleDependencies: List<KSClassDeclaration>,
-    sortedGraph: List<KSClassDeclaration>,
 ): TypeSpec {
     val className = module.simpleName.asString()
-    val packageName = module.packageName.asString()
 
     return TypeSpec
         .classBuilder(className.flattenClassName())
-        .addFlattenModuleClassConstructor(moduleDependencies)
+        .addFlattenModuleClassConstructor(moduleDependencies + module)
         .build()
 }
 

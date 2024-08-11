@@ -66,8 +66,6 @@ class KomokSymbolProcessor(
 
                     val flattenModuleClass = try {
                         generateFlattenModuleClass(
-                            graph = resolvedGraph,
-                            sortedGraph = sortedGraph,
                             module = module,
                             moduleDependencies = moduleDependencies,
                         )

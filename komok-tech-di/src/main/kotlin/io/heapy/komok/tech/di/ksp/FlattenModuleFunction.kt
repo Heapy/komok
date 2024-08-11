@@ -49,6 +49,7 @@ fun generateFlattenModuleFunction(
 
     return FunSpec
         .builder("createFlatten$className")
+        .addAnnotation(moduleDslMarker)
         .addParameter(
             "builder",
             LambdaTypeName.get(
@@ -109,7 +110,13 @@ fun generateFlattenModuleFunction(
 
                 indent()
 
-                moduleDependencies.forEach {
+                add(
+                    "%N = %N,\n",
+                    className.toPropertyName(),
+                    className.toPropertyName(),
+                )
+
+                 moduleDependencies.forEach {
                     add(
                         "%N = %N.build(),\n",
                         it.toPropertyName(),

@@ -12,9 +12,9 @@ class EntryPointTest {
             assertFalse(TestInlineModule.executed)
 
             komok<TestInlineModule, Unit> {
-                provide(EntryPointTest::TestInlineModule)
-                provide(EntryPointTest::Service1)
-                provide(EntryPointTest::Service2)
+                provide(::TestInlineModule)
+                provide(::Service1)
+                provide(::Service2)
             }
 
             assertTrue(TestInlineModule.executed)
@@ -38,9 +38,9 @@ class EntryPointTest {
         runTest {
             val exception = assertThrows<ContextException> {
                 komok<EntryPoint<Unit>, Unit> {
-                    provide(EntryPointTest::TestInlineModule)
-                    provide(EntryPointTest::Service1)
-                    provide(EntryPointTest::Service2)
+                    provide(::TestInlineModule)
+                    provide(::Service1)
+                    provide(::Service2)
                 }
             }
 
@@ -56,7 +56,7 @@ class EntryPointTest {
             assertFalse(TestModule.executed)
 
             komok<TestModule, Unit> {
-                provide(EntryPointTest::TestModule)
+                provide(::TestModule)
                 dependency(k1)
             }
 
@@ -92,10 +92,10 @@ class EntryPointTest {
 
     private val k1 by module {
         dependency(k2)
-        provide(EntryPointTest::Service1)
+        provide(::Service1)
     }
 
     private val k2 by module {
-        provide(EntryPointTest::Service2)
+        provide(::Service2)
     }
 }

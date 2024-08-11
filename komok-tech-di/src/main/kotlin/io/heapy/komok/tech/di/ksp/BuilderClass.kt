@@ -105,19 +105,23 @@ private fun TypeSpec.Builder.addModuleBuildFunction(
     val primaryConstructor = module.primaryConstructor
         ?: error("MBF: Primary constructor not found for $className")
 
-    val moduleBuilderFunction = try {
-        FunSpec
-            .builder("build")
-            .returns(
+    val moduleBuildProperty = try {
+        PropertySpec
+            .builder(
+                "module",
                 ClassName(
                     packageName,
-                    className,
+                    className.overrideClassName(),
                 ),
+                PRIVATE,
             )
-            .addCode(
+            .mutable(false)
+            .delegate(
                 buildCodeBlock {
+                    add("lazy {\n")
+                    indent()
                     add(
-                        "return %T(\n",
+                        "%T(\n",
                         ClassName(
                             packageName,
                             className.overrideClassName(),
@@ -148,6 +152,32 @@ private fun TypeSpec.Builder.addModuleBuildFunction(
                         }
                     unindent()
                     add(")\n")
+                    unindent()
+                    addStatement("}\n")
+                },
+            )
+            .build()
+    } catch (e: Exception) {
+        logger.error("Failed to generate module build property")
+        throw e
+    }
+
+    addProperty(moduleBuildProperty)
+
+    val moduleBuilderFunction = try {
+        FunSpec
+            .builder("build")
+            .returns(
+                ClassName(
+                    packageName,
+                    className,
+                ),
+            )
+            .addCode(
+                buildCodeBlock {
+                    addStatement(
+                        "return module",
+                    )
                 },
             )
             .build()

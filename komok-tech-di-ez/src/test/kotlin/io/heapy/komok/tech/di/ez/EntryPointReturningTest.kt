@@ -9,9 +9,9 @@ class EntryPointReturningTest {
     fun `test inline module`() =
         runTest {
             val result = komok<Application, String> {
-                provide(EntryPointReturningTest::Application)
-                provide(EntryPointReturningTest::Service1)
-                provide(EntryPointReturningTest::Service2)
+                provide(::Application)
+                provide(::Service1)
+                provide(::Service2)
             }
 
             assertEquals(
@@ -24,7 +24,7 @@ class EntryPointReturningTest {
     fun `test module`() =
         runTest {
             val result = komok<Application, String> {
-                provide(EntryPointReturningTest::Application)
+                provide(::Application)
                 dependency(k1)
             }
 
@@ -58,10 +58,10 @@ class EntryPointReturningTest {
 
     private val k1 by module {
         dependency(k2)
-        provide(EntryPointReturningTest::Service1)
+        provide(::Service1)
     }
 
     private val k2 by module {
-        provide(EntryPointReturningTest::Service2)
+        provide(::Service2)
     }
 }

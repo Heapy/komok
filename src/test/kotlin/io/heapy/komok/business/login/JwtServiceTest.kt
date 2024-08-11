@@ -30,7 +30,7 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val module = createJwtModule {
-            configurationModule {
+            configModule {
                 config(mockConfig)
             }
         }
@@ -67,7 +67,7 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val module = createJwtModule {
-            configurationModule {
+            configModule {
                 config(mockConfig)
             }
         }

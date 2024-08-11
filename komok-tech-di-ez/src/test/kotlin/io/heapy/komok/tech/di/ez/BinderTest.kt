@@ -50,15 +50,15 @@ class BasicBinderTest {
     }
 
     private val module1 by module {
-        provide<Test1>(BasicBinderTest::Test1Impl)
+        provide<Test1>(::Test1Impl)
         provide(::test2Provider)
     }
 
     private val module2 by module {}
 
     private val module3 by module {
-        provide(BasicBinderTest::Test3)
-        provide(BasicBinderTest::TestRoot)
+        provide(::Test3)
+        provide(::TestRoot)
     }
 
     @Test
@@ -96,8 +96,8 @@ class SingletonBinderTest {
     fun test() =
         runTest {
             val module by module {
-                provide(SingletonBinderTest::Test1)
-                provide(SingletonBinderTest::TestRoot)
+                provide(::Test1)
+                provide(::TestRoot)
             }
 
             val root = createContextAndGet(
@@ -125,7 +125,7 @@ class SingletonZeroArgBinderTest {
         runTest {
             val module by module {
                 provideInstance<Test1>({ Test1() })
-                provide(SingletonZeroArgBinderTest::TestRoot)
+                provide(::TestRoot)
             }
 
             val root = createContextAndGet(
@@ -148,7 +148,7 @@ class OptionalInjectionTest {
     class Bar
 
     private val module1 by module {
-        provide(OptionalInjectionTest::Foo)
+        provide(::Foo)
     }
 
     @Test
@@ -196,9 +196,9 @@ class CyclicDependencyTest {
     class Baz(val foo: Foo)
 
     private val cyclic by module {
-        provide(CyclicDependencyTest::Foo)
-        provide(CyclicDependencyTest::Bar)
-        provide(CyclicDependencyTest::Baz)
+        provide(::Foo)
+        provide(::Bar)
+        provide(::Baz)
     }
 
     @Test
