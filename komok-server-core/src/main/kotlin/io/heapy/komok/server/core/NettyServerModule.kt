@@ -1,21 +1,23 @@
 package io.heapy.komok.server.core
 
-import io.heapy.komok.configuration.ConfigModule
+import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
 
 @Module
 open class NettyServerModule(
-    private val configModule: ConfigModule,
+    private val configurationModule: ConfigurationModule,
 ) {
     open val ioHandlerFactoryProvider: IoConfigurationProvider by lazy {
         SystemDependentIoConfigurationProvider()
     }
 
     open val config: NettyServerConfiguration by lazy {
-        configModule.config.read(
-            deserializer = DefaultNettyServerConfiguration.serializer(),
-            path = "netty",
-        )
+        configurationModule
+            .config
+            .read(
+                deserializer = DefaultNettyServerConfiguration.serializer(),
+                path = "netty",
+            )
     }
 
     open val rootHandler: HttpHandler by lazy<HttpHandler> {

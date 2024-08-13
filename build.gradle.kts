@@ -40,7 +40,8 @@ application {
 
 dependencies {
     implementation(projects.komokAuthCommon)
-    implementation(projects.komokConfiguration)
+    implementation(projects.komokTechConfig)
+    implementation(projects.komokTechDotenv)
     implementation(projects.komokLogging)
     implementation(projects.komokDaoMg)
     implementation(projects.komokServerCommon)

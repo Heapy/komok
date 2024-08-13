@@ -2,7 +2,7 @@ package io.heapy.komok.dao.pg
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import io.heapy.komok.configuration.ConfigModule
+import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
 import org.jooq.SQLDialect
 import org.jooq.impl.DSL
@@ -10,10 +10,10 @@ import org.postgresql.ds.PGSimpleDataSource
 
 @Module
 open class DatabaseModule(
-    private val configModule: ConfigModule,
+    private val configurationModule: ConfigurationModule,
 ) {
     open val postgresConfig: PostgresConfiguration by lazy {
-        configModule
+        configurationModule
             .config
             .read(
                 PostgresConfiguration.serializer(),

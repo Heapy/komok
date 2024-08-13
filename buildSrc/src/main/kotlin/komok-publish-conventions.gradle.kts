@@ -24,6 +24,14 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech DI Easy",
         "publishDescription" to "Easy way for dependency injection in Kotlin",
     ),
+    "komok-tech-dotenv" to mapOf(
+        "publishName" to "Komok Tech Dotenv",
+        "publishDescription" to "Simple .env implementation",
+    ),
+    "komok-tech-config" to mapOf(
+        "publishName" to "Komok Tech Config",
+        "publishDescription" to "Configuration module based on .env and HOCON",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")

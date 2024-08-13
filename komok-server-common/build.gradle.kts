@@ -31,7 +31,7 @@ tasks.test {
 }
 
 dependencies {
-    implementation(projects.komokConfiguration)
+    implementation(projects.komokTechConfig)
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiLib)
 

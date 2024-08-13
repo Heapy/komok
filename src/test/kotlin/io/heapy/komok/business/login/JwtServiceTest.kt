@@ -4,7 +4,7 @@ import io.heapy.komok.KomokBaseTest
 import io.heapy.komok.TestTimeSourceContext
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.User
-import io.heapy.komok.configuration.buildMockKomokConfiguration
+import io.heapy.komok.tech.config.buildMockKomokConfiguration
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 import java.time.Instant
@@ -30,7 +30,7 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val module = createJwtModule {
-            configModule {
+            configurationModule {
                 config(mockConfig)
             }
         }
@@ -67,7 +67,7 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val module = createJwtModule {
-            configModule {
+            configurationModule {
                 config(mockConfig)
             }
         }

@@ -1,4 +1,4 @@
-package io.heapy.komok.configuration
+package io.heapy.komok.tech.config
 
 import com.typesafe.config.Config
 import kotlinx.serialization.DeserializationStrategy

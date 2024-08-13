@@ -1,12 +1,12 @@
 package io.heapy.komok.dao.mg
 
 import com.mongodb.kotlin.client.coroutine.MongoClient
-import io.heapy.komok.configuration.ConfigModule
+import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
 
 @Module
 open class MongoModule(
-    private val configModule: ConfigModule,
+    private val configurationModule: ConfigurationModule,
 ) {
     open val client by lazy {
         val mc = mongoConfiguration
@@ -18,9 +18,11 @@ open class MongoModule(
     }
 
     open val mongoConfiguration: MongoConfiguration by lazy {
-        configModule.config.read(
-            deserializer = MongoConfiguration.serializer(),
-            path = "mongo",
-        )
+        configurationModule
+            .config
+            .read(
+                deserializer = MongoConfiguration.serializer(),
+                path = "mongo",
+            )
     }
 }

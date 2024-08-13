@@ -35,7 +35,8 @@ dependencies {
     implementation(projects.komokServerCommon)
     implementation(projects.komokAuthCommon)
     implementation(projects.komokLogging)
-    implementation(projects.komokConfiguration)
+    implementation(projects.komokTechConfig)
+    implementation(projects.komokTechDotenv)
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiLib)
 

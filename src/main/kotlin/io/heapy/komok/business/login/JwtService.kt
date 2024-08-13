@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.heapy.komok.TimeSourceContext
 import io.heapy.komok.auth.common.User
-import io.heapy.komok.configuration.ConfigModule
+import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
 import java.time.temporal.ChronoUnit
 
@@ -44,17 +44,20 @@ private class DefaultJwtService(
 
 @Module
 open class JwtModule(
-    private val configModule: ConfigModule,
+    private val configurationModule: ConfigurationModule,
 ) {
     open val config: JwtConfiguration by lazy {
-        configModule.config.read(
-            deserializer = JwtConfiguration.serializer(),
-            path = "jwt",
-        ).also { config ->
-            require(config.secret.length >= 128) {
-                "Secret must be at least 128 characters long"
+        configurationModule
+            .config
+            .read(
+                deserializer = JwtConfiguration.serializer(),
+                path = "jwt",
+            )
+            .also { config ->
+                require(config.secret.length >= 128) {
+                    "Secret must be at least 128 characters long"
+                }
             }
-        }
     }
 
     open val jwtService: JwtService by lazy {
