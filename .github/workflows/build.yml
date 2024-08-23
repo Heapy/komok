@@ -59,7 +59,7 @@ jobs:
           name: "Backend Application"
           path: "build/distributions/"
       - name: "Untar files"
-        run: mkdir -p komok-app/build/install && tar -xvf komok-app/build/distributions/komok-app.tar -C $_
+        run: mkdir -p komok-app/build/distributions && tar -xvf komok-app/build/distributions/komok-app.tar -C $_
       - uses: actions/download-artifact@v4
         with:
           name: "Frontend Application"
