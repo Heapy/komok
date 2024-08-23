@@ -42,7 +42,7 @@ dependencies {
     implementation(projects.komokAuthCommon)
     implementation(projects.komokTechConfig)
     implementation(projects.komokTechDotenv)
-    implementation(projects.komokLogging)
+    implementation(projects.komokTechLogging)
     implementation(projects.komokDaoMg)
     implementation(projects.komokServerCommon)
 
@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.netty)
+    implementation(libs.logback)
 
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.cio)

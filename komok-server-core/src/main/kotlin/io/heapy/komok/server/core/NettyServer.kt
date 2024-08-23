@@ -1,6 +1,6 @@
 package io.heapy.komok.server.core
 
-import io.heapy.komok.logging.Logger
+import io.heapy.komok.tech.logging.Logger
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption

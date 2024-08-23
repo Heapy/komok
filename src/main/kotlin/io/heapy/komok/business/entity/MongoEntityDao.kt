@@ -2,7 +2,7 @@ package io.heapy.komok.business.entity
 
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.heapy.komok.auth.common.UserContext
-import io.heapy.komok.logging.Logger
+import io.heapy.komok.tech.logging.Logger
 import kotlinx.coroutines.flow.toList
 import org.bson.Document
 import org.bson.types.ObjectId

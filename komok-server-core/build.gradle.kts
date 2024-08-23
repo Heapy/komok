@@ -34,7 +34,7 @@ dependencies {
     implementation("org.http4k:http4k-server-netty:5.28.0.0")
     implementation(projects.komokTechConfig)
     implementation(projects.komokTechDotenv)
-    implementation(projects.komokLogging)
+    implementation(projects.komokTechLogging)
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiLib)
 

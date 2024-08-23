@@ -3,7 +3,7 @@ package io.heapy.komok.business.user
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.heapy.komok.dao.mg.MongoV1.User
-import io.heapy.komok.logging.Logger
+import io.heapy.komok.tech.logging.Logger
 import kotlinx.coroutines.flow.firstOrNull
 import org.bson.types.ObjectId
 

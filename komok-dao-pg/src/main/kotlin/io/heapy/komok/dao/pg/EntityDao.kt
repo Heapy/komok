@@ -3,7 +3,7 @@ package io.heapy.komok.dao.pg
 import io.heapy.komok.auth.common.UserContext
 import io.heapy.komok.database.tables.pojos.Entity
 import io.heapy.komok.database.tables.references.ENTITY
-import io.heapy.komok.logging.Logger
+import io.heapy.komok.tech.logging.Logger
 import org.jooq.JSONB
 import org.jooq.impl.DSL
 

@@ -32,6 +32,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Config",
         "publishDescription" to "Configuration module based on .env and HOCON",
     ),
+    "komok-tech-logging" to mapOf(
+        "publishName" to "Komok Tech Logging",
+        "publishDescription" to "Logging module based on SLF4J",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")

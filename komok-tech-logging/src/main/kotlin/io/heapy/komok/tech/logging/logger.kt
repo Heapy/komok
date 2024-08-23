@@ -1,4 +1,4 @@
-package io.heapy.komok.logging
+package io.heapy.komok.tech.logging
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,7 +22,6 @@ inline fun getLogger(className: String): Logger {
         .getILoggerFactory() // Skip one stack frame
         .getLogger(name)
 }
-
 
 open class Logger {
     protected val log: Logger = getLogger(this.javaClass.name)
