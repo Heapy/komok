@@ -17,3 +17,6 @@ src/main/resources/application.conf
 
 # System
 .DS_Store
+
+# Publish
+publish.sh
