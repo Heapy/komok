@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Komok" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="io.heapy.komok.Application" />
-    <module name="komok.main" />
+    <module name="komok.komok-app.main" />
     <shortenClasspath name="NONE" />
     <method v="2">
       <option name="Make" enabled="true" />

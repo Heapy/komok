@@ -13,7 +13,7 @@ build/
 /.kotlin/
 
 # Project
-src/main/resources/application.conf
+komok-app/src/main/resources/application.conf
 
 # System
 .DS_Store
