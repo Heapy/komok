@@ -38,6 +38,14 @@ application {
     applicationName = "backend"
 }
 
+tasks.distTar {
+    archiveFileName = "komok-app.tar"
+}
+
+tasks.distZip {
+    enabled = false
+}
+
 dependencies {
     implementation(projects.komokAuthCommon)
     implementation(projects.komokTechConfig)
