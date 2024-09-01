@@ -2,6 +2,10 @@ public final class io/heapy/komok/tech/di/delegate/BeanKt {
 	public static final fun bean (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
 }
 
+public final class io/heapy/komok/tech/di/delegate/ModulesKt {
+	public static final fun buildModule (Ljava/lang/Class;)Ljava/lang/Object;
+}
+
 public final class io/heapy/komok/tech/di/delegate/MutableBean {
 	public final fun getValue ()Ljava/lang/Object;
 	public final fun isInitialized ()Z
