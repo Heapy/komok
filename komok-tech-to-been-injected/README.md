@@ -28,6 +28,9 @@ dependencies {
 This is a simplified example of multi-module project with dependencies between them.
 
 ```kotlin
+import io.heapy.komok.tech.di.delegate.bean
+import io.heapy.komok.tech.di.delegate.buildModule
+
 // UtilsModule.kt
 class UtilsModule {
     val configuration by bean {
