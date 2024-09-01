@@ -1,0 +1,6 @@
+public abstract interface annotation class io/heapy/komok/tech/di/lib/KomokModuleDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/di/lib/Module : java/lang/annotation/Annotation {
+}
+

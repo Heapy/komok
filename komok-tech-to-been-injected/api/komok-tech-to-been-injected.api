@@ -1,0 +1,12 @@
+public final class io/heapy/komok/tech/di/delegate/BeanKt {
+	public static final fun bean (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
+}
+
+public final class io/heapy/komok/tech/di/delegate/MutableBean {
+	public final fun getValue ()Ljava/lang/Object;
+	public final fun isInitialized ()Z
+	public final fun mock (Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public final fun setValue (Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+

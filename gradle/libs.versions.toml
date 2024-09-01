@@ -1,4 +1,5 @@
 [versions]
+binary-compatibility-validator = "0.16.3"
 bouncycastle = "1.78.1"
 flyway = "10.17.2"
 hikari = "5.1.0"
@@ -79,6 +80,8 @@ postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 [plugins]
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
+
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
