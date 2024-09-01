@@ -13,6 +13,16 @@ open class MyModule {
 
 But not requiring to extend modules for testing and manually build module tree.
 
+## Installation
+
+Add the following to your `build.gradle.kts`:
+
+```kotlin
+dependencies {
+    implementation("io.heapy.komok:komok-tech-to-been-injected:1.0.7")
+}
+```
+
 ## Usage
 
 This is a simplified example of multi-module project with dependencies between them.
