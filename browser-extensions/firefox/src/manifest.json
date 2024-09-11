@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "Komok Sync",
+    "version": "1.0",
+    "description": "Syncing bookmarks and history with Komok",
+    "homepage_url": "https://github.com/Heapy/komok/tree/main/browser-extensions/firefox",
+    "icons": {
+        "48": "icons/48.png",
+        "96": "icons/96.png"
+    },
+    "permissions": [
+        "bookmarks"
+    ],
+
+    "background": {
+        "scripts": ["background.js"]
+    }
+}
