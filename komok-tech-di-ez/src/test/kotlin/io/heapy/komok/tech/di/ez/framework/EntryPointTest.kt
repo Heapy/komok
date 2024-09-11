@@ -1,5 +1,8 @@
-package io.heapy.komok.tech.di.ez
+package io.heapy.komok.tech.di.ez.framework
 
+import io.heapy.komok.tech.di.ez.impl.ContextException
+import io.heapy.komok.tech.di.ez.dsl.module
+import io.heapy.komok.tech.di.ez.dsl.provide
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -45,7 +48,7 @@ class EntryPointTest {
             }
 
             assertEquals(
-                "Required io.heapy.komok.tech.di.ez.EntryPoint<kotlin.Unit> not found in context.",
+                "Required io.heapy.komok.tech.di.ez.framework.EntryPoint<kotlin.Unit> not found in context.",
                 exception.message,
             )
         }

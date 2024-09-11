@@ -1,5 +1,15 @@
 package io.heapy.komok.tech.di.ez
 
+import io.heapy.komok.tech.di.ez.api.ModuleProvider
+import io.heapy.komok.tech.di.ez.api.Provider
+import io.heapy.komok.tech.di.ez.api.createContext
+import io.heapy.komok.tech.di.ez.api.genericKey
+import io.heapy.komok.tech.di.ez.api.get
+import io.heapy.komok.tech.di.ez.dsl.module
+import io.heapy.komok.tech.di.ez.dsl.provide
+import io.heapy.komok.tech.di.ez.dsl.provideInstance
+import io.heapy.komok.tech.di.ez.impl.ContextException
+import io.heapy.komok.tech.di.ez.impl.isProvider
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -70,16 +80,14 @@ class BasicBinderTest {
                 dependency(module3)
             }
 
-            val testProvider = createContextAndGet(
-                genericKey<Provider<TestRoot>>(),
-                module,
-            )
-
-            val test = testProvider.get()
+            val instanceByProvider = module
+                .createContext()
+                .get<Provider<TestRoot>>()
+                .get()
 
             assertEquals(
                 "Test1Impl Test2Impl Test3 Test2Impl Test3",
-                test.run(),
+                instanceByProvider.run(),
             )
         }
 }
@@ -100,10 +108,9 @@ class SingletonBinderTest {
                 provide(::TestRoot)
             }
 
-            val root = createContextAndGet(
-                genericKey<TestRoot>(),
-                module,
-            )
+            val root = module
+                .createContext()
+                .get<TestRoot>()
 
             assertSame(
                 root.t1,
@@ -124,14 +131,13 @@ class SingletonZeroArgBinderTest {
     fun test() =
         runTest {
             val module by module {
-                provideInstance<Test1>({ Test1() })
+                provideInstance(Test1())
                 provide(::TestRoot)
             }
 
-            val root = createContextAndGet(
-                genericKey<TestRoot>(),
-                module,
-            )
+            val root = module
+                .createContext()
+                .get<TestRoot>()
 
             assertSame(
                 root.t1,
@@ -154,10 +160,9 @@ class OptionalInjectionTest {
     @Test
     fun `test constructor`() =
         runTest {
-            val foo = createContextAndGet(
-                genericKey<Foo>(),
-                module1,
-            )
+            val foo = module1
+                .createContext()
+                .get<Foo>()
 
             assertNull(foo.bar)
         }
@@ -173,10 +178,9 @@ class OptionalInjectionTest {
     @Test
     fun `test provider`() =
         runTest {
-            val foo = createContextAndGet(
-                genericKey<Foo>(),
-                module2,
-            )
+            val foo = module2
+                .createContext()
+                .get<Foo>()
 
             assertNull(foo.bar)
         }
@@ -205,10 +209,9 @@ class CyclicDependencyTest {
     fun `test cyclic dependencies`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                createContextAndGet(
-                    genericKey<Foo>(),
-                    cyclic,
-                )
+                cyclic
+                    .createContext()
+                    .get<Foo>()
             }
 
             assertEquals(
@@ -227,24 +230,23 @@ class CyclicDependencyTest {
 class ObjectBindingTest {
     object ToBind
 
-    private val obj by module {
-        provideInstance<ToBind>({ ToBind })
+    private val objectModule by module {
+        provideInstance(ToBind)
     }
 
     @Test
     fun `komok disallows object binding`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                createContextAndGet(
-                    genericKey<ToBind>(),
-                    obj,
-                )
+                objectModule
+                    .createContext()
+                    .get<ToBind>()
             }
 
             assertEquals(
                 """
-            Objects not allowed to be bound.
-        """.trimIndent(),
+                Objects not allowed to be bound.
+                """.trimIndent(),
                 exception.message,
             )
         }
@@ -255,11 +257,13 @@ class CircularDependencyTest {
 
     private val module1: ModuleProvider by module {
         dependency(module3)
-        provideInstance<HelloWorld>({ HelloWorld() })
+        provideInstance(HelloWorld())
     }
+
     private val module2 by module {
         dependency(module1)
     }
+
     private val module3 by module {
         dependency(module2)
     }
@@ -267,10 +271,9 @@ class CircularDependencyTest {
     @Test
     fun `circular dependency in modules shouldn't throw error`() {
         runTest {
-            createContextAndGet(
-                genericKey<HelloWorld>(),
-                module3,
-            )
+            module3
+                .createContext()
+                .get<HelloWorld>()
         }
     }
 }

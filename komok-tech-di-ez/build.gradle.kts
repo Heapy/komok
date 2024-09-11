@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
     api(libs.slf4j.api)
+    implementation(kotlin("reflect"))
 
-    testImplementation(kotlin("reflect"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)

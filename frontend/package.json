@@ -9,7 +9,7 @@
     "build": "webpack --mode production --env NODE_ENV=production --env SOURCE_MAP=source-map"
   },
   "repository": "git+https://github.com/Heapy/komok.git",
-  "author": "Ruslan Ibragimov",
+  "author": "Ruslan Ibrahimau",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Heapy/komok/issues"

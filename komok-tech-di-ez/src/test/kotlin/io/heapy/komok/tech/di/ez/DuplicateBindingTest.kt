@@ -1,22 +1,27 @@
 package io.heapy.komok.tech.di.ez
 
+import io.heapy.komok.tech.di.ez.api.createContext
+import io.heapy.komok.tech.di.ez.api.get
+import io.heapy.komok.tech.di.ez.dsl.module
+import io.heapy.komok.tech.di.ez.dsl.provideInstance
+import io.heapy.komok.tech.di.ez.impl.ContextException
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 private val module1 by module {
-    provideInstance<String> { "Hello" }
+    provideInstance("Hello")
 }
 
 private val module2 by module {
-    provideInstance<String> { "World" }
+    provideInstance("World")
     dependency(module1)
 }
 
 private val withDuplication by module {
-    provideInstance<String> { "Hello" }
-    provideInstance<String> { "World" }
+    provideInstance("Hello")
+    provideInstance("World")
 }
 
 class DuplicateBindingTest {
@@ -24,10 +29,9 @@ class DuplicateBindingTest {
     fun `duplicate binding in module for same key should throw error`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                createContextAndGet(
-                    type = genericKey<String>(),
-                    moduleProvider = withDuplication,
-                )
+                withDuplication
+                    .createContext()
+                    .get<String>()
             }
 
             assertEquals(
@@ -42,10 +46,9 @@ class DuplicateBindingTest {
     fun `duplicate binding for same key should throw error`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                createContextAndGet(
-                    genericKey<String>(),
-                    module2,
-                )
+                module2
+                    .createContext()
+                    .get<String>()
             }
 
             assertEquals(

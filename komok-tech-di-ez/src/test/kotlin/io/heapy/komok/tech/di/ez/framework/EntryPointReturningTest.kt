@@ -1,5 +1,7 @@
-package io.heapy.komok.tech.di.ez
+package io.heapy.komok.tech.di.ez.framework
 
+import io.heapy.komok.tech.di.ez.dsl.module
+import io.heapy.komok.tech.di.ez.dsl.provide
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
