@@ -4,7 +4,7 @@ import io.heapy.komok.tech.di.ez.api.ProviderBinding
 import io.heapy.komok.tech.di.ez.api.Binder
 import io.heapy.komok.tech.di.ez.api.ModuleDSL
 import io.heapy.komok.tech.di.ez.api.genericKey
-import io.heapy.komok.tech.di.ez.impl.asProvider
+import io.heapy.komok.tech.di.ez.impl.asMethodReference
 
 @ModuleDSL
 inline fun <reified I> Binder.provideInstance(
@@ -13,7 +13,7 @@ inline fun <reified I> Binder.provideInstance(
     contribute(
         ProviderBinding(
             key = genericKey<I>(),
-            provider = instance.asProvider(),
+            provider = instance.asMethodReference(),
             source = source,
         )
     )

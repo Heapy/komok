@@ -7,3 +7,4 @@
 5. Support integration and unit tests
     - Replace dependencies with mocks
     - auto confirmVerified for all mocks
+6. Multi-binding support
