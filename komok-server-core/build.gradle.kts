@@ -31,7 +31,7 @@ tasks.test {
 }
 
 dependencies {
-    implementation("org.http4k:http4k-server-netty:5.32.1.0")
+    implementation("org.http4k:http4k-server-netty:5.32.3.0")
     implementation(projects.komokTechConfig)
     implementation(projects.komokTechDotenv)
     implementation(projects.komokTechLogging)
