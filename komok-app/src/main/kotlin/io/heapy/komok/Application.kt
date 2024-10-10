@@ -1,7 +1,7 @@
 @file:JvmName("Application")
 package io.heapy.komok
 
-import io.heapy.komok.business.ServerModule
+import io.heapy.komok.infra.http.server.ServerModule
 import io.heapy.komok.infra.uptime.JvmUptime
 import io.heapy.komok.tech.logging.Logger
 import io.heapy.komok.infra.uptime.JvmUptimeModule

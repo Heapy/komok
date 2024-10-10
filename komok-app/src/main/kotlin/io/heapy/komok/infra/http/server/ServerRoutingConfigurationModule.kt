@@ -1,5 +1,7 @@
-package io.heapy.komok.business
+package io.heapy.komok.infra.http.server
 
+import io.heapy.komok.business.AnonymousRoutesModule
+import io.heapy.komok.business.AuthenticatedRoutesModule
 import io.heapy.komok.server.common.KomokRoutes
 import io.heapy.komok.tech.di.lib.Module
 
@@ -14,9 +16,7 @@ open class ServerRoutingConfigurationModule(
             listOf(
                 staticFilesRoute,
                 anonymousRoutesModule.anonymousRoutes,
-                AuthenticatedRoutes(
-                    routes = authenticatedRoutesModule.authenticatedRoutes,
-                ),
+                authenticatedRoutesModule.authenticatedRoutes,
             ),
         )
     }

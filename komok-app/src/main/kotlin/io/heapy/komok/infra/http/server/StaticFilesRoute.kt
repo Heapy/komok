@@ -1,4 +1,4 @@
-package io.heapy.komok.business
+package io.heapy.komok.infra.http.server
 
 import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.http.content.CompressedFileType

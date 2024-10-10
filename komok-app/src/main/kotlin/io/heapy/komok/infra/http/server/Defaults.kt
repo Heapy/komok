@@ -1,4 +1,4 @@
-package io.heapy.komok.business
+package io.heapy.komok.infra.http.server
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

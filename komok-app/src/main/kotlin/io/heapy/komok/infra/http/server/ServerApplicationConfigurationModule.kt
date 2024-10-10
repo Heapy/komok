@@ -1,4 +1,4 @@
-package io.heapy.komok.business
+package io.heapy.komok.infra.http.server
 
 import io.heapy.komok.business.login.JwtModule
 import io.heapy.komok.metrics.MetricsModule
