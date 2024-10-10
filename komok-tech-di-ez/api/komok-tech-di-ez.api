@@ -1,123 +1,77 @@
-public abstract interface class io/heapy/komok/tech/di/ez/Binder {
-	public abstract fun contribute (Lio/heapy/komok/tech/di/ez/Binding;)V
-	public abstract fun dependency (Lio/heapy/komok/tech/di/ez/ModuleProvider;)V
+public abstract interface class io/heapy/komok/tech/di/ez/api/Binder {
+	public abstract fun contribute (Lio/heapy/komok/tech/di/ez/api/Binding;)V
+	public abstract fun dependency (Lio/heapy/komok/tech/di/ez/api/ModuleProvider;)V
 	public abstract fun getSource ()Ljava/lang/String;
 }
 
-public final class io/heapy/komok/tech/di/ez/Binder_implKt {
-	public static final fun createContextAndGet (Lio/heapy/komok/tech/di/ez/GenericKey;Lio/heapy/komok/tech/di/ez/ModuleProvider;)Ljava/lang/Object;
-	public static final fun module (Lkotlin/jvm/functions/Function1;)Lkotlin/properties/ReadOnlyProperty;
-	public static final fun printCircularDependencyGraph (Lio/heapy/komok/tech/di/ez/Key;Ljava/util/List;Ljava/util/Map;)Ljava/lang/String;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/Binding {
-	public abstract fun getKey ()Lio/heapy/komok/tech/di/ez/GenericKey;
+public abstract interface class io/heapy/komok/tech/di/ez/api/Binding {
+	public abstract fun getKey ()Lio/heapy/komok/tech/di/ez/api/GenericKey;
 	public abstract fun getSource ()Ljava/lang/String;
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/Context {
-	public abstract fun get (Lio/heapy/komok/tech/di/ez/Key;)Ljava/lang/Object;
+public abstract interface class io/heapy/komok/tech/di/ez/api/Context {
+	public abstract fun get (Lio/heapy/komok/tech/di/ez/api/GenericKey;)Ljava/lang/Object;
 }
 
-public final class io/heapy/komok/tech/di/ez/DefaultKomokBuilder : io/heapy/komok/tech/di/ez/KomokBuilder {
-	public fun <init> (Ljava/lang/String;)V
-	public fun args ([Ljava/lang/String;)V
-	public fun contribute (Lio/heapy/komok/tech/di/ez/Binding;)V
-	public fun dependency (Lio/heapy/komok/tech/di/ez/ModuleProvider;)V
-	public fun env (Ljava/util/Map;)V
-	public fun getSource ()Ljava/lang/String;
-	public final fun komok ()Lio/heapy/komok/tech/di/ez/Komok;
-	public fun props (Ljava/util/Map;)V
+public final class io/heapy/komok/tech/di/ez/api/CreateContextKt {
+	public static final fun createContext (Lio/heapy/komok/tech/di/ez/api/ModuleProvider;)Lio/heapy/komok/tech/di/ez/api/Context;
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/EntryPoint {
-	public abstract fun run (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/ExecutionContext {
-	public abstract fun getDefinitions ()Ljava/util/Map;
-	public abstract fun getInstances ()Ljava/util/Map;
-	public abstract fun getStack ()Ljava/util/List;
-}
-
-public final class io/heapy/komok/tech/di/ez/GenericKey : io/heapy/komok/tech/di/ez/Key {
+public final class io/heapy/komok/tech/di/ez/api/GenericKey : io/heapy/komok/tech/di/ez/api/Key {
 	public fun <init> (Lkotlin/reflect/KType;)V
 	public final fun component1 ()Lkotlin/reflect/KType;
-	public final fun copy (Lkotlin/reflect/KType;)Lio/heapy/komok/tech/di/ez/GenericKey;
-	public static synthetic fun copy$default (Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/reflect/KType;ILjava/lang/Object;)Lio/heapy/komok/tech/di/ez/GenericKey;
+	public final fun copy (Lkotlin/reflect/KType;)Lio/heapy/komok/tech/di/ez/api/GenericKey;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/di/ez/api/GenericKey;Lkotlin/reflect/KType;ILjava/lang/Object;)Lio/heapy/komok/tech/di/ez/api/GenericKey;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getType ()Lkotlin/reflect/KType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/Key {
+public abstract interface class io/heapy/komok/tech/di/ez/api/Key {
 	public abstract fun getType ()Lkotlin/reflect/KType;
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/Komok {
-	public abstract fun run (Ljava/lang/String;Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/KomokArgs {
-	public abstract fun getArgs ()Ljava/util/List;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/KomokBuilder : io/heapy/komok/tech/di/ez/Binder {
-	public abstract fun args ([Ljava/lang/String;)V
-	public abstract fun env (Ljava/util/Map;)V
-	public abstract fun props (Ljava/util/Map;)V
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/KomokEnv {
-	public abstract fun getEnv ()Ljava/util/Map;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/KomokProps {
-	public abstract fun getProperties ()Ljava/util/Map;
-}
-
-public abstract interface class io/heapy/komok/tech/di/ez/Module {
+public abstract interface class io/heapy/komok/tech/di/ez/api/Module {
 	public abstract fun getBindings ()Ljava/util/List;
 	public abstract fun getDependencies ()Ljava/util/List;
 	public abstract fun getSource ()Ljava/lang/String;
 }
 
-public abstract interface annotation class io/heapy/komok/tech/di/ez/ModuleDSL : java/lang/annotation/Annotation {
+public abstract interface annotation class io/heapy/komok/tech/di/ez/api/ModuleDSL : java/lang/annotation/Annotation {
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/ModuleProvider {
-	public abstract fun module ()Lio/heapy/komok/tech/di/ez/Module;
+public abstract interface class io/heapy/komok/tech/di/ez/api/ModuleProvider {
+	public abstract fun module ()Lio/heapy/komok/tech/di/ez/api/Module;
 }
 
-public abstract interface class io/heapy/komok/tech/di/ez/Provider {
+public abstract interface class io/heapy/komok/tech/di/ez/api/Provider {
 	public abstract fun get ()Ljava/lang/Object;
 }
 
-public final class io/heapy/komok/tech/di/ez/ProviderBinding : io/heapy/komok/tech/di/ez/Binding {
-	public fun <init> (Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;)V
-	public final fun component1 ()Lio/heapy/komok/tech/di/ez/GenericKey;
+public final class io/heapy/komok/tech/di/ez/api/ProviderBinding : io/heapy/komok/tech/di/ez/api/Binding {
+	public fun <init> (Lio/heapy/komok/tech/di/ez/api/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;)V
+	public final fun component1 ()Lio/heapy/komok/tech/di/ez/api/GenericKey;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;)Lio/heapy/komok/tech/di/ez/ProviderBinding;
-	public static synthetic fun copy$default (Lio/heapy/komok/tech/di/ez/ProviderBinding;Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/di/ez/ProviderBinding;
+	public final fun copy (Lio/heapy/komok/tech/di/ez/api/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;)Lio/heapy/komok/tech/di/ez/api/ProviderBinding;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/di/ez/api/ProviderBinding;Lio/heapy/komok/tech/di/ez/api/GenericKey;Lkotlin/reflect/KFunction;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/di/ez/api/ProviderBinding;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getKey ()Lio/heapy/komok/tech/di/ez/GenericKey;
+	public fun getKey ()Lio/heapy/komok/tech/di/ez/api/GenericKey;
 	public final fun getProvider ()Lkotlin/reflect/KFunction;
 	public fun getSource ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/heapy/komok/tech/di/ez/ZeroArgProviderBinding : io/heapy/komok/tech/di/ez/Binding {
-	public fun <init> (Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/jvm/functions/Function0;Ljava/lang/String;)V
-	public final fun component1 ()Lio/heapy/komok/tech/di/ez/GenericKey;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/jvm/functions/Function0;Ljava/lang/String;)Lio/heapy/komok/tech/di/ez/ZeroArgProviderBinding;
-	public static synthetic fun copy$default (Lio/heapy/komok/tech/di/ez/ZeroArgProviderBinding;Lio/heapy/komok/tech/di/ez/GenericKey;Lkotlin/jvm/functions/Function0;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/di/ez/ZeroArgProviderBinding;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getKey ()Lio/heapy/komok/tech/di/ez/GenericKey;
-	public fun getSource ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+public final class io/heapy/komok/tech/di/ez/dsl/ModuleKt {
+	public static final fun module (Lkotlin/jvm/functions/Function1;)Lkotlin/properties/ReadOnlyProperty;
+}
+
+public abstract interface class io/heapy/komok/tech/di/ez/framework/EntryPoint {
+	public abstract fun run (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/di/ez/impl/AsMethodReferenceKt {
+	public static final fun asMethodReference (Ljava/lang/Object;)Lkotlin/reflect/KFunction;
 }
 
