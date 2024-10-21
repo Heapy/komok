@@ -271,12 +271,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.7.5":
-  version: 22.7.5
-  resolution: "@types/node@npm:22.7.5"
+"@types/node@npm:^22.7.7":
+  version: 22.7.7
+  resolution: "@types/node@npm:22.7.7"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/cf11f74f1a26053ec58066616e3a8685b6bcd7259bc569738b8f752009f9f0f7f85a1b2d24908e5b0f752482d1e8b6babdf1fbb25758711ec7bb9500bfcd6e60
+  checksum: 10c0/07268a1e990ad9d9b1865092881317ea679a46eb6706d83a8874eec75fdddae6cfd6452e4e68b651561183e2a8f8548276f3155744bc402c2545978c19b70d65
   languageName: node
   linkType: hard
 
@@ -1320,9 +1320,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-webpack-plugin@npm:^5.6.0":
-  version: 5.6.0
-  resolution: "html-webpack-plugin@npm:5.6.0"
+"html-webpack-plugin@npm:^5.6.2":
+  version: 5.6.2
+  resolution: "html-webpack-plugin@npm:5.6.2"
   dependencies:
     "@types/html-minifier-terser": "npm:^6.0.0"
     html-minifier-terser: "npm:^6.0.2"
@@ -1337,7 +1337,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/50d1a0f90d512463ea8d798985d91a7ccc9d5e461713dedb240125b2ff0671f58135dd9355f7969af341ff4725e73b2defbc0984cfdce930887a48506d970002
+  checksum: 10c0/4a6e8367d47e9265aaebd30cd83076bb4a1006eda526b7273f06328f68d1ad2d088da29bd10b41e5016352e8dc1f2b63707a36dde26bed438a01c23cd3799844
   languageName: node
   linkType: hard
 
@@ -1594,21 +1594,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^22.7.5"
+    "@types/node": "npm:^22.7.7"
     "@types/react": "npm:^18.3.11"
     "@types/react-dom": "npm:^18.3.1"
     bulma: "npm:^1.0.2"
     compression-webpack-plugin: "npm:^11.1.0"
     css-loader: "npm:^7.1.2"
-    html-webpack-plugin: "npm:^5.6.0"
+    html-webpack-plugin: "npm:^5.6.2"
     mini-css-extract-plugin: "npm:^2.9.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    sass: "npm:^1.79.5"
+    sass: "npm:^1.80.3"
     sass-loader: "npm:^16.0.2"
     style-loader: "npm:^4.0.0"
     ts-loader: "npm:^9.5.1"
-    tslib: "npm:^2.7.0"
+    tslib: "npm:^2.8.0"
     typescript: "npm:^5.6.3"
     webpack: "npm:^5.95.0"
     webpack-cli: "npm:^5.1.4"
@@ -2320,9 +2320,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.79.5":
-  version: 1.79.5
-  resolution: "sass@npm:1.79.5"
+"sass@npm:^1.80.3":
+  version: 1.80.3
+  resolution: "sass@npm:1.80.3"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -2330,7 +2330,7 @@ __metadata:
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 10c0/7331865fd1d0c03e6e180a4fe0e175ac1bf1214f6c77f0d99ad72fbe2ed9ede3fab8a64c0c41471cb8a358a9d11624ec59a49283f9b6070eb99c522b34b814bf
+  checksum: 10c0/fa08043fc36b854717b6eaf6247ee11341d0aff5e17a645965071866bd677930c9c9467d82ed5a4a666d7897a82be8a61427cd81b808e6b9e2d3b32cf278bebd
   languageName: node
   linkType: hard
 
@@ -2665,10 +2665,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "tslib@npm:2.7.0"
-  checksum: 10c0/469e1d5bf1af585742128827000711efa61010b699cb040ab1800bcd3ccdd37f63ec30642c9e07c4439c1db6e46345582614275daca3e0f4abae29b0083f04a6
+"tslib@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "tslib@npm:2.8.0"
+  checksum: 10c0/31e4d14dc1355e9b89e4d3c893a18abb7f90b6886b089c2da91224d0a7752c79f3ddc41bc1aa0a588ac895bd97bb99c5bc2bfdb2f86de849f31caeb3ba79bbe5
   languageName: node
   linkType: hard
 
