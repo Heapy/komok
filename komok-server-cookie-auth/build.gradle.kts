@@ -20,7 +20,10 @@ tasks
             jvmTarget.set(JVM_21)
             languageVersion.set(KotlinVersion.KOTLIN_2_0)
             apiVersion.set(KotlinVersion.KOTLIN_2_0)
-            freeCompilerArgs.add("-Xcontext-receivers")
+            freeCompilerArgs.addAll(
+                "-Xsuppress-warning=CONTEXT_RECEIVERS_DEPRECATED",
+                "-Xcontext-receivers",
+            )
         }
     }
 
