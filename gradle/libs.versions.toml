@@ -1,9 +1,6 @@
 [versions]
 binary-compatibility-validator = "0.16.3"
 bouncycastle = "1.79"
-flyway = "11.1.0"
-hikari = "6.2.1"
-jooq = "3.19.16"
 junit = "5.11.4"
 junit-platform = "1.11.4"
 komok = "1.0.7"
@@ -18,18 +15,10 @@ micrometer = "1.14.2"
 mockk = "1.13.13"
 mongo = "5.2.1"
 netty = "4.2.0.RC1"
-postgresql = "42.7.4"
 slf4j = "2.0.16"
 
 [libraries]
 bouncycastle-bcpkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
-
-flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
-
-hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
-
-jooq-codegen = { module = "org.jooq:jooq-codegen", version.ref = "jooq" }
-jooq-core = { module = "org.jooq:jooq", version.ref = "jooq" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
@@ -74,8 +63,6 @@ netty = { module = "io.netty:netty-all", version.ref = "netty" }
 netty-kqueue = { module = "io.netty:netty-transport-native-kqueue", version.ref = "netty" }
 netty-epoll = { module = "io.netty:netty-transport-native-epoll", version.ref = "netty" }
 netty-iouring = { module = "io.netty:netty-transport-native-io_uring", version.ref = "netty" }
-
-postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 

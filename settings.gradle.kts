@@ -1,12 +1,9 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "komok"
 
-include("database")
-include("dataops")
 include("komok-app")
 include("komok-auth-common")
 include("komok-dao-mg")
-include("komok-dao-pg")
 include("komok-server-common")
 include("komok-server-cookie-auth")
 include("komok-server-core")
