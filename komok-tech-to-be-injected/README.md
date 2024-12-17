@@ -1,4 +1,4 @@
-# To Been Injected
+# To Be Injected
 
 Minimal and simple dependency injection library for Kotlin.
 Based on idea of using Kotlin `lazy` delegate:
@@ -19,7 +19,7 @@ Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.heapy.komok:komok-tech-to-been-injected:1.0.7")
+    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.8")
 }
 ```
 

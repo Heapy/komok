@@ -36,8 +36,8 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Logging",
         "publishDescription" to "Logging module based on SLF4J",
     ),
-    "komok-tech-to-been-injected" to mapOf(
-        "publishName" to "Komok Tech To Been Injected",
+    "komok-tech-to-be-injected" to mapOf(
+        "publishName" to "Komok Tech To Be Injected",
         "publishDescription" to "Library for dependency injection in Kotlin",
     )
 )

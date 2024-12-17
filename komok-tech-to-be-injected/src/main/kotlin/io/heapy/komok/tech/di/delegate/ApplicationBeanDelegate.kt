@@ -1,6 +1,5 @@
 package io.heapy.komok.tech.di.delegate
 
-import kotlin.concurrent.Volatile
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
