@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation(projects.komokTechDotenv)
+    implementation(projects.komokTechConfigDotenv)
+    implementation(projects.komokTechConfigCommon)
     implementation(projects.komokTechDiLib)
     ksp(projects.komokTechDi)
 
     implementation(libs.kotlinx.serialization.hocon)
-
 }

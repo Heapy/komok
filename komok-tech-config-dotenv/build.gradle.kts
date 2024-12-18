@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(projects.komokTechConfigCommon)
     implementation(projects.komokTechDiLib)
     ksp(projects.komokTechDi)
 }

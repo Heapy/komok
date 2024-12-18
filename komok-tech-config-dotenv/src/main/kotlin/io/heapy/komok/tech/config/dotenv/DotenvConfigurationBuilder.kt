@@ -1,4 +1,4 @@
-package io.heapy.komok.tech.dotenv
+package io.heapy.komok.tech.config.dotenv
 
 import java.nio.file.Path
 import kotlin.io.path.exists

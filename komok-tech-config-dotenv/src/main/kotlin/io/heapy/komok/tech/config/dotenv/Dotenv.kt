@@ -1,5 +1,8 @@
-package io.heapy.komok.tech.dotenv
+package io.heapy.komok.tech.config.dotenv
 
+import io.heapy.komok.tech.config.common.DefaultEnvironment
+import io.heapy.komok.tech.config.common.EmptyEnvironment
+import io.heapy.komok.tech.config.common.Environment
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.exists
@@ -13,7 +16,7 @@ import kotlin.io.path.readLines
  */
 fun dotenv(
     configurationBuilder: DotenvConfigurationBuilder.() -> Unit = {},
-): Map<String, String> {
+): Environment {
     val configuration: DotenvConfiguration = DotenvConfigurationBuilder().also(configurationBuilder).copy()
     val workingDirectory = Paths
         .get(".")
@@ -34,7 +37,8 @@ fun dotenv(
                     split[0].trim() to split[1].trim()
                 }
         }
-        ?: emptyMap()
+        ?.let(::DefaultEnvironment)
+        ?: EmptyEnvironment
 }
 
 private fun resolveEnv(

@@ -3,7 +3,7 @@ package io.heapy.komok.tech.config
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
 import io.heapy.komok.tech.di.lib.Module
-import io.heapy.komok.tech.dotenv.DotenvModule
+import io.heapy.komok.tech.config.dotenv.DotenvModule
 
 @Module
 open class ConfigurationModule(
@@ -24,7 +24,7 @@ open class ConfigurationModule(
     open val effectiveEnvironment: Map<String, String> by lazy {
         buildMap {
             putAll(systemEnvironment)
-            putAll(dotenvModule.dotenv)
+            putAll(dotenvModule.dotenv.properties)
             putAll(environmentOverrides)
         }
     }
