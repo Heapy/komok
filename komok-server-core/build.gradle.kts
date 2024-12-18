@@ -42,6 +42,8 @@ dependencies {
     ksp(projects.komokTechDi)
     implementation(projects.komokTechDiLib)
 
+    implementation(libs.logback)
+
     implementation(libs.kotlinx.coroutines.jdk8)
     implementation(libs.kotlinx.serialization.json)
 

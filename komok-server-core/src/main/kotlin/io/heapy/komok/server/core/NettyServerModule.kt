@@ -21,7 +21,13 @@ open class NettyServerModule(
     }
 
     open val rootHandler: HttpHandler by lazy<HttpHandler> {
-        TODO("Implement root handler in module that requires netty server")
+        object : HttpHandler {
+            override suspend fun handleRequest(exchange: NettyHttpServerExchange) {
+                println("Calling handler")
+                exchange.setResponseContent("Hello World")
+                exchange.endExchange()
+            }
+        }
     }
 
     open val nettyServer: NettyServer by lazy {

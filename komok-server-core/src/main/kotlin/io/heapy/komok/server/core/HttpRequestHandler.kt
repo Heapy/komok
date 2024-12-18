@@ -1,21 +1,27 @@
 package io.heapy.komok.server.core
 
-import io.netty.buffer.Unpooled
-import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.handler.codec.http.*
 import io.netty.util.AttributeKey
+import io.netty.util.concurrent.EventExecutor
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+
+class NettyDispatcher(
+    private val executor: EventExecutor,
+) : CoroutineDispatcher() {
+    override fun dispatch(context: CoroutineContext, block: Runnable) {
+        executor.execute(block)
+    }
+}
 
 class HttpRequestHandler(
     private val rootHandler: HttpHandler,
-) : SimpleChannelInboundHandler<FullHttpRequest>() {
-    private val websocketPath = "/ws"
-
+) : SimpleChannelInboundHandler<FullHttpRequest>(false) {
     override fun channelActive(ctx: ChannelHandlerContext) {
         super.channelActive(ctx)
         // Attach a new Job to the context
@@ -30,59 +36,24 @@ class HttpRequestHandler(
         ctx: ChannelHandlerContext,
         request: FullHttpRequest
     ) {
-        if (websocketPath.equals(
-                request.uri(),
-                ignoreCase = true
-            )
-        ) {
-            ctx.fireChannelRead(request.retain())
-        } else {
-            CoroutineScope(Dispatchers.Default + ctx.channel().attr(ATTRIBUTE_KEY_JOB).get())
-                .launch {
-                    val exchange = object : HttpExchange {
-                        override val method: Method by lazy(LazyThreadSafetyMode.PUBLICATION) {
-                            when (val method = request.method()) {
-                                HttpMethod.DELETE -> Method.DELETE
-                                HttpMethod.GET -> Method.GET
-                                HttpMethod.HEAD -> Method.HEAD
-                                HttpMethod.OPTIONS -> Method.OPTIONS
-                                HttpMethod.PATCH -> Method.PATCH
-                                HttpMethod.POST -> Method.POST
-                                HttpMethod.PUT -> Method.PUT
-                                HttpMethod.TRACE -> Method.TRACE
-                                else -> error("Unsupported method: $method")
-                            }
-                        }
-                    }
+        val exchange = NettyHttpServerExchange(ctx, request)
+        val dispatcher = NettyDispatcher(ctx.executor())
 
-                    rootHandler.handle(exchange)
+        println("Channel read")
+        CoroutineScope(dispatcher + ctx.channel().attr(ATTRIBUTE_KEY_JOB).get())
+            .launch {
+                try {
+                    rootHandler.handleRequest(exchange)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    exchange.setStatusCode(500)
+                    exchange.setResponseContent("Internal Server Error")
+                    exchange.getResponseHeaders()[HttpHeaderNames.CONTENT_TYPE] = "text/plain; charset=UTF-8"
+                    exchange.endExchange()
+                } finally {
+                    request.release()
                 }
-
-            val content = "Welcome to the Netty HTTP Server".toByteArray()
-            val response = DefaultFullHttpResponse(
-                HttpVersion.HTTP_1_1,
-                HttpResponseStatus.OK,
-                Unpooled.wrappedBuffer(content)
-            )
-            response
-                .headers()
-                .set(
-                    HttpHeaderNames.CONTENT_TYPE,
-                    "text/plain"
-                )
-            response
-                .headers()
-                .set(
-                    HttpHeaderNames.CONTENT_LENGTH,
-                    response
-                        .content()
-                        .readableBytes()
-                )
-
-            ctx
-                .writeAndFlush(response)
-                .addListener(ChannelFutureListener.CLOSE)
-        }
+            }
     }
 
     override fun exceptionCaught(

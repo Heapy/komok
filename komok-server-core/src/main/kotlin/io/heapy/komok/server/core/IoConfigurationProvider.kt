@@ -13,7 +13,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.channel.uring.IoUring
 import io.netty.channel.uring.IoUringIoHandler
 import io.netty.channel.uring.IoUringServerSocketChannel
-import kotlin.reflect.KClass
 
 interface IoConfigurationProvider {
     operator fun invoke(): IoConfiguration
@@ -25,30 +24,30 @@ class SystemDependentIoConfigurationProvider : IoConfigurationProvider {
             // Prioritize io_uring over epoll
             IoUring.isAvailable() -> DefaultIoConfiguration(
                 ioHandlerFactory = IoUringIoHandler.newFactory(),
-                serverSocketChannel = IoUringServerSocketChannel::class,
+                serverSocketChannel = IoUringServerSocketChannel::class.java,
             )
             KQueue.isAvailable() -> DefaultIoConfiguration(
                 ioHandlerFactory = KQueueIoHandler.newFactory(),
-                serverSocketChannel = KQueueServerSocketChannel::class,
+                serverSocketChannel = KQueueServerSocketChannel::class.java,
             )
             Epoll.isAvailable() -> DefaultIoConfiguration(
                 ioHandlerFactory = EpollIoHandler.newFactory(),
-                serverSocketChannel = EpollServerSocketChannel::class,
+                serverSocketChannel = EpollServerSocketChannel::class.java,
             )
             // Default to NIO
             else -> DefaultIoConfiguration(
                 ioHandlerFactory = NioIoHandler.newFactory(),
-                serverSocketChannel = NioServerSocketChannel::class,
+                serverSocketChannel = NioServerSocketChannel::class.java,
             )
         }
 }
 
 interface IoConfiguration {
     val ioHandlerFactory: IoHandlerFactory
-    val serverSocketChannel: KClass<out ServerSocketChannel>
+    val serverSocketChannel: Class<out ServerSocketChannel>
 }
 
 private data class DefaultIoConfiguration(
     override val ioHandlerFactory: IoHandlerFactory,
-    override val serverSocketChannel: KClass<out ServerSocketChannel>,
+    override val serverSocketChannel: Class<out ServerSocketChannel>,
 ) : IoConfiguration
