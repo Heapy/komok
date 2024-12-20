@@ -1,5 +1,6 @@
 package io.heapy.komok.business.login
 
+import io.heapy.komok.infra.jwt.JwtService
 import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.request.receive
 import io.ktor.server.routing.*

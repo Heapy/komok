@@ -1,6 +1,6 @@
 package io.heapy.komok.infra.http.server
 
-import io.heapy.komok.business.login.JwtModule
+import io.heapy.komok.infra.jwt.JwtModule
 import io.heapy.komok.metrics.MetricsModule
 import io.heapy.komok.server.common.KomokServerFeatures
 import io.heapy.komok.tech.di.lib.Module

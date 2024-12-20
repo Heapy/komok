@@ -1,11 +1,12 @@
-package io.heapy.komok.business.login
+package io.heapy.komok.infra.jwt
 
 import io.heapy.komok.KomokBaseTest
 import io.heapy.komok.TestTimeSource
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.User
+import io.heapy.komok.business.login.JwtConfiguration
 import io.heapy.komok.tech.config.buildMockKomokConfiguration
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.assertThrows
 import java.time.Instant
 import kotlin.time.Duration.Companion.minutes
@@ -48,7 +49,7 @@ class JwtServiceTest : KomokBaseTest {
             User(id = "1"),
         )
 
-        assertEquals(
+        Assertions.assertEquals(
             "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdWRpZW5jZSIsImlzcyI6Imlzc3VlciIsImlkIjoiMSIsImV4cCI6MTcyMDE1OTcyOH0.8cFIbUkrFEDTMEstyUKzMM_Knlictchm1ejqQOwZrAGgyOPuSVx5rJ-IZb7QI1aLBHBRrfVJP_oQ_6TU2_EYFw",
             token,
         )
@@ -81,7 +82,7 @@ class JwtServiceTest : KomokBaseTest {
             module.jwtService
         }
 
-        assertEquals(
+        Assertions.assertEquals(
             "Secret must be at least 128 characters long",
             exception.message,
         )
