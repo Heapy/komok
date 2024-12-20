@@ -1,4 +1,4 @@
-package io.heapy.komok
+package io.heapy.komok.infra.time
 
 import java.time.Clock
 import java.time.Instant
@@ -20,7 +20,7 @@ interface TimeSource {
     fun offsetTime(): OffsetTime
 }
 
-fun TimeContext(
+fun TimeSource(
     clock: Clock,
 ): TimeSource =
     DefaultTimeSource(

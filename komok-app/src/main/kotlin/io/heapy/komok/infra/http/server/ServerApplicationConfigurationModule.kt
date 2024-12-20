@@ -22,7 +22,7 @@ open class ServerApplicationConfigurationModule(
     }
 
     open val defaultFeature by lazy {
-        DefaultFeature(jwtModule.config)
+        DefaultFeature(jwtModule.jwtConfiguration)
     }
 
     open val callLoggingFeature by lazy {

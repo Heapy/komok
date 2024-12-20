@@ -1,5 +1,6 @@
 package io.heapy.komok
 
+import io.heapy.komok.infra.time.TimeSource
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -14,8 +15,8 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 class TestTimeSource(
-    private var advanceBy: Duration = 1.seconds,
-    var initial: Instant = Instant.now(),
+    private val advanceBy: Duration = 1.seconds,
+    val initial: Instant = Instant.now(),
 ) : TimeSource {
     private var current: Instant = initial
     private var _calls: Int = 0
@@ -28,7 +29,7 @@ class TestTimeSource(
             instant,
             ZoneId.systemDefault(),
         )
-        return TimeContext(clock)
+        return TimeSource(clock)
     }
 
     val calls: Int

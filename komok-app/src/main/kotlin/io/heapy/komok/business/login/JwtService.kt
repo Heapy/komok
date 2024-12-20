@@ -2,14 +2,14 @@ package io.heapy.komok.business.login
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import io.heapy.komok.TimeSourceContext
+import io.heapy.komok.infra.time.TimeSource
 import io.heapy.komok.auth.common.User
+import io.heapy.komok.infra.time.TimeSourceModule
 import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
 import java.time.temporal.ChronoUnit
 
 interface JwtService {
-    context(TimeSourceContext)
     fun createToken(
         user: User,
     ): String
@@ -17,8 +17,8 @@ interface JwtService {
 
 private class DefaultJwtService(
     private val jwtConfiguration: JwtConfiguration,
+    private val timeSource: TimeSource,
 ) : JwtService {
-    context(TimeSourceContext)
     override fun createToken(
         user: User,
     ): String {
@@ -45,8 +45,9 @@ private class DefaultJwtService(
 @Module
 open class JwtModule(
     private val configurationModule: ConfigurationModule,
+    private val timeSourceModule: TimeSourceModule,
 ) {
-    open val config: JwtConfiguration by lazy {
+    open val jwtConfiguration: JwtConfiguration by lazy {
         configurationModule
             .config
             .read(
@@ -62,7 +63,8 @@ open class JwtModule(
 
     open val jwtService: JwtService by lazy {
         DefaultJwtService(
-            jwtConfiguration = config,
+            jwtConfiguration = jwtConfiguration,
+            timeSource = timeSourceModule.timeSource,
         )
     }
 }

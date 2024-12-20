@@ -1,7 +1,7 @@
 package io.heapy.komok.business.login
 
 import io.heapy.komok.KomokBaseTest
-import io.heapy.komok.TestTimeSourceContext
+import io.heapy.komok.TestTimeSource
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.User
 import io.heapy.komok.tech.config.buildMockKomokConfiguration
@@ -11,9 +11,9 @@ import java.time.Instant
 import kotlin.time.Duration.Companion.minutes
 
 class JwtServiceTest : KomokBaseTest {
-    context(TestTimeSourceContext)
     @UnitTest
     fun `jwt token generated using configuration`() {
+        val timeSource = TestTimeSource()
         val mockConfig = {
             buildMockKomokConfiguration {
                 add(
@@ -30,6 +30,11 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val module = createJwtModule {
+            timeSourceModule {
+                timeSource {
+                    timeSource
+                }
+            }
             configurationModule {
                 config(mockConfig)
             }
