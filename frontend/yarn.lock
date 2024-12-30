@@ -701,10 +701,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bulma@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "bulma@npm:1.0.2"
-  checksum: 10c0/294c28a445366074431c56624eea05cdb156537064c2af75002ef8d49bcb336c451fbb4ce81337cf085228247f81b27df418dd5290d6b6276c1aaa40ad4bbf64
+"bulma@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "bulma@npm:1.0.3"
+  checksum: 10c0/4720af6ea0a59694344b8a75d02aac16e18c0e92427129496b140a6a886a709b0c15980ebf91e1230f61009c6ca8c950ca65363487b7fdac381c77d119f49ed4
   languageName: node
   linkType: hard
 
@@ -1584,7 +1584,7 @@ __metadata:
     "@types/node": "npm:^22.10.2"
     "@types/react": "npm:^19.0.2"
     "@types/react-dom": "npm:^19.0.2"
-    bulma: "npm:^1.0.2"
+    bulma: "npm:^1.0.3"
     compression-webpack-plugin: "npm:^11.1.0"
     css-loader: "npm:^7.1.2"
     html-webpack-plugin: "npm:^5.6.3"
