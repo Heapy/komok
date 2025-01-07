@@ -59,7 +59,7 @@ class MutableBean<V> internal constructor(
         mockFn: () -> V,
     ): V {
         if (isInitialized) {
-            error("Bean $name is already initialized, mocking will replace the value")
+            error("Bean $name is already initialized with value $_value")
         } else {
             val result = measureTimedValue(mockFn)
             log.info("Mocking bean {} took {}", name, result.duration)
@@ -74,17 +74,19 @@ class MutableBean<V> internal constructor(
      */
     fun setValue(value: V) {
         if (isInitialized) {
-            error("Bean $name is already initialized, setting the value will replace the value")
+            error("Bean $name is already initialized with value $_value")
         } else {
             log.info("Setting new value to bean $name")
             _value = value
         }
     }
 
-    override fun toString(): String = if (isInitialized) {
-        value.toString()
-    } else {
-        "MutableBean $name value not initialized yet."
+    override fun toString(): String {
+        return if (isInitialized) {
+            value.toString()
+        } else {
+            "MutableBean $name value not initialized yet."
+        }
     }
 
     private companion object : Logger()
