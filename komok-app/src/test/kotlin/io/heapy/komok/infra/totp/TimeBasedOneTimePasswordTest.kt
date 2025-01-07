@@ -21,7 +21,7 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159128),
         )
 
-        val totp = module.timeBasedOneTimePassword
+        val totp = module.timeBasedOneTimePasswordService
             .generate("JBSWY3DPEHPK3PXP")
 
         assertEquals(
@@ -45,10 +45,10 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159128),
         )
 
-        val decision1 = module.timeBasedOneTimePassword
+        val decision1 = module.timeBasedOneTimePasswordService
             .validate(
                 secret = "JBSWY3DPEHPK3PXP",
-                otp = "476288",
+                totp = "476288",
             )
 
         assertTrue(decision1)
@@ -57,10 +57,10 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159158),
         )
 
-        val decision2 = module.timeBasedOneTimePassword
+        val decision2 = module.timeBasedOneTimePasswordService
             .validate(
                 secret = "JBSWY3DPEHPK3PXP",
-                otp = "476288",
+                totp = "476288",
             )
 
         assertFalse(decision2)

@@ -1,4 +1,4 @@
-package io.heapy.komok.business.user.argon2
+package io.heapy.komok.infra.argon2
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue

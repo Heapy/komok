@@ -1,14 +1,14 @@
-package io.heapy.komok.business.user.session
+package io.heapy.komok.infra.session_token
 
 import java.security.SecureRandom
 
-interface SessionTokenGenerator {
+interface SessionTokenService {
     fun generate(): String
 }
 
-class SecureRandomSessionTokenGenerator(
+class SecureRandomSessionTokenService(
     private val random: SecureRandom,
-) : SessionTokenGenerator {
+) : SessionTokenService {
     override fun generate(): String {
         return buildString(SESSION_TOKEN_LENGTH) {
             repeat(SESSION_TOKEN_LENGTH) {

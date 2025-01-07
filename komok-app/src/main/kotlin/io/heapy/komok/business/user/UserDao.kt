@@ -15,7 +15,7 @@ class UserDao(
      */
     suspend fun insertUser(
         email: String,
-        password: String,
+        hash: String,
     ): String {
         val objectId = ObjectId()
         database.getCollection<User>(User.COLLECTION)
@@ -23,7 +23,7 @@ class UserDao(
                 User(
                     id = objectId,
                     email = email,
-                    password = password,
+                    hash = hash,
                     authenticatorKey = "",
                 )
             )

@@ -1,4 +1,4 @@
-package io.heapy.komok.business.user.argon2
+package io.heapy.komok.infra.argon2
 
 import io.heapy.komok.tech.di.lib.Module
 import kotlinx.serialization.json.Json

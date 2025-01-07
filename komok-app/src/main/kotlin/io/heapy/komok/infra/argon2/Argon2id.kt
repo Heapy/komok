@@ -1,4 +1,4 @@
-package io.heapy.komok.business.user.argon2
+package io.heapy.komok.infra.argon2
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -11,20 +11,13 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 interface PasswordHasher {
-    fun hash(password: String): String
+    fun hash(
+        password: String,
+    ): String
     fun verify(
         password: String,
         hash: String,
     ): Boolean
-}
-
-fun main() {
-    val hasher = createPasswordHasherModule {}
-        .passwordHasher
-
-    val hash = hasher.hash("password")
-
-    println(hash)
 }
 
 @OptIn(ExperimentalEncodingApi::class)

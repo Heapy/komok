@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.heapy.komok.infra.time.TimeSource
 import io.heapy.komok.auth.common.User
-import io.heapy.komok.business.login.JwtConfiguration
 import java.time.temporal.ChronoUnit
 
 interface JwtService {

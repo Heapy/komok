@@ -7,7 +7,7 @@ object MongoV1 {
     data class User(
         @BsonId val id: ObjectId,
         val email: String,
-        val password: String,
+        val hash: String,
         val authenticatorKey: String,
     ) {
         companion object {
@@ -21,6 +21,7 @@ object MongoV1 {
         val expiration: Long,
         val ip: String,
         val device: String,
+        val token: String,
     ) {
         companion object {
             const val COLLECTION = "session"

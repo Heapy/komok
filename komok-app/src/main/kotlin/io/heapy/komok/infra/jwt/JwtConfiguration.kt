@@ -1,4 +1,4 @@
-package io.heapy.komok.business.login
+package io.heapy.komok.infra.jwt
 
 import kotlinx.serialization.Serializable
 import kotlin.time.Duration

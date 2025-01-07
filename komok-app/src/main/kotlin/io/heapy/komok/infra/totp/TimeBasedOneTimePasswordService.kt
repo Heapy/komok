@@ -8,7 +8,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import kotlin.math.pow
 
-class TimeBasedOneTimePassword(
+class TimeBasedOneTimePasswordService(
     private val base32: Base32,
     private val timeSource: TimeSource,
 ) {
@@ -53,11 +53,11 @@ class TimeBasedOneTimePassword(
 
     fun validate(
         secret: String,
-        otp: String,
+        totp: String,
     ): Boolean {
         val calculatedOtp = generate(secret)
 
-        return calculatedOtp == otp
+        return calculatedOtp == totp
     }
 
     private companion object {

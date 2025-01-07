@@ -9,8 +9,8 @@ open class TimeBasedOneTimePasswordModule(
     private val base32Module: Base32Module,
     private val timeSourceModule: TimeSourceModule,
 ) {
-    open val timeBasedOneTimePassword by lazy {
-        TimeBasedOneTimePassword(
+    open val timeBasedOneTimePasswordService by lazy {
+        TimeBasedOneTimePasswordService(
             base32 = base32Module.base32,
             timeSource = timeSourceModule.timeSource,
         )

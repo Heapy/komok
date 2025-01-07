@@ -2,7 +2,10 @@ package io.heapy.komok.infra.http.server
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import io.heapy.komok.business.login.JwtConfiguration
+import io.heapy.komok.infra.http.server.errors.AuthenticationException
+import io.heapy.komok.infra.http.server.errors.AuthorizationException
+import io.heapy.komok.infra.http.server.errors.BadRequestException
+import io.heapy.komok.infra.jwt.JwtConfiguration
 import io.heapy.komok.server.common.KomokServerFeature
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -12,11 +15,9 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.resources.Resources
 import io.ktor.server.response.*
-import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.days
 
 class DefaultFeature(
@@ -36,10 +37,6 @@ fun Application.defaults(
         json()
     }
 
-    install(DefaultHeaders) {
-        header("X-Application", "komok")
-    }
-
     install(CachingHeaders) {
         options { _, outgoingContent ->
             when (outgoingContent.contentType?.withoutParameters()) {
@@ -57,14 +54,14 @@ fun Application.defaults(
     }
 
     install(StatusPages) {
-        exception<AuthenticationException> { call, _ ->
-            call.respond(HttpStatusCode.Unauthorized)
+        exception<AuthenticationException> { call, cause ->
+            call.respond(HttpStatusCode.Unauthorized, cause.response)
         }
-        exception<AuthorizationException> { call, _ ->
-            call.respond(HttpStatusCode.Forbidden)
+        exception<AuthorizationException> { call, cause ->
+            call.respond(HttpStatusCode.Forbidden, cause.response)
         }
-        exception<ConstraintViolationException> { call, cause ->
-            call.respond(HttpStatusCode.BadRequest, cause.fields)
+        exception<BadRequestException> { call, cause ->
+            call.respond(HttpStatusCode.BadRequest, cause.response)
         }
     }
 
@@ -88,17 +85,3 @@ fun Application.defaults(
         }
     }
 }
-
-class AuthenticationException : RuntimeException()
-
-class AuthorizationException : RuntimeException()
-
-class ConstraintViolationException(
-    val fields: List<ConstraintViolationFields>,
-) : RuntimeException()
-
-@Serializable
-data class ConstraintViolationFields(
-    val message: String,
-    val fields: List<String>,
-)
