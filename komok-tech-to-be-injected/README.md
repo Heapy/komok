@@ -19,7 +19,7 @@ Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.9")
+    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.10")
 }
 ```
 
