@@ -43,7 +43,11 @@ val modules: Map<String, Map<String, String>> = mapOf(
     "komok-tech-to-be-injected" to mapOf(
         "publishName" to "Komok Tech To Be Injected",
         "publishDescription" to "Library for dependency injection in Kotlin",
-    )
+    ),
+    "komok-tech-time" to mapOf(
+        "publishName" to "Komok Tech Time",
+        "publishDescription" to "Library for working with time",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")

@@ -182,3 +182,30 @@ Good examples of context:
 - userContext (who is current user in request scope)
 - transactionContext (current transaction running)
 
+#### Approach 4: Add copy functions to modules
+
+In test, be able to create a deep copy of modules, but be able to replace a single bean:
+
+```kotlin
+@Test
+fun `updateName should update user name`(
+    applicationModuleFlatten: ApplicationModuleFlatten,
+) {
+    val timeSource = TestTimeSource()
+    val userDao = applicationModuleFlatten.daoModule.copy(
+        timeSource = timeSource,
+    ).userDao
+
+    userDao.updateName("new name")
+
+    timeSource.resetTime()
+
+    assertEquals(
+        User(
+            name = "new name",
+            lastUpdated = timeSource.currentTime()
+        ),
+        userDao.getUser()
+    )
+}
+```

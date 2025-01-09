@@ -1,4 +1,4 @@
-package io.heapy.komok.infra.time
+package io.heapy.komok.tech.time
 
 import java.time.Clock
 import java.time.Instant

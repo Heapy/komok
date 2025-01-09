@@ -1,6 +1,5 @@
-package io.heapy.komok
+package io.heapy.komok.tech.time
 
-import io.heapy.komok.infra.time.TimeSource
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate

@@ -1,0 +1,45 @@
+public class io/heapy/komok/tech/config/ConfigurationModule {
+	public fun <init> (Lio/heapy/komok/tech/config/dotenv/DotenvModule;)V
+	public fun getConfig ()Lio/heapy/komok/tech/config/KomokConfiguration;
+	public fun getEffectiveEnvironment ()Ljava/util/Map;
+	public fun getEnvironmentOverrides ()Ljava/util/Map;
+	public fun getHoconConfig ()Lcom/typesafe/config/Config;
+	public fun getSystemEnvironment ()Ljava/util/Map;
+}
+
+public final class io/heapy/komok/tech/config/ConfigurationModuleBuilder {
+	public fun <init> (Lio/heapy/komok/tech/config/dotenv/DotenvModuleBuilder;)V
+	public final fun build ()Lio/heapy/komok/tech/config/ConfigurationModule;
+	public final fun config (Lkotlin/jvm/functions/Function0;)V
+	public final fun dotenvModule (Lkotlin/jvm/functions/Function1;)V
+	public final fun effectiveEnvironment (Lkotlin/jvm/functions/Function0;)V
+	public final fun environmentOverrides (Lkotlin/jvm/functions/Function0;)V
+	public final fun getDotenvModule ()Lio/heapy/komok/tech/config/dotenv/DotenvModuleBuilder;
+	public final fun hoconConfig (Lkotlin/jvm/functions/Function0;)V
+	public final fun systemEnvironment (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/heapy/komok/tech/config/ConfigurationModuleFactoryKt {
+	public static final fun createConfigurationModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/ConfigurationModule;
+	public static final fun createFlattenConfigurationModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/ConfigurationModuleFlatten;
+}
+
+public final class io/heapy/komok/tech/config/ConfigurationModuleFlatten {
+	public fun <init> (Lio/heapy/komok/tech/config/dotenv/DotenvModule;Lio/heapy/komok/tech/config/ConfigurationModule;)V
+	public final fun getConfigurationModule ()Lio/heapy/komok/tech/config/ConfigurationModule;
+	public final fun getDotenvModule ()Lio/heapy/komok/tech/config/dotenv/DotenvModule;
+}
+
+public final class io/heapy/komok/tech/config/HoconKomokConfigurationKt {
+	public static final fun buildMockKomokConfiguration (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/KomokConfiguration;
+}
+
+public abstract interface class io/heapy/komok/tech/config/KomokConfiguration {
+	public abstract fun read (Lkotlinx/serialization/DeserializationStrategy;Ljava/lang/String;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/config/MockKomokConfigurationBuilder {
+	public fun <init> ()V
+	public final fun add (Lkotlinx/serialization/DeserializationStrategy;Ljava/lang/Object;)V
+}
+

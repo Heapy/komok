@@ -1,10 +1,10 @@
 package io.heapy.komok.infra.jwt
 
 import io.heapy.komok.KomokBaseTest
-import io.heapy.komok.TestTimeSource
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.User
 import io.heapy.komok.tech.config.buildMockKomokConfiguration
+import io.heapy.komok.tech.time.TestTimeSource
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.assertThrows
 import java.time.Instant

@@ -1,8 +1,8 @@
 package io.heapy.komok.infra.jwt
 
-import io.heapy.komok.infra.time.TimeSourceModule
 import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.time.TimeSourceModule
 
 @Module
 open class JwtModule(

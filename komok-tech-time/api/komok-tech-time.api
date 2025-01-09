@@ -1,0 +1,36 @@
+public abstract interface class io/heapy/komok/tech/time/TimeSource {
+	public abstract fun getClock ()Ljava/time/Clock;
+	public abstract fun instant ()Ljava/time/Instant;
+	public abstract fun localDate ()Ljava/time/LocalDate;
+	public abstract fun localDateTime ()Ljava/time/LocalDateTime;
+	public abstract fun localTime ()Ljava/time/LocalTime;
+	public abstract fun offsetDateTime ()Ljava/time/OffsetDateTime;
+	public abstract fun offsetTime ()Ljava/time/OffsetTime;
+	public abstract fun zonedDateTime ()Ljava/time/ZonedDateTime;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceKt {
+	public static final fun TimeSource (Ljava/time/Clock;)Lio/heapy/komok/tech/time/TimeSource;
+}
+
+public class io/heapy/komok/tech/time/TimeSourceModule {
+	public fun <init> ()V
+	public fun getTimeSource ()Lio/heapy/komok/tech/time/TimeSource;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/time/TimeSourceModule;
+	public final fun timeSource (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleFactoryKt {
+	public static final fun createFlattenTimeSourceModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModuleFlatten;
+	public static final fun createTimeSourceModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModule;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleFlatten {
+	public fun <init> (Lio/heapy/komok/tech/time/TimeSourceModule;)V
+	public final fun getTimeSourceModule ()Lio/heapy/komok/tech/time/TimeSourceModule;
+}
+

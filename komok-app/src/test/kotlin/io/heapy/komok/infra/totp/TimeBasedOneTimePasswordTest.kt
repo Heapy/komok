@@ -1,7 +1,7 @@
 package io.heapy.komok.infra.totp
 
-import io.heapy.komok.TestTimeSource
 import io.heapy.komok.UnitTest
+import io.heapy.komok.tech.time.TestTimeSource
 import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 

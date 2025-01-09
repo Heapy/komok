@@ -1,8 +1,8 @@
 package io.heapy.komok.infra.totp
 
 import io.heapy.komok.infra.base32.Base32Module
-import io.heapy.komok.infra.time.TimeSourceModule
 import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.time.TimeSourceModule
 
 @Module
 open class TimeBasedOneTimePasswordModule(

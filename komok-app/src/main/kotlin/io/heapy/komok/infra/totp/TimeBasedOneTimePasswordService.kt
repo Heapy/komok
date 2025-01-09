@@ -1,7 +1,7 @@
 package io.heapy.komok.infra.totp
 
-import io.heapy.komok.infra.time.TimeSource
 import io.heapy.komok.infra.base32.Base32
+import io.heapy.komok.tech.time.TimeSource
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import javax.crypto.Mac
@@ -28,8 +28,8 @@ class TimeBasedOneTimePasswordService(
         mac.init(
             SecretKeySpec(
                 key,
-                HMAC_ALGO
-            )
+                HMAC_ALGO,
+            ),
         )
 
         val hmac = mac.doFinal(data)
@@ -40,14 +40,15 @@ class TimeBasedOneTimePasswordService(
               (hmac[offset + 2].toInt() and 0xff shl 8) or
               (hmac[offset + 3].toInt() and 0xff)
 
-        val otp = binary % 10.0.pow(TOTP_DIGITS.toDouble())
+        val otp = binary % 10.0
+            .pow(TOTP_DIGITS.toDouble())
             .toInt()
 
         return otp
             .toString()
             .padStart(
                 TOTP_DIGITS,
-                '0'
+                '0',
             )
     }
 

@@ -54,6 +54,7 @@ dependencies {
     implementation(projects.komokTechConfig)
     implementation(projects.komokTechConfigDotenv)
     implementation(projects.komokTechLogging)
+    implementation(projects.komokTechTime)
     implementation(projects.komokDaoMg)
     implementation(projects.komokServerCommon)
 
@@ -87,6 +88,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)
+    testImplementation(testFixtures(projects.komokTechTime))
     runtimeOnly(libs.junit.platform.launcher)
 }
 
