@@ -7,6 +7,7 @@ komok = "1.0.11"
 kotlin = "2.1.10"
 kotlinpoet = "2.1.0"
 kotlinx-coroutines = "1.10.1"
+kotlinx-html = "0.12.0"
 kotlinx-serialization = "1.8.0"
 ksp = "2.1.10-1.0.31"
 ktor = "3.1.1"
@@ -31,6 +32,8 @@ kotlin-poet = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoe
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
+kotlinx-html = { module = "org.jetbrains.kotlinx:kotlinx-html", version.ref = "kotlinx-html" }
+
 kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
@@ -39,6 +42,7 @@ ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = 
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
 ktor-server-resources = { group = "io.ktor", name = "ktor-server-resources", version.ref = "ktor" }
 ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }

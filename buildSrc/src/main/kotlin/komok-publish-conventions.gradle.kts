@@ -48,6 +48,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Time",
         "publishDescription" to "Library for working with time",
     ),
+    "komok-tech-ktor-htmx" to mapOf(
+        "publishName" to "Komok Tech Ktor HTMX",
+        "publishDescription" to "HTMX support for Ktor",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")
