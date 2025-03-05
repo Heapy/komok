@@ -19,7 +19,7 @@ Add the following to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.11")
+    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.12")
 }
 ```
 
@@ -135,3 +135,7 @@ class UserServiceTest {
     }
 }
 ```
+
+## License
+
+This project is licensed under the Apache License 2.0 – see the [LICENSE-Apache2](../LICENSE-Apache2) file for details.
