@@ -211,7 +211,7 @@ fun CommonAttributeGroupFacade.hxPreserve() {
  * Adds JavaScript event handlers for htmx events
  */
 fun CommonAttributeGroupFacade.hxOn(event: String, script: String) {
-    htmx("$HtmxAttributes.HX_ON:$event", script)
+    htmx("${HtmxAttributes.HX_ON}::$event", script)
 }
 
 // Convenience extensions for common trigger options

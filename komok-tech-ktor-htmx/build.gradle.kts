@@ -12,6 +12,7 @@ dependencies {
     api(libs.ktor.server.core)
     api(libs.kotlinx.html)
 
+    testImplementation(libs.ktor.server.cio)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)

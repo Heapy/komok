@@ -235,6 +235,7 @@ public final class io/heapy/komok/tech/ktor/htmx/SwapBuilder {
 }
 
 public final class io/heapy/komok/tech/ktor/htmx/TemplatingKt {
+	public static final fun doNotRenderCurrentTag (Lkotlinx/html/HTMLTag;)V
 	public static final fun renderBodyComponent (ZLkotlin/jvm/functions/Function1;)Ljava/lang/String;
 	public static synthetic fun renderBodyComponent$default (ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun renderHtmlComponent (ZLkotlin/jvm/functions/Function1;)Ljava/lang/String;

@@ -209,29 +209,37 @@ fun Application.configureRouting() {
 
 ## Complete Example: Todo Application
 
+[![Komok-Tech-Ktor-Htmx Demo](https://img.youtube.com/vi/fTy5tuPeG4Q/0.jpg)](https://youtu.be/fTy5tuPeG4Q)
+
 Here's a more complete example of a simple Todo application using Ktor and HTMX:
 
 ```kotlin
-import io.heapy.komok.tech.ktor.htmx.*
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.routing.*
-import io.ktor.http.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import kotlinx.html.*
 
-data class Todo(val id: Int, var text: String, var completed: Boolean = false)
+data class Todo(
+    val id: Int,
+    var text: String,
+    var completed: Boolean = false,
+)
 
-// In-memory todo storage
+// In-memory storage
 val todos = mutableListOf(
-    Todo(1, "Learn HTMX", true),
-    Todo(2, "Build Ktor application", false)
+    Todo(
+        id = 1,
+        text = "Learn HTMX",
+        completed = true,
+    ),
+    Todo(
+        id = 2,
+        text = "Build Ktor application",
+        completed = false,
+    ),
 )
 
 fun main() {
-    embeddedServer(Netty, port = 8080) {
+    embeddedServer(
+        CIO,
+        port = 8080,
+    ) {
         routing {
             get("/") {
                 call.respondText(
@@ -249,9 +257,15 @@ fun main() {
                                 hxPost("/todos")
                                 hxTarget("#todo-list")
                                 hxSwap(HtmxAttributes.SwapValues.BEFORE_END)
-                                hxOn("htmx:afterRequest", "this.reset()")
+                                hxOn(
+                                    "after-request",
+                                    "this.reset()",
+                                )
 
-                                input(type = InputType.text, name = "todoText") {
+                                input(
+                                    type = InputType.text,
+                                    name = "todoText",
+                                ) {
                                     placeholder = "Add a new todo"
                                     required = true
                                 }
@@ -270,25 +284,32 @@ fun main() {
                             }
                         }
                     },
-                    ContentType.Text.Html
+                    ContentType.Text.Html,
                 )
             }
 
             // Create a new todo
             post("/todos") {
                 val formParameters = call.receiveParameters()
-                val todoText = formParameters["todoText"] ?: ""
+                val todoText = formParameters["todoText"]
+                    ?: ""
 
                 if (todoText.isNotBlank()) {
                     val newId = (todos.maxOfOrNull { it.id } ?: 0) + 1
-                    val newTodo = Todo(newId, todoText)
+                    val newTodo = Todo(
+                        newId,
+                        todoText,
+                    )
                     todos.add(newTodo)
 
                     call.respondText(
                         renderBodyComponent {
-                            renderTodoItem(newTodo)
+                            ul {
+                                doNotRenderTag()
+                                renderTodoItem(newTodo)
+                            }
                         },
-                        ContentType.Text.Html
+                        ContentType.Text.Html,
                     )
                 } else {
                     call.respond(HttpStatusCode.BadRequest)
@@ -305,9 +326,12 @@ fun main() {
 
                     call.respondText(
                         renderBodyComponent {
-                            renderTodoItem(todo)
+                            ul {
+                                doNotRenderTag()
+                                renderTodoItem(todo)
+                            }
                         },
-                        ContentType.Text.Html
+                        ContentType.Text.Html,
                     )
                 } else {
                     call.respond(HttpStatusCode.NotFound)
@@ -317,7 +341,8 @@ fun main() {
             // Delete a todo
             delete("/todos/{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()
-                val removed = id?.let { todoId -> todos.removeIf { it.id == todoId } } ?: false
+                val removed = id?.let { todoId -> todos.removeIf { it.id == todoId } }
+                    ?: false
 
                 if (removed) {
                     call.respond(HttpStatusCode.OK)
@@ -330,7 +355,7 @@ fun main() {
 }
 
 // Helper function to render a todo item
-fun BODY.renderTodoItem(todo: Todo) {
+fun UL.renderTodoItem(todo: Todo) {
     li {
         id = "todo-${todo.id}"
 
