@@ -10,7 +10,7 @@ import org.bson.types.ObjectId
 class MongoEntityDao(
     private val database: MongoDatabase
 ) {
-    context(UserContext)
+    context(uc: UserContext)
     suspend fun insertPost(
         title: String,
         text: String,
@@ -25,7 +25,7 @@ class MongoEntityDao(
                         "text" to text,
                         "date" to date,
                         "read_status" to readStatus,
-                        "user_id" to user.id,
+                        "user_id" to uc.user.id,
                     )
                 )
             )
@@ -40,7 +40,7 @@ class MongoEntityDao(
     /**
      * Get latest events for homepage feed.
      */
-    context(UserContext)
+    context(uc: UserContext)
     suspend fun getLatest(
         limit: Int = 100,
         offset: Int = 0,
@@ -50,7 +50,7 @@ class MongoEntityDao(
                 Document(
                     mapOf(
                         "read_status" to false,
-                        "user_id" to user.id,
+                        "user_id" to uc.user.id,
                     )
                 )
             )
@@ -69,14 +69,14 @@ class MongoEntityDao(
             }
     }
 
-    context(UserContext)
+    context(uc: UserContext)
     suspend fun markPostAsRead(postId: String): Long {
         return database.getCollection<Document>("entity")
             .updateOne(
                 Document(
                     mapOf(
                         "_id" to ObjectId(postId),
-                        "user_id" to user.id,
+                        "user_id" to uc.user.id,
                     )
                 ),
                 Document(

@@ -142,11 +142,11 @@ Instead of using DI for all dependencies, use contexts for some of them:
 
 ```kotlin
 class UserDao {
-    context(TimeSourceContext)
+    context(tsc: TimeSourceContext)
     fun updateName(
         name: String,
     ) {
-        val currentTime = timeSource.currentTime()
+        val currentTime = tsc.timeSource.currentTime()
 
         // save to db and use currentTime
     }
@@ -156,19 +156,19 @@ class UserDao {
 And in test:
 
 ```kotlin
-context(TestTimeSourceContext)
+context(tsc: TestTimeSourceContext)
 @Test
 fun `updateName should update user name`() {
     val userDao = UserDao()
 
     userDao.updateName("new name")
 
-    timeSource.resetTime()
+    tsc.timeSource.resetTime()
 
     assertEquals(
         User(
             name = "new name",
-            lastUpdated = timeSource.currentTime()
+            lastUpdated = tsc.timeSource.currentTime()
         ),
         userDao.getUser()
     )

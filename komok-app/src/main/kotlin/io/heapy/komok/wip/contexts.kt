@@ -59,7 +59,7 @@ fun main() {
     }
 }
 
-context(UserContext)
+context(uc: UserContext)
 fun testUserInfo() {
-    println("Hello, world! I'm ${user.id}!")
+    println("Hello, world! I'm ${uc.user.id}!")
 }

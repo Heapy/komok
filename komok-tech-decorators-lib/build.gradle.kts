@@ -1,18 +1,15 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.binary.compatibility.validator)
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
-kotlin {
-    jvmToolchain(21)
+dependencies {
 }
 
 tasks
@@ -25,9 +22,3 @@ tasks
             )
         }
     }
-
-dependencies {
-    implementation(libs.logback)
-    ksp(libs.komok.tech.di)
-    implementation(libs.komok.tech.di.lib)
-}
