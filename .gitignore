@@ -11,6 +11,7 @@ build/
 
 # Kotlin
 /.kotlin/
+/buildSrc/.kotlin/
 
 # Project
 komok-app/src/main/resources/application.conf
