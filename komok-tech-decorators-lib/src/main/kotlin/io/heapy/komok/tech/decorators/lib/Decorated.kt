@@ -1,4 +1,4 @@
-package io.heapy.komok.tech.decorators.ksp
+package io.heapy.komok.tech.decorators.lib
 
 import kotlin.reflect.KClass
 

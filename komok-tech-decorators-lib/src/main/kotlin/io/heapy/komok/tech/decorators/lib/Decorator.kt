@@ -1,4 +1,4 @@
-package io.heapy.komok.tech.decorators.ksp
+package io.heapy.komok.tech.decorators.lib
 
 import java.lang.reflect.Method
 
@@ -12,7 +12,7 @@ import java.lang.reflect.Method
  *
  * The Current Method type is suboptimal and will be replaced with MethodHandle.
  *
- * @see Decorated
+ * @see io.heapy.komok.tech.decorators.lib.Decorated
  */
 interface Decorator {
     /**

@@ -5,14 +5,14 @@ charset = utf-8
 insert_final_newline = true
 end_of_line = lf
 trim_trailing_whitespace = true
-max_line_length = 100
+max_line_length = 80
 tab_width = 4
 ij_continuation_indent_size = 6
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = true
 ij_smart_tabs = false
-ij_visual_guides = 80,100
+ij_visual_guides = 80
 ij_wrap_on_typing = false
 
 [*.kt]
@@ -98,4 +98,3 @@ ij_kotlin_spaces_around_unary_operator = false
 ij_kotlin_spaces_around_when_arrow = true
 ij_kotlin_variable_annotation_wrap = off
 ij_kotlin_wrap_expression_body_functions = 2
-

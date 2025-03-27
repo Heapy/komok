@@ -1,4 +1,6 @@
-package io.heapy.komok.tech.decorators.ksp
+package io.heapy.komok.tech.decorators.lib
+
+// I rather expect for this function to be present in the next Kotlin versions
 
 inline fun <C1, R> context(
     c1: C1,

@@ -1,4 +1,4 @@
-package io.heapy.komok.tech.decorators.ksp
+package io.heapy.komok.tech.decorators.lib
 
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
@@ -20,7 +20,7 @@ class DecoratorsSymbolProcessor(
     private val codeGenerator: CodeGenerator
 ) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val symbols = resolver.getSymbolsWithAnnotation(Decorated::class.qualifiedName!!)
+        val symbols = resolver.getSymbolsWithAnnotation("io.heapy.komok.tech.decorators.lib.Decorated")
         val invalidSymbols = mutableListOf<KSAnnotated>()
 
         symbols
