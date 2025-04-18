@@ -6,6 +6,7 @@ junit-platform = "1.12.2"
 komok = "1.0.12"
 kotlin = "2.1.20"
 kotlinpoet = "2.1.0"
+kotlinpoet-snapshot = "2.2.0-SNAPSHOT"
 kotlinx-coroutines = "1.10.2"
 kotlinx-html = "0.12.0"
 kotlinx-serialization = "1.8.1"
@@ -27,7 +28,8 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 komok-tech-di = { module = "io.heapy.komok:komok-tech-di", version.ref = "komok" }
 komok-tech-di-lib = { module = "io.heapy.komok:komok-tech-di-lib", version.ref = "komok" }
 
-kotlin-poet = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+kotlin-poet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+kotlin-poet-ksp-snapshot = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet-snapshot" }
 
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
