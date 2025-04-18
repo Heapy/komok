@@ -182,7 +182,11 @@ By using the AGPL-3.0, we ensure that any company using this code must
 contribute back to the community, promoting transparency and continuous
 improvement in the project.
 
-<img src=".readme/AGPLv3_Logo.svg" width="150" alt="AGPLv3 Logo">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".readme/dark-mode-AGPLv3_Logo.svg">
+  <source media="(prefers-color-scheme: light)" srcset=".readme/light-mode-AGPLv3_Logo.svg">
+  <img width="150" alt="AGPLv3 Logo" src=".readme/fallback-mode-AGPLv3_Logo.svg">
+</picture>
 
 For more detailed information on the terms and conditions of each license, please refer to the
 following links:
