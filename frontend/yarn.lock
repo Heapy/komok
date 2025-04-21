@@ -690,10 +690,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bulma@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "bulma@npm:1.0.3"
-  checksum: 10c0/4720af6ea0a59694344b8a75d02aac16e18c0e92427129496b140a6a886a709b0c15980ebf91e1230f61009c6ca8c950ca65363487b7fdac381c77d119f49ed4
+"bulma@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "bulma@npm:1.0.4"
+  checksum: 10c0/5a9bf48c6681181fce6fe06d1744272938cc81d4356314d9c4eee3ddbd1fac6ac678cb640b2fe58aec47f907ff273231b246b9cd66d1894b40c3a89a68fb3a68
   languageName: node
   linkType: hard
 
@@ -1559,7 +1559,7 @@ __metadata:
     "@types/node": "npm:^22.14.1"
     "@types/react": "npm:^19.1.2"
     "@types/react-dom": "npm:^19.1.2"
-    bulma: "npm:^1.0.3"
+    bulma: "npm:^1.0.4"
     compression-webpack-plugin: "npm:^11.1.0"
     css-loader: "npm:^7.1.2"
     html-webpack-plugin: "npm:^5.6.3"
@@ -1572,7 +1572,7 @@ __metadata:
     ts-loader: "npm:^9.5.2"
     tslib: "npm:^2.8.1"
     typescript: "npm:^5.8.3"
-    webpack: "npm:^5.99.5"
+    webpack: "npm:^5.99.6"
     webpack-cli: "npm:^6.0.1"
   languageName: unknown
   linkType: soft
@@ -2790,9 +2790,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.99.5":
-  version: 5.99.5
-  resolution: "webpack@npm:5.99.5"
+"webpack@npm:^5.99.6":
+  version: 5.99.6
+  resolution: "webpack@npm:5.99.6"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.7"
     "@types/estree": "npm:^1.0.6"
@@ -2822,7 +2822,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10c0/8f5ebea5e2ae7449774d535862348ee564c100350643e4bdd0683fa07eabc058e88a07b7af7176ee4038d03e5172001daf65c16acebf90bc7ba48c08e25e6792
+  checksum: 10c0/b8b44b16933a0dd83e185ad42f292bbdfa9c47e245cbe786c48520d681556ece9af6ea7fff33059fafdf3d2cd62674715308d70a6f15eda6c6de7e03ef01842a
   languageName: node
   linkType: hard
 
