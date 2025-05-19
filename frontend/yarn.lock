@@ -301,21 +301,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.15.17":
-  version: 22.15.17
-  resolution: "@types/node@npm:22.15.17"
+"@types/node@npm:^22.15.19":
+  version: 22.15.19
+  resolution: "@types/node@npm:22.15.19"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/fb92aa10b628683c5b965749f955bc2322485ecb0ea6c2f4cae5f2c7537a16834607e67083a9e9281faaae8d7dee9ada8d6a5c0de9a52c17d82912ef00c0fdd4
+  checksum: 10c0/8ef52fa1a91b1c8891616d46f3921a9f3c65ad1c6bb62db7899c8c28643c13bf9d607a2403b1e5aceb3e6fa6749efc9e0ba5c39618a4872da6946437b0edbfbe
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.1.4":
-  version: 19.1.4
-  resolution: "@types/react-dom@npm:19.1.4"
+"@types/react-dom@npm:^19.1.5":
+  version: 19.1.5
+  resolution: "@types/react-dom@npm:19.1.5"
   peerDependencies:
     "@types/react": ^19.0.0
-  checksum: 10c0/6ae65e7dce761c06b6cdc38221eb320ecb17b1a346f6055053d549fa07c0ddfdb8274e051e7940b5769f2591c982001ebd5d8dc3e0738418d262021ef15c09fd
+  checksum: 10c0/2a29e77cf6bb6e9f57bcfa54509c216cad2e16e244f0bd56369966ec88c072b9c91f6011d14f9e18fbfe2b801b18b86f616de75e5c8aef0be73c1f74abb33b49
   languageName: node
   linkType: hard
 
@@ -1556,9 +1556,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^22.15.17"
+    "@types/node": "npm:^22.15.19"
     "@types/react": "npm:^19.1.4"
-    "@types/react-dom": "npm:^19.1.4"
+    "@types/react-dom": "npm:^19.1.5"
     bulma: "npm:^1.0.4"
     compression-webpack-plugin: "npm:^11.1.0"
     css-loader: "npm:^7.1.2"
@@ -1566,7 +1566,7 @@ __metadata:
     mini-css-extract-plugin: "npm:^2.9.2"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    sass: "npm:^1.88.0"
+    sass: "npm:^1.89.0"
     sass-loader: "npm:^16.0.5"
     style-loader: "npm:^4.0.0"
     ts-loader: "npm:^9.5.2"
@@ -2275,9 +2275,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.88.0":
-  version: 1.88.0
-  resolution: "sass@npm:1.88.0"
+"sass@npm:^1.89.0":
+  version: 1.89.0
+  resolution: "sass@npm:1.89.0"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -2288,7 +2288,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/dcb16dc29116bfa5a90485d24fd8020d2b0d95155bd2e31285901588729343b59fefe44365c5f146b2ba5a9ebadef90b23a7220b902507bdbd91ca2ba0a0b688
+  checksum: 10c0/8e31b48c5e0abd9d437edb201919a82863f605ace1c1536ccdc6b3133937a70fe29b92ad536af632ecae2f140733931e4ec971e1bfbf8b835c54d392b28331df
   languageName: node
   linkType: hard
 
