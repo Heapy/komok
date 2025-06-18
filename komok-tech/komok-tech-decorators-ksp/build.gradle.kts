@@ -10,5 +10,5 @@ repositories {
 dependencies {
     implementation(libs.kotlin.poet.ksp.snapshot)
     implementation(libs.ksp)
-    implementation(projects.komokTechDecoratorsLib)
+    implementation(projects.komokTech.komokTechDecoratorsLib)
 }

@@ -47,17 +47,17 @@ tasks.distZip {
 
 dependencies {
     implementation(projects.komokAuthCommon)
-    implementation(projects.komokTechConfig)
-    implementation(projects.komokTechConfigDotenv)
-    implementation(projects.komokTechLogging)
-    implementation(projects.komokTechTime)
+    implementation(projects.komokTech.komokTechConfig)
+    implementation(projects.komokTech.komokTechConfigDotenv)
+    implementation(projects.komokTech.komokTechLogging)
+    implementation(projects.komokTech.komokTechTime)
     implementation(projects.komokDaoMg)
     implementation(projects.komokServerCommon)
 
     implementation(libs.bouncycastle.bcpkix)
 
-    ksp(projects.komokTechDi)
-    implementation(projects.komokTechDiLib)
+    ksp(projects.komokTech.komokTechDi)
+    implementation(projects.komokTech.komokTechDiLib)
 
     implementation(libs.kotlinx.coroutines.jdk8)
     implementation(libs.kotlinx.serialization.json)
@@ -84,7 +84,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.junit.jupiter)
-    testImplementation(testFixtures(projects.komokTechTime))
+    testImplementation(testFixtures(projects.komokTech.komokTechTime))
     runtimeOnly(libs.junit.platform.launcher)
 }
 

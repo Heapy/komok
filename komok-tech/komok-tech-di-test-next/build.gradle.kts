@@ -9,8 +9,9 @@ repositories {
 
 dependencies {
     implementation(libs.logback)
-    ksp(projects.komokTechDi)
-    implementation(projects.komokTechDiLib)
+    ksp(projects.komokTech.komokTechDi)
+    implementation(projects.komokTech.komokTechDiTest)
+    implementation(projects.komokTech.komokTechDiLib)
 
     implementation(libs.junit.jupiter)
     runtimeOnly(libs.junit.platform.launcher)

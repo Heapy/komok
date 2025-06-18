@@ -30,9 +30,9 @@ tasks.test {
 }
 
 dependencies {
-    implementation(projects.komokTechConfig)
-    ksp(projects.komokTechDi)
-    implementation(projects.komokTechDiLib)
+    implementation(projects.komokTech.komokTechConfig)
+    ksp(projects.komokTech.komokTechDi)
+    implementation(projects.komokTech.komokTechDiLib)
 
     implementation(libs.kotlinx.coroutines.jdk8)
     implementation(libs.kotlinx.serialization.json)

@@ -11,6 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation(projects.komokTechDiLib)
-    ksp(projects.komokTechDi)
+    implementation(projects.komokTech.komokTechDiLib)
+    ksp(projects.komokTech.komokTechDi)
 }

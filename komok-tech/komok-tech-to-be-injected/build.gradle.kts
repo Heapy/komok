@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(projects.komok.komokTechLogging)
+    implementation(projects.komokTech.komokTechLogging)
 
     testImplementation(libs.mockk)
     testImplementation(libs.logback)
