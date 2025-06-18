@@ -1,6 +1,18 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "komok"
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        create("ktorLibs") {
+            from("io.ktor:ktor-version-catalog:3.2.0")
+        }
+    }
+}
+
 include("komok-app")
 include("komok-auth-common")
 include("komok-dao-mg")
