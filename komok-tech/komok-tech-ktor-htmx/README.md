@@ -20,7 +20,7 @@ This library offers a comprehensive set of Kotlin extensions for working with HT
 Add the library to your project's dependencies:
 
 ```kotlin
-implementation("io.heapy.komok:komok-tech-ktor-htmx:1.0.12")
+implementation("io.heapy.komok:komok-tech-ktor-htmx:1.0.13")
 ```
 
 ## Usage
