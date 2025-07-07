@@ -5,7 +5,7 @@ import org.bson.types.ObjectId
 
 object MongoV1 {
     data class User(
-        @BsonId val id: ObjectId,
+        @param:BsonId val id: ObjectId,
         val email: String,
         val hash: String,
         val authenticatorKey: String,
@@ -16,7 +16,7 @@ object MongoV1 {
     }
 
     data class Session(
-        @BsonId val id: ObjectId,
+        @param:BsonId val id: ObjectId,
         val userId: ObjectId,
         val expiration: Long,
         val ip: String,
