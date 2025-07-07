@@ -1,6 +1,7 @@
 package io.heapy.komok.wip
 
 import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -28,6 +29,7 @@ fun <T> Map<String, String>.toObject(deserializer: DeserializationStrategy<T>): 
     return deserializer.deserialize(decoder)
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 class MapDecoder(
     private val map: Map<String, String>,
     private val descriptor: SerialDescriptor,
