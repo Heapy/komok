@@ -1,0 +1,15 @@
+public final class io/heapy/komok/tech/decorators/plugins/logging/DecoratorsKt {
+	public static final fun log0 (Lorg/slf4j/Logger;Lkotlin/reflect/KCallable;Lio/heapy/komok/tech/decorators/plugins/logging/annotations/Log;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public static final fun log1 (Lorg/slf4j/Logger;Lkotlin/reflect/KCallable;Lio/heapy/komok/tech/decorators/plugins/logging/annotations/Log;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun log2 (Lorg/slf4j/Logger;Lkotlin/reflect/KFunction;Lio/heapy/komok/tech/decorators/plugins/logging/annotations/Log;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static final fun runAndLog (Lorg/slf4j/Logger;Lio/heapy/komok/tech/decorators/plugins/logging/annotations/Log;Ljava/lang/String;Lorg/slf4j/spi/LoggingEventBuilder;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/decorators/plugins/logging/annotations/Log : java/lang/annotation/Annotation {
+	public abstract fun includeExecutionTime ()Z
+	public abstract fun includeParameters ()Z
+	public abstract fun includeResult ()Z
+	public abstract fun includeStacktrace ()Z
+	public abstract fun level ()Lorg/slf4j/event/Level;
+}
+

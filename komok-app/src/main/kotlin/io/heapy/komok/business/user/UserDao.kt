@@ -16,6 +16,7 @@ class UserDao(
     suspend fun insertUser(
         email: String,
         hash: String,
+        authenticatorKey: String,
     ): String {
         val objectId = ObjectId()
         database.getCollection<User>(User.COLLECTION)
@@ -24,7 +25,7 @@ class UserDao(
                     id = objectId,
                     email = email,
                     hash = hash,
-                    authenticatorKey = "",
+                    authenticatorKey = authenticatorKey,
                 )
             )
             .also { result ->
@@ -34,10 +35,16 @@ class UserDao(
         return objectId.toHexString()
     }
 
+    suspend fun getUserCount(): Long {
+        return database
+            .getCollection<User>(User.COLLECTION)
+            .countDocuments()
+    }
+
     /**
-     * Get user by email, return null if not found.
+     * Get a user by email, return null if not found.
      */
-    suspend fun getUser(
+    suspend fun getUserByEmail(
         email: String,
     ): User? {
         return database
@@ -46,6 +53,23 @@ class UserDao(
                 Filters.eq(
                     User::email.name,
                     email,
+                )
+            )
+            .firstOrNull()
+    }
+
+    /**
+     * Get a user by email, return null if not found.
+     */
+    suspend fun getUserById(
+        id: ObjectId,
+    ): User? {
+        return database
+            .getCollection<User>(User.COLLECTION)
+            .find(
+                Filters.eq(
+                    "_id",
+                    id,
                 )
             )
             .firstOrNull()

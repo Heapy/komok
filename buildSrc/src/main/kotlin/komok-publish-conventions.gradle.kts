@@ -52,6 +52,26 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Ktor HTMX",
         "publishDescription" to "HTMX support for Ktor",
     ),
+    "komok-tech-decorators-ksp" to mapOf(
+        "publishName" to "TODO",
+        "publishDescription" to "TODO",
+    ),
+    "komok-tech-decorators-ksp-api" to mapOf(
+        "publishName" to "TODO",
+        "publishDescription" to "TODO",
+    ),
+    "komok-tech-decorators-lib" to mapOf(
+        "publishName" to "TODO",
+        "publishDescription" to "TODO",
+    ),
+    "komok-tech-decorators-plugin-logging" to mapOf(
+        "publishName" to "TODO",
+        "publishDescription" to "TODO",
+    ),
+    "komok-tech-decorators-plugin-logging-lib" to mapOf(
+        "publishName" to "TODO",
+        "publishDescription" to "TODO",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")

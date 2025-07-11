@@ -22,7 +22,7 @@ class LoginService(
         userAgent: String,
     ): LoginResponse {
         val user = userDao
-            .getUser(
+            .getUserByEmail(
                 email = loginRequest.email,
             )
             ?: badRequestError("email", "User not found")

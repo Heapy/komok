@@ -3,6 +3,7 @@ package io.heapy.komok.infra.totp
 import io.heapy.komok.infra.base32.Base32Module
 import io.heapy.komok.tech.di.lib.Module
 import io.heapy.komok.tech.time.TimeSourceModule
+import java.security.SecureRandom
 
 @Module
 open class TimeBasedOneTimePasswordModule(
@@ -13,6 +14,17 @@ open class TimeBasedOneTimePasswordModule(
         TimeBasedOneTimePasswordService(
             base32 = base32Module.base32,
             timeSource = timeSourceModule.timeSource,
+        )
+    }
+
+    open val random by lazy {
+        SecureRandom()
+    }
+
+    open val generateTimeBasedOneTimeKeyService by lazy {
+        GenerateTimeBasedOneTimeKeyService(
+            base32 = base32Module.base32,
+            random = random,
         )
     }
 }

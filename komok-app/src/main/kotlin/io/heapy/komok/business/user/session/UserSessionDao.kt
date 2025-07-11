@@ -38,7 +38,7 @@ class UserSessionDao(
     suspend fun verifySession(
         token: String,
         ip: String,
-    ) {
+    ): Session {
         val session = database
             .getCollection<Session>(Session.COLLECTION)
             .find(
@@ -62,5 +62,7 @@ class UserSessionDao(
         if (session.expiration < timeSource.instant().epochSecond) {
             authenticationError(AuthenticationError.SESSION_EXPIRED)
         }
+
+        return session
     }
 }

@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.binary.compatibility.validator)
+    `komok-publish-conventions`
 }
 
 repositories {

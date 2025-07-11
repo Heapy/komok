@@ -1,0 +1,93 @@
+public final class io/heapy/komok/tech/decorators/ksp/api/ContextParam {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Z)Lio/heapy/komok/tech/decorators/ksp/api/ContextParam;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/decorators/ksp/api/ContextParam;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lio/heapy/komok/tech/decorators/ksp/api/ContextParam;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isRequired ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class io/heapy/komok/tech/decorators/ksp/api/DecoratedElement {
+}
+
+public final class io/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Class : io/heapy/komok/tech/decorators/ksp/api/DecoratedElement {
+	public fun <init> (Lcom/google/devtools/ksp/symbol/KSClassDeclaration;Ljava/util/List;)V
+	public final fun component1 ()Lcom/google/devtools/ksp/symbol/KSClassDeclaration;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lcom/google/devtools/ksp/symbol/KSClassDeclaration;Ljava/util/List;)Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Class;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Class;Lcom/google/devtools/ksp/symbol/KSClassDeclaration;Ljava/util/List;ILjava/lang/Object;)Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Class;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnnotations ()Ljava/util/List;
+	public final fun getDeclaration ()Lcom/google/devtools/ksp/symbol/KSClassDeclaration;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Method : io/heapy/komok/tech/decorators/ksp/api/DecoratedElement {
+	public fun <init> (Lcom/google/devtools/ksp/symbol/KSFunctionDeclaration;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSClassDeclaration;)V
+	public final fun component1 ()Lcom/google/devtools/ksp/symbol/KSFunctionDeclaration;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Lcom/google/devtools/ksp/symbol/KSClassDeclaration;
+	public final fun copy (Lcom/google/devtools/ksp/symbol/KSFunctionDeclaration;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSClassDeclaration;)Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Method;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Method;Lcom/google/devtools/ksp/symbol/KSFunctionDeclaration;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSClassDeclaration;ILjava/lang/Object;)Lio/heapy/komok/tech/decorators/ksp/api/DecoratedElement$Method;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnnotations ()Ljava/util/List;
+	public final fun getContainingClass ()Lcom/google/devtools/ksp/symbol/KSClassDeclaration;
+	public final fun getDeclaration ()Lcom/google/devtools/ksp/symbol/KSFunctionDeclaration;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/decorators/ksp/api/DecoratorContext {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSType;Z)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Lcom/google/devtools/ksp/symbol/KSType;
+	public final fun component5 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSType;Z)Lio/heapy/komok/tech/decorators/ksp/api/DecoratorContext;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/decorators/ksp/api/DecoratorContext;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lcom/google/devtools/ksp/symbol/KSType;ZILjava/lang/Object;)Lio/heapy/komok/tech/decorators/ksp/api/DecoratorContext;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOriginalClassName ()Ljava/lang/String;
+	public final fun getOriginalMethodName ()Ljava/lang/String;
+	public final fun getParameters ()Ljava/util/List;
+	public final fun getReturnType ()Lcom/google/devtools/ksp/symbol/KSType;
+	public fun hashCode ()I
+	public final fun isSuspending ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/heapy/komok/tech/decorators/ksp/api/DecoratorPlugin {
+	public fun generateCode (Ljava/util/List;Lcom/google/devtools/ksp/processing/CodeGenerator;Ljava/lang/String;)V
+	public abstract fun getAnnotationTypes ()Ljava/util/List;
+	public fun getRequiredContextParams ()Ljava/util/List;
+	public abstract fun getWrappingFunctionFqn (I)Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/decorators/ksp/api/DecoratorPlugin$DefaultImpls {
+	public static fun generateCode (Lio/heapy/komok/tech/decorators/ksp/api/DecoratorPlugin;Ljava/util/List;Lcom/google/devtools/ksp/processing/CodeGenerator;Ljava/lang/String;)V
+	public static fun getRequiredContextParams (Lio/heapy/komok/tech/decorators/ksp/api/DecoratorPlugin;)Ljava/util/List;
+}
+
+public final class io/heapy/komok/tech/decorators/ksp/api/MethodParam {
+	public fun <init> (Ljava/lang/String;Lcom/google/devtools/ksp/symbol/KSType;I)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lcom/google/devtools/ksp/symbol/KSType;
+	public final fun component3 ()I
+	public final fun copy (Ljava/lang/String;Lcom/google/devtools/ksp/symbol/KSType;I)Lio/heapy/komok/tech/decorators/ksp/api/MethodParam;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/decorators/ksp/api/MethodParam;Ljava/lang/String;Lcom/google/devtools/ksp/symbol/KSType;IILjava/lang/Object;)Lio/heapy/komok/tech/decorators/ksp/api/MethodParam;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIndex ()I
+	public final fun getName ()Ljava/lang/String;
+	public final fun getType ()Lcom/google/devtools/ksp/symbol/KSType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

@@ -10,6 +10,7 @@ class DecoratorsSymbolProcessorProvider : SymbolProcessorProvider {
     ): SymbolProcessor {
         return DecoratorsSymbolProcessor(
             codeGenerator = environment.codeGenerator,
+            logger = environment.logger
         )
     }
 }

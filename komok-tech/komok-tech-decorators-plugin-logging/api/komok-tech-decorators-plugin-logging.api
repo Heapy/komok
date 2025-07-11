@@ -1,0 +1,8 @@
+public final class io/heapy/komok/tech/decorators/plugins/logging/LoggingDecoratorPlugin : io/heapy/komok/tech/decorators/ksp/api/DecoratorPlugin {
+	public fun <init> ()V
+	public fun generateCode (Ljava/util/List;Lcom/google/devtools/ksp/processing/CodeGenerator;Ljava/lang/String;)V
+	public fun getAnnotationTypes ()Ljava/util/List;
+	public fun getRequiredContextParams ()Ljava/util/List;
+	public fun getWrappingFunctionFqn (I)Ljava/lang/String;
+}
+

@@ -8,8 +8,21 @@ GET http://127.0.0.1:9556/api/healthcheck
     })
 %}
 
-### Get person
-GET http://127.0.0.1:9556/person/ruslan
+### Login
+POST http://127.0.0.1:9556/login
+Content-Type: application/json
+
+{
+    "email": "komok@heapy.io",
+    "password": "!}{6-Q65Ex]TxS$:&?jpx0.?X-Y#+1k^@[Tw/3X;Mb7^i$3>c%m[~NSg^8}7sx5F?zAcb3G$>L;qJ5c_7mp:L^hO][}fR9vPp,ATj)=wb}pFPumm0Utvs#!Odls+8tT85I;CetOAuq^zY,gxffHU{p/7ndJH:bMb0Hh",
+    "otp": "148899"
+}
+
+> {% client.global.set("komok_cookie", response.headers.valueOf("Set-Cookie")); %}
+
+### Get me
+GET http://127.0.0.1:9556/me
+Cookie: {{komok_cookie}}
 
 ### Get index.html
 GET http://127.0.0.1:9556

@@ -35,6 +35,35 @@ class Base32 {
         return buffer.array()
     }
 
+    fun encode(bytes: ByteArray): String {
+        val result = StringBuilder()
+        var buffer = 0
+        var bitsLeft = 0
+
+        bytes.forEach { byte ->
+            buffer = (buffer shl 8) or (byte.toInt() and 0xFF)
+            bitsLeft += 8
+
+            while (bitsLeft >= 5) {
+                val index = (buffer shr (bitsLeft - 5)) and 0x1F
+                result.append(CHAR_MAP[index])
+                bitsLeft -= 5
+            }
+        }
+
+        if (bitsLeft > 0) {
+            buffer = buffer shl (5 - bitsLeft)
+            val index = buffer and 0x1F
+            result.append(CHAR_MAP[index])
+        }
+
+        while (result.length % 8 != 0) {
+            result.append('=')
+        }
+
+        return result.toString()
+    }
+
     private companion object {
         private val CHAR_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".toCharArray()
     }

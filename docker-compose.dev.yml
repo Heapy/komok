@@ -1,11 +1,13 @@
 # docker-compose -f docker-compose.dev.yml up -d
+name: "komok"
+
 services:
-  komok_database_mg:
+  database:
     image: "mongo:latest"
-    container_name: komok_database_mg
-    restart: always
-    mem_limit: 512m
-    memswap_limit: 0m
+    container_name: "database"
+    restart: "always"
+    mem_limit: "512m"
+    memswap_limit: "0m"
     environment:
       MONGO_INITDB_ROOT_USERNAME: "komok"
       MONGO_INITDB_ROOT_PASSWORD: "komok"
