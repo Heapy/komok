@@ -13,6 +13,9 @@ build/
 /.kotlin/
 /buildSrc/.kotlin/
 
+# Yarn
+/frontend/node_modules/
+
 # Project
 komok-app/src/main/resources/application.conf
 
