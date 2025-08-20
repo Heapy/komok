@@ -50,20 +50,10 @@ Build started with following configuration:
           }]
         },
         {
-          test: /\.s[ac]ss$/,
+          test: /\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
-            {
-              loader: "css-loader",
-              options: {
-                modules: {
-                  localIdentName: "[path][name]__[local]--[hash:base64:5]"
-                }
-              }
-            },
-            {
-              loader: "sass-loader"
-            }
+            'css-loader'
           ]
         },
         {
@@ -83,10 +73,14 @@ Build started with following configuration:
           "NODE_ENV": JSON.stringify(NODE_ENV)
         }
       }),
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: "css/[name].[contenthash:8].css",
+        chunkFilename: "css/[name].[contenthash:8].chunk.css",
+      }),
       new HtmlWebpackPlugin({
         filename: "index.html",
         template: "src/index.html",
+        hash: true,
       }),
       new CompressionPlugin({
         algorithm: "gzip",

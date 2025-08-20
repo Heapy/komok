@@ -26,19 +26,5 @@
 <body>
 <div id="root">
 </div>
-<script>
-    var socket;
-    if (window.WebSocket) {
-        socket = new WebSocket("ws://localhost:9556/ws");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                window.location.reload();
-            }
-            console.log(event.data);
-        };
-    } else {
-        alert("Your browser does not support Websockets");
-    }
-</script>
 </body>
 </html>
