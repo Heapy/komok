@@ -14,6 +14,7 @@ class StaticFilesRoute(
             "/",
             File(resources)
         ) {
+            default("index.html")
             preCompressed(
                 CompressedFileType.BROTLI,
                 CompressedFileType.GZIP
