@@ -4,7 +4,6 @@ name: "komok"
 services:
   database:
     image: "mongo:latest"
-    container_name: "database"
     restart: "always"
     mem_limit: "512m"
     memswap_limit: "0m"
