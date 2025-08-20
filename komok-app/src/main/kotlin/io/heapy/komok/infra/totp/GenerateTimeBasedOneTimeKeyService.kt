@@ -7,8 +7,18 @@ class GenerateTimeBasedOneTimeKeyService(
     private val random: SecureRandom,
     private val base32: Base32,
 ) {
-    fun generate(): String {
-        val bytes = ByteArray(20)
+    enum class Algorithm(
+        val keyLength: Int,
+    ) {
+        SHA1(20),
+        SHA256(32),
+        SHA512(64),
+    }
+
+    fun generate(
+        algorithm: Algorithm,
+    ): String {
+        val bytes = ByteArray(algorithm.keyLength)
         random.nextBytes(bytes)
         return base32.encode(bytes)
     }

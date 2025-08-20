@@ -22,7 +22,8 @@ class AutoRegisterStartupTask(
         if (userDao.getUserCount() == 0L) {
             val password = passwordGenerator.generate()
             val email = autoRegisterStartupTaskConfiguration.email
-            val authenticatorKey = generateTimeBasedOneTimeKeyService.generate()
+            val authenticatorKey = generateTimeBasedOneTimeKeyService
+                .generate(GenerateTimeBasedOneTimeKeyService.Algorithm.SHA512)
             log.info(
                 """
                 No users found, creating default user:
