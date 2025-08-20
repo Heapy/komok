@@ -14,5 +14,17 @@ services:
         - "komok-mg-data:/data/db"
     ports:
       - "27017:27017"
+  mongo-express:
+    image: "mongo-express:latest"
+    restart: "always"
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://komok:komok@database:27017/"
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: "komok"
+      ME_CONFIG_BASICAUTH_PASSWORD: "komok"
+    depends_on:
+      - "database"
 volumes:
   komok-mg-data:
