@@ -72,6 +72,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "TODO",
         "publishDescription" to "TODO",
     ),
+    "komok-tech-stable-values" to mapOf(
+        "publishName" to "Komok Tech: JEP 502 Stable Values API for Kotlin",
+        "publishDescription" to "Provides property delegate for stable supplier and convenience functions for stable collections and functions.",
+    )
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")
