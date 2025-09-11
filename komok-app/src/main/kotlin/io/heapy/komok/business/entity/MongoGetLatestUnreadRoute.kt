@@ -1,6 +1,5 @@
 package io.heapy.komok.business.entity
 
-import io.heapy.komok.auth.common.User
 import io.heapy.komok.auth.common.UserContext
 import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.response.respond
@@ -19,7 +18,7 @@ class MongoGetLatestUnreadRoute(
         get("/mongo/entity") {
             val req = call.parameters["page"]?.toIntOrNull() ?: 0
 
-            val entities = with(UserContext(User(id = "1"))) {
+            val entities = with(UserContext(id = "1")) {
                 mongoEntityDao.getLatest(
                     limit = 100,
                     offset = 100 * req,

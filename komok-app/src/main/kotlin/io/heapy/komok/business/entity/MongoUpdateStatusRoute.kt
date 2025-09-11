@@ -1,6 +1,5 @@
 package io.heapy.komok.business.entity
 
-import io.heapy.komok.auth.common.User
 import io.heapy.komok.auth.common.UserContext
 import io.heapy.komok.server.common.KomokRoute
 import io.ktor.server.request.receive
@@ -25,7 +24,7 @@ class MongoUpdateStatusRoute(
         put("/mongo/entity") {
             val req = call.receive<EntityRequest>()
 
-            val resp = with(UserContext(User(id = "1"))) {
+            val resp = with(UserContext(id = "1")) {
                 mongoEntityDao.markPostAsRead(
                     req.id
                 )

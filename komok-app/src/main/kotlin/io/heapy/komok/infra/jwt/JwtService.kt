@@ -2,13 +2,13 @@ package io.heapy.komok.infra.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import io.heapy.komok.auth.common.User
+import io.heapy.komok.auth.common.UserContext
 import io.heapy.komok.tech.time.TimeSource
 import java.time.temporal.ChronoUnit
 
 interface JwtService {
     fun createToken(
-        user: User,
+        userContext: UserContext,
     ): String
 }
 
@@ -17,7 +17,7 @@ internal class DefaultJwtService(
     private val timeSource: TimeSource,
 ) : JwtService {
     override fun createToken(
-        user: User,
+        userContext: UserContext,
     ): String {
         return JWT
             .create()
@@ -25,7 +25,7 @@ internal class DefaultJwtService(
             .withIssuer(jwtConfiguration.issuer)
             .withClaim(
                 "id",
-                user.id,
+                userContext.id,
             )
             .withExpiresAt(
                 timeSource

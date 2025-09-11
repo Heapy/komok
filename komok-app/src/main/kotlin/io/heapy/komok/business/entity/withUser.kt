@@ -1,6 +1,5 @@
 package io.heapy.komok.business.entity
 
-import io.heapy.komok.auth.common.User
 import io.heapy.komok.auth.common.UserContext
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
@@ -24,13 +23,10 @@ suspend fun RoutingContext.withUser(
     // Calculate the expiration time (if it exists)
     val expiresAt = principal.expiresAt?.time?.minus(System.currentTimeMillis())
 
-    // Create a User instance
-    val user = User(
+    // Create UserContext
+    val userContext = UserContext(
         id = userId,
     )
-
-    // Create UserContext with the User instance
-    val userContext = UserContext(user)
 
     // Invoke the passed function with the user context
     userContext.function()

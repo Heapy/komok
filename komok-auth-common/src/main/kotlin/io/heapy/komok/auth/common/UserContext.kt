@@ -1,36 +1,21 @@
 package io.heapy.komok.auth.common
 
 interface UserContext {
-    val user: User
-}
-
-fun UserContext(
-    user: User,
-): UserContext =
-    DefaultUserContext(
-        user = user,
-    )
-
-private data class DefaultUserContext(
-    override val user: User,
-) : UserContext
-
-interface User {
     val id: String
 }
 
 /**
- * Create a new User instance.
+ * Create a new UserContext instance.
  *
  * @param id The user's unique identifier.
  */
-fun User(
+fun UserContext(
     id: String,
-): User =
-    DefaultUser(
+): UserContext =
+    DefaultUserContext(
         id = id,
     )
 
-private data class DefaultUser(
+private data class DefaultUserContext(
     override val id: String,
-) : User
+) : UserContext
