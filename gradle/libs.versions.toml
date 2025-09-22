@@ -1,6 +1,6 @@
 [versions]
 binary-compatibility-validator = "0.18.1"
-bouncycastle = "1.81"
+bouncycastle = "1.82"
 junit = "5.13.4"
 junit-platform = "1.13.4"
 komok = "1.0.13"
