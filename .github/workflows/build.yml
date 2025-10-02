@@ -5,7 +5,7 @@ on:
 jobs:
   check:
     if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -15,7 +15,7 @@ jobs:
         working-directory: frontend
   build-backend:
     name: "Build Backend Application"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -30,7 +30,7 @@ jobs:
           retention-days: 1
   build-frontend:
     name: "Build Frontend Application"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -47,7 +47,7 @@ jobs:
           retention-days: 1
   build-and-push-backend-image:
     if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - build-backend
       - build-frontend
