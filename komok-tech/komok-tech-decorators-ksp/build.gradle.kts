@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.kotlin.poet.ksp)
+    implementation(libs.kotlinpoet.ksp)
     implementation(libs.ksp)
     implementation(libs.logback)
     implementation(projects.komokTech.komokTechDecoratorsKspApi)
