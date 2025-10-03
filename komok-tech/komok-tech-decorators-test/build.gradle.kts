@@ -6,8 +6,8 @@ plugins {
 }
 
 dependencies {
-    ksp(projects.komokTech.komokTechDecoratorsKsp)
-    ksp(projects.komokTech.komokTechDecoratorsPluginLogging)
+//    ksp(projects.komokTech.komokTechDecoratorsKsp)
+//    ksp(projects.komokTech.komokTechDecoratorsPluginLogging)
     implementation(projects.komokTech.komokTechDecoratorsPluginLoggingLib)
     implementation(projects.komokTech.komokTechLogging)
     implementation(kotlin("reflect"))

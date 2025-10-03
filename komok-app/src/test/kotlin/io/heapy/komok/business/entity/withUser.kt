@@ -71,7 +71,7 @@ class WithUserTest {
             authenticate {
                 get("/protected") {
                     withUser {
-                        call.respondText("Hello, ${user.id}")
+                        call.respondText("Hello, $id")
                     }
                 }
             }
