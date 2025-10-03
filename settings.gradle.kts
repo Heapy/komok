@@ -14,8 +14,8 @@ dependencyResolutionManagement {
 }
 
 include("komok-app")
-include("komok-auth-common")
 include("komok-dao-mg")
+include("komok-infra:komok-auth-common")
 include("komok-server-common")
 include("komok-server-cookie-auth")
 include("komok-server-core")

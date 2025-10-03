@@ -46,7 +46,7 @@ tasks.distZip {
 }
 
 dependencies {
-    implementation(projects.komokAuthCommon)
+    implementation(projects.komokInfra.komokAuthCommon)
     implementation(projects.komokTech.komokTechConfig)
     implementation(projects.komokTech.komokTechConfigDotenv)
     implementation(projects.komokTech.komokTechLogging)
