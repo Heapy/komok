@@ -1,8 +1,7 @@
 [versions]
 binary-compatibility-validator = "0.18.1"
 bouncycastle = "1.82"
-junit = "5.13.4"
-junit-platform = "1.13.4"
+junit = "6.0.0"
 komok = "1.0.13"
 kotlin = "2.2.20"
 kotlinpoet = "2.2.0"
@@ -21,7 +20,7 @@ slf4j = "2.0.17"
 bouncycastle-bcpkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
 
 komok-tech-di = { module = "io.heapy.komok:komok-tech-di", version.ref = "komok" }
 komok-tech-di-lib = { module = "io.heapy.komok:komok-tech-di-lib", version.ref = "komok" }
