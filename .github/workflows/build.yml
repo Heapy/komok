@@ -51,6 +51,9 @@ jobs:
   build-and-push-backend-image:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: self-hosted
+    permissions:
+        contents: read
+        packages: write
     needs:
       - build-backend
       - build-frontend
