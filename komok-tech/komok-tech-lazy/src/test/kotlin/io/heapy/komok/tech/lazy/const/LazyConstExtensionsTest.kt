@@ -1,15 +1,15 @@
-package io.heapy.komok.tech.stable.values
+package io.heapy.komok.tech.lazy.const
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
 
-class StableValueExtensionsTest {
+class LazyConstExtensionsTest {
     private class Holder(
         private val counter: Counter,
     ) {
-        val value by stableValue {
+        val value by lazyConst {
             counter.inc()
             Any()
         }
@@ -42,7 +42,7 @@ class StableValueExtensionsTest {
     }
 
     @Test
-    fun `multiple holders have independent stable values`() {
+    fun `multiple holders have independent lazy const`() {
         val counter1 = Counter()
         val counter2 = Counter()
         val h1 = Holder(counter1)

@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package io.heapy.komok.tech.stable.values
+package io.heapy.komok.tech.lazy.const
 
 import java.util.function.Function
 import java.util.function.IntFunction
@@ -13,19 +13,19 @@ import kotlin.reflect.KProperty
  * Usage:
  * ```kotlin
  * class MyClass {
- *     val myValue by stableValue { "myValue" }
+ *     val myValue by lazyConst { "myValue" }
  * }
  * ```
  */
-inline fun <T> stableValue(
+inline fun <T> lazyConst(
     noinline initializer: () -> T,
 ): ReadOnlyProperty<Any, T> =
-    StableValueSupplierProperty(
+    LazyConstSupplierProperty(
         initializer = initializer,
     )
 
 @PublishedApi
-internal class StableValueSupplierProperty<T>(
+internal class LazyConstSupplierProperty<T>(
     initializer: () -> T,
 ) : ReadOnlyProperty<Any, T> {
     private val value = StableValue.supplier(initializer)
@@ -44,11 +44,11 @@ internal class StableValueSupplierProperty<T>(
  * Usage:
  * ```kotlin
  * class MyClass {
- *     val myList by stableList(10) { "myValue$it" }
+ *     val myList by lazyList(10) { "myValue$it" }
  * }
  * ```
  */
-inline fun <E> stableList(
+inline fun <E> lazyList(
     size: Int,
     mapper: IntFunction<E>,
 ): List<E> = StableValue.list(size, mapper)
@@ -59,41 +59,11 @@ inline fun <E> stableList(
  * Usage:
  * ```kotlin
  * class MyClass {
- *     val myMap by stableMap(setOf("a", "b", "c")) { it.uppercase() }
+ *     val myMap by lazyMap(setOf("a", "b", "c")) { it.uppercase() }
  * }
  * ```
  */
-inline fun <K, V> stableMap(
+inline fun <K, V> lazyMap(
     value: Set<K>,
     underlying: Function<K, V>
 ): Map<K, V> = StableValue.map(value, underlying)
-
-/**
- * Kotlin wrapper for [StableValue.function]
- *
- * Usage:
- * ```kotlin
- * class MyClass {
- *     val myFunction by stableFunction(setOf("a", "b", "c")) { it.uppercase() }
- * }
- * ```
- */
-inline fun <T, R> stableFunction(
-    value: Set<T>,
-    underlying: Function<T, R>
-): Function<T, R> = StableValue.function(value, underlying)
-
-/**
- * Kotlin wrapper for [StableValue.intFunction]
- *
- * Usage:
- * ```kotlin
- * class MyClass {
- *     val myIntFunction by stableIntFunction(42) { it * 10 }
- * }
- * ```
- */
-inline fun <R> stableIntFunction(
-    size: Int,
-    underlying: IntFunction<R>,
-): IntFunction<R> = StableValue.intFunction(size, underlying)

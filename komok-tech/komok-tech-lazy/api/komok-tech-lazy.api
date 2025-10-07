@@ -1,0 +1,11 @@
+public final class io/heapy/komok/tech/lazy/const/LazyConstExtensionsKt {
+	public static final fun lazyConst (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
+	public static final fun lazyList (ILjava/util/function/IntFunction;)Ljava/util/List;
+	public static final fun lazyMap (Ljava/util/Set;Ljava/util/function/Function;)Ljava/util/Map;
+}
+
+public final class io/heapy/komok/tech/lazy/const/LazyConstSupplierProperty : kotlin/properties/ReadOnlyProperty {
+	public fun <init> (Lkotlin/jvm/functions/Function0;)V
+	public fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+}
+

@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -13,11 +13,19 @@ repositories {
 dependencies {
 }
 
+kotlin {
+    jvmToolchain(25)
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
 tasks
     .withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
     .configureEach {
         compilerOptions {
-            jvmTarget.set(JVM_21)
+            jvmTarget = JvmTarget.JVM_21
             freeCompilerArgs.addAll(
                 "-Xcontext-parameters",
             )

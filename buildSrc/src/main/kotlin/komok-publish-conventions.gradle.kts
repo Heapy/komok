@@ -72,9 +72,9 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "TODO",
         "publishDescription" to "TODO",
     ),
-    "komok-tech-stable-values" to mapOf(
-        "publishName" to "Komok Tech: JEP 502 Stable Values API for Kotlin",
-        "publishDescription" to "Provides property delegate for stable supplier and convenience functions for stable collections and functions.",
+    "komok-tech-lazy" to mapOf(
+        "publishName" to "Komok Tech: JEP 526: Lazy Constants for Kotlin",
+        "publishDescription" to "Provides property delegate for lazy constant and convenience functions for lazy collections and functions.",
     )
 )
 

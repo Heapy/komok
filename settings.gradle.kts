@@ -39,6 +39,6 @@ include("komok-tech:komok-tech-di-test-central")
 include("komok-tech:komok-tech-di-test-next")
 include("komok-tech:komok-tech-ktor-htmx")
 include("komok-tech:komok-tech-logging")
-//include("komok-tech:komok-tech-stable-values")//enable after JDK 25 release and Kotlin/Gradle support
+include("komok-tech:komok-tech-lazy")
 include("komok-tech:komok-tech-time")
 include("komok-tech:komok-tech-to-be-injected")
