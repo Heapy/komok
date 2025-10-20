@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/Heapy/komok#readme",
   "devDependencies": {
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.9.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "compression-webpack-plugin": "^11.1.0",
