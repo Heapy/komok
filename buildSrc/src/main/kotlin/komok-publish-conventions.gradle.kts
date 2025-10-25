@@ -75,7 +75,11 @@ val modules: Map<String, Map<String, String>> = mapOf(
     "komok-tech-lazy" to mapOf(
         "publishName" to "Komok Tech: JEP 526: Lazy Constants for Kotlin",
         "publishDescription" to "Provides property delegate for lazy constant and convenience functions for lazy collections and functions.",
-    )
+    ),
+    "komok-tech-api-dsl" to mapOf(
+        "publishName" to "Komok OpenApi 3.2 DSL",
+        "publishDescription" to "Model and DSL for OpenApi 3.2",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")
