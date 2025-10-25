@@ -213,7 +213,7 @@ class BasicInformationObjectsTest {
         val json = compactJson.encodeToString(reference)
 
         assertEquals(
-            """{"${'$'}ref":"#/components/schemas/Pet"}""",
+            $$"""{"$ref":"#/components/schemas/Pet"}""",
             json
         )
     }
@@ -227,13 +227,13 @@ class BasicInformationObjectsTest {
         )
         val json = compactJson.encodeToString(reference)
 
-        val expected = """{"${'$'}ref":"#/components/schemas/User","summary":"User reference","description":"Reference to a User schema"}"""
+        val expected = $$"""{"$ref":"#/components/schemas/User","summary":"User reference","description":"Reference to a User schema"}"""
         assertEquals(expected, json)
     }
 
     @Test
     fun `should deserialize Reference object`() {
-        val json = """{"${'$'}ref":"#/components/schemas/Pet","summary":"Pet reference"}"""
+        val json = $$"""{"$ref":"#/components/schemas/Pet","summary":"Pet reference"}"""
         val reference = compactJson.decodeFromString<Reference>(json)
 
         assertEquals("#/components/schemas/Pet", reference.ref)

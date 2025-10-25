@@ -55,10 +55,12 @@ These are simple objects without complex dependencies:
 - [ ] Test: Header objects with JSON schema validation
 
 ### Phase 5: Content and Media Types
-- [ ] Encoding object (contentType, headers, style, explode, allowReserved, encoding, prefixEncoding, itemEncoding)
-- [ ] MediaType object (description, schema, itemSchema, encoding, prefixEncoding, itemEncoding, example, examples)
-- [ ] Test: Content objects (map of MediaType)
-- [ ] Test: Encoding configurations with JSON schema validation
+- [x] Encoding object (contentType, style, explode, allowReserved, encoding, prefixEncoding, itemEncoding)
+- [x] MediaType object (description, schema, itemSchema, encoding, prefixEncoding, itemEncoding, example, examples)
+- [x] Header object (description, required, deprecated, schema, content, style, explode, example, examples)
+- [x] Test: Content objects (map of MediaType)
+- [x] Test: Encoding configurations with mutual exclusivity validation
+- [ ] TODO: Add Referenceable support for MediaType, Example, and Header (deferred to later phase)
 
 ### Phase 6: Request and Response Modeling
 - [ ] RequestBody object (description, content, required)

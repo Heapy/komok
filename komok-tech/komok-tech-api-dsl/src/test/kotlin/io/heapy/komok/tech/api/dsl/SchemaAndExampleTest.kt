@@ -70,12 +70,12 @@ class SchemaAndExampleTest {
     @Test
     fun `should serialize schema with ref`() {
         val schemaObject = buildJsonObject {
-            put("\$ref", "#/components/schemas/User")
+            put($$"$ref", "#/components/schemas/User")
         }
         val schema = Schema(schemaObject)
         val json = compactJson.encodeToString(schema)
 
-        assertEquals("""{"${'$'}ref":"#/components/schemas/User"}""", json)
+        assertEquals($$"""{"$ref":"#/components/schemas/User"}""", json)
     }
 
     @Test

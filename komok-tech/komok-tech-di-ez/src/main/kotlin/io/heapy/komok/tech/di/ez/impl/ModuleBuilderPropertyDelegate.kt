@@ -14,7 +14,7 @@ internal class ModuleBuilderPropertyDelegate(
     ): ModuleProvider {
         val fullName = builder::class.toString()
         val variableName = property.name
-        val place = fullName.substringBefore("$\$Lambda")
+        val place = fullName.substringBefore($$$"$$Lambda")
         val source = "$place.$variableName"
 
         return ModuleBuilderDelegateModuleProvider(

@@ -56,7 +56,7 @@ value class Direct<out T : OpenAPIObject>(val value: T) : Referenceable<T>
  */
 @Serializable
 data class Reference(
-    @SerialName("\$ref")
+    @SerialName($$"$ref")
     val ref: String,
     val summary: String? = null,
     val description: String? = null,

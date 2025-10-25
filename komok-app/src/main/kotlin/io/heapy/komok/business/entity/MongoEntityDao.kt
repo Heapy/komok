@@ -81,7 +81,7 @@ class MongoEntityDao(
                 ),
                 Document(
                     mapOf(
-                        "\$set" to mapOf(
+                        $$"$set" to mapOf(
                             "read_status" to true,
                         )
                     )

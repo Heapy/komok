@@ -215,12 +215,12 @@ class CyclicDependencyTest {
             }
 
             assertEquals(
-                """
+                $$"""
                 A circular dependency found:
-                class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}Foo implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}cyclic${'$'}2${'$'}1] <-- Circular dependency starts here
-                  class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}Bar implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}cyclic${'$'}2${'$'}2]
-                    class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}Baz implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}cyclic${'$'}2${'$'}3]
-                      class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}Foo implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest${'$'}cyclic${'$'}2${'$'}1]
+                class io.heapy.komok.tech.di.ez.CyclicDependencyTest$Foo implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest$cyclic$2$1] <-- Circular dependency starts here
+                  class io.heapy.komok.tech.di.ez.CyclicDependencyTest$Bar implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest$cyclic$2$2]
+                    class io.heapy.komok.tech.di.ez.CyclicDependencyTest$Baz implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest$cyclic$2$3]
+                      class io.heapy.komok.tech.di.ez.CyclicDependencyTest$Foo implemented by provider [class io.heapy.komok.tech.di.ez.CyclicDependencyTest$cyclic$2$1]
                 """.trimIndent(),
                 exception.message,
             )
