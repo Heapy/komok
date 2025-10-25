@@ -22,9 +22,9 @@ Update this document with comprehensive list of tasks.
 
 ### Phase 1: Project Setup and Foundation
 - [x] Module setup with Kotlin Serialization, JUnit, and json-schema-validator
-- [ ] Create base interfaces/annotations for OpenAPI objects
-- [ ] Set up test infrastructure with JSON schema validation helpers
-- [ ] Create utility functions for specification extensions (x- properties)
+- [x] Create base interfaces/annotations for OpenAPI objects
+- [x] Set up test infrastructure with JSON schema validation helpers
+- [x] Create utility functions for specification extensions (x- properties)
 
 ### Phase 2: Core Value Objects
 These are simple objects without complex dependencies:
