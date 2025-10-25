@@ -1,5 +1,8 @@
 package io.heapy.komok.tech.api.dsl
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Marker interface for all OpenAPI objects.
  *
@@ -48,8 +51,12 @@ value class Direct<out T : OpenAPIObject>(val value: T) : Referenceable<T>
  * @property ref the reference string (e.g., "#/components/schemas/Pet")
  * @property summary optional summary of the referenced component
  * @property description optional description of the referenced component
+ *
+ * @see <a href="https://spec.openapis.org/oas/v3.2#reference-object">Reference Object</a>
  */
+@Serializable
 data class Reference(
+    @SerialName("\$ref")
     val ref: String,
     val summary: String? = null,
     val description: String? = null,

@@ -66,6 +66,26 @@ object TestHelpers {
     }
 
     /**
+     * Tests round-trip serialization without OpenAPI schema validation.
+     *
+     * Useful for testing individual objects that are not complete OpenAPI documents.
+     *
+     * @param T the type of the object
+     * @param serializer the kotlinx.serialization serializer for type T
+     * @param obj the object to test
+     * @param json the Json instance to use (defaults to compactJson)
+     */
+    fun <T> testRoundTripWithoutValidation(
+        serializer: KSerializer<T>,
+        obj: T,
+        json: Json = compactJson,
+    ) {
+        val jsonString = json.encodeToString(serializer, obj)
+        val deserialized = json.decodeFromString(serializer, jsonString)
+        assertEquals(obj, deserialized, "Round-trip serialization should produce equal objects")
+    }
+
+    /**
      * Tests that a JSON string can be deserialized and validates against OpenAPI schema.
      *
      * @param T the type of the object

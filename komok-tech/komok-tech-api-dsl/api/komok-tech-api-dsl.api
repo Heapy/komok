@@ -1,0 +1,276 @@
+public final class io/heapy/komok/tech/api/dsl/Contact : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/Contact$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/Contact;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/Contact;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Contact;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmail ()Ljava/lang/String;
+	public fun getExtensions ()Ljava/util/Map;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/Contact$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/Contact$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Contact;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Contact;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Contact$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Direct : io/heapy/komok/tech/api/dsl/Referenceable {
+	public static final synthetic fun box-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)Lio/heapy/komok/tech/api/dsl/Direct;
+	public static fun constructor-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)Z
+	public final fun getValue ()Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ExternalDocumentation : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/ExternalDocumentation$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public fun getExtensions ()Ljava/util/Map;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/ExternalDocumentation$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ExternalDocumentation$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ExternalDocumentation$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/License : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/License$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/License;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/License;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/License;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getExtensions ()Ljava/util/Map;
+	public final fun getIdentifier ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/License$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/License$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/License;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/License;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/License$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class io/heapy/komok/tech/api/dsl/OpenAPIObject {
+}
+
+public final class io/heapy/komok/tech/api/dsl/Reference : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/Referenceable {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/Reference$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/heapy/komok/tech/api/dsl/Reference;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/Reference;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Reference;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getRef ()Ljava/lang/String;
+	public final fun getSummary ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/Reference$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/Reference$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Reference;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Reference;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Reference$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class io/heapy/komok/tech/api/dsl/Referenceable : io/heapy/komok/tech/api/dsl/OpenAPIObject {
+}
+
+public final class io/heapy/komok/tech/api/dsl/Server : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/Server$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/Server;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/Server;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Server;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public fun getExtensions ()Ljava/util/Map;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun getVariables ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/Server$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/Server$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Server;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Server;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Server$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ServerVariable : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/ServerVariable$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/ServerVariable;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/ServerVariable;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/ServerVariable;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefault ()Ljava/lang/String;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEnum ()Ljava/util/List;
+	public fun getExtensions ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/ServerVariable$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ServerVariable$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/ServerVariable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/ServerVariable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ServerVariable$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SpecificationExtensionsKt {
+	public static final fun emptySpecificationExtensions ()Ljava/util/Map;
+	public static final fun specificationExtensions ([Lkotlin/Pair;)Ljava/util/Map;
+}
+
+public abstract interface class io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public fun getExtensions ()Ljava/util/Map;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SupportsExtensions$DefaultImpls {
+	public static fun getExtensions (Lio/heapy/komok/tech/api/dsl/SupportsExtensions;)Ljava/util/Map;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Tag : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/Tag$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/heapy/komok/tech/api/dsl/Tag;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/Tag;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Tag;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public fun getExtensions ()Ljava/util/Map;
+	public final fun getExternalDocs ()Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public final fun getKind ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getParent ()Ljava/lang/String;
+	public final fun getSummary ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class io/heapy/komok/tech/api/dsl/Tag$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/Tag$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Tag;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Tag;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/Tag$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+

@@ -30,17 +30,17 @@ Update this document with comprehensive list of tasks.
 These are simple objects without complex dependencies:
 
 #### 2.1 Basic Information Objects
-- [ ] Contact object (name, url, email)
-- [ ] License object (name, identifier, url)
-- [ ] ExternalDocumentation object (description, url)
-- [ ] Tag object (name, summary, description, externalDocs, parent, kind)
-- [ ] Reference object ($ref, summary, description)
-- [ ] Test: Basic information objects with JSON schema validation
+- [x] Contact object (name, url, email)
+- [x] License object (name, identifier, url)
+- [x] ExternalDocumentation object (description, url)
+- [x] Tag object (name, summary, description, externalDocs, parent, kind)
+- [x] Reference object ($ref, summary, description)
+- [x] Test: Basic information objects with JSON schema validation
 
 #### 2.2 Server Objects
-- [ ] ServerVariable object (enum, default, description)
-- [ ] Server object (url, description, name, variables)
-- [ ] Test: Server objects with JSON schema validation
+- [x] ServerVariable object (enum, default, description)
+- [x] Server object (url, description, name, variables)
+- [x] Test: Server objects with JSON schema validation
 
 ### Phase 3: Schema and Data Modeling
 - [ ] Schema object (integrate with JSON Schema - can be object or boolean)
