@@ -43,9 +43,9 @@ These are simple objects without complex dependencies:
 - [x] Test: Server objects with JSON schema validation
 
 ### Phase 3: Schema and Data Modeling
-- [ ] Schema object (integrate with JSON Schema - can be object or boolean)
-- [ ] Example object (summary, description, dataValue, serializedValue, value, externalValue)
-- [ ] Test: Schema and Example objects with JSON schema validation
+- [x] Schema object (integrate with JSON Schema - can be object or boolean)
+- [x] Example object (summary, description, dataValue, serializedValue, value, externalValue)
+- [x] Test: Schema and Example objects with JSON schema validation
 
 ### Phase 4: Parameter and Header Modeling
 - [ ] Parameter object (name, in, description, required, deprecated, schema, content, style, explode, allowReserved, allowEmptyValue)
