@@ -6,6 +6,7 @@ I'd like to use Kotlinx Serialization to do that.
 To learn about OpenAPI 3.2 use @komok-tech/komok-tech-api-dsl/src/test/resources/doc.md and @komok-tech/komok-tech-api-dsl/src/test/resources/openapi-v3.2.0-json-schema.json
 
 Put code in :komok-tech:komok-tech-api-dsl module.
+The UI rendering code will go in :komok-tech:komok-tech-api-dsl-ui module (Phase 12).
 
 Let's first create OpenAPI 3.2 document model classes and write tests that would generate JSON files from them.
 Use com.networknt:json-schema-validator to validate generated JSON files against JSON Schema.
@@ -121,7 +122,74 @@ For each model class, create idiomatic Kotlin DSL:
 - [ ] OpenAPI root DSL with fluent API
 - [ ] Test: DSL usage examples for each builder
 
-### Phase 12: Validation and Integration
+### Phase 12: API Documentation UI (komok-tech-api-dsl-ui module)
+Create a web-server-agnostic UI module for displaying OpenAPI documentation:
+
+#### 12.1 Module Setup
+- [ ] Create `:komok-tech:komok-tech-api-dsl-ui` module
+- [ ] Add kotlinx-html dependency for HTML generation
+- [ ] Set up build configuration for embedding static resources (CSS, JS)
+- [ ] Create main function signature: `fun renderOpenApiDoc(openapi: OpenAPI): String`
+
+#### 12.2 HTML Structure and Layout
+- [ ] Design semantic HTML structure for OpenAPI documentation
+- [ ] Implement header section (API title, version, description)
+- [ ] Implement server information display
+- [ ] Implement navigation/table of contents for endpoints
+- [ ] Implement main content area for operation details
+- [ ] Implement sidebar for model schemas
+- [ ] Support for external documentation links
+- [ ] Support for security scheme documentation
+
+#### 12.3 Styling (Embedded CSS)
+- [ ] Create clean, modern CSS layout (embedded in HTML head)
+- [ ] Implement responsive design for mobile/tablet/desktop
+- [ ] Design HTTP method badges (GET, POST, PUT, DELETE, etc.)
+- [ ] Style request/response sections
+- [ ] Style schema tables and object hierarchies
+- [ ] Implement dark/light theme support
+- [ ] Add smooth transitions and micro-interactions
+- [ ] Ensure readability and accessibility (WCAG compliant)
+
+#### 12.4 Interactive JavaScript UI (Preact + ESM)
+- [ ] Set up Preact-based component architecture
+- [ ] Use ES modules (mjs) for modern JavaScript delivery
+- [ ] Implement collapsible sections for operations
+- [ ] Create interactive schema browser with expand/collapse
+- [ ] Add request/response example display with syntax highlighting
+- [ ] Implement "Try it out" functionality (optional, lightweight)
+- [ ] Create search/filter functionality for endpoints
+- [ ] Add deep linking support (URL fragments for specific operations)
+- [ ] Implement keyboard navigation support
+
+#### 12.5 Performance Optimization
+- [ ] Minimize JavaScript bundle size (target: <50KB total)
+- [ ] Implement virtual scrolling for APIs with many endpoints
+- [ ] Lazy load sections on demand (intersection observer)
+- [ ] Optimize initial render time (target: <100ms for HTML generation)
+- [ ] Use CSS containment for layout performance
+- [ ] Minimize DOM nodes for large schemas
+- [ ] Add performance monitoring hooks
+- [ ] Benchmark against Swagger UI for comparison
+
+#### 12.6 Testing
+- [ ] Test: HTML generation from minimal OpenAPI object
+- [ ] Test: HTML generation from complex OpenAPI documents
+- [ ] Test: Validate HTML structure and semantics
+- [ ] Test: Verify all OpenAPI elements are rendered
+- [ ] Test: CSS is properly embedded
+- [ ] Test: JavaScript is properly embedded
+- [ ] Test: Generated HTML size is reasonable
+- [ ] Test: Performance benchmarks for various document sizes
+- [ ] Test: Accessibility compliance (ARIA labels, semantic HTML)
+
+#### 12.7 Documentation and Examples
+- [ ] Add KDoc for public API
+- [ ] Create usage examples for different web servers (Ktor, Spring, etc.)
+- [ ] Document customization options (themes, layouts)
+- [ ] Add example showcasing generated UI
+
+### Phase 13: Validation and Integration
 - [ ] Add model-level validation (required fields, pattern matching, mutual exclusivity)
 - [ ] Implement specification extensions support (x- properties)
 - [ ] Add reference resolution utilities
@@ -129,13 +197,13 @@ For each model class, create idiomatic Kotlin DSL:
 - [ ] Test: Real-world OpenAPI examples (Stripe, GitHub, Petstore)
 - [ ] Test: Ensure 100% code coverage for all model classes
 
-### Phase 13: Documentation and Examples
+### Phase 14: Documentation and Examples
 - [ ] Add KDoc documentation to all public APIs
 - [ ] Create example OpenAPI documents using the DSL
 - [ ] Add validation error messages with helpful hints
 - [ ] Create user guide for the DSL
 
-### Phase 14: Performance and Optimization
+### Phase 15: Performance and Optimization
 - [ ] Benchmark serialization/deserialization performance
 - [ ] Optimize memory usage for large documents
 - [ ] Add lazy initialization where appropriate

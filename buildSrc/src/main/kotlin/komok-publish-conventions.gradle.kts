@@ -80,6 +80,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok OpenApi 3.2 DSL",
         "publishDescription" to "Model and DSL for OpenApi 3.2",
     ),
+    "komok-tech-api-dsl-ui" to mapOf(
+        "publishName" to "Komok OpenApi 3.2 DSL UI",
+        "publishDescription" to "Web UI renderer for OpenApi 3.2 documents",
+    ),
 )
 
 fun Project.getPublishName(): String = modules.getValue(name).getValue("publishName")
