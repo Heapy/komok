@@ -104,6 +104,12 @@ body {
     box-shadow: 0 2px 4px var(--shadow);
 }
 
+/* Add scroll margin to all sections and operations to prevent hiding behind sticky header */
+.content-section,
+.operation {
+    scroll-margin-top: calc(var(--header-height) + var(--spacing-md));
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;

@@ -158,6 +158,18 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
 }
 
 /**
+ * Sanitizes a path to create a valid HTML ID.
+ * Removes slashes, curly braces, and other special characters.
+ */
+private fun sanitizePathForId(path: String): String {
+    return path
+        .replace("/", "-")
+        .replace("{", "")
+        .replace("}", "")
+        .removePrefix("-")
+}
+
+/**
  * Renders an endpoint list item in the sidebar.
  */
 private fun UL.renderEndpointListItem(path: String, pathItem: io.heapy.komok.tech.api.dsl.PathItem) {
@@ -174,7 +186,7 @@ private fun UL.renderEndpointListItem(path: String, pathItem: io.heapy.komok.tec
 
     operations.forEach { (method, operation) ->
         li(classes = "endpoint-item") {
-            a(href = "#${method.lowercase()}-${path.replace("/", "-").removePrefix("-")}") {
+            a(href = "#${method.lowercase()}-${sanitizePathForId(path)}") {
                 span(classes = "method-badge method-${method.lowercase()}") { +method }
                 span(classes = "endpoint-path") { +path }
             }
@@ -307,7 +319,7 @@ private fun FlowContent.renderPathItem(path: String, pathItem: io.heapy.komok.te
  */
 private fun FlowContent.renderOperation(method: String, path: String, operation: io.heapy.komok.tech.api.dsl.Operation) {
     div(classes = "operation") {
-        id = "${method.lowercase()}-${path.replace("/", "-").removePrefix("-")}"
+        id = "${method.lowercase()}-${sanitizePathForId(path)}"
 
         div(classes = "operation-header") {
             span(classes = "method-badge method-${method.lowercase()}") { +method }
