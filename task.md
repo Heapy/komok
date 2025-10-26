@@ -89,11 +89,12 @@ These are simple objects without complex dependencies:
 - [x] Updated Operation object to include security field
 
 ### Phase 9: Components
-- [ ] Components object (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
-- [ ] Link object (operationRef, operationId, parameters, requestBody, description, server)
-- [ ] Test: Component reference resolution
-- [ ] Test: All component types
-- [ ] Test: Component naming patterns (^[a-zA-Z0-9._-]+$)
+- [x] Components object (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
+- [x] Link object (operationRef, operationId, parameters, requestBody, description, server)
+- [x] Test: All component types (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
+- [x] Test: Component naming patterns (^[a-zA-Z0-9._-]+$)
+- [x] Test: Link validation (operationRef XOR operationId)
+- [ ] TODO: Component reference resolution (deferred - requires full OpenAPI document context)
 
 ### Phase 10: Root OpenAPI Document
 - [ ] Info object (title, summary, description, termsOfService, contact, license, version)
