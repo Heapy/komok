@@ -1,6 +1,7 @@
 [versions]
 binary-compatibility-validator = "0.18.1"
 bouncycastle = "1.83"
+commonmark = "0.27.0"
 json-schema-validator = "1.5.8"
 junit = "6.0.2"
 kaml = "0.97.0"
@@ -20,6 +21,8 @@ slf4j = "2.0.17"
 
 [libraries]
 bouncycastle-bcpkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
+
+commonmark = { module = "org.commonmark:commonmark", version.ref = "commonmark" }
 
 json-schema-validator = { module = "com.networknt:json-schema-validator", version.ref = "json-schema-validator" }
 

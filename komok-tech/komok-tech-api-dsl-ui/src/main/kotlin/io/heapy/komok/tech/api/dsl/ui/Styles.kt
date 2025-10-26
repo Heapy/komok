@@ -321,9 +321,52 @@ body {
 .method-options { background-color: var(--method-options); }
 .method-trace { background-color: var(--method-trace); }
 
+/* ===== Tag Groups ===== */
+.tag-group {
+    margin-bottom: var(--spacing-xl);
+}
+
+.tag-name {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-primary);
+    font-weight: 600;
+    scroll-margin-top: calc(var(--header-height) + var(--spacing-md));
+}
+
+.tag-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+}
+
+.sidebar-tag-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.sidebar-tag-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-xs);
+    text-transform: capitalize;
+}
+
+.sidebar-tag-name a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: var(--spacing-xs) 0;
+    display: block;
+}
+
+.sidebar-tag-name a:hover {
+    color: var(--text-link);
+}
+
 /* ===== Operations ===== */
 .operation {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
     padding: var(--spacing-lg);
     background-color: var(--bg-secondary);
     border-radius: 8px;

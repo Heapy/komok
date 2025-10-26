@@ -32,6 +32,7 @@ tasks
 dependencies {
     implementation(projects.komokTech.komokTechApiDsl)
     implementation(libs.kotlinx.html)
+    implementation(libs.commonmark)
 
     testImplementation(libs.kotlinx.serialization.json)
     testImplementation(libs.logback)

@@ -132,13 +132,52 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
         }
     }
 
-    // Endpoints section
+    // Endpoints section - grouped by tags
     openapi.paths?.takeIf { it.isNotEmpty() }?.let { paths ->
         div(classes = "sidebar-section") {
             h3 { +"Endpoints" }
-            ul(classes = "endpoint-list") {
-                paths.forEach { (path, pathItem) ->
-                    renderEndpointListItem(path, pathItem)
+
+            // Group operations by tag for sidebar
+            val operationsByTag = mutableMapOf<String?, MutableList<Pair<String, io.heapy.komok.tech.api.dsl.PathItem>>>()
+
+            paths.forEach { (path, pathItem) ->
+                val operations = listOfNotNull(
+                    pathItem.get,
+                    pathItem.post,
+                    pathItem.put,
+                    pathItem.delete,
+                    pathItem.patch,
+                    pathItem.options,
+                    pathItem.head,
+                    pathItem.trace
+                )
+
+                operations.forEach { operation ->
+                    val tag = operation.tags?.firstOrNull()
+                    operationsByTag.getOrPut(tag) { mutableListOf() }.add(path to pathItem)
+                }
+            }
+
+            // Remove duplicates and render
+            val tagOrder = openapi.tags?.map { it.name } ?: emptyList()
+            val sortedTags = operationsByTag.keys.sortedBy { tag ->
+                val index = tagOrder.indexOf(tag)
+                if (index >= 0) index else Int.MAX_VALUE
+            }
+
+            sortedTags.forEach { tag ->
+                div(classes = "sidebar-tag-group") {
+                    if (tag != null) {
+                        p(classes = "sidebar-tag-name") {
+                            a(href = "#tag-$tag") { +tag }
+                        }
+                    }
+
+                    ul(classes = "endpoint-list") {
+                        operationsByTag[tag]?.distinctBy { it.first }?.forEach { (path, pathItem) ->
+                            renderEndpointListItem(path, pathItem)
+                        }
+                    }
                 }
             }
         }
@@ -205,8 +244,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
 
         openapi.info.description?.let { description ->
             div(classes = "description") {
-                // Render as markdown-like text
-                +description
+                markdown(description)
             }
         }
 
@@ -261,13 +299,61 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
         }
     }
 
-    // Paths/Endpoints section
+    // Paths/Endpoints section - grouped by tags
     openapi.paths?.takeIf { it.isNotEmpty() }?.let { paths ->
         section(classes = "content-section") {
             h2 { +"Endpoints" }
 
+            // Group operations by tag
+            val operationsByTag = mutableMapOf<String?, MutableList<Triple<String, String, io.heapy.komok.tech.api.dsl.Operation>>>()
+
             paths.forEach { (path, pathItem) ->
-                renderPathItem(path, pathItem)
+                val operations = listOfNotNull(
+                    pathItem.get?.let { Triple("GET", path, it) },
+                    pathItem.post?.let { Triple("POST", path, it) },
+                    pathItem.put?.let { Triple("PUT", path, it) },
+                    pathItem.delete?.let { Triple("DELETE", path, it) },
+                    pathItem.patch?.let { Triple("PATCH", path, it) },
+                    pathItem.options?.let { Triple("OPTIONS", path, it) },
+                    pathItem.head?.let { Triple("HEAD", path, it) },
+                    pathItem.trace?.let { Triple("TRACE", path, it) }
+                )
+
+                operations.forEach { (method, p, operation) ->
+                    val tag = operation.tags?.firstOrNull()
+                    operationsByTag.getOrPut(tag) { mutableListOf() }.add(Triple(method, p, operation))
+                }
+            }
+
+            // Render operations grouped by tag
+            val tagOrder = openapi.tags?.map { it.name } ?: emptyList()
+            val sortedTags = operationsByTag.keys.sortedBy { tag ->
+                val index = tagOrder.indexOf(tag)
+                if (index >= 0) index else Int.MAX_VALUE
+            }
+
+            sortedTags.forEach { tag ->
+                val tagInfo = openapi.tags?.find { it.name == tag }
+
+                div(classes = "tag-group") {
+                    if (tag != null) {
+                        h3(classes = "tag-name") {
+                            id = "tag-$tag"
+                            +tag
+                        }
+                        tagInfo?.description?.let { desc ->
+                            div(classes = "tag-description") {
+                                markdown(desc)
+                            }
+                        }
+                    } else {
+                        h3(classes = "tag-name") { +"Untagged" }
+                    }
+
+                    operationsByTag[tag]?.forEach { (method, path, operation) ->
+                        renderOperation(method, path, operation)
+                    }
+                }
             }
         }
     }
@@ -330,8 +416,10 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
             }
         }
 
-        operation.description?.let {
-            p(classes = "operation-description") { +it }
+        operation.description?.let { desc ->
+            div(classes = "operation-description") {
+                markdown(desc)
+            }
         }
 
         // Parameters
@@ -369,8 +457,10 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
             div(classes = "operation-section") {
                 h4 { +"Request Body" }
 
-                requestBody.description?.let {
-                    p { +it }
+                requestBody.description?.let { desc ->
+                    div {
+                        markdown(desc)
+                    }
                 }
 
                 if (requestBody.content != null) {
@@ -397,8 +487,10 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                             response.summary?.let {
                                 span(classes = "response-summary") { +it }
                             }
-                            response.description?.let {
-                                p(classes = "response-description") { +it }
+                            response.description?.let { desc ->
+                                div(classes = "response-description") {
+                                    markdown(desc)
+                                }
                             }
                         }
                     }
