@@ -613,14 +613,9 @@ class OpenAPIIntegrationTest {
         // Validate against OpenAPI 3.2 JSON Schema
         OpenAPISchemaValidator.validate(serialized)
 
-        // Verify round-trip: deserialize the serialized JSON and compare
+        // Verify round-trip: deserialize the serialized JSON and compare full object
         val roundTrip = compactJson.decodeFromString<OpenAPI>(serialized)
-        assertEquals(openAPI.openapi, roundTrip.openapi)
-        assertEquals(openAPI.info.title, roundTrip.info.title)
-        assertEquals(openAPI.info.version, roundTrip.info.version)
-        assertEquals(paths.size, roundTrip.paths!!.size)
-        assertEquals(components.schemas!!.size, roundTrip.components!!.schemas!!.size)
-        assertEquals(components.securitySchemes!!.size, roundTrip.components.securitySchemes!!.size)
+        assertEquals(openAPI, roundTrip, "Round-trip serialization should preserve all data")
 
         println("Successfully parsed, serialized, and validated Petstore OpenAPI document")
         println("Paths: ${paths.size}")
