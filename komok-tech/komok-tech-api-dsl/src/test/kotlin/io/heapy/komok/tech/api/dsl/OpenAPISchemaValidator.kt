@@ -78,6 +78,17 @@ val compactJson = Json {
 }
 
 /**
+ * JSON instance for pretty-printed serialization (for manual inspection).
+ */
+val prettyJson = Json {
+    prettyPrint = true
+    prettyPrintIndent = "  "
+    encodeDefaults = false
+    explicitNulls = false
+    ignoreUnknownKeys = true
+}
+
+/**
  * Extension function to validate a JsonElement against OpenAPI schema.
  */
 fun JsonElement.validateOpenAPI() {

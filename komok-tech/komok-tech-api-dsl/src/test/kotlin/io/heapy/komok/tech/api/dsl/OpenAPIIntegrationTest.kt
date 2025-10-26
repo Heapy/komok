@@ -622,4 +622,83 @@ class OpenAPIIntegrationTest {
         println("Schemas: ${components.schemas!!.size}")
         println("Security Schemes: ${components.securitySchemes!!.size}")
     }
+
+    @Test
+    fun `should generate comprehensive OpenAPI example for manual verification`() {
+        // Create comprehensive API document with all major features
+        val openAPI = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Comprehensive Example API",
+                version = "2.1.0",
+                summary = "Complete OpenAPI 3.2 demonstration",
+                description = "Demonstrates all OpenAPI 3.2 features",
+                contact = Contact(name = "API Team", email = "api@example.com"),
+                license = License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0.html")
+            ),
+            servers = listOf(
+                Server(url = "https://api.example.com/v2", description = "Production"),
+                Server(url = "https://sandbox.example.com/v2", description = "Sandbox")
+            ),
+            paths = paths(
+                "/users" to PathItem(
+                    get = Operation(
+                        operationId = "listUsers",
+                        summary = "List users",
+                        responses = responses(
+                            "200" to Response(description = "Success")
+                        )
+                    )
+                )
+            ),
+            components = Components(
+                schemas = mapOf(
+                    "User" to Schema(buildJsonObject {
+                        put("type", "object")
+                        put("properties", buildJsonObject {
+                            put("id", buildJsonObject { put("type", "string") })
+                            put("name", buildJsonObject { put("type", "string") })
+                        })
+                    })
+                ),
+                securitySchemes = mapOf(
+                    "oauth2" to SecurityScheme.oauth2(
+                        flows = OAuthFlows(
+                            authorizationCode = OAuthFlow.AuthorizationCode(
+                                authorizationUrl = "https://auth.example.com/authorize",
+                                tokenUrl = "https://auth.example.com/token",
+                                scopes = mapOf("read" to "Read access", "write" to "Write access")
+                            )
+                        )
+                    ),
+                    "api_key" to SecurityScheme.apiKey(name = "X-API-Key", location = ApiKeyLocation.HEADER),
+                    "bearer" to SecurityScheme.http(scheme = "bearer", bearerFormat = "JWT"),
+                    "mutual_tls" to SecurityScheme.mutualTLS(),
+                    "openid" to SecurityScheme.openIdConnect(openIdConnectUrl = "https://auth.example.com/.well-known/openid-configuration")
+                )
+            )
+        )
+
+        // Serialize to pretty JSON
+        val json = prettyJson.encodeToString(openAPI)
+
+        // Write to file
+        val outputFile = java.io.File("build/comprehensive-openapi-example.json")
+        outputFile.parentFile.mkdirs()
+        outputFile.writeText(json)
+
+        // Validate
+        OpenAPISchemaValidator.validate(json)
+
+        // Verify round-trip
+        val deserialized = compactJson.decodeFromString<OpenAPI>(json)
+        assertEquals(openAPI, deserialized)
+
+        // Print summary
+        println("=".repeat(80))
+        println("Generated: ${outputFile.absolutePath}")
+        println("OpenAPI: ${openAPI.info.title} v${openAPI.info.version}")
+        println("Security schemes: ${openAPI.components?.securitySchemes?.size}")
+        println("=".repeat(80))
+    }
 }
