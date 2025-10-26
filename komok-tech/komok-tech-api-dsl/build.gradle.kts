@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.kaml)
 
     testImplementation(libs.logback)
+    testImplementation(projects.komokTech.komokTechLogging)
     testImplementation(libs.json.schema.validator)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
