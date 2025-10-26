@@ -270,16 +270,8 @@ class OpenAPIIntegrationTest {
         // Deserialize back
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
 
-        // Verify round-trip
-        assertEquals("3.2.0", deserialized.openapi)
-        assertEquals("Pet Store API", deserialized.info.title)
-        assertEquals("1.0.0", deserialized.info.version)
-        assertEquals(2, deserialized.servers?.size)
-        assertEquals(3, deserialized.tags?.size)
-        assertEquals(2, deserialized.paths?.size)
-        assertNotNull(deserialized.components)
-        assertEquals(3, deserialized.components?.schemas?.size)
-        assertEquals(2, deserialized.components?.securitySchemes?.size)
+        // Verify round-trip with full object equality
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
 
         // Validate against JSON Schema
         OpenAPISchemaValidator.validate(json)
@@ -309,10 +301,9 @@ class OpenAPIIntegrationTest {
         // Validate against JSON Schema
         OpenAPISchemaValidator.validate(json)
 
-        // Verify round-trip
+        // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
-        assertEquals("3.2.0", deserialized.openapi)
-        assertEquals("Minimal API", deserialized.info.title)
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
     }
 
     @Test
@@ -354,10 +345,9 @@ class OpenAPIIntegrationTest {
         // Validate against JSON Schema
         OpenAPISchemaValidator.validate(json)
 
-        // Verify round-trip
+        // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
-        assertEquals(1, deserialized.webhooks?.size)
-        assertNotNull(deserialized.webhooks?.get("newPet"))
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
     }
 
     @Test
@@ -420,12 +410,9 @@ class OpenAPIIntegrationTest {
         // Validate against JSON Schema
         OpenAPISchemaValidator.validate(json)
 
-        // Verify structure
+        // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
-        assertEquals(2, deserialized.components?.schemas?.size)
-        assertEquals(2, deserialized.components?.responses?.size)
-        assertEquals(1, deserialized.components?.parameters?.size)
-        assertEquals(1, deserialized.components?.securitySchemes?.size)
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
     }
 
     @Test
@@ -541,10 +528,9 @@ class OpenAPIIntegrationTest {
         log.info("Generated OpenAPI Document:")
         log.info(json)
 
-        // Verify deserialization
+        // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
-        assertEquals("3.2.0", deserialized.openapi)
-        assertEquals("Comprehensive API", deserialized.info.title)
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
     }
 
     @Test
@@ -691,9 +677,9 @@ class OpenAPIIntegrationTest {
         // Validate
         OpenAPISchemaValidator.validate(json)
 
-        // Verify round-trip
+        // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
-        assertEquals(openAPI, deserialized)
+        assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
 
         // Log summary
         log.info("=".repeat(80))
