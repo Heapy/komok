@@ -71,13 +71,14 @@ These are simple objects without complex dependencies:
 - [ ] TODO: Add Link support (deferred to later phase)
 
 ### Phase 7: Operations and Paths
-- [ ] Operation object (tags, summary, description, externalDocs, operationId, parameters, requestBody, responses, callbacks, deprecated, security, servers)
-- [ ] PathItem object ($ref, summary, description, servers, parameters, additionalOperations, get, put, post, delete, options, head, patch, trace, query)
-- [ ] Paths container object (path pattern validation)
-- [ ] Callback object
-- [ ] Test: All HTTP methods
-- [ ] Test: Path patterns and parameters
-- [ ] Test: Callback definitions
+- [x] Operation object (tags, summary, description, externalDocs, operationId, parameters, requestBody, responses, callbacks, deprecated, servers)
+- [x] PathItem object ($ref, summary, description, servers, parameters, additionalOperations, get, put, post, delete, options, head, patch, trace, query)
+- [x] Paths container object (path pattern validation)
+- [x] Callback object (typealias to Map<String, PathItem>)
+- [x] Test: All HTTP methods (GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH, TRACE, QUERY)
+- [x] Test: Path patterns and parameters
+- [x] Test: Callback definitions
+- [ ] TODO: Add security support (deferred to Phase 8)
 
 ### Phase 8: Security Modeling
 - [ ] OAuthFlows objects (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
