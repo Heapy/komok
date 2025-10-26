@@ -554,10 +554,15 @@ class ParameterTest {
         val json = """{"name":"limit","in":"query","schema":{"type":"integer"},"example":20}"""
         val parameter = compactJson.decodeFromString<Parameter>(json)
 
-        assertEquals("limit", parameter.name)
-        assertEquals(ParameterLocation.QUERY, parameter.location)
-        assertEquals(Schema(buildJsonObject { put("type", "integer") }), parameter.schema)
-        assertEquals(JsonPrimitive(20), parameter.example)
+        assertEquals(
+            Parameter(
+                name = "limit",
+                location = ParameterLocation.QUERY,
+                schema = Schema(buildJsonObject { put("type", "integer") }),
+                example = JsonPrimitive(20)
+            ),
+            parameter
+        )
     }
 
     @Test
@@ -565,9 +570,18 @@ class ParameterTest {
         val json = """{"name":"userId","in":"path","required":true,"schema":{"type":"string","format":"uuid"}}"""
         val parameter = compactJson.decodeFromString<Parameter>(json)
 
-        assertEquals("userId", parameter.name)
-        assertEquals(ParameterLocation.PATH, parameter.location)
-        assertEquals(true, parameter.required)
+        assertEquals(
+            Parameter(
+                name = "userId",
+                location = ParameterLocation.PATH,
+                required = true,
+                schema = Schema(buildJsonObject {
+                    put("type", "string")
+                    put("format", "uuid")
+                })
+            ),
+            parameter
+        )
     }
 
     // Round-trip Tests

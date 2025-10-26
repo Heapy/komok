@@ -199,9 +199,14 @@ class InfoTest {
         val json = """{"title":"Test API","version":"1.0.0","summary":"Test"}"""
         val info = compactJson.decodeFromString<Info>(json)
 
-        assertEquals("Test API", info.title)
-        assertEquals("1.0.0", info.version)
-        assertEquals("Test", info.summary)
+        assertEquals(
+            Info(
+                title = "Test API",
+                version = "1.0.0",
+                summary = "Test"
+            ),
+            info
+        )
     }
 
     @Test
@@ -209,9 +214,15 @@ class InfoTest {
         val json = """{"title":"API","version":"1.0.0","contact":{"name":"Support"},"license":{"name":"MIT"}}"""
         val info = compactJson.decodeFromString<Info>(json)
 
-        assertEquals("API", info.title)
-        assertEquals("Support", info.contact?.name)
-        assertEquals("MIT", info.license?.name)
+        assertEquals(
+            Info(
+                title = "API",
+                version = "1.0.0",
+                contact = Contact(name = "Support"),
+                license = License(name = "MIT")
+            ),
+            info
+        )
     }
 
     // Round-trip Tests

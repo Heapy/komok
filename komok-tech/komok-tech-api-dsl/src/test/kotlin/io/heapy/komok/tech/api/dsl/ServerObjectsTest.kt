@@ -73,8 +73,13 @@ class ServerObjectsTest {
         val json = """{"default":"production","enum":["production","staging"]}"""
         val serverVariable = compactJson.decodeFromString<ServerVariable>(json)
 
-        assertEquals("production", serverVariable.default)
-        assertEquals(listOf("production", "staging"), serverVariable.enum)
+        assertEquals(
+            ServerVariable(
+                default = "production",
+                enum = listOf("production", "staging")
+            ),
+            serverVariable
+        )
     }
 
     @Test
@@ -175,8 +180,13 @@ class ServerObjectsTest {
         val json = """{"url":"https://api.example.com","description":"Production"}"""
         val server = compactJson.decodeFromString<Server>(json)
 
-        assertEquals("https://api.example.com", server.url)
-        assertEquals("Production", server.description)
+        assertEquals(
+            Server(
+                url = "https://api.example.com",
+                description = "Production"
+            ),
+            server
+        )
     }
 
     @Test

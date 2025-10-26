@@ -183,8 +183,13 @@ class LinkTest {
         val json = """{"operationId":"getUserByName","parameters":{"username":"${'$'}response.body#/username"}}"""
         val link = compactJson.decodeFromString<Link>(json)
 
-        assertEquals("getUserByName", link.operationId)
-        assertEquals("\$response.body#/username", link.parameters?.get("username"))
+        assertEquals(
+            Link(
+                operationId = "getUserByName",
+                parameters = mapOf("username" to "\$response.body#/username")
+            ),
+            link
+        )
     }
 
     @Test

@@ -339,9 +339,13 @@ class SecuritySchemeTest {
         val json = """{"type":"apiKey","name":"api_key","in":"header"}"""
         val securityScheme = compactJson.decodeFromString<SecurityScheme>(json)
 
-        assertEquals(SecuritySchemeType.API_KEY, securityScheme.type)
-        assertEquals("api_key", securityScheme.name)
-        assertEquals(ApiKeyLocation.HEADER, securityScheme.location)
+        assertEquals(
+            SecurityScheme.apiKey(
+                name = "api_key",
+                location = ApiKeyLocation.HEADER
+            ),
+            securityScheme
+        )
     }
 
     @Test
@@ -349,9 +353,13 @@ class SecuritySchemeTest {
         val json = """{"type":"http","scheme":"bearer","bearerFormat":"JWT"}"""
         val securityScheme = compactJson.decodeFromString<SecurityScheme>(json)
 
-        assertEquals(SecuritySchemeType.HTTP, securityScheme.type)
-        assertEquals("bearer", securityScheme.scheme)
-        assertEquals("JWT", securityScheme.bearerFormat)
+        assertEquals(
+            SecurityScheme.http(
+                scheme = "bearer",
+                bearerFormat = "JWT"
+            ),
+            securityScheme
+        )
     }
 
     @Test
@@ -359,8 +367,12 @@ class SecuritySchemeTest {
         val json = """{"type":"mutualTLS","description":"mTLS auth"}"""
         val securityScheme = compactJson.decodeFromString<SecurityScheme>(json)
 
-        assertEquals(SecuritySchemeType.MUTUAL_TLS, securityScheme.type)
-        assertEquals("mTLS auth", securityScheme.description)
+        assertEquals(
+            SecurityScheme.mutualTLS(
+                description = "mTLS auth"
+            ),
+            securityScheme
+        )
     }
 
     // Round-trip Tests
@@ -491,9 +503,13 @@ class SecuritySchemeTest {
         val json = """{"petstore_auth":["write:pets","read:pets"],"api_key":[]}"""
         val requirement = compactJson.decodeFromString<SecurityRequirement>(json)
 
-        assertEquals(2, requirement.size)
-        assertEquals(listOf("write:pets", "read:pets"), requirement["petstore_auth"])
-        assertEquals(emptyList<String>(), requirement["api_key"])
+        assertEquals(
+            securityRequirement(
+                "petstore_auth" to listOf("write:pets", "read:pets"),
+                "api_key" to emptyList()
+            ),
+            requirement
+        )
     }
 
     @Test

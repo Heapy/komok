@@ -348,10 +348,14 @@ class OperationTest {
         val json = """{"summary":"List users","operationId":"listUsers","responses":{"200":{"description":"Success"}}}"""
         val operation = compactJson.decodeFromString<Operation>(json)
 
-        assertEquals("List users", operation.summary)
-        assertEquals("listUsers", operation.operationId)
-        assertEquals(1, operation.responses.size)
-        assertEquals("Success", operation.responses["200"]?.description)
+        assertEquals(
+            Operation(
+                summary = "List users",
+                operationId = "listUsers",
+                responses = responses("200" to Response(description = "Success"))
+            ),
+            operation
+        )
     }
 
     @Test

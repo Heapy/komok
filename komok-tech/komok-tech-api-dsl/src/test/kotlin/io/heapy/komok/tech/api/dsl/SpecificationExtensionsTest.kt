@@ -17,10 +17,14 @@ class SpecificationExtensionsTest {
         )
 
         // Then
-        assertEquals(3, extensions.size)
-        assertEquals(JsonPrimitive("value"), extensions["x-custom"])
-        assertEquals(JsonPrimitive(123), extensions["x-internal-id"])
-        assertEquals(JsonPrimitive(true), extensions["x-feature-flag"])
+        assertEquals(
+            mapOf(
+                "x-custom" to JsonPrimitive("value"),
+                "x-internal-id" to JsonPrimitive(123),
+                "x-feature-flag" to JsonPrimitive(true)
+            ),
+            extensions
+        )
     }
 
     @Test

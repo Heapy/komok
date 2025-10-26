@@ -253,10 +253,18 @@ class RequestBodyTest {
         val json = """{"content":{"application/json":{"schema":{"type":"object"}}},"description":"User data","required":true}"""
         val requestBody = compactJson.decodeFromString<RequestBody>(json)
 
-        assertEquals("User data", requestBody.description)
-        assertEquals(true, requestBody.required)
-        assertEquals(1, requestBody.content.size)
-        assertTrue(requestBody.content.containsKey("application/json"))
+        assertEquals(
+            RequestBody(
+                content = mapOf(
+                    "application/json" to MediaType(
+                        schema = Schema(buildJsonObject { put("type", "object") })
+                    )
+                ),
+                description = "User data",
+                required = true
+            ),
+            requestBody
+        )
     }
 
     @Test

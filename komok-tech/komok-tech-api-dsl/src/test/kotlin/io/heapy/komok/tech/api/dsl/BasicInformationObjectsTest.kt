@@ -52,8 +52,13 @@ class BasicInformationObjectsTest {
         val json = """{"name":"Support","email":"support@example.com"}"""
         val contact = compactJson.decodeFromString<Contact>(json)
 
-        assertEquals("Support", contact.name)
-        assertEquals("support@example.com", contact.email)
+        assertEquals(
+            Contact(
+                name = "Support",
+                email = "support@example.com"
+            ),
+            contact
+        )
     }
 
     @Test
@@ -236,8 +241,13 @@ class BasicInformationObjectsTest {
         val json = $$"""{"$ref":"#/components/schemas/Pet","summary":"Pet reference"}"""
         val reference = compactJson.decodeFromString<Reference>(json)
 
-        assertEquals("#/components/schemas/Pet", reference.ref)
-        assertEquals("Pet reference", reference.summary)
+        assertEquals(
+            Reference(
+                ref = "#/components/schemas/Pet",
+                summary = "Pet reference"
+            ),
+            reference
+        )
     }
 
     @Test

@@ -316,10 +316,14 @@ class ResponseTest {
             "500" to Response(description = "Internal Server Error")
         )
 
-        assertEquals(3, responses.size)
-        assertEquals("OK", responses["200"]?.description)
-        assertEquals("Not Found", responses["404"]?.description)
-        assertEquals("Internal Server Error", responses["500"]?.description)
+        assertEquals(
+            mapOf(
+                "200" to Response(description = "OK"),
+                "404" to Response(description = "Not Found"),
+                "500" to Response(description = "Internal Server Error")
+            ),
+            responses
+        )
     }
 
     @Test
@@ -330,10 +334,14 @@ class ResponseTest {
             "5XX" to Response(description = "Server Error")
         )
 
-        assertEquals(3, responses.size)
-        assertEquals("Success", responses["2XX"]?.description)
-        assertEquals("Client Error", responses["4XX"]?.description)
-        assertEquals("Server Error", responses["5XX"]?.description)
+        assertEquals(
+            mapOf(
+                "2XX" to Response(description = "Success"),
+                "4XX" to Response(description = "Client Error"),
+                "5XX" to Response(description = "Server Error")
+            ),
+            responses
+        )
     }
 
     @Test
@@ -343,9 +351,13 @@ class ResponseTest {
             "default" to Response(description = "Unexpected error")
         )
 
-        assertEquals(2, responses.size)
-        assertEquals("OK", responses["200"]?.description)
-        assertEquals("Unexpected error", responses["default"]?.description)
+        assertEquals(
+            mapOf(
+                "200" to Response(description = "OK"),
+                "default" to Response(description = "Unexpected error")
+            ),
+            responses
+        )
     }
 
     @Test
@@ -490,9 +502,13 @@ class ResponseTest {
         val json = """{"200":{"description":"OK"},"404":{"description":"Not Found"}}"""
         val responses = compactJson.decodeFromString<Responses>(json)
 
-        assertEquals(2, responses.size)
-        assertEquals("OK", responses["200"]?.description)
-        assertEquals("Not Found", responses["404"]?.description)
+        assertEquals(
+            responses(
+                "200" to Response(description = "OK"),
+                "404" to Response(description = "Not Found")
+            ),
+            responses
+        )
     }
 
     @Test

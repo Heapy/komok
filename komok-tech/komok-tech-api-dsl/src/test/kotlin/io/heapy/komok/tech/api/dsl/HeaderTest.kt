@@ -153,9 +153,14 @@ class HeaderTest {
         val json = """{"description":"Rate limit","required":true,"schema":{"type":"integer"}}"""
         val header = compactJson.decodeFromString<Header>(json)
 
-        assertEquals("Rate limit", header.description)
-        assertEquals(true, header.required)
-        assertEquals(Schema(buildJsonObject { put("type", "integer") }), header.schema)
+        assertEquals(
+            Header(
+                description = "Rate limit",
+                required = true,
+                schema = Schema(buildJsonObject { put("type", "integer") })
+            ),
+            header
+        )
     }
 
     @Test
