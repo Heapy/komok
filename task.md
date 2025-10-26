@@ -78,15 +78,15 @@ These are simple objects without complex dependencies:
 - [x] Test: All HTTP methods (GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH, TRACE, QUERY)
 - [x] Test: Path patterns and parameters
 - [x] Test: Callback definitions
-- [ ] TODO: Add security support (deferred to Phase 8)
 
 ### Phase 8: Security Modeling
-- [ ] OAuthFlows objects (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
-- [ ] SecurityScheme object (type: apiKey, http, mutualTLS, oauth2, openIdConnect)
-- [ ] SecurityRequirement object
-- [ ] Test: All security scheme types
-- [ ] Test: OAuth 2.0 flows
-- [ ] Test: OpenID Connect configuration
+- [x] OAuthFlows objects (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
+- [x] SecurityScheme object (type: apiKey, http, mutualTLS, oauth2, openIdConnect)
+- [x] SecurityRequirement object
+- [x] Test: All security scheme types
+- [x] Test: OAuth 2.0 flows
+- [x] Test: OpenID Connect configuration
+- [x] Updated Operation object to include security field
 
 ### Phase 9: Components
 - [ ] Components object (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)

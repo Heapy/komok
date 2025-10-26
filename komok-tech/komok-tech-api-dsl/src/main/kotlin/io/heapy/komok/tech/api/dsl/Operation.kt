@@ -6,7 +6,6 @@ import kotlinx.serialization.json.JsonElement
 /**
  * Describes a single API operation on a path.
  *
- * Note: Security requirements are not yet implemented (deferred to Phase 8).
  * Note: Callbacks reference PathItem, which creates a circular dependency, so callback paths are PathItem objects.
  *
  * @property tags A list of tags for API documentation control
@@ -19,6 +18,7 @@ import kotlinx.serialization.json.JsonElement
  * @property responses The list of possible responses as they are returned from executing this operation (required)
  * @property callbacks A map of possible out-of band callbacks related to the parent operation
  * @property deprecated Declares this operation to be deprecated (default: false)
+ * @property security A declaration of which security mechanisms can be used for this operation
  * @property servers An alternative server array to service this operation
  * @property extensions Specification extensions (x- prefixed properties)
  *
@@ -36,8 +36,7 @@ data class Operation(
     val requestBody: RequestBody? = null,
     val callbacks: Map<String, Callback>? = null,
     val deprecated: Boolean = false,
-    // TODO: Add security support in Phase 8
-    // val security: List<SecurityRequirement>? = null,
+    val security: List<SecurityRequirement>? = null,
     val servers: List<Server>? = null,
     override val extensions: Map<String, JsonElement>? = null,
 ) : OpenAPIObject, SupportsExtensions {
