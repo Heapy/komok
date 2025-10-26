@@ -63,11 +63,12 @@ These are simple objects without complex dependencies:
 - [ ] TODO: Add Referenceable support for MediaType, Example, and Header (deferred to later phase)
 
 ### Phase 6: Request and Response Modeling
-- [ ] RequestBody object (description, content, required)
-- [ ] Response object (summary, description, headers, content, links)
-- [ ] Responses container object (default, status code patterns)
-- [ ] Test: Request/Response bodies with various content types
-- [ ] Test: Response status code patterns (1XX, 2XX, 3XX, 4XX, 5XX)
+- [x] RequestBody object (description, content, required)
+- [x] Response object (summary, description, headers, content, links)
+- [x] Responses container object (default, status code patterns)
+- [x] Test: Request/Response bodies with various content types
+- [x] Test: Response status code patterns (1XX, 2XX, 3XX, 4XX, 5XX)
+- [ ] TODO: Add Link support (deferred to later phase)
 
 ### Phase 7: Operations and Paths
 - [ ] Operation object (tags, summary, description, externalDocs, operationId, parameters, requestBody, responses, callbacks, deprecated, security, servers)
