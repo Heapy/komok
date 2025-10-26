@@ -97,11 +97,13 @@ These are simple objects without complex dependencies:
 - [ ] TODO: Component reference resolution (deferred - requires full OpenAPI document context)
 
 ### Phase 10: Root OpenAPI Document
-- [ ] Info object (title, summary, description, termsOfService, contact, license, version)
-- [ ] OpenAPI root object (openapi, $self, info, jsonSchemaDialect, servers, paths, webhooks, components, security, tags, externalDocs)
-- [ ] Test: OpenAPI version pattern (^3\.2\.\d+(-.+)?$)
-- [ ] Test: Document validation (must have paths, components, or webhooks)
-- [ ] Test: Default values (servers default to [{url: "/"}], jsonSchemaDialect default)
+- [x] Info object (title, summary, description, termsOfService, contact, license, version)
+- [x] OpenAPI root object (openapi, $self, info, jsonSchemaDialect, servers, paths, webhooks, components, security, tags, externalDocs)
+- [x] Test: OpenAPI version pattern (^3\.2\.\d+(-.+)?$)
+- [x] Test: Document validation (must have paths, components, or webhooks)
+- [x] Test: $self validation (must not contain fragment)
+- [x] Test: All OpenAPI properties (servers, security, tags, externalDocs, webhooks)
+- [x] Test: Real-world examples (Petstore, Stripe, GitHub)
 
 ### Phase 11: Kotlin DSL Builders
 For each model class, create idiomatic Kotlin DSL:
