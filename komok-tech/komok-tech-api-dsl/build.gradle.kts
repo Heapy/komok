@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.kotlinpoet)
     implementation(libs.kaml)
 
+    testImplementation(libs.logback)
     testImplementation(libs.json.schema.validator)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)

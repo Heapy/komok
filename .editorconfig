@@ -15,6 +15,9 @@ ij_smart_tabs = false
 ij_visual_guides = 80
 ij_wrap_on_typing = false
 
+[*.{json,yaml,yml}]
+indent_size = 2
+
 [*.kt]
 ij_kotlin_align_multiline_parameters = true
 ij_kotlin_align_multiline_parameters_in_calls = true
