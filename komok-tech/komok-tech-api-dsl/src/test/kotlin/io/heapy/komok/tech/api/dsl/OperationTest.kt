@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -36,8 +37,8 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("List users"))
-        assert(json.contains("Returns a list of all users"))
+        assertTrue(json.contains("List users"))
+        assertTrue(json.contains("Returns a list of all users"))
     }
 
     @Test
@@ -51,8 +52,8 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("users"))
-        assert(json.contains("admin"))
+        assertTrue(json.contains("users"))
+        assertTrue(json.contains("admin"))
     }
 
     @Test
@@ -84,8 +85,8 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("externalDocs"))
-        assert(json.contains("Find more info here"))
+        assertTrue(json.contains("externalDocs"))
+        assertTrue(json.contains("Find more info here"))
     }
 
     // Parameters Tests
@@ -122,9 +123,9 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("userId"))
-        assert(json.contains("includeDeleted"))
-        assert(json.contains("parameters"))
+        assertTrue(json.contains("userId"))
+        assertTrue(json.contains("includeDeleted"))
+        assertTrue(json.contains("parameters"))
     }
 
     // Request Body Tests
@@ -154,8 +155,8 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("requestBody"))
-        assert(json.contains("User to create"))
+        assertTrue(json.contains("requestBody"))
+        assertTrue(json.contains("User to create"))
     }
 
     // Responses Tests
@@ -180,10 +181,10 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("200"))
-        assert(json.contains("400"))
-        assert(json.contains("404"))
-        assert(json.contains("500"))
+        assertTrue(json.contains("200"))
+        assertTrue(json.contains("400"))
+        assertTrue(json.contains("404"))
+        assertTrue(json.contains("500"))
     }
 
     @Test
@@ -198,9 +199,9 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("204"))
-        assert(json.contains("4XX"))
-        assert(json.contains("5XX"))
+        assertTrue(json.contains("204"))
+        assertTrue(json.contains("4XX"))
+        assertTrue(json.contains("5XX"))
     }
 
     // Deprecated Flag Tests
@@ -216,7 +217,7 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("\"deprecated\":true"))
+        assertTrue(json.contains("\"deprecated\":true"))
     }
 
     @Test
@@ -231,7 +232,7 @@ class OperationTest {
         val json = compactJson.encodeToString(operation)
 
         // deprecated should not appear when false (default value)
-        assert(!json.contains("deprecated"))
+        assertTrue(!json.contains("deprecated"))
     }
 
     // Servers Tests
@@ -256,9 +257,9 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("servers"))
-        assert(json.contains("api-v2.example.com"))
-        assert(json.contains("staging-api.example.com"))
+        assertTrue(json.contains("servers"))
+        assertTrue(json.contains("api-v2.example.com"))
+        assertTrue(json.contains("staging-api.example.com"))
     }
 
     // Callbacks Tests
@@ -298,8 +299,8 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("callbacks"))
-        assert(json.contains("orderUpdate"))
+        assertTrue(json.contains("callbacks"))
+        assertTrue(json.contains("orderUpdate"))
     }
 
     // Specification Extensions Tests
@@ -318,9 +319,9 @@ class OperationTest {
         )
         val json = compactJson.encodeToString(operation)
 
-        assert(json.contains("x-internal-id"))
-        assert(json.contains("op-123"))
-        assert(json.contains("x-rate-limit"))
+        assertTrue(json.contains("x-internal-id"))
+        assertTrue(json.contains("op-123"))
+        assertTrue(json.contains("x-rate-limit"))
     }
 
     // Validation Tests

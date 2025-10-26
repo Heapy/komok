@@ -3,6 +3,7 @@ package io.heapy.komok.tech.api.dsl
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class InfoTest {
@@ -30,9 +31,9 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("\"title\":\"Pet Store API\""))
-        assert(json.contains("\"version\":\"1.0.0\""))
-        assert(json.contains("\"summary\":\"A sample pet store API\""))
+        assertTrue(json.contains("\"title\":\"Pet Store API\""))
+        assertTrue(json.contains("\"version\":\"1.0.0\""))
+        assertTrue(json.contains("\"summary\":\"A sample pet store API\""))
     }
 
     @Test
@@ -44,8 +45,8 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("description"))
-        assert(json.contains("comprehensive API"))
+        assertTrue(json.contains("description"))
+        assertTrue(json.contains("comprehensive API"))
     }
 
     @Test
@@ -57,8 +58,8 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("termsOfService"))
-        assert(json.contains("https://example.com/terms"))
+        assertTrue(json.contains("termsOfService"))
+        assertTrue(json.contains("https://example.com/terms"))
     }
 
     @Test
@@ -74,9 +75,9 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("contact"))
-        assert(json.contains("API Support"))
-        assert(json.contains("support@example.com"))
+        assertTrue(json.contains("contact"))
+        assertTrue(json.contains("API Support"))
+        assertTrue(json.contains("support@example.com"))
     }
 
     @Test
@@ -91,8 +92,8 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("license"))
-        assert(json.contains("Apache 2.0"))
+        assertTrue(json.contains("license"))
+        assertTrue(json.contains("Apache 2.0"))
     }
 
     @Test
@@ -107,8 +108,8 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("MIT"))
-        assert(json.contains("identifier"))
+        assertTrue(json.contains("MIT"))
+        assertTrue(json.contains("identifier"))
     }
 
     @Test
@@ -131,12 +132,12 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("Comprehensive API"))
-        assert(json.contains("3.0.0"))
-        assert(json.contains("complete example"))
-        assert(json.contains("terms"))
-        assert(json.contains("API Team"))
-        assert(json.contains("Apache 2.0"))
+        assertTrue(json.contains("Comprehensive API"))
+        assertTrue(json.contains("3.0.0"))
+        assertTrue(json.contains("complete example"))
+        assertTrue(json.contains("terms"))
+        assertTrue(json.contains("API Team"))
+        assertTrue(json.contains("Apache 2.0"))
     }
 
     @Test
@@ -151,9 +152,9 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("x-api-id"))
-        assert(json.contains("api-12345"))
-        assert(json.contains("x-audience"))
+        assertTrue(json.contains("x-api-id"))
+        assertTrue(json.contains("api-12345"))
+        assertTrue(json.contains("x-audience"))
     }
 
     // Version Format Tests
@@ -166,7 +167,7 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("\"version\":\"1.2.3\""))
+        assertTrue(json.contains("\"version\":\"1.2.3\""))
     }
 
     @Test
@@ -177,7 +178,7 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("2.0.0-beta.1"))
+        assertTrue(json.contains("2.0.0-beta.1"))
     }
 
     @Test
@@ -188,7 +189,7 @@ class InfoTest {
         )
         val json = compactJson.encodeToString(info)
 
-        assert(json.contains("1.0.0+20130313144700"))
+        assertTrue(json.contains("1.0.0+20130313144700"))
     }
 
     // Deserialization Tests

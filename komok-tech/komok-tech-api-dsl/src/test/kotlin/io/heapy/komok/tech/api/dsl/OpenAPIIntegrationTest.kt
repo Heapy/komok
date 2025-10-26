@@ -6,6 +6,7 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 /**
@@ -256,16 +257,16 @@ class OpenAPIIntegrationTest {
 
         // Verify JSON is not empty
         assertNotNull(json)
-        assert(json.isNotEmpty())
+        assertTrue(json.isNotEmpty())
 
         // Verify it contains expected structure
-        assert(json.contains("\"openapi\":\"3.2.0\""))
-        assert(json.contains("\"title\":\"Pet Store API\""))
-        assert(json.contains("\"/pets\""))
-        assert(json.contains("\"/pets/{petId}\""))
-        assert(json.contains("\"components\""))
-        assert(json.contains("\"Pet\""))
-        assert(json.contains("\"securitySchemes\""))
+        assertTrue(json.contains("\"openapi\":\"3.2.0\""))
+        assertTrue(json.contains("\"title\":\"Pet Store API\""))
+        assertTrue(json.contains("\"/pets\""))
+        assertTrue(json.contains("\"/pets/{petId}\""))
+        assertTrue(json.contains("\"components\""))
+        assertTrue(json.contains("\"Pet\""))
+        assertTrue(json.contains("\"securitySchemes\""))
 
         // Deserialize back
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
@@ -568,10 +569,10 @@ class OpenAPIIntegrationTest {
         // Verify paths are parsed
         val paths = openAPI.paths
         assertNotNull(paths)
-        assert(paths!!.containsKey("/pet"))
-        assert(paths.containsKey("/pet/findByStatus"))
-        assert(paths.containsKey("/pet/{petId}"))
-        assert(paths.containsKey("/user"))
+        assertTrue(paths!!.containsKey("/pet"))
+        assertTrue(paths.containsKey("/pet/findByStatus"))
+        assertTrue(paths.containsKey("/pet/{petId}"))
+        assertTrue(paths.containsKey("/user"))
 
         // Verify operations are parsed
         val petPath = paths["/pet"]
@@ -585,14 +586,14 @@ class OpenAPIIntegrationTest {
         val components = openAPI.components
         assertNotNull(components)
         assertNotNull(components!!.schemas)
-        assert(components.schemas!!.containsKey("Pet"))
-        assert(components.schemas!!.containsKey("Order"))
-        assert(components.schemas!!.containsKey("User"))
+        assertTrue(components.schemas!!.containsKey("Pet"))
+        assertTrue(components.schemas!!.containsKey("Order"))
+        assertTrue(components.schemas!!.containsKey("User"))
 
         // Verify security schemes
         assertNotNull(components.securitySchemes)
-        assert(components.securitySchemes!!.containsKey("petstore_auth"))
-        assert(components.securitySchemes!!.containsKey("api_key"))
+        assertTrue(components.securitySchemes!!.containsKey("petstore_auth"))
+        assertTrue(components.securitySchemes!!.containsKey("api_key"))
 
         // Serialize back to JSON
         val serialized = compactJson.encodeToString(openAPI)

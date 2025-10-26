@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -45,9 +46,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("schemas"))
-        assert(json.contains("User"))
-        assert(json.contains("Error"))
+        assertTrue(json.contains("schemas"))
+        assertTrue(json.contains("User"))
+        assertTrue(json.contains("Error"))
     }
 
     // Responses Tests
@@ -74,10 +75,10 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("responses"))
-        assert(json.contains("NotFound"))
-        assert(json.contains("IllegalInput"))
-        assert(json.contains("GeneralError"))
+        assertTrue(json.contains("responses"))
+        assertTrue(json.contains("NotFound"))
+        assertTrue(json.contains("IllegalInput"))
+        assertTrue(json.contains("GeneralError"))
     }
 
     // Parameters Tests
@@ -108,9 +109,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("parameters"))
-        assert(json.contains("skipParam"))
-        assert(json.contains("limitParam"))
+        assertTrue(json.contains("parameters"))
+        assertTrue(json.contains("skipParam"))
+        assertTrue(json.contains("limitParam"))
     }
 
     // Examples Tests
@@ -137,9 +138,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("examples"))
-        assert(json.contains("userExample"))
-        assert(json.contains("errorExample"))
+        assertTrue(json.contains("examples"))
+        assertTrue(json.contains("userExample"))
+        assertTrue(json.contains("errorExample"))
     }
 
     // Request Bodies Tests
@@ -172,9 +173,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("requestBodies"))
-        assert(json.contains("UserArray"))
-        assert(json.contains("Pet"))
+        assertTrue(json.contains("requestBodies"))
+        assertTrue(json.contains("UserArray"))
+        assertTrue(json.contains("Pet"))
     }
 
     // Headers Tests
@@ -195,9 +196,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("headers"))
-        assert(json.contains("X-Rate-Limit-Limit"))
-        assert(json.contains("X-Rate-Limit-Remaining"))
+        assertTrue(json.contains("headers"))
+        assertTrue(json.contains("X-Rate-Limit-Limit"))
+        assertTrue(json.contains("X-Rate-Limit-Remaining"))
     }
 
     // Security Schemes Tests
@@ -225,9 +226,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("securitySchemes"))
-        assert(json.contains("api_key"))
-        assert(json.contains("petstore_auth"))
+        assertTrue(json.contains("securitySchemes"))
+        assertTrue(json.contains("api_key"))
+        assertTrue(json.contains("petstore_auth"))
     }
 
     // Links Tests
@@ -252,9 +253,9 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("links"))
-        assert(json.contains("UserRepositories"))
-        assert(json.contains("UserByUserId"))
+        assertTrue(json.contains("links"))
+        assertTrue(json.contains("UserRepositories"))
+        assertTrue(json.contains("UserByUserId"))
     }
 
     // Callbacks Tests
@@ -281,8 +282,8 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("callbacks"))
-        assert(json.contains("onData"))
+        assertTrue(json.contains("callbacks"))
+        assertTrue(json.contains("onData"))
     }
 
     // Path Items Tests
@@ -300,8 +301,8 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("pathItems"))
-        assert(json.contains("commonPath"))
+        assertTrue(json.contains("pathItems"))
+        assertTrue(json.contains("commonPath"))
     }
 
     // Media Types Tests
@@ -317,8 +318,8 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("mediaTypes"))
-        assert(json.contains("jsonMediaType"))
+        assertTrue(json.contains("mediaTypes"))
+        assertTrue(json.contains("jsonMediaType"))
     }
 
     // Component Naming Pattern Tests
@@ -338,7 +339,7 @@ class ComponentsTest {
 
         // Should not throw exception
         val json = compactJson.encodeToString(components)
-        assert(json.contains("User"))
+        assertTrue(json.contains("User"))
     }
 
     @Test
@@ -351,9 +352,9 @@ class ComponentsTest {
             )
         }
 
-        assert(exception.message?.contains("User Model") == true)
-        assert(exception.message?.contains("schemas") == true)
-        assert(exception.message?.contains("^[a-zA-Z0-9._-]+$") == true)
+        assertTrue(exception.message?.contains("User Model") == true)
+        assertTrue(exception.message?.contains("schemas") == true)
+        assertTrue(exception.message?.contains("^[a-zA-Z0-9._-]+$") == true)
     }
 
     @Test
@@ -370,8 +371,8 @@ class ComponentsTest {
             )
         }
 
-        assert(exception.message?.contains("user@param") == true)
-        assert(exception.message?.contains("parameters") == true)
+        assertTrue(exception.message?.contains("user@param") == true)
+        assertTrue(exception.message?.contains("parameters") == true)
     }
 
     @Test
@@ -384,7 +385,7 @@ class ComponentsTest {
             )
         }
 
-        assert(exception.message?.contains("#example") == true)
+        assertTrue(exception.message?.contains("#example") == true)
     }
 
     @Test
@@ -397,7 +398,7 @@ class ComponentsTest {
             )
         }
 
-        assert(exception.message?.contains("responses") == true)
+        assertTrue(exception.message?.contains("responses") == true)
     }
 
     // Specification Extensions Tests
@@ -414,8 +415,8 @@ class ComponentsTest {
         )
         val json = compactJson.encodeToString(components)
 
-        assert(json.contains("x-internal-id"))
-        assert(json.contains("comp-123"))
+        assertTrue(json.contains("x-internal-id"))
+        assertTrue(json.contains("comp-123"))
     }
 
     // Deserialization Tests
@@ -426,7 +427,7 @@ class ComponentsTest {
         val components = compactJson.decodeFromString<Components>(json)
 
         assertEquals(1, components.schemas?.size)
-        assert(components.schemas?.containsKey("User") == true)
+        assertTrue(components.schemas?.containsKey("User") == true)
     }
 
     // Round-trip Tests

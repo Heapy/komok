@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -91,9 +92,9 @@ class RequestBodyTest {
         val json = compactJson.encodeToString(requestBody)
 
         // Verify it contains all content types
-        assert(json.contains("application/json"))
-        assert(json.contains("application/xml"))
-        assert(json.contains("text/plain"))
+        assertTrue(json.contains("application/json"))
+        assertTrue(json.contains("application/xml"))
+        assertTrue(json.contains("text/plain"))
     }
 
     @Test
@@ -130,10 +131,10 @@ class RequestBodyTest {
         )
         val json = compactJson.encodeToString(requestBody)
 
-        assert(json.contains("user1"))
-        assert(json.contains("user2"))
-        assert(json.contains("johndoe"))
-        assert(json.contains("janedoe"))
+        assertTrue(json.contains("user1"))
+        assertTrue(json.contains("user2"))
+        assertTrue(json.contains("johndoe"))
+        assertTrue(json.contains("janedoe"))
     }
 
     @Test
@@ -173,9 +174,9 @@ class RequestBodyTest {
         )
         val json = compactJson.encodeToString(requestBody)
 
-        assert(json.contains("application/x-www-form-urlencoded"))
-        assert(json.contains("username"))
-        assert(json.contains("password"))
+        assertTrue(json.contains("application/x-www-form-urlencoded"))
+        assertTrue(json.contains("username"))
+        assertTrue(json.contains("password"))
     }
 
     @Test
@@ -204,9 +205,9 @@ class RequestBodyTest {
         )
         val json = compactJson.encodeToString(requestBody)
 
-        assert(json.contains("multipart/form-data"))
-        assert(json.contains("binary"))
-        assert(json.contains("image/png"))
+        assertTrue(json.contains("multipart/form-data"))
+        assertTrue(json.contains("binary"))
+        assertTrue(json.contains("image/png"))
     }
 
     @Test
@@ -224,8 +225,8 @@ class RequestBodyTest {
         )
         val json = compactJson.encodeToString(requestBody)
 
-        assert(json.contains("application/octet-stream"))
-        assert(json.contains("binary"))
+        assertTrue(json.contains("application/octet-stream"))
+        assertTrue(json.contains("binary"))
     }
 
     // Validation Tests
@@ -255,7 +256,7 @@ class RequestBodyTest {
         assertEquals("User data", requestBody.description)
         assertEquals(true, requestBody.required)
         assertEquals(1, requestBody.content.size)
-        assert(requestBody.content.containsKey("application/json"))
+        assertTrue(requestBody.content.containsKey("application/json"))
     }
 
     @Test

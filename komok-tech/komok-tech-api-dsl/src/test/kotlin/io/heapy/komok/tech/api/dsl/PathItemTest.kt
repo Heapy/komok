@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -22,8 +23,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"get\""))
-        assert(json.contains("List items"))
+        assertTrue(json.contains("\"get\""))
+        assertTrue(json.contains("List items"))
     }
 
     @Test
@@ -37,8 +38,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("User operations"))
-        assert(json.contains("Operations for managing users"))
+        assertTrue(json.contains("User operations"))
+        assertTrue(json.contains("Operations for managing users"))
     }
 
     @Test
@@ -65,8 +66,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"get\""))
-        assert(json.contains("getResource"))
+        assertTrue(json.contains("\"get\""))
+        assertTrue(json.contains("getResource"))
     }
 
     @Test
@@ -80,8 +81,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"put\""))
-        assert(json.contains("updateResource"))
+        assertTrue(json.contains("\"put\""))
+        assertTrue(json.contains("updateResource"))
     }
 
     @Test
@@ -95,8 +96,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"post\""))
-        assert(json.contains("createResource"))
+        assertTrue(json.contains("\"post\""))
+        assertTrue(json.contains("createResource"))
     }
 
     @Test
@@ -110,8 +111,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"delete\""))
-        assert(json.contains("deleteResource"))
+        assertTrue(json.contains("\"delete\""))
+        assertTrue(json.contains("deleteResource"))
     }
 
     @Test
@@ -125,8 +126,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"options\""))
-        assert(json.contains("getOptions"))
+        assertTrue(json.contains("\"options\""))
+        assertTrue(json.contains("getOptions"))
     }
 
     @Test
@@ -140,8 +141,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"head\""))
-        assert(json.contains("getHeaders"))
+        assertTrue(json.contains("\"head\""))
+        assertTrue(json.contains("getHeaders"))
     }
 
     @Test
@@ -155,8 +156,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"patch\""))
-        assert(json.contains("patchResource"))
+        assertTrue(json.contains("\"patch\""))
+        assertTrue(json.contains("patchResource"))
     }
 
     @Test
@@ -170,8 +171,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"trace\""))
-        assert(json.contains("traceRequest"))
+        assertTrue(json.contains("\"trace\""))
+        assertTrue(json.contains("traceRequest"))
     }
 
     @Test
@@ -185,8 +186,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"query\""))
-        assert(json.contains("queryResource"))
+        assertTrue(json.contains("\"query\""))
+        assertTrue(json.contains("queryResource"))
     }
 
     @Test
@@ -204,15 +205,15 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("\"get\""))
-        assert(json.contains("\"put\""))
-        assert(json.contains("\"post\""))
-        assert(json.contains("\"delete\""))
-        assert(json.contains("\"options\""))
-        assert(json.contains("\"head\""))
-        assert(json.contains("\"patch\""))
-        assert(json.contains("\"trace\""))
-        assert(json.contains("\"query\""))
+        assertTrue(json.contains("\"get\""))
+        assertTrue(json.contains("\"put\""))
+        assertTrue(json.contains("\"post\""))
+        assertTrue(json.contains("\"delete\""))
+        assertTrue(json.contains("\"options\""))
+        assertTrue(json.contains("\"head\""))
+        assertTrue(json.contains("\"patch\""))
+        assertTrue(json.contains("\"trace\""))
+        assertTrue(json.contains("\"query\""))
     }
 
     // Parameters Tests
@@ -241,9 +242,9 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("parameters"))
-        assert(json.contains("id"))
-        assert(json.contains("version"))
+        assertTrue(json.contains("parameters"))
+        assertTrue(json.contains("id"))
+        assertTrue(json.contains("version"))
     }
 
     // Servers Tests
@@ -267,9 +268,9 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("servers"))
-        assert(json.contains("api-v2.example.com"))
-        assert(json.contains("staging.example.com"))
+        assertTrue(json.contains("servers"))
+        assertTrue(json.contains("api-v2.example.com"))
+        assertTrue(json.contains("staging.example.com"))
     }
 
     // Additional Operations Tests
@@ -290,9 +291,9 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("additionalOperations"))
-        assert(json.contains("CUSTOM"))
-        assert(json.contains("SPECIAL"))
+        assertTrue(json.contains("additionalOperations"))
+        assertTrue(json.contains("CUSTOM"))
+        assertTrue(json.contains("SPECIAL"))
     }
 
     @Test
@@ -306,7 +307,7 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("custom"))
+        assertTrue(json.contains("custom"))
     }
 
     @Test
@@ -322,9 +323,9 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("SEARCH"))
-        assert(json.contains("LOCK"))
-        assert(json.contains("custom-method"))
+        assertTrue(json.contains("SEARCH"))
+        assertTrue(json.contains("LOCK"))
+        assertTrue(json.contains("custom-method"))
     }
 
     // Validation Tests
@@ -339,8 +340,8 @@ class PathItemTest {
             )
         }
 
-        assert(exception.message?.contains("GET") == true)
-        assert(exception.message?.contains("cannot be a standard HTTP method") == true)
+        assertTrue(exception.message?.contains("GET") == true)
+        assertTrue(exception.message?.contains("cannot be a standard HTTP method") == true)
     }
 
     @Test
@@ -353,7 +354,7 @@ class PathItemTest {
             )
         }
 
-        assert(exception.message?.contains("POST") == true)
+        assertTrue(exception.message?.contains("POST") == true)
     }
 
     @Test
@@ -366,8 +367,8 @@ class PathItemTest {
             )
         }
 
-        assert(exception.message?.contains("INVALID METHOD") == true)
-        assert(exception.message?.contains("RFC9110") == true)
+        assertTrue(exception.message?.contains("INVALID METHOD") == true)
+        assertTrue(exception.message?.contains("RFC9110") == true)
     }
 
     @Test
@@ -380,7 +381,7 @@ class PathItemTest {
             )
         }
 
-        assert(exception.message?.contains("METHOD@INVALID") == true)
+        assertTrue(exception.message?.contains("METHOD@INVALID") == true)
     }
 
     // Specification Extensions Tests
@@ -398,8 +399,8 @@ class PathItemTest {
         )
         val json = compactJson.encodeToString(pathItem)
 
-        assert(json.contains("x-internal-id"))
-        assert(json.contains("path-123"))
+        assertTrue(json.contains("x-internal-id"))
+        assertTrue(json.contains("path-123"))
     }
 
     // Deserialization Tests
@@ -491,8 +492,8 @@ class PathItemTest {
         )
 
         assertEquals(3, paths.size)
-        assert(paths.containsKey("/users"))
-        assert(paths.containsKey("/users/{id}"))
+        assertTrue(paths.containsKey("/users"))
+        assertTrue(paths.containsKey("/users/{id}"))
     }
 
     @Test
@@ -521,7 +522,7 @@ class PathItemTest {
             )
         }
 
-        assert(exception.message?.contains("must start with a forward slash") == true)
+        assertTrue(exception.message?.contains("must start with a forward slash") == true)
     }
 
     @Test
@@ -547,10 +548,10 @@ class PathItemTest {
 
         val json = compactJson.encodeToString(paths)
 
-        assert(json.contains("/users"))
-        assert(json.contains("/users/{id}"))
-        assert(json.contains("List users"))
-        assert(json.contains("Delete user"))
+        assertTrue(json.contains("/users"))
+        assertTrue(json.contains("/users/{id}"))
+        assertTrue(json.contains("List users"))
+        assertTrue(json.contains("Delete user"))
     }
 
     @Test
@@ -559,7 +560,7 @@ class PathItemTest {
         val paths = compactJson.decodeFromString<Paths>(json)
 
         assertEquals(1, paths.size)
-        assert(paths.containsKey("/users"))
+        assertTrue(paths.containsKey("/users"))
         assertEquals("OK", paths["/users"]?.get?.responses?.get("200")?.description)
     }
 

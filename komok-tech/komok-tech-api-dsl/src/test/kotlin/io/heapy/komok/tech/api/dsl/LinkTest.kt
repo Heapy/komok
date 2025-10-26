@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -19,8 +20,8 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("operationRef"))
-        assert(json.contains("#/paths/~12.0~1repositories~1{username}/get"))
+        assertTrue(json.contains("operationRef"))
+        assertTrue(json.contains("#/paths/~12.0~1repositories~1{username}/get"))
     }
 
     @Test
@@ -42,8 +43,8 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("description"))
-        assert(json.contains("userId"))
+        assertTrue(json.contains("description"))
+        assertTrue(json.contains("userId"))
     }
 
     // Parameters Tests
@@ -58,9 +59,9 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("parameters"))
-        assert(json.contains("userId"))
-        assert(json.contains("\$response.body#/id"))
+        assertTrue(json.contains("parameters"))
+        assertTrue(json.contains("userId"))
+        assertTrue(json.contains("\$response.body#/id"))
     }
 
     @Test
@@ -75,9 +76,9 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("id"))
-        assert(json.contains("status"))
-        assert(json.contains("userId"))
+        assertTrue(json.contains("id"))
+        assertTrue(json.contains("status"))
+        assertTrue(json.contains("userId"))
     }
 
     // RequestBody Tests
@@ -90,8 +91,8 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("requestBody"))
-        assert(json.contains("\$response.body#/user"))
+        assertTrue(json.contains("requestBody"))
+        assertTrue(json.contains("\$response.body#/user"))
     }
 
     @Test
@@ -105,9 +106,9 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("requestBody"))
-        assert(json.contains("userId"))
-        assert(json.contains("username"))
+        assertTrue(json.contains("requestBody"))
+        assertTrue(json.contains("userId"))
+        assertTrue(json.contains("username"))
     }
 
     // Server Tests
@@ -123,8 +124,8 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("server"))
-        assert(json.contains("https://api.example.com/v2"))
+        assertTrue(json.contains("server"))
+        assertTrue(json.contains("https://api.example.com/v2"))
     }
 
     // Specification Extensions Tests
@@ -140,8 +141,8 @@ class LinkTest {
         )
         val json = compactJson.encodeToString(link)
 
-        assert(json.contains("x-internal-id"))
-        assert(json.contains("link-123"))
+        assertTrue(json.contains("x-internal-id"))
+        assertTrue(json.contains("link-123"))
     }
 
     // Validation Tests

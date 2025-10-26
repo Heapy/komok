@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -30,9 +31,9 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("\"openapi\":\"3.2.0\""))
-        assert(json.contains("\"title\":\"Sample API\""))
-        assert(json.contains("/users"))
+        assertTrue(json.contains("\"openapi\":\"3.2.0\""))
+        assertTrue(json.contains("\"title\":\"Sample API\""))
+        assertTrue(json.contains("/users"))
     }
 
     @Test
@@ -51,8 +52,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("components"))
-        assert(json.contains("User"))
+        assertTrue(json.contains("components"))
+        assertTrue(json.contains("User"))
     }
 
     @Test
@@ -80,8 +81,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("webhooks"))
-        assert(json.contains("newPet"))
+        assertTrue(json.contains("webhooks"))
+        assertTrue(json.contains("newPet"))
     }
 
     // Version Pattern Tests
@@ -140,8 +141,8 @@ class OpenAPITest {
             )
         }
 
-        assert(exception.message?.contains("3.1.0") == true)
-        assert(exception.message?.contains("^3\\.2\\.\\d+(-.+)?\$") == true)
+        assertTrue(exception.message?.contains("3.1.0") == true)
+        assertTrue(exception.message?.contains("^3\\.2\\.\\d+(-.+)?\$") == true)
     }
 
     @Test
@@ -154,7 +155,7 @@ class OpenAPITest {
             )
         }
 
-        assert(exception.message?.contains("3.0.0") == true)
+        assertTrue(exception.message?.contains("3.0.0") == true)
     }
 
     @Test
@@ -167,7 +168,7 @@ class OpenAPITest {
             )
         }
 
-        assert(exception.message?.contains("3.2") == true)
+        assertTrue(exception.message?.contains("3.2") == true)
     }
 
     // Document Content Validation Tests
@@ -196,8 +197,8 @@ class OpenAPITest {
             components = Components(schemas = mapOf("User" to Schema(buildJsonObject { put("type", "object") })))
         )
 
-        assert(openAPI.paths != null)
-        assert(openAPI.components != null)
+        assertTrue(openAPI.paths != null)
+        assertTrue(openAPI.components != null)
     }
 
     // $self Validation Tests
@@ -237,8 +238,8 @@ class OpenAPITest {
             )
         }
 
-        assert(exception.message?.contains("\$self") == true)
-        assert(exception.message?.contains("fragment") == true)
+        assertTrue(exception.message?.contains("\$self") == true)
+        assertTrue(exception.message?.contains("fragment") == true)
     }
 
     // Servers Tests
@@ -256,9 +257,9 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("servers"))
-        assert(json.contains("Production"))
-        assert(json.contains("Staging"))
+        assertTrue(json.contains("servers"))
+        assertTrue(json.contains("Production"))
+        assertTrue(json.contains("Staging"))
     }
 
     // Security Tests
@@ -280,8 +281,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("security"))
-        assert(json.contains("api_key"))
+        assertTrue(json.contains("security"))
+        assertTrue(json.contains("api_key"))
     }
 
     // Tags Tests
@@ -299,9 +300,9 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("tags"))
-        assert(json.contains("users"))
-        assert(json.contains("pets"))
+        assertTrue(json.contains("tags"))
+        assertTrue(json.contains("users"))
+        assertTrue(json.contains("pets"))
     }
 
     // External Docs Tests
@@ -319,8 +320,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("externalDocs"))
-        assert(json.contains("Find more info here"))
+        assertTrue(json.contains("externalDocs"))
+        assertTrue(json.contains("Find more info here"))
     }
 
     // JSON Schema Dialect Tests
@@ -335,8 +336,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("jsonSchemaDialect"))
-        assert(json.contains("json-schema.org"))
+        assertTrue(json.contains("jsonSchemaDialect"))
+        assertTrue(json.contains("json-schema.org"))
     }
 
     // Specification Extensions Tests
@@ -354,8 +355,8 @@ class OpenAPITest {
         )
         val json = compactJson.encodeToString(openAPI)
 
-        assert(json.contains("x-api-id"))
-        assert(json.contains("x-internal"))
+        assertTrue(json.contains("x-api-id"))
+        assertTrue(json.contains("x-internal"))
     }
 
     // Deserialization Tests
@@ -367,7 +368,7 @@ class OpenAPITest {
 
         assertEquals("3.2.0", openAPI.openapi)
         assertEquals("Test", openAPI.info.title)
-        assert(openAPI.paths?.containsKey("/test") == true)
+        assertTrue(openAPI.paths?.containsKey("/test") == true)
     }
 
     // Round-trip Tests

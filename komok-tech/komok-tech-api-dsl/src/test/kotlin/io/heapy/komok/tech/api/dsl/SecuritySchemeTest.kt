@@ -3,6 +3,7 @@ package io.heapy.komok.tech.api.dsl
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class SecuritySchemeTest {
@@ -17,9 +18,9 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"apiKey\""))
-        assert(json.contains("\"name\":\"api_key\""))
-        assert(json.contains("\"in\":\"query\""))
+        assertTrue(json.contains("\"type\":\"apiKey\""))
+        assertTrue(json.contains("\"name\":\"api_key\""))
+        assertTrue(json.contains("\"in\":\"query\""))
     }
 
     @Test
@@ -31,9 +32,9 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"name\":\"X-API-Key\""))
-        assert(json.contains("\"in\":\"header\""))
-        assert(json.contains("API key for authentication"))
+        assertTrue(json.contains("\"name\":\"X-API-Key\""))
+        assertTrue(json.contains("\"in\":\"header\""))
+        assertTrue(json.contains("API key for authentication"))
     }
 
     @Test
@@ -44,7 +45,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"in\":\"cookie\""))
+        assertTrue(json.contains("\"in\":\"cookie\""))
     }
 
     @Test
@@ -56,7 +57,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"deprecated\":true"))
+        assertTrue(json.contains("\"deprecated\":true"))
     }
 
     // HTTP Security Scheme Tests
@@ -69,8 +70,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"http\""))
-        assert(json.contains("\"scheme\":\"basic\""))
+        assertTrue(json.contains("\"type\":\"http\""))
+        assertTrue(json.contains("\"scheme\":\"basic\""))
     }
 
     @Test
@@ -82,8 +83,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"scheme\":\"bearer\""))
-        assert(json.contains("\"bearerFormat\":\"JWT\""))
+        assertTrue(json.contains("\"scheme\":\"bearer\""))
+        assertTrue(json.contains("\"bearerFormat\":\"JWT\""))
     }
 
     @Test
@@ -93,7 +94,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"scheme\":\"digest\""))
+        assertTrue(json.contains("\"scheme\":\"digest\""))
     }
 
     @Test
@@ -104,7 +105,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"scheme\":\"negotiate\""))
+        assertTrue(json.contains("\"scheme\":\"negotiate\""))
     }
 
     // Mutual TLS Security Scheme Tests
@@ -116,8 +117,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"mutualTLS\""))
-        assert(json.contains("Mutual TLS authentication"))
+        assertTrue(json.contains("\"type\":\"mutualTLS\""))
+        assertTrue(json.contains("Mutual TLS authentication"))
     }
 
     @Test
@@ -125,7 +126,7 @@ class SecuritySchemeTest {
         val securityScheme = SecurityScheme.mutualTLS()
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"mutualTLS\""))
+        assertTrue(json.contains("\"type\":\"mutualTLS\""))
     }
 
     // OAuth2 Security Scheme Tests
@@ -146,10 +147,10 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"oauth2\""))
-        assert(json.contains("implicit"))
-        assert(json.contains("https://example.com/oauth/authorize"))
-        assert(json.contains("read:pets"))
+        assertTrue(json.contains("\"type\":\"oauth2\""))
+        assertTrue(json.contains("implicit"))
+        assertTrue(json.contains("https://example.com/oauth/authorize"))
+        assertTrue(json.contains("read:pets"))
     }
 
     @Test
@@ -167,8 +168,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("password"))
-        assert(json.contains("https://example.com/oauth/token"))
+        assertTrue(json.contains("password"))
+        assertTrue(json.contains("https://example.com/oauth/token"))
     }
 
     @Test
@@ -186,7 +187,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("clientCredentials"))
+        assertTrue(json.contains("clientCredentials"))
     }
 
     @Test
@@ -206,9 +207,9 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("authorizationCode"))
-        assert(json.contains("authorizationUrl"))
-        assert(json.contains("tokenUrl"))
+        assertTrue(json.contains("authorizationCode"))
+        assertTrue(json.contains("authorizationUrl"))
+        assertTrue(json.contains("tokenUrl"))
     }
 
     @Test
@@ -227,8 +228,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("deviceAuthorization"))
-        assert(json.contains("deviceAuthorizationUrl"))
+        assertTrue(json.contains("deviceAuthorization"))
+        assertTrue(json.contains("deviceAuthorizationUrl"))
     }
 
     @Test
@@ -248,8 +249,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("implicit"))
-        assert(json.contains("authorizationCode"))
+        assertTrue(json.contains("implicit"))
+        assertTrue(json.contains("authorizationCode"))
     }
 
     @Test
@@ -266,8 +267,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("refreshUrl"))
-        assert(json.contains("https://example.com/oauth/refresh"))
+        assertTrue(json.contains("refreshUrl"))
+        assertTrue(json.contains("https://example.com/oauth/refresh"))
     }
 
     @Test
@@ -284,8 +285,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("oauth2MetadataUrl"))
-        assert(json.contains(".well-known/oauth-authorization-server"))
+        assertTrue(json.contains("oauth2MetadataUrl"))
+        assertTrue(json.contains(".well-known/oauth-authorization-server"))
     }
 
     // OpenID Connect Security Scheme Tests
@@ -298,9 +299,9 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("\"type\":\"openIdConnect\""))
-        assert(json.contains("openIdConnectUrl"))
-        assert(json.contains(".well-known/openid-configuration"))
+        assertTrue(json.contains("\"type\":\"openIdConnect\""))
+        assertTrue(json.contains("openIdConnectUrl"))
+        assertTrue(json.contains(".well-known/openid-configuration"))
     }
 
     @Test
@@ -310,7 +311,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("accounts.google.com"))
+        assertTrue(json.contains("accounts.google.com"))
     }
 
     // Specification Extensions Tests
@@ -327,8 +328,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(securityScheme)
 
-        assert(json.contains("x-internal-id"))
-        assert(json.contains("sec-123"))
+        assertTrue(json.contains("x-internal-id"))
+        assertTrue(json.contains("sec-123"))
     }
 
     // Deserialization Tests
@@ -457,9 +458,9 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(requirement)
 
-        assert(json.contains("petstore_auth"))
-        assert(json.contains("write:pets"))
-        assert(json.contains("read:pets"))
+        assertTrue(json.contains("petstore_auth"))
+        assertTrue(json.contains("write:pets"))
+        assertTrue(json.contains("read:pets"))
     }
 
     @Test
@@ -469,7 +470,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(requirement)
 
-        assert(json.contains("api_key"))
+        assertTrue(json.contains("api_key"))
         assertEquals("""{"api_key":[]}""", json)
     }
 
@@ -481,8 +482,8 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(requirement)
 
-        assert(json.contains("oauth2"))
-        assert(json.contains("api_key"))
+        assertTrue(json.contains("oauth2"))
+        assertTrue(json.contains("api_key"))
     }
 
     @Test
@@ -516,7 +517,7 @@ class SecuritySchemeTest {
         )
         val json = compactJson.encodeToString(requirements)
 
-        assert(json.contains("oauth2"))
-        assert(json.contains("api_key"))
+        assertTrue(json.contains("oauth2"))
+        assertTrue(json.contains("api_key"))
     }
 }

@@ -5,6 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -53,8 +54,8 @@ class ResponseTest {
         )
         val json = compactJson.encodeToString(response)
 
-        assert(json.contains("User data"))
-        assert(json.contains("application/json"))
+        assertTrue(json.contains("User data"))
+        assertTrue(json.contains("application/json"))
     }
 
     @Test
@@ -77,9 +78,9 @@ class ResponseTest {
         )
         val json = compactJson.encodeToString(response)
 
-        assert(json.contains("X-Rate-Limit"))
-        assert(json.contains("X-Request-ID"))
-        assert(json.contains("Rate limit remaining"))
+        assertTrue(json.contains("X-Rate-Limit"))
+        assertTrue(json.contains("X-Request-ID"))
+        assertTrue(json.contains("Rate limit remaining"))
     }
 
     @Test
@@ -100,9 +101,9 @@ class ResponseTest {
         )
         val json = compactJson.encodeToString(response)
 
-        assert(json.contains("application/json"))
-        assert(json.contains("application/xml"))
-        assert(json.contains("text/plain"))
+        assertTrue(json.contains("application/json"))
+        assertTrue(json.contains("application/xml"))
+        assertTrue(json.contains("text/plain"))
     }
 
     @Test
@@ -135,8 +136,8 @@ class ResponseTest {
         )
         val json = compactJson.encodeToString(response)
 
-        assert(json.contains("admin"))
-        assert(json.contains("regular"))
+        assertTrue(json.contains("admin"))
+        assertTrue(json.contains("regular"))
     }
 
     @Test
@@ -190,8 +191,8 @@ class ResponseTest {
         )
         val json = compactJson.encodeToString(response)
 
-        assert(json.contains("Location"))
-        assert(json.contains("created"))
+        assertTrue(json.contains("Location"))
+        assertTrue(json.contains("created"))
     }
 
     @Test
@@ -478,10 +479,10 @@ class ResponseTest {
 
         val json = compactJson.encodeToString(responses)
 
-        assert(json.contains("200"))
-        assert(json.contains("404"))
-        assert(json.contains("Success"))
-        assert(json.contains("Not found"))
+        assertTrue(json.contains("200"))
+        assertTrue(json.contains("404"))
+        assertTrue(json.contains("Success"))
+        assertTrue(json.contains("Not found"))
     }
 
     @Test
@@ -594,9 +595,9 @@ class ResponseTest {
         )
 
         val json = compactJson.encodeToString(responses)
-        assert(json.contains("200"))
-        assert(json.contains("400"))
-        assert(json.contains("401"))
-        assert(json.contains("500"))
+        assertTrue(json.contains("200"))
+        assertTrue(json.contains("400"))
+        assertTrue(json.contains("401"))
+        assertTrue(json.contains("500"))
     }
 }
