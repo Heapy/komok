@@ -48,11 +48,11 @@ These are simple objects without complex dependencies:
 - [x] Test: Schema and Example objects with JSON schema validation
 
 ### Phase 4: Parameter and Header Modeling
-- [ ] Parameter object (name, in, description, required, deprecated, schema, content, style, explode, allowReserved, allowEmptyValue)
-- [ ] Header object (description, required, deprecated, schema, content, style, explode)
-- [ ] Test: Parameter location types (query, querystring, header, path, cookie)
-- [ ] Test: Parameter styles (matrix, label, simple, form, spaceDelimited, pipeDelimited, deepObject)
-- [ ] Test: Header objects with JSON schema validation
+- [x] Parameter object (name, in, description, required, deprecated, schema, content, style, explode, allowReserved, allowEmptyValue)
+- [x] Header object (description, required, deprecated, schema, content, style, explode)
+- [x] Test: Parameter location types (query, querystring, header, path, cookie)
+- [x] Test: Parameter styles (matrix, label, simple, form, spaceDelimited, pipeDelimited, deepObject, cookie)
+- [x] Test: Header objects with JSON schema validation
 
 ### Phase 5: Content and Media Types
 - [x] Encoding object (contentType, style, explode, allowReserved, encoding, prefixEncoding, itemEncoding)
