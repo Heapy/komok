@@ -1,5 +1,6 @@
 package io.heapy.komok.tech.api.dsl
 
+import io.heapy.komok.tech.logging.Logger
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -536,9 +537,9 @@ class OpenAPIIntegrationTest {
         // Validate against JSON Schema
         OpenAPISchemaValidator.validate(json)
 
-        // Print for manual inspection (optional)
-        println("Generated OpenAPI Document:")
-        println(json)
+        // Log for manual inspection (optional)
+        log.info("Generated OpenAPI Document:")
+        log.info(json)
 
         // Verify deserialization
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
@@ -617,10 +618,10 @@ class OpenAPIIntegrationTest {
         val roundTrip = compactJson.decodeFromString<OpenAPI>(serialized)
         assertEquals(openAPI, roundTrip, "Round-trip serialization should preserve all data")
 
-        println("Successfully parsed, serialized, and validated Petstore OpenAPI document")
-        println("Paths: ${paths.size}")
-        println("Schemas: ${components.schemas!!.size}")
-        println("Security Schemes: ${components.securitySchemes!!.size}")
+        log.info("Successfully parsed, serialized, and validated Petstore OpenAPI document")
+        log.info("Paths: ${paths.size}")
+        log.info("Schemas: ${components.schemas!!.size}")
+        log.info("Security Schemes: ${components.securitySchemes!!.size}")
     }
 
     @Test
@@ -694,11 +695,13 @@ class OpenAPIIntegrationTest {
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
         assertEquals(openAPI, deserialized)
 
-        // Print summary
-        println("=".repeat(80))
-        println("Generated: ${outputFile.absolutePath}")
-        println("OpenAPI: ${openAPI.info.title} v${openAPI.info.version}")
-        println("Security schemes: ${openAPI.components?.securitySchemes?.size}")
-        println("=".repeat(80))
+        // Log summary
+        log.info("=".repeat(80))
+        log.info("Generated: ${outputFile.absolutePath}")
+        log.info("OpenAPI: ${openAPI.info.title} v${openAPI.info.version}")
+        log.info("Security schemes: ${openAPI.components?.securitySchemes?.size}")
+        log.info("=".repeat(80))
     }
+
+    private companion object : Logger()
 }
