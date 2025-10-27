@@ -26,7 +26,7 @@ jobs:
           java-version: "21"
           distribution: "corretto"
       - run: ./gradlew check distTar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: "Backend Application"
           path: "komok-app/build/distributions/komok-app.tar"
@@ -43,7 +43,7 @@ jobs:
         run: yarn install
       - working-directory: frontend
         run: yarn run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: "Frontend Application"
           path: "frontend/dist/"
@@ -60,13 +60,13 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: "Backend Application"
           path: "komok-app/build/distributions/"
       - name: "Untar files"
         run: mkdir -p komok-app/build/distributions && tar -xvf komok-app/build/distributions/komok-app.tar -C $_
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: "Frontend Application"
           path: "frontend/dist/"
