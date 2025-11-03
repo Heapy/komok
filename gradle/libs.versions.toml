@@ -1,7 +1,7 @@
 [versions]
 binary-compatibility-validator = "0.18.1"
 bouncycastle = "1.82"
-junit = "6.0.0"
+junit = "6.0.1"
 komok = "1.0.13"
 kotlin = "2.2.21"
 kotlinpoet = "2.2.0"
