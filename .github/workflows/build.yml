@@ -10,7 +10,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "22.x"
@@ -20,7 +20,7 @@ jobs:
     name: "Build Backend Application"
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-java@v5
         with:
           java-version: "21"
@@ -35,7 +35,7 @@ jobs:
     name: "Build Frontend Application"
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "22.x"
@@ -59,7 +59,7 @@ jobs:
       - build-frontend
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - uses: actions/download-artifact@v6
         with:
           name: "Backend Application"
