@@ -1,6 +1,8 @@
 package io.heapy.komok.tech.api.dsl.ui
 
+import io.heapy.komok.tech.api.dsl.Direct
 import io.heapy.komok.tech.api.dsl.OpenAPI
+import io.heapy.komok.tech.api.dsl.Reference
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
 
@@ -448,16 +450,31 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                         }
                     }
                     tbody {
-                        parameters.forEach { param ->
+                        parameters.forEach { paramRef ->
                             tr {
-                                td { code { +param.name } }
-                                td { span(classes = "param-in") { +param.location.name.lowercase() } }
-                                td { +"string" } // Simplified
-                                td { +(if (param.required) "✓" else "-") }
-                                td {
-                                    param.description?.let { desc ->
-                                        markdown(desc)
-                                    } ?: run { +"-" }
+                                when (paramRef) {
+                                    is Direct -> {
+                                        val param = paramRef.value
+                                        td { code { +param.name } }
+                                        td { span(classes = "param-in") { +param.location.name.lowercase() } }
+                                        td { +"string" } // Simplified
+                                        td { +(if (param.required) "✓" else "-") }
+                                        td {
+                                            param.description?.let { desc ->
+                                                markdown(desc)
+                                            } ?: run { +"-" }
+                                        }
+                                    }
+                                    is Reference -> {
+                                        td {
+                                            colSpan = "5"
+                                            code { +paramRef.ref }
+                                            paramRef.description?.let { desc ->
+                                                +" - "
+                                                +desc
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

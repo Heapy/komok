@@ -186,20 +186,17 @@ class GitHubApiIntegrationTest {
         assertTrue(html.contains("<html"), "Should be valid HTML")
     }
 
-    /**
-     * Test parsing the non-dereferenced YAML spec.
-     * Currently disabled because the spec contains $ref references in parameters,
-     * which requires Referenceable<Parameter> support in the Operation model.
-     */
-    @Disabled("Non-dereferenced spec contains \$ref in parameters - model doesn't support Referenceable<Parameter> yet")
     @Test
     fun `parse GitHub API YAML spec and generate UI`() {
         val spec = API_SPECS.first { it.name == "api.github.com.yaml" }
         val localPath = CACHE_DIR.resolve(spec.name)
-        val content = patchOpenApiVersion(localPath.readText())
+        val yamlContent = patchOpenApiVersion(localPath.readText())
+
+        log.info("Converting YAML to JSON...")
+        val jsonContent = yamlToJson(yamlContent)
 
         log.info("Parsing ${spec.name}...")
-        val openapi = yaml.decodeFromString(OpenAPI.serializer(), content)
+        val openapi = yaml.decodeFromString(OpenAPI.serializer(), jsonContent)
 
         log.info("Parsed OpenAPI document:")
         log.info("  Title: ${openapi.info.title}")

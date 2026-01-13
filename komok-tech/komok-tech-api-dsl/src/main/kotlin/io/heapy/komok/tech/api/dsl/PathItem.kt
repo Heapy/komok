@@ -36,7 +36,8 @@ data class PathItem(
     val summary: String? = null,
     val description: String? = null,
     val servers: List<Server>? = null,
-    val parameters: List<Parameter>? = null,
+    @Serializable(with = ReferenceableParameterListSerializer::class)
+    val parameters: List<Referenceable<Parameter>>? = null,
     val get: Operation? = null,
     val put: Operation? = null,
     val post: Operation? = null,

@@ -1,6 +1,7 @@
 package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -196,3 +197,12 @@ object ReferenceableLinkMapSerializer : KSerializer<Map<String, Referenceable<Li
 object ReferenceableResponseMapSerializer : KSerializer<Map<String, Referenceable<Response>>>
     by MapSerializer(String.serializer(), ReferenceableResponseSerializer)
 
+// List Serializers for common patterns
+
+/**
+ * Serializer for `List<Referenceable<Parameter>>`.
+ *
+ * Use this with `@Serializable(with = ReferenceableParameterListSerializer::class)` annotation.
+ */
+object ReferenceableParameterListSerializer : KSerializer<List<Referenceable<Parameter>>>
+    by ListSerializer(ReferenceableParameterSerializer)

@@ -32,7 +32,8 @@ data class Operation(
     val description: String? = null,
     val externalDocs: ExternalDocumentation? = null,
     val operationId: String? = null,
-    val parameters: List<Parameter>? = null,
+    @Serializable(with = ReferenceableParameterListSerializer::class)
+    val parameters: List<Referenceable<Parameter>>? = null,
     val requestBody: RequestBody? = null,
     val callbacks: Map<String, Callback>? = null,
     val deprecated: Boolean = false,

@@ -237,27 +237,33 @@ class OpenApiDocRendererTest {
                     get = Operation(
                         summary = "List users",
                         parameters = listOf(
-                            Parameter(
-                                name = "limit",
-                                location = ParameterLocation.QUERY,
-                                description = "Maximum number of users to return",
-                                required = false,
-                                schema = Schema(buildJsonObject { put("type", "integer") })
+                            Direct(
+                                Parameter(
+                                    name = "limit",
+                                    location = ParameterLocation.QUERY,
+                                    description = "Maximum number of users to return",
+                                    required = false,
+                                    schema = Schema(buildJsonObject { put("type", "integer") })
+                                )
                             ),
-                            Parameter(
-                                name = "offset",
-                                location = ParameterLocation.QUERY,
-                                description = "Number of users to skip",
-                                required = false,
-                                schema = Schema(buildJsonObject { put("type", "integer") })
+                            Direct(
+                                Parameter(
+                                    name = "offset",
+                                    location = ParameterLocation.QUERY,
+                                    description = "Number of users to skip",
+                                    required = false,
+                                    schema = Schema(buildJsonObject { put("type", "integer") })
+                                )
                             ),
-                            Parameter(
-                                name = "Authorization",
-                                location = ParameterLocation.HEADER,
-                                description = "Bearer token",
-                                required = true,
-                                schema = Schema(buildJsonObject { put("type", "string") })
-                            )
+                            Direct(
+                                Parameter(
+                                    name = "Authorization",
+                                    location = ParameterLocation.HEADER,
+                                    description = "Bearer token",
+                                    required = true,
+                                    schema = Schema(buildJsonObject { put("type", "string") })
+                                ),
+                            ),
                         ),
                         responses = mapOf(
                             "200" to Response(
