@@ -21,180 +21,144 @@ Update this document with comprehensive list of tasks.
 
 ## Comprehensive Task Breakdown
 
-### Phase 1: Project Setup and Foundation
-- [x] Module setup with Kotlin Serialization, JUnit, and json-schema-validator
-- [x] Create base interfaces/annotations for OpenAPI objects
-- [x] Set up test infrastructure with JSON schema validation helpers
-- [x] Create utility functions for specification extensions (x- properties)
-
-### Phase 2: Core Value Objects
-These are simple objects without complex dependencies:
-
-#### 2.1 Basic Information Objects
-- [x] Contact object (name, url, email)
-- [x] License object (name, identifier, url)
-- [x] ExternalDocumentation object (description, url)
-- [x] Tag object (name, summary, description, externalDocs, parent, kind)
-- [x] Reference object ($ref, summary, description)
-- [x] Test: Basic information objects with JSON schema validation
-
-#### 2.2 Server Objects
-- [x] ServerVariable object (enum, default, description)
-- [x] Server object (url, description, name, variables)
-- [x] Test: Server objects with JSON schema validation
-
-### Phase 3: Schema and Data Modeling
-- [x] Schema object (integrate with JSON Schema - can be object or boolean)
-- [x] Example object (summary, description, dataValue, serializedValue, value, externalValue)
-- [x] Test: Schema and Example objects with JSON schema validation
-
-### Phase 4: Parameter and Header Modeling
-- [x] Parameter object (name, in, description, required, deprecated, schema, content, style, explode, allowReserved, allowEmptyValue)
-- [x] Header object (description, required, deprecated, schema, content, style, explode)
-- [x] Test: Parameter location types (query, querystring, header, path, cookie)
-- [x] Test: Parameter styles (matrix, label, simple, form, spaceDelimited, pipeDelimited, deepObject, cookie)
-- [x] Test: Header objects with JSON schema validation
-
-### Phase 5: Content and Media Types
-- [x] Encoding object (contentType, style, explode, allowReserved, encoding, prefixEncoding, itemEncoding)
-- [x] MediaType object (description, schema, itemSchema, encoding, prefixEncoding, itemEncoding, example, examples)
-- [x] Header object (description, required, deprecated, schema, content, style, explode, example, examples)
-- [x] Test: Content objects (map of MediaType)
-- [x] Test: Encoding configurations with mutual exclusivity validation
-- [ ] TODO: Add Referenceable support for MediaType, Example, and Header (deferred to later phase)
-
-### Phase 6: Request and Response Modeling
-- [x] RequestBody object (description, content, required)
-- [x] Response object (summary, description, headers, content, links)
-- [x] Responses container object (default, status code patterns)
-- [x] Test: Request/Response bodies with various content types
-- [x] Test: Response status code patterns (1XX, 2XX, 3XX, 4XX, 5XX)
-- [ ] TODO: Add Link support (deferred to later phase)
-
-### Phase 7: Operations and Paths
-- [x] Operation object (tags, summary, description, externalDocs, operationId, parameters, requestBody, responses, callbacks, deprecated, servers)
-- [x] PathItem object ($ref, summary, description, servers, parameters, additionalOperations, get, put, post, delete, options, head, patch, trace, query)
-- [x] Paths container object (path pattern validation)
-- [x] Callback object (typealias to Map<String, PathItem>)
-- [x] Test: All HTTP methods (GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH, TRACE, QUERY)
-- [x] Test: Path patterns and parameters
-- [x] Test: Callback definitions
-
-### Phase 8: Security Modeling
-- [x] OAuthFlows objects (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
-- [x] SecurityScheme object (type: apiKey, http, mutualTLS, oauth2, openIdConnect)
-- [x] SecurityRequirement object
-- [x] Test: All security scheme types
-- [x] Test: OAuth 2.0 flows
-- [x] Test: OpenID Connect configuration
-- [x] Updated Operation object to include security field
-
-### Phase 9: Components
-- [x] Components object (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
-- [x] Link object (operationRef, operationId, parameters, requestBody, description, server)
-- [x] Test: All component types (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
-- [x] Test: Component naming patterns (^[a-zA-Z0-9._-]+$)
-- [x] Test: Link validation (operationRef XOR operationId)
-- [ ] TODO: Component reference resolution (deferred - requires full OpenAPI document context)
-
-### Phase 10: Root OpenAPI Document
-- [x] Info object (title, summary, description, termsOfService, contact, license, version)
-- [x] OpenAPI root object (openapi, $self, info, jsonSchemaDialect, servers, paths, webhooks, components, security, tags, externalDocs)
-- [x] Test: OpenAPI version pattern (^3\.2\.\d+(-.+)?$)
-- [x] Test: Document validation (must have paths, components, or webhooks)
-- [x] Test: $self validation (must not contain fragment)
-- [x] Test: All OpenAPI properties (servers, security, tags, externalDocs, webhooks)
-- [x] Test: Real-world examples (Petstore, Stripe, GitHub)
-
 ### Phase 11: Kotlin DSL Builders
-For each model class, create idiomatic Kotlin DSL:
+Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail-fast validation** - throw meaningful exceptions immediately when invalid values are provided (e.g., missing required fields, invalid patterns, mutual exclusivity violations).
 
-- [ ] Info DSL with contact and license builders
+#### 11.1 Core Value Object DSLs
+- [ ] Contact DSL builder
+- [ ] License DSL builder
+- [ ] ExternalDocumentation DSL builder
+- [ ] Tag DSL builder
+- [ ] Test: Core value object DSL examples
+
+#### 11.2 Server DSLs
+- [ ] ServerVariable DSL builder
 - [ ] Server DSL with variables builder
+- [ ] Test: Server DSL examples
+
+#### 11.3 Schema and Example DSLs
+- [ ] Schema DSL builder (JSON Schema integration)
+- [ ] Example DSL builder
+- [ ] Test: Schema and Example DSL examples
+
+#### 11.4 Parameter and Header DSLs
 - [ ] Parameter DSL with style and schema builders
+- [ ] Header DSL builder
+- [ ] Test: Parameter and Header DSL examples
+
+#### 11.5 Content and Encoding DSLs
+- [ ] Encoding DSL builder
 - [ ] MediaType DSL with encoding and examples builders
+- [ ] Test: Content and Encoding DSL examples
+
+#### 11.6 Request and Response DSLs
 - [ ] RequestBody DSL with content builder
 - [ ] Response DSL with headers and content builders
+- [ ] Responses container DSL
+- [ ] Test: Request and Response DSL examples
+
+#### 11.7 Operation and Path DSLs
 - [ ] Operation DSL with parameters, requestBody, and responses builders
-- [ ] PathItem DSL with operation builders for each HTTP method
-- [ ] SecurityScheme DSL with OAuth flows builder
+- [ ] PathItem DSL with operation builders for each HTTP method (get, post, put, delete, etc.)
+- [ ] Paths container DSL
+- [ ] Callback DSL
+- [ ] Test: Operation and Path DSL examples
+
+#### 11.8 Security DSLs
+- [ ] OAuthFlow DSL builders (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
+- [ ] SecurityScheme DSL for all types (apiKey, http, mutualTLS, oauth2, openIdConnect)
+- [ ] SecurityRequirement DSL
+- [ ] Test: Security DSL examples
+
+#### 11.9 Components and Root DSLs
 - [ ] Components DSL with typed component builders
+- [ ] Link DSL builder
+- [ ] Info DSL with contact and license builders
 - [ ] OpenAPI root DSL with fluent API
-- [ ] Test: DSL usage examples for each builder
+- [ ] Test: Components and Root DSL examples
 
 ### Phase 12: API Documentation UI (komok-tech-api-dsl-ui module)
 Create a web-server-agnostic UI module for displaying OpenAPI documentation:
 
 #### 12.1 Module Setup
-- [ ] Create `:komok-tech:komok-tech-api-dsl-ui` module
-- [ ] Add kotlinx-html dependency for HTML generation
-- [ ] Set up build configuration for embedding static resources (CSS, JS)
-- [ ] Create main function signature: `fun renderOpenApiDoc(openapi: OpenAPI): String`
+- [x] Create `:komok-tech:komok-tech-api-dsl-ui` module
+- [x] Add kotlinx-html dependency for HTML generation
+- [x] Set up build configuration for embedding static resources (CSS, JS)
+- [x] Create main function signature: `fun renderOpenApiDoc(openapi: OpenAPI): String`
 
 #### 12.2 HTML Structure and Layout
-- [ ] Design semantic HTML structure for OpenAPI documentation
-- [ ] Implement header section (API title, version, description)
-- [ ] Implement server information display
-- [ ] Implement navigation/table of contents for endpoints
-- [ ] Implement main content area for operation details
-- [ ] Implement sidebar for model schemas
-- [ ] Support for external documentation links
-- [ ] Support for security scheme documentation
+- [x] Design semantic HTML structure for OpenAPI documentation
+- [x] Implement header section (API title, version, description)
+- [x] Implement server information display
+- [x] Implement navigation/table of contents for endpoints
+- [x] Implement main content area for operation details
+- [x] Implement sidebar for model schemas
+- [ ] Support for external documentation links (not fully implemented for tags and info)
+- [ ] Support for security scheme documentation (not rendered yet)
 
 #### 12.3 Styling (Embedded CSS)
-- [ ] Create clean, modern CSS layout (embedded in HTML head)
-- [ ] Implement responsive design for mobile/tablet/desktop
-- [ ] Design HTTP method badges (GET, POST, PUT, DELETE, etc.)
-- [ ] Style request/response sections
-- [ ] Style schema tables and object hierarchies
-- [ ] Implement dark/light theme support
-- [ ] Add smooth transitions and micro-interactions
-- [ ] Ensure readability and accessibility (WCAG compliant)
+- [x] Create clean, modern CSS layout (embedded in HTML head)
+- [x] Implement responsive design for mobile/tablet/desktop
+- [x] Design HTTP method badges (GET, POST, PUT, DELETE, etc.)
+- [x] Style request/response sections
+- [x] Style schema tables and object hierarchies
+- [x] Implement dark/light theme support
+- [x] Add smooth transitions and micro-interactions
+- [x] Ensure readability and accessibility (WCAG compliant)
 
-#### 12.4 Interactive JavaScript UI (Preact + ESM)
-- [ ] Set up Preact-based component architecture
-- [ ] Use ES modules (mjs) for modern JavaScript delivery
-- [ ] Implement collapsible sections for operations
-- [ ] Create interactive schema browser with expand/collapse
-- [ ] Add request/response example display with syntax highlighting
-- [ ] Implement "Try it out" functionality (optional, lightweight)
-- [ ] Create search/filter functionality for endpoints
-- [ ] Add deep linking support (URL fragments for specific operations)
-- [ ] Implement keyboard navigation support
+#### 12.4 Interactive JavaScript UI (Vanilla JS - simplified approach)
+Note: Implementation uses vanilla JavaScript instead of Preact for simplicity
+- [x] Theme toggle functionality with localStorage persistence
+- [x] Create search/filter functionality for endpoints
+- [x] Add deep linking support (URL fragments for specific operations)
+- [x] Implement keyboard navigation support (Ctrl/Cmd+K for search, Ctrl/Cmd+D for theme)
+- [x] Smooth scrolling for navigation
+- [x] Active section highlighting with IntersectionObserver
+- [ ] Implement collapsible sections for operations (not implemented)
+- [ ] Create interactive schema browser with expand/collapse (not implemented)
+- [ ] Add request/response example display with syntax highlighting (not implemented)
+
+#### 12.8 HTTP File Generation
+Generate downloadable `.http` files for use with IntelliJ IDEA / VS Code REST Client:
+- [ ] Create `fun generateHttpFile(openapi: OpenAPI): String` function
+- [ ] Generate one request per operation with documentation comments
+- [ ] Include path parameters, query parameters, headers, and request body examples
+- [ ] Support for multiple servers (base URLs)
+- [ ] Add download button in UI to get the .http file
+- [ ] Test: Generated .http file syntax is valid
 
 #### 12.5 Performance Optimization
-- [ ] Minimize JavaScript bundle size (target: <50KB total)
+- [x] Add performance monitoring hooks (console logging)
+- [x] Use IntersectionObserver for active section tracking
+- [x] Minimal JavaScript bundle (vanilla JS, no frameworks)
 - [ ] Implement virtual scrolling for APIs with many endpoints
-- [ ] Lazy load sections on demand (intersection observer)
-- [ ] Optimize initial render time (target: <100ms for HTML generation)
+- [ ] Optimize initial render time (target: <100ms for HTML generation) - needs benchmarking
 - [ ] Use CSS containment for layout performance
 - [ ] Minimize DOM nodes for large schemas
-- [ ] Add performance monitoring hooks
 - [ ] Benchmark against Swagger UI for comparison
 
 #### 12.6 Testing
-- [ ] Test: HTML generation from minimal OpenAPI object
-- [ ] Test: HTML generation from complex OpenAPI documents
-- [ ] Test: Validate HTML structure and semantics
-- [ ] Test: Verify all OpenAPI elements are rendered
-- [ ] Test: CSS is properly embedded
-- [ ] Test: JavaScript is properly embedded
-- [ ] Test: Generated HTML size is reasonable
+- [x] Test: HTML generation from minimal OpenAPI object
+- [x] Test: Validate HTML structure and semantics
+- [x] Test: Verify OpenAPI elements are rendered (info, servers, endpoints, operations, parameters)
+- [x] Test: CSS is properly embedded
+- [x] Test: JavaScript is properly embedded
+- [x] Test: Generated HTML size is reasonable
+- [ ] Test: HTML generation from complex OpenAPI documents (needs more comprehensive tests)
 - [ ] Test: Performance benchmarks for various document sizes
-- [ ] Test: Accessibility compliance (ARIA labels, semantic HTML)
+- [ ] Test: Accessibility compliance (ARIA labels, semantic HTML) - needs specific test
 
 #### 12.7 Documentation and Examples
-- [ ] Add KDoc for public API
+- [x] Add KDoc for public API (partial - main functions documented)
+- [x] Manual test example with Petstore (PetstoreManualTest.kt)
 - [ ] Create usage examples for different web servers (Ktor, Spring, etc.)
 - [ ] Document customization options (themes, layouts)
-- [ ] Add example showcasing generated UI
+- [ ] Add comprehensive example showcasing all UI features
 
 ### Phase 13: Validation and Integration
 - [ ] Add model-level validation (required fields, pattern matching, mutual exclusivity)
-- [ ] Implement specification extensions support (x- properties)
-- [ ] Add reference resolution utilities
 - [ ] Test: Complex nested documents
-- [ ] Test: Real-world OpenAPI examples (Stripe, GitHub, Petstore)
+- [ ] Test: Real-world OpenAPI 3.2 examples (Stripe, GitHub APIs - need to obtain/convert to 3.2)
 - [ ] Test: Ensure 100% code coverage for all model classes
 
 ### Phase 14: Documentation and Examples
@@ -203,10 +167,35 @@ Create a web-server-agnostic UI module for displaying OpenAPI documentation:
 - [ ] Add validation error messages with helpful hints
 - [ ] Create user guide for the DSL
 
-### Phase 15: Performance and Optimization
-- [ ] Benchmark serialization/deserialization performance
-- [ ] Optimize memory usage for large documents
-- [ ] Add lazy initialization where appropriate
+### Phase 15: Reference Resolution & Referenceable Types
+Advanced reference handling for complete OpenAPI document processing.
+
+#### 15.1 Referenceable Type Support
+Extend model classes to accept either inline definitions or `$ref` references:
+- [ ] Create `Referenceable<T>` sealed type (either `Inline<T>` or `Ref`)
+- [ ] Update MediaType fields to support Referenceable where spec allows
+- [ ] Update Example fields to support Referenceable where spec allows
+- [ ] Update Header fields to support Referenceable where spec allows
+- [ ] Custom serializer for Referenceable that outputs either inline object or `{"$ref": "..."}`
+- [ ] Test: Referenceable serialization/deserialization round-trip
+
+#### 15.2 Reference Resolution
+Resolve `$ref` pointers to actual objects within a document:
+- [ ] Create `ReferenceResolver` that takes an `OpenAPI` document
+- [ ] Implement JSON Pointer parsing (`#/components/schemas/Pet` → path segments)
+- [ ] Implement resolution for all component types (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems)
+- [ ] Return resolved object or error if reference is invalid
+- [ ] Test: Resolution of valid references
+- [ ] Test: Error handling for missing references
+
+#### 15.3 Reference Validation
+Validate all references in a document:
+- [ ] Detect references pointing to non-existent components
+- [ ] Detect circular references (A → B → A)
+- [ ] Report all validation errors with paths to problematic references
+- [ ] Test: Circular reference detection
+- [ ] Test: Missing reference detection
+- [ ] Test: Valid document passes validation
 
 ---
 
