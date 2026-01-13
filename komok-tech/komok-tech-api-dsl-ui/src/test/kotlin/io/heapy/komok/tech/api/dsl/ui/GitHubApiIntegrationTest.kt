@@ -196,7 +196,7 @@ class GitHubApiIntegrationTest {
         val jsonContent = yamlToJson(yamlContent)
 
         log.info("Parsing ${spec.name}...")
-        val openapi = yaml.decodeFromString(OpenAPI.serializer(), jsonContent)
+        val openapi = json.decodeFromString<OpenAPI>(jsonContent)
 
         log.info("Parsed OpenAPI document:")
         log.info("  Title: ${openapi.info.title}")
