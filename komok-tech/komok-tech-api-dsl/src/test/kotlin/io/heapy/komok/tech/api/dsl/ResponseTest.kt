@@ -63,17 +63,17 @@ class ResponseTest {
         val response = Response(
             description = "Successful response with headers",
             headers = mapOf(
-                "X-Rate-Limit" to Header(
+                "X-Rate-Limit" to Direct(Header(
                     description = "Rate limit remaining",
                     schema = Schema(buildJsonObject { put("type", "integer") })
-                ),
-                "X-Request-ID" to Header(
+                )),
+                "X-Request-ID" to Direct(Header(
                     description = "Request identifier",
                     schema = Schema(buildJsonObject {
                         put("type", "string")
                         put("format", "uuid")
                     })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(response)
@@ -81,6 +81,47 @@ class ResponseTest {
         assertTrue(json.contains("X-Rate-Limit"))
         assertTrue(json.contains("X-Request-ID"))
         assertTrue(json.contains("Rate limit remaining"))
+    }
+
+    @Test
+    fun `should serialize Response with both Direct and Reference headers`() {
+        val response = Response(
+            description = "Response with mixed header types",
+            headers = mapOf(
+                "X-Inline-Header" to Direct(Header(
+                    description = "Inline header definition",
+                    schema = Schema(buildJsonObject { put("type", "string") })
+                )),
+                "X-Referenced-Header" to Reference(
+                    ref = "#/components/headers/CommonHeader",
+                    summary = "A reusable header"
+                )
+            )
+        )
+        val json = compactJson.encodeToString(response)
+
+        // Direct header should be serialized as inline object
+        assertTrue(json.contains("Inline header definition"))
+
+        // Reference should be serialized with $ref
+        assertTrue(json.contains("\$ref"))
+        assertTrue(json.contains("#/components/headers/CommonHeader"))
+        assertTrue(json.contains("A reusable header"))
+    }
+
+    @Test
+    fun `should round-trip Response with Reference header`() {
+        val response = Response(
+            description = "Response with referenced header",
+            headers = mapOf(
+                "X-Auth" to Reference(
+                    ref = "#/components/headers/Authorization",
+                    description = "Standard auth header"
+                )
+            )
+        )
+
+        TestHelpers.testRoundTripWithoutValidation(Response.serializer(), response)
     }
 
     @Test
@@ -175,13 +216,13 @@ class ResponseTest {
             summary = "Created",
             description = "Resource successfully created",
             headers = mapOf(
-                "Location" to Header(
+                "Location" to Direct(Header(
                     description = "URL of the created resource",
                     schema = Schema(buildJsonObject {
                         put("type", "string")
                         put("format", "uri")
                     })
-                )
+                ))
             ),
             content = mapOf(
                 "application/json" to MediaType(
@@ -288,10 +329,10 @@ class ResponseTest {
             summary = "Successful response",
             description = "The operation completed successfully",
             headers = mapOf(
-                "X-Total-Count" to Header(
+                "X-Total-Count" to Direct(Header(
                     description = "Total number of items",
                     schema = Schema(buildJsonObject { put("type", "integer") })
-                )
+                ))
             ),
             content = mapOf(
                 "application/json" to MediaType(
@@ -551,14 +592,14 @@ class ResponseTest {
                 summary = "Success",
                 description = "List of users retrieved successfully",
                 headers = mapOf(
-                    "X-Total-Count" to Header(
+                    "X-Total-Count" to Direct(Header(
                         description = "Total number of users",
                         schema = Schema(buildJsonObject { put("type", "integer") })
-                    ),
-                    "X-Page" to Header(
+                    )),
+                    "X-Page" to Direct(Header(
                         description = "Current page number",
                         schema = Schema(buildJsonObject { put("type", "integer") })
-                    )
+                    ))
                 ),
                 content = mapOf(
                     "application/json" to MediaType(

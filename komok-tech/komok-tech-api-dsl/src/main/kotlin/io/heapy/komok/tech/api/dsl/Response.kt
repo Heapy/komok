@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
  *
  * @property description A description of the response
  * @property summary A short summary of the response
- * @property headers Maps a header name to its definition
+ * @property headers Maps a header name to its definition (can be inline or `$ref`)
  * @property content A map containing descriptions of potential response payloads
  * @property extensions Specification extensions (x- prefixed properties)
  *
@@ -20,7 +20,8 @@ import kotlinx.serialization.json.JsonElement
 data class Response(
     val description: String? = null,
     val summary: String? = null,
-    val headers: Map<String, Header>? = null,
+    @Serializable(with = ReferenceableHeaderMapSerializer::class)
+    val headers: Map<String, Referenceable<Header>>? = null,
     val content: Content? = null,
     // TODO: Add links support in later phase
     // val links: Map<String, Referenceable<Link>>? = null,

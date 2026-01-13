@@ -346,21 +346,57 @@ body {
     margin-bottom: var(--spacing-md);
 }
 
-.sidebar-tag-name {
-    font-weight: 600;
-    font-size: 0.85rem;
+.sidebar-tag-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
     margin-bottom: var(--spacing-xs);
-    text-transform: capitalize;
 }
 
-.sidebar-tag-name a {
+.sidebar-tag-toggle {
+    background: none;
+    border: none;
+    padding: var(--spacing-xs);
+    cursor: pointer;
+    color: var(--text-secondary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+.sidebar-tag-toggle:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.toggle-icon {
+    font-size: 0.6rem;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.sidebar-tag-group.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.sidebar-tag-group.collapsed .endpoint-list {
+    display: none;
+}
+
+a.sidebar-tag-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: capitalize;
     color: var(--text-primary);
     text-decoration: none;
     padding: var(--spacing-xs) 0;
-    display: block;
+    flex: 1;
 }
 
-.sidebar-tag-name a:hover {
+a.sidebar-tag-name:hover {
     color: var(--text-link);
 }
 

@@ -81,10 +81,10 @@ class OpenAPIIntegrationTest {
                             "200" to Response(
                                 description = "A paged array of pets",
                                 headers = mapOf(
-                                    "x-next" to Header(
+                                    "x-next" to Direct(Header(
                                         description = "A link to the next page of responses",
                                         schema = Schema(buildJsonObject { put("type", "string") })
-                                    )
+                                    ))
                                 ),
                                 content = mapOf(
                                     "application/json" to MediaType(

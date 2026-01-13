@@ -168,8 +168,18 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
             sortedTags.forEach { tag ->
                 div(classes = "sidebar-tag-group") {
                     if (tag != null) {
-                        p(classes = "sidebar-tag-name") {
-                            a(href = "#tag-$tag") { +tag }
+                        attributes["data-tag"] = tag
+                    }
+
+                    div(classes = "sidebar-tag-header") {
+                        button(classes = "sidebar-tag-toggle") {
+                            attributes["type"] = "button"
+                            attributes["aria-expanded"] = "true"
+                            attributes["aria-label"] = "Toggle ${tag ?: "endpoints"} group"
+                            span(classes = "toggle-icon") { +"▼" }
+                        }
+                        if (tag != null) {
+                            a(href = "#tag-$tag", classes = "sidebar-tag-name") { +tag }
                         }
                     }
 
@@ -444,7 +454,11 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                                 td { span(classes = "param-in") { +param.location.name.lowercase() } }
                                 td { +"string" } // Simplified
                                 td { +(if (param.required) "✓" else "-") }
-                                td { +(param.description ?: "-") }
+                                td {
+                                    param.description?.let { desc ->
+                                        markdown(desc)
+                                    } ?: run { +"-" }
+                                }
                             }
                         }
                     }

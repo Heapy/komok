@@ -9,7 +9,8 @@ package io.heapy.komok.tech.api.dsl.ui
  * - Search functionality for endpoints
  * - Smooth scrolling for navigation
  * - Deep linking support
- * - Local storage for theme persistence
+ * - Collapsible sidebar groups with state persistence
+ * - Local storage for theme and sidebar state persistence
  */
 internal val JAVASCRIPT_CODE = """
 // ===== Theme Toggle =====
@@ -183,6 +184,67 @@ internal val JAVASCRIPT_CODE = """
             const themeToggle = document.getElementById('theme-toggle');
             themeToggle.click();
         }
+    });
+})();
+
+// ===== Sidebar Collapsible Groups =====
+(function initSidebarCollapse() {
+    const STORAGE_KEY = 'sidebar-collapsed-groups';
+
+    // Load collapsed state from localStorage
+    function getCollapsedGroups() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch {
+            return [];
+        }
+    }
+
+    // Save collapsed state to localStorage
+    function saveCollapsedGroups(groups) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
+        } catch {
+            // Ignore storage errors
+        }
+    }
+
+    // Initialize all tag groups
+    const tagGroups = document.querySelectorAll('.sidebar-tag-group');
+    const collapsedGroups = getCollapsedGroups();
+
+    tagGroups.forEach((group, index) => {
+        const tag = group.dataset.tag || 'group-' + index;
+        const toggle = group.querySelector('.sidebar-tag-toggle');
+
+        if (!toggle) return;
+
+        // Restore collapsed state
+        if (collapsedGroups.includes(tag)) {
+            group.classList.add('collapsed');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        // Add click handler
+        toggle.addEventListener('click', () => {
+            const isCollapsed = group.classList.toggle('collapsed');
+            toggle.setAttribute('aria-expanded', !isCollapsed);
+
+            // Update stored state
+            const currentCollapsed = getCollapsedGroups();
+            if (isCollapsed) {
+                if (!currentCollapsed.includes(tag)) {
+                    currentCollapsed.push(tag);
+                }
+            } else {
+                const idx = currentCollapsed.indexOf(tag);
+                if (idx > -1) {
+                    currentCollapsed.splice(idx, 1);
+                }
+            }
+            saveCollapsedGroups(currentCollapsed);
+        });
     });
 })();
 

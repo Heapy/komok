@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.commonmark)
 
     testImplementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.kaml)
     testImplementation(libs.logback)
     testImplementation(projects.komokTech.komokTechLogging)
     testImplementation(libs.junit.jupiter)
@@ -43,4 +44,5 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    maxHeapSize = "2g"
 }

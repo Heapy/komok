@@ -397,10 +397,10 @@ class OperationTest {
                 "201" to Response(
                     description = "User created",
                     headers = mapOf(
-                        "Location" to Header(
+                        "Location" to Direct(Header(
                             description = "URL of created user",
                             schema = Schema(buildJsonObject { put("type", "string") })
-                        )
+                        ))
                     )
                 ),
                 "400" to Response(description = "Invalid input")
