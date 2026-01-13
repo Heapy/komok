@@ -66,7 +66,7 @@ class OpenAPIIntegrationTest {
                         summary = "List all pets",
                         operationId = "listPets",
                         parameters = listOf(
-                            Parameter(
+                            Direct(Parameter(
                                 name = "limit",
                                 location = ParameterLocation.QUERY,
                                 description = "How many items to return at one time (max 100)",
@@ -75,7 +75,7 @@ class OpenAPIIntegrationTest {
                                     put("type", "integer")
                                     put("format", "int32")
                                 })
-                            )
+                            ))
                         ),
                         responses = responses(
                             "200" to Response(
@@ -134,13 +134,13 @@ class OpenAPIIntegrationTest {
                 "/pets/{petId}" to PathItem(
                     summary = "Individual pet operations",
                     parameters = listOf(
-                        Parameter(
+                        Direct(Parameter(
                             name = "petId",
                             location = ParameterLocation.PATH,
                             description = "The id of the pet to retrieve",
                             required = true,
                             schema = Schema(buildJsonObject { put("type", "string") })
-                        )
+                        ))
                     ),
                     get = Operation(
                         tags = listOf("pet"),
@@ -461,11 +461,11 @@ class OpenAPIIntegrationTest {
                         summary = "List users",
                         tags = listOf("users"),
                         parameters = listOf(
-                            Parameter(
+                            Direct(Parameter(
                                 name = "limit",
                                 location = ParameterLocation.QUERY,
                                 schema = Schema(buildJsonObject { put("type", "integer") })
-                            )
+                            ))
                         ),
                         responses = responses(
                             "200" to Response(

@@ -96,7 +96,7 @@ class OperationTest {
         val operation = Operation(
             summary = "Get user by ID",
             parameters = listOf(
-                Parameter(
+                Direct(Parameter(
                     name = "userId",
                     location = ParameterLocation.PATH,
                     description = "User identifier",
@@ -105,8 +105,8 @@ class OperationTest {
                         put("type", "string")
                         put("format", "uuid")
                     })
-                ),
-                Parameter(
+                )),
+                Direct(Parameter(
                     name = "includeDeleted",
                     location = ParameterLocation.QUERY,
                     description = "Include deleted users",
@@ -114,7 +114,7 @@ class OperationTest {
                         put("type", "boolean")
                         put("default", false)
                     })
-                )
+                ))
             ),
             responses = responses(
                 "200" to Response(description = "User found"),
@@ -379,11 +379,11 @@ class OperationTest {
             ),
             operationId = "createUser",
             parameters = listOf(
-                Parameter(
+                Direct(Parameter(
                     name = "X-Request-ID",
                     location = ParameterLocation.HEADER,
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             ),
             requestBody = RequestBody(
                 content = mapOf(
@@ -424,7 +424,7 @@ class OperationTest {
             description = "Multiple status values can be provided with comma separated strings",
             operationId = "findPetsByStatus",
             parameters = listOf(
-                Parameter(
+                Direct(Parameter(
                     name = "status",
                     location = ParameterLocation.QUERY,
                     description = "Status values that need to be considered for filter",
@@ -442,7 +442,7 @@ class OperationTest {
                     }),
                     style = ParameterStyle.FORM,
                     explode = true
-                )
+                ))
             ),
             responses = responses(
                 "200" to Response(

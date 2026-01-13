@@ -966,6 +966,131 @@ public final class io/heapy/komok/tech/api/dsl/Reference$Companion {
 public abstract interface class io/heapy/komok/tech/api/dsl/Referenceable : io/heapy/komok/tech/api/dsl/OpenAPIObject {
 }
 
+public final class io/heapy/komok/tech/api/dsl/ReferenceableExampleMapSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableExampleMapSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/Map;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/Map;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableExampleSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableExampleSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableHeaderMapSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableHeaderMapSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/Map;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/Map;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableHeaderSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableHeaderSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableLinkMapSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableLinkMapSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/Map;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/Map;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableLinkSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableLinkSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableParameterListSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableParameterListSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/List;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/List;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableParameterSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableParameterSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableRequestBodySerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableRequestBodySerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableResponseMapSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableResponseMapSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/Map;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/Map;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableResponseSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableResponseSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableSecuritySchemeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/heapy/komok/tech/api/dsl/ReferenceableSecuritySchemeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableSerializer : kotlinx/serialization/KSerializer {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/ReferenceableSerializer$Companion;
+	public fun <init> (Lkotlinx/serialization/KSerializer;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/heapy/komok/tech/api/dsl/Referenceable;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/heapy/komok/tech/api/dsl/Referenceable;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableSerializer$Companion {
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceableSerializerKt {
+	public static final fun referenceableSerializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
+}
+
 public final class io/heapy/komok/tech/api/dsl/RequestBody : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/RequestBody$Companion;
 	public fun <init> (Ljava/util/Map;Ljava/lang/String;ZLjava/util/Map;)V

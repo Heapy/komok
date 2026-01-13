@@ -222,19 +222,19 @@ class PathItemTest {
     fun `should serialize PathItem with parameters`() {
         val pathItem = PathItem(
             parameters = listOf(
-                Parameter(
+                Direct(Parameter(
                     name = "id",
                     location = ParameterLocation.PATH,
                     description = "Resource ID",
                     required = true,
                     schema = Schema(buildJsonObject { put("type", "string") })
-                ),
-                Parameter(
+                )),
+                Direct(Parameter(
                     name = "version",
                     location = ParameterLocation.HEADER,
                     description = "API version",
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             ),
             get = Operation(
                 responses = responses("200" to Response(description = "Success"))
@@ -433,11 +433,11 @@ class PathItemTest {
                 summary = "List pets",
                 operationId = "listPets",
                 parameters = listOf(
-                    Parameter(
+                    Direct(Parameter(
                         name = "limit",
                         location = ParameterLocation.QUERY,
                         schema = Schema(buildJsonObject { put("type", "integer") })
-                    )
+                    ))
                 ),
                 responses = responses(
                     "200" to Response(
@@ -579,12 +579,12 @@ class PathItemTest {
             ),
             "/pets/{petId}" to PathItem(
                 parameters = listOf(
-                    Parameter(
+                    Direct(Parameter(
                         name = "petId",
                         location = ParameterLocation.PATH,
                         required = true,
                         schema = Schema(buildJsonObject { put("type", "string") })
-                    )
+                    ))
                 ),
                 get = Operation(
                     operationId = "getPet",
@@ -608,7 +608,7 @@ class PathItemTest {
             summary = "User resource",
             description = "Operations for user management",
             parameters = listOf(
-                Parameter(
+                Direct(Parameter(
                     name = "userId",
                     location = ParameterLocation.PATH,
                     description = "User identifier",
@@ -617,7 +617,7 @@ class PathItemTest {
                         put("type", "string")
                         put("format", "uuid")
                     })
-                )
+                ))
             ),
             get = Operation(
                 summary = "Get user details",
