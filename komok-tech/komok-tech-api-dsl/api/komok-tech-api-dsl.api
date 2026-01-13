@@ -232,6 +232,35 @@ public final class io/heapy/komok/tech/api/dsl/Example$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/ExampleBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Example;
+	public final fun dataValue (Lkotlin/jvm/functions/Function1;)V
+	public final fun getDataValue ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getExternalValue ()Ljava/lang/String;
+	public final fun getSerializedValue ()Ljava/lang/String;
+	public final fun getSummary ()Ljava/lang/String;
+	public final fun getValue ()Lkotlinx/serialization/json/JsonElement;
+	public final fun setDataValue (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setExternalValue (Ljava/lang/String;)V
+	public final fun setSerializedValue (Ljava/lang/String;)V
+	public final fun setSummary (Ljava/lang/String;)V
+	public final fun setValue (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun value (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ExamplesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Example;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/ExternalDocumentation : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/ExternalDocumentation$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
@@ -361,6 +390,26 @@ public final synthetic class io/heapy/komok/tech/api/dsl/Info$$serializer : kotl
 
 public final class io/heapy/komok/tech/api/dsl/Info$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/JsonArrayBuilderScope {
+	public fun <init> (Lkotlinx/serialization/json/JsonArrayBuilder;)V
+	public final fun add (Ljava/lang/Number;)Z
+	public final fun add (Ljava/lang/String;)Z
+	public final fun add (Lkotlinx/serialization/json/JsonElement;)Z
+	public final fun add (Z)Z
+	public final fun addJsonArray (Lkotlin/jvm/functions/Function1;)V
+	public final fun addJsonObject (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/JsonObjectBuilderScope {
+	public fun <init> (Lkotlinx/serialization/json/JsonObjectBuilder;)V
+	public final fun put (Ljava/lang/String;Ljava/lang/Number;)Lkotlinx/serialization/json/JsonElement;
+	public final fun put (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
+	public final fun put (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public final fun put (Ljava/lang/String;Z)Lkotlinx/serialization/json/JsonElement;
+	public final fun putJsonArray (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun putJsonObject (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/License : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -1239,6 +1288,103 @@ public final synthetic class io/heapy/komok/tech/api/dsl/Schema$$serializer : ko
 
 public final class io/heapy/komok/tech/api/dsl/Schema$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaAndExampleDslKt {
+	public static final fun arraySchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun arraySchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun booleanSchema (Z)Lkotlinx/serialization/json/JsonElement;
+	public static final fun booleanTypeSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun booleanTypeSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun example (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Example;
+	public static final fun examples (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun integerSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun integerSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun numberSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun numberSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun objectSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun objectSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun refSchema (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun schema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun schema (Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun schemaProperties (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun stringSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun stringSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaBuilder {
+	public fun <init> ()V
+	public final fun build-k2ar-Rc ()Lkotlinx/serialization/json/JsonElement;
+	public final fun enum ([Ljava/lang/String;)V
+	public final fun getAdditionalProperties ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getAllOf ()Ljava/util/List;
+	public final fun getAnyOf ()Ljava/util/List;
+	public final fun getConst ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getDefault ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEnum ()Ljava/util/List;
+	public final fun getExclusiveMaximum ()Ljava/lang/Number;
+	public final fun getExclusiveMinimum ()Ljava/lang/Number;
+	public final fun getFormat ()Ljava/lang/String;
+	public final fun getItems-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getMaxItems ()Ljava/lang/Integer;
+	public final fun getMaxLength ()Ljava/lang/Integer;
+	public final fun getMaxProperties ()Ljava/lang/Integer;
+	public final fun getMaximum ()Ljava/lang/Number;
+	public final fun getMinItems ()Ljava/lang/Integer;
+	public final fun getMinLength ()Ljava/lang/Integer;
+	public final fun getMinProperties ()Ljava/lang/Integer;
+	public final fun getMinimum ()Ljava/lang/Number;
+	public final fun getMultipleOf ()Ljava/lang/Number;
+	public final fun getNot-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getNullable ()Ljava/lang/Boolean;
+	public final fun getOneOf ()Ljava/util/List;
+	public final fun getPattern ()Ljava/lang/String;
+	public final fun getRef ()Ljava/lang/String;
+	public final fun getSchemaProperties ()Ljava/util/Map;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun getUniqueItems ()Ljava/lang/Boolean;
+	public final fun properties (Lkotlin/jvm/functions/Function1;)V
+	public final fun property (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
+	public final fun required ([Ljava/lang/String;)V
+	public final fun setAdditionalProperties (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setAllOf (Ljava/util/List;)V
+	public final fun setAnyOf (Ljava/util/List;)V
+	public final fun setConst (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setDefault (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setEnum (Ljava/util/List;)V
+	public final fun setExclusiveMaximum (Ljava/lang/Number;)V
+	public final fun setExclusiveMinimum (Ljava/lang/Number;)V
+	public final fun setFormat (Ljava/lang/String;)V
+	public final fun setItems-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setMaxItems (Ljava/lang/Integer;)V
+	public final fun setMaxLength (Ljava/lang/Integer;)V
+	public final fun setMaxProperties (Ljava/lang/Integer;)V
+	public final fun setMaximum (Ljava/lang/Number;)V
+	public final fun setMinItems (Ljava/lang/Integer;)V
+	public final fun setMinLength (Ljava/lang/Integer;)V
+	public final fun setMinProperties (Ljava/lang/Integer;)V
+	public final fun setMinimum (Ljava/lang/Number;)V
+	public final fun setMultipleOf (Ljava/lang/Number;)V
+	public final fun setNot-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setNullable (Ljava/lang/Boolean;)V
+	public final fun setOneOf (Ljava/util/List;)V
+	public final fun setPattern (Ljava/lang/String;)V
+	public final fun setRef (Ljava/lang/String;)V
+	public final fun setSchemaProperties (Ljava/util/Map;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public final fun setType (Ljava/lang/String;)V
+	public final fun setUniqueItems (Ljava/lang/Boolean;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaPropertiesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getProperties ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun to-v8GvFto (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/SecurityRequirementKt {

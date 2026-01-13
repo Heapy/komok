@@ -37,9 +37,9 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Test: Server DSL examples
 
 #### 11.3 Schema and Example DSLs
-- [ ] Schema DSL builder (JSON Schema integration)
-- [ ] Example DSL builder
-- [ ] Test: Schema and Example DSL examples
+- [x] Schema DSL builder (JSON Schema integration)
+- [x] Example DSL builder
+- [x] Test: Schema and Example DSL examples
 
 #### 11.4 Parameter and Header DSLs
 - [ ] Parameter DSL with style and schema builders
