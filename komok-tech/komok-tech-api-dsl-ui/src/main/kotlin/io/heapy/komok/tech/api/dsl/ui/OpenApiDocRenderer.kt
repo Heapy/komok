@@ -463,11 +463,9 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                     }
                 }
 
-                if (requestBody.content != null) {
-                    div(classes = "content-types") {
-                        requestBody.content.forEach { (contentType, _) ->
-                            span(classes = "content-type-badge") { +contentType }
-                        }
+                div(classes = "content-types") {
+                    requestBody.content.forEach { (contentType, _) ->
+                        span(classes = "content-type-badge") { +contentType }
                     }
                 }
             }
