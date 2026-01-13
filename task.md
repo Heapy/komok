@@ -25,16 +25,16 @@ Update this document with comprehensive list of tasks.
 Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail-fast validation** - throw meaningful exceptions immediately when invalid values are provided (e.g., missing required fields, invalid patterns, mutual exclusivity violations).
 
 #### 11.1 Core Value Object DSLs
-- [ ] Contact DSL builder
-- [ ] License DSL builder
-- [ ] ExternalDocumentation DSL builder
-- [ ] Tag DSL builder
-- [ ] Test: Core value object DSL examples
+- [x] Contact DSL builder
+- [x] License DSL builder
+- [x] ExternalDocumentation DSL builder
+- [x] Tag DSL builder
+- [x] Test: Core value object DSL examples
 
 #### 11.2 Server DSLs
-- [ ] ServerVariable DSL builder
-- [ ] Server DSL with variables builder
-- [ ] Test: Server DSL examples
+- [x] ServerVariable DSL builder
+- [x] Server DSL with variables builder
+- [x] Test: Server DSL examples
 
 #### 11.3 Schema and Example DSLs
 - [ ] Schema DSL builder (JSON Schema integration)
