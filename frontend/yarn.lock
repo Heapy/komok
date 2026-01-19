@@ -131,12 +131,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.0.7":
-  version: 25.0.7
-  resolution: "@types/node@npm:25.0.7"
+"@types/node@npm:^25.0.9":
+  version: 25.0.9
+  resolution: "@types/node@npm:25.0.9"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/a9feeb16a6487621ef96158e7a9759f89e3c1726189c7b19a9e6d3e0d581499c62e441e120e5a334e9eb01bc4d26644f27767fd5931d6d4f177d14f4f8e3f9ab
+  checksum: 10c0/a757efafe303d9c8833eb53c2e9a0981cd5ac725cdc04c5612a71db86468c938778d4fa328be4231b68fffc68258638764df7b9c69e86cf55f0bb67105eb056f
   languageName: node
   linkType: hard
 
@@ -923,9 +923,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-webpack-plugin@npm:^5.6.5":
-  version: 5.6.5
-  resolution: "html-webpack-plugin@npm:5.6.5"
+"html-webpack-plugin@npm:^5.6.6":
+  version: 5.6.6
+  resolution: "html-webpack-plugin@npm:5.6.6"
   dependencies:
     "@types/html-minifier-terser": "npm:^6.0.0"
     html-minifier-terser: "npm:^6.0.2"
@@ -940,7 +940,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/4ae0ae48fec6337e4eb055e730e46340172ec1967bd383d897d03cb3c4e385a8128e8d5179c4658536b00e432c2d3f026d97eb5fdb4cf9dc710498d2e871b84e
+  checksum: 10c0/30c07c46c6125d51f9779e4fc3dd1bf30ebd0ef78e9628d918f8e4c45e116e79a31ca5ba3444d2743833335405616b8772a68d6183b0663f016529802422ca9e
   languageName: node
   linkType: hard
 
@@ -1059,13 +1059,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^25.0.7"
+    "@types/node": "npm:^25.0.9"
     "@types/react": "npm:^19.2.8"
     "@types/react-dom": "npm:^19.2.3"
     compression-webpack-plugin: "npm:^11.1.0"
     css-loader: "npm:^7.1.2"
-    html-webpack-plugin: "npm:^5.6.5"
-    mini-css-extract-plugin: "npm:^2.9.4"
+    html-webpack-plugin: "npm:^5.6.6"
+    mini-css-extract-plugin: "npm:^2.10.0"
     react: "npm:^19.2.3"
     react-dom: "npm:^19.2.3"
     ts-loader: "npm:^9.5.4"
@@ -1151,15 +1151,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^2.9.4":
-  version: 2.9.4
-  resolution: "mini-css-extract-plugin@npm:2.9.4"
+"mini-css-extract-plugin@npm:^2.10.0":
+  version: 2.10.0
+  resolution: "mini-css-extract-plugin@npm:2.10.0"
   dependencies:
     schema-utils: "npm:^4.0.0"
     tapable: "npm:^2.2.1"
   peerDependencies:
     webpack: ^5.0.0
-  checksum: 10c0/76f9e471784d52435ea766ce576ad23d37d0ea51c32ddc56414c8fdf14f7de44202dbc772cdf7549b7e54a5e56f569af93cfbd036d62d13ff8fd9571e53353b7
+  checksum: 10c0/5fb0654471f4fb695629d96324d327d4d3a05069a95b83770d070e8f48a07d5b5f8da61adabdd56e3119cf6b17eef058c4ba6ab4cd31a7b2af48624621fe0520
   languageName: node
   linkType: hard
 
