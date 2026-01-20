@@ -1,28 +1,31 @@
 package io.heapy.komok.tech.api.dsl
 
-import com.networknt.schema.JsonSchema
-import com.networknt.schema.JsonSchemaFactory
-import com.networknt.schema.SpecVersion
-import com.networknt.schema.ValidationMessage
+import com.networknt.schema.Error
+import com.networknt.schema.Schema
+import com.networknt.schema.SchemaRegistry
+import com.networknt.schema.dialect.Dialects
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
+import tools.jackson.databind.json.JsonMapper
 import java.io.InputStream
 
 /**
  * Helper class for validating JSON against OpenAPI 3.2 JSON Schema.
  */
 object OpenAPISchemaValidator {
-    private val jsonSchemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012)
+    private val jsonSchemaRegistry by lazy {
+        SchemaRegistry.withDialect(Dialects.getDraft202012())
+    }
 
     /**
      * Lazily loaded OpenAPI 3.2 JSON Schema.
      */
-    val openApiSchema: JsonSchema by lazy {
+    val openApiSchema: Schema by lazy {
         val schemaStream: InputStream = javaClass.classLoader
             .getResourceAsStream("openapi-v3.2.0-json-schema.json")
             ?: error("Could not load openapi-v3.2.0-json-schema.json from resources")
 
-        jsonSchemaFactory.getSchema(schemaStream)
+        jsonSchemaRegistry.getSchema(schemaStream)
     }
 
     /**
@@ -31,8 +34,8 @@ object OpenAPISchemaValidator {
      * @param json the JSON string to validate
      * @return set of validation errors, empty if valid
      */
-    fun validate(json: String): Set<ValidationMessage> {
-        val jsonNode = com.fasterxml.jackson.databind.ObjectMapper().readTree(json)
+    fun validate(json: String): List<Error> {
+        val jsonNode = JsonMapper().readTree(json)
         return openApiSchema.validate(jsonNode)
     }
 
@@ -49,7 +52,10 @@ object OpenAPISchemaValidator {
                 appendLine("OpenAPI schema validation failed with ${errors.size} error(s):")
                 errors.forEachIndexed { index, error ->
                     appendLine("${index + 1}. ${error.message}")
-                    appendLine("   Type: ${error.type}")
+                    appendLine("   Details:")
+                    error.details.forEach { (key, value) ->
+                        appendLine("      $key: $value")
+                    }
                 }
             }
             error(errorMessage)
