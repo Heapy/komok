@@ -71,17 +71,17 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Test: Content and Encoding DSL examples
 
 #### 11.6 Request and Response DSLs
-- [ ] RequestBody DSL with content builder
-- [ ] Response DSL with headers and content builders
-- [ ] Responses container DSL
-- [ ] Test: Request and Response DSL examples
+- [x] RequestBody DSL with content builder
+- [x] Response DSL with headers and content builders
+- [x] Responses container DSL
+- [x] Test: Request and Response DSL examples
 
 #### 11.7 Operation and Path DSLs
-- [ ] Operation DSL with parameters, requestBody, and responses builders
-- [ ] PathItem DSL with operation builders for each HTTP method (get, post, put, delete, etc.)
-- [ ] Paths container DSL
-- [ ] Callback DSL
-- [ ] Test: Operation and Path DSL examples
+- [x] Operation DSL with parameters, requestBody, and responses builders
+- [x] PathItem DSL with operation builders for each HTTP method (get, post, put, delete, etc.)
+- [x] Paths container DSL
+- [x] Callback DSL
+- [x] Test: Operation and Path DSL examples
 
 #### 11.8 Security DSLs
 - [ ] OAuthFlow DSL builders (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
