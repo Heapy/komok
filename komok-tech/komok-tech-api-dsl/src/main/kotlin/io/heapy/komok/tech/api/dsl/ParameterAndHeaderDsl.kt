@@ -2,6 +2,178 @@ package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.json.JsonElement
 
+// ============================================
+// Encoding DSL Builders
+// ============================================
+
+/**
+ * DSL builder for [Encoding] object.
+ *
+ * The builder enforces fail-fast validation:
+ * - `encoding` and (`prefixEncoding` or `itemEncoding`) are mutually exclusive
+ *
+ * Example usage:
+ * ```kotlin
+ * val encoding = encoding {
+ *     contentType = "application/json"
+ *     style = EncodingStyle.FORM
+ *     explode = true
+ * }
+ * ```
+ */
+class EncodingBuilder {
+    var contentType: String? = null
+    var style: EncodingStyle? = null
+    var explode: Boolean? = null
+    var allowReserved: Boolean? = null
+    var encoding: Map<String, Encoding>? = null
+    var prefixEncoding: List<Encoding>? = null
+    var itemEncoding: Encoding? = null
+    var extensions: Map<String, JsonElement>? = null
+
+    /**
+     * Configures nested encoding map using DSL syntax.
+     */
+    inline fun encoding(block: EncodingsBuilder.() -> Unit) {
+        encoding = encodings(block)
+    }
+
+    /**
+     * Configures prefix encoding list using DSL syntax.
+     */
+    inline fun prefixEncoding(block: PrefixEncodingsBuilder.() -> Unit) {
+        prefixEncoding = prefixEncodings(block)
+    }
+
+    /**
+     * Configures item encoding using DSL syntax.
+     */
+    inline fun itemEncoding(block: EncodingBuilder.() -> Unit) {
+        itemEncoding = io.heapy.komok.tech.api.dsl.encoding(block)
+    }
+
+    fun build(): Encoding {
+        // Validation is handled by Encoding's init block
+        return Encoding(
+            contentType = contentType,
+            style = style,
+            explode = explode,
+            allowReserved = allowReserved,
+            encoding = encoding,
+            prefixEncoding = prefixEncoding,
+            itemEncoding = itemEncoding,
+            extensions = extensions,
+        )
+    }
+}
+
+/**
+ * Creates an [Encoding] object using DSL syntax.
+ *
+ * @param block configuration block for the encoding
+ * @return configured Encoding object
+ */
+inline fun encoding(block: EncodingBuilder.() -> Unit): Encoding {
+    return EncodingBuilder().apply(block).build()
+}
+
+/**
+ * DSL builder for creating a map of named [Encoding] objects.
+ *
+ * Example usage:
+ * ```kotlin
+ * val encodings = encodings {
+ *     "profileImage" to {
+ *         contentType = "image/png, image/jpeg"
+ *     }
+ *     "address" to {
+ *         style = EncodingStyle.DEEP_OBJECT
+ *         explode = true
+ *     }
+ * }
+ * ```
+ */
+class EncodingsBuilder {
+    @PublishedApi
+    internal val encodings = mutableMapOf<String, Encoding>()
+
+    /**
+     * Adds an encoding using DSL syntax.
+     */
+    inline infix fun String.to(block: EncodingBuilder.() -> Unit) {
+        encodings[this] = encoding(block)
+    }
+
+    /**
+     * Adds a pre-built encoding.
+     */
+    infix fun String.to(encoding: Encoding) {
+        encodings[this] = encoding
+    }
+
+    fun build(): Map<String, Encoding> = encodings.toMap()
+}
+
+/**
+ * Creates a map of named [Encoding] objects using DSL syntax.
+ *
+ * @param block configuration block for the encodings
+ * @return map of field names to Encoding objects
+ */
+inline fun encodings(block: EncodingsBuilder.() -> Unit): Map<String, Encoding> {
+    return EncodingsBuilder().apply(block).build()
+}
+
+/**
+ * DSL builder for creating a list of [Encoding] objects (for prefixEncoding).
+ *
+ * Example usage:
+ * ```kotlin
+ * val prefixEncodings = prefixEncodings {
+ *     encoding {
+ *         contentType = "application/json"
+ *     }
+ *     encoding {
+ *         style = EncodingStyle.FORM
+ *     }
+ * }
+ * ```
+ */
+class PrefixEncodingsBuilder {
+    @PublishedApi
+    internal val encodings = mutableListOf<Encoding>()
+
+    /**
+     * Adds an encoding using DSL syntax.
+     */
+    inline fun encoding(block: EncodingBuilder.() -> Unit) {
+        encodings.add(io.heapy.komok.tech.api.dsl.encoding(block))
+    }
+
+    /**
+     * Adds a pre-built encoding.
+     */
+    fun encoding(encoding: Encoding) {
+        encodings.add(encoding)
+    }
+
+    fun build(): List<Encoding> = encodings.toList()
+}
+
+/**
+ * Creates a list of [Encoding] objects using DSL syntax (for prefixEncoding).
+ *
+ * @param block configuration block for the encodings
+ * @return list of Encoding objects
+ */
+inline fun prefixEncodings(block: PrefixEncodingsBuilder.() -> Unit): List<Encoding> {
+    return PrefixEncodingsBuilder().apply(block).build()
+}
+
+// ============================================
+// MediaType DSL Builders
+// ============================================
+
 /**
  * DSL builder for [MediaType] object.
  *
@@ -54,6 +226,38 @@ class MediaTypeBuilder {
      */
     inline fun examples(block: ExamplesBuilder.() -> Unit) {
         examples = io.heapy.komok.tech.api.dsl.examples(block)
+    }
+
+    /**
+     * Configures encoding map using DSL syntax.
+     *
+     * Example:
+     * ```kotlin
+     * mediaType {
+     *     encoding {
+     *         "profileImage" to {
+     *             contentType = "image/png, image/jpeg"
+     *         }
+     *     }
+     * }
+     * ```
+     */
+    inline fun encoding(block: EncodingsBuilder.() -> Unit) {
+        encoding = encodings(block)
+    }
+
+    /**
+     * Configures prefix encoding list using DSL syntax.
+     */
+    inline fun prefixEncoding(block: PrefixEncodingsBuilder.() -> Unit) {
+        prefixEncoding = prefixEncodings(block)
+    }
+
+    /**
+     * Configures item encoding using DSL syntax.
+     */
+    inline fun itemEncoding(block: EncodingBuilder.() -> Unit) {
+        itemEncoding = io.heapy.komok.tech.api.dsl.encoding(block)
     }
 
     fun build(): MediaType {

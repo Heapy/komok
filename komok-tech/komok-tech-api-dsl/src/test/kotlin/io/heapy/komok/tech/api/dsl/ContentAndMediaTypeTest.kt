@@ -427,4 +427,681 @@ class ContentAndMediaTypeTest {
         val expected = """{"multipart/form-data":{"schema":{"type":"object","properties":{"file":{"type":"string","format":"binary"}}},"encoding":{"file":{"contentType":"image/png, image/jpeg","allowReserved":false}}}}"""
         assertEquals(expected, json)
     }
+
+    // ============================================
+    // Encoding DSL Tests
+    // ============================================
+
+    @Test
+    fun `encoding DSL should create with contentType only`() {
+        val result = encoding {
+            contentType = "application/json"
+        }
+
+        assertEquals(
+            Encoding(contentType = "application/json"),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should create with all properties`() {
+        val result = encoding {
+            contentType = "application/json"
+            style = EncodingStyle.FORM
+            explode = true
+            allowReserved = false
+        }
+
+        assertEquals(
+            Encoding(
+                contentType = "application/json",
+                style = EncodingStyle.FORM,
+                explode = true,
+                allowReserved = false
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should support all style types`() {
+        val styles = listOf(
+            EncodingStyle.FORM,
+            EncodingStyle.SPACE_DELIMITED,
+            EncodingStyle.PIPE_DELIMITED,
+            EncodingStyle.DEEP_OBJECT
+        )
+
+        styles.forEach { encodingStyle ->
+            val result = encoding {
+                style = encodingStyle
+            }
+            assertEquals(encodingStyle, result.style)
+        }
+    }
+
+    @Test
+    fun `encoding DSL should support nested encoding map`() {
+        val result = encoding {
+            contentType = "application/json"
+            encoding {
+                "address" to {
+                    style = EncodingStyle.DEEP_OBJECT
+                }
+                "tags" to {
+                    style = EncodingStyle.SPACE_DELIMITED
+                    explode = false
+                }
+            }
+        }
+
+        assertEquals(
+            Encoding(
+                contentType = "application/json",
+                encoding = mapOf(
+                    "address" to Encoding(style = EncodingStyle.DEEP_OBJECT),
+                    "tags" to Encoding(style = EncodingStyle.SPACE_DELIMITED, explode = false)
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should support nested prefixEncoding`() {
+        val result = encoding {
+            contentType = "application/json"
+            prefixEncoding {
+                encoding {
+                    style = EncodingStyle.FORM
+                }
+                encoding {
+                    style = EncodingStyle.PIPE_DELIMITED
+                }
+            }
+        }
+
+        assertEquals(
+            Encoding(
+                contentType = "application/json",
+                prefixEncoding = listOf(
+                    Encoding(style = EncodingStyle.FORM),
+                    Encoding(style = EncodingStyle.PIPE_DELIMITED)
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should support nested itemEncoding`() {
+        val result = encoding {
+            contentType = "application/json"
+            itemEncoding {
+                style = EncodingStyle.SPACE_DELIMITED
+                explode = true
+            }
+        }
+
+        assertEquals(
+            Encoding(
+                contentType = "application/json",
+                itemEncoding = Encoding(
+                    style = EncodingStyle.SPACE_DELIMITED,
+                    explode = true
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should fail when encoding and prefixEncoding both set`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            encoding {
+                encoding {
+                    "field" to { style = EncodingStyle.FORM }
+                }
+                prefixEncoding {
+                    encoding { style = EncodingStyle.FORM }
+                }
+            }
+        }
+
+        assertEquals(
+            "Encoding 'encoding' is mutually exclusive with 'prefixEncoding' and 'itemEncoding'",
+            exception.message
+        )
+    }
+
+    @Test
+    fun `encoding DSL should fail when encoding and itemEncoding both set`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            encoding {
+                encoding {
+                    "field" to { style = EncodingStyle.FORM }
+                }
+                itemEncoding {
+                    style = EncodingStyle.FORM
+                }
+            }
+        }
+
+        assertEquals(
+            "Encoding 'encoding' is mutually exclusive with 'prefixEncoding' and 'itemEncoding'",
+            exception.message
+        )
+    }
+
+    @Test
+    fun `encoding DSL should allow prefixEncoding and itemEncoding together`() {
+        val result = encoding {
+            prefixEncoding {
+                encoding { style = EncodingStyle.FORM }
+            }
+            itemEncoding {
+                style = EncodingStyle.PIPE_DELIMITED
+            }
+        }
+
+        assertEquals(
+            Encoding(
+                prefixEncoding = listOf(Encoding(style = EncodingStyle.FORM)),
+                itemEncoding = Encoding(style = EncodingStyle.PIPE_DELIMITED)
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encoding DSL should serialize correctly`() {
+        val result = encoding {
+            contentType = "image/png"
+            style = EncodingStyle.FORM
+            explode = true
+        }
+        val json = compactJson.encodeToString(result)
+
+        assertEquals(
+            """{"contentType":"image/png","style":"form","explode":true}""",
+            json
+        )
+    }
+
+    @Test
+    fun `encoding DSL should round-trip correctly`() {
+        val result = encoding {
+            contentType = "application/json"
+            style = EncodingStyle.DEEP_OBJECT
+            explode = true
+            allowReserved = false
+        }
+
+        TestHelpers.testRoundTripWithoutValidation(Encoding.serializer(), result)
+    }
+
+    // ============================================
+    // Encodings DSL Tests (Map builder)
+    // ============================================
+
+    @Test
+    fun `encodings DSL should create map of encodings`() {
+        val result = encodings {
+            "profileImage" to {
+                contentType = "image/png, image/jpeg"
+            }
+            "address" to {
+                style = EncodingStyle.DEEP_OBJECT
+                explode = true
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "profileImage" to Encoding(contentType = "image/png, image/jpeg"),
+                "address" to Encoding(style = EncodingStyle.DEEP_OBJECT, explode = true)
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `encodings DSL should create empty map`() {
+        val result = encodings {}
+
+        assertEquals(emptyMap<String, Encoding>(), result)
+    }
+
+    @Test
+    fun `encodings DSL should accept pre-built encodings`() {
+        val preBuilt = Encoding(contentType = "text/plain", style = EncodingStyle.FORM)
+
+        val result = encodings {
+            "description" to preBuilt
+            "tags" to {
+                style = EncodingStyle.SPACE_DELIMITED
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "description" to Encoding(contentType = "text/plain", style = EncodingStyle.FORM),
+                "tags" to Encoding(style = EncodingStyle.SPACE_DELIMITED)
+            ),
+            result
+        )
+    }
+
+    // ============================================
+    // PrefixEncodings DSL Tests (List builder)
+    // ============================================
+
+    @Test
+    fun `prefixEncodings DSL should create list of encodings`() {
+        val result = prefixEncodings {
+            encoding {
+                contentType = "application/json"
+            }
+            encoding {
+                style = EncodingStyle.FORM
+            }
+        }
+
+        assertEquals(
+            listOf(
+                Encoding(contentType = "application/json"),
+                Encoding(style = EncodingStyle.FORM)
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `prefixEncodings DSL should create empty list`() {
+        val result = prefixEncodings {}
+
+        assertEquals(emptyList<Encoding>(), result)
+    }
+
+    @Test
+    fun `prefixEncodings DSL should accept pre-built encodings`() {
+        val preBuilt = Encoding(contentType = "text/xml")
+
+        val result = prefixEncodings {
+            encoding(preBuilt)
+            encoding {
+                style = EncodingStyle.PIPE_DELIMITED
+            }
+        }
+
+        assertEquals(
+            listOf(
+                Encoding(contentType = "text/xml"),
+                Encoding(style = EncodingStyle.PIPE_DELIMITED)
+            ),
+            result
+        )
+    }
+
+    // ============================================
+    // MediaType DSL with Encoding Tests
+    // ============================================
+
+    @Test
+    fun `mediaType DSL should support nested encoding DSL`() {
+        val result = mediaType {
+            schema {
+                type = "object"
+            }
+            encoding {
+                "profileImage" to {
+                    contentType = "image/png, image/jpeg"
+                }
+                "children" to {
+                    style = EncodingStyle.FORM
+                    explode = true
+                }
+            }
+        }
+
+        assertEquals(
+            MediaType(
+                schema = Schema(buildJsonObject { put("type", "object") }),
+                encoding = mapOf(
+                    "profileImage" to Encoding(contentType = "image/png, image/jpeg"),
+                    "children" to Encoding(style = EncodingStyle.FORM, explode = true)
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `mediaType DSL should support nested prefixEncoding DSL`() {
+        val result = mediaType {
+            schema {
+                type = "array"
+            }
+            prefixEncoding {
+                encoding {
+                    contentType = "application/json"
+                }
+                encoding {
+                    style = EncodingStyle.FORM
+                }
+            }
+        }
+
+        assertEquals(
+            MediaType(
+                schema = Schema(buildJsonObject { put("type", "array") }),
+                prefixEncoding = listOf(
+                    Encoding(contentType = "application/json"),
+                    Encoding(style = EncodingStyle.FORM)
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `mediaType DSL should support nested itemEncoding DSL`() {
+        val result = mediaType {
+            schema {
+                type = "array"
+            }
+            itemEncoding {
+                contentType = "application/json"
+                style = EncodingStyle.DEEP_OBJECT
+            }
+        }
+
+        assertEquals(
+            MediaType(
+                schema = Schema(buildJsonObject { put("type", "array") }),
+                itemEncoding = Encoding(
+                    contentType = "application/json",
+                    style = EncodingStyle.DEEP_OBJECT
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `mediaType DSL should support deeply nested encoding`() {
+        val result = mediaType {
+            schema {
+                type = "object"
+            }
+            encoding {
+                "data" to {
+                    contentType = "application/json"
+                    encoding {
+                        "nested" to {
+                            style = EncodingStyle.DEEP_OBJECT
+                        }
+                    }
+                }
+            }
+        }
+
+        assertEquals(
+            MediaType(
+                schema = Schema(buildJsonObject { put("type", "object") }),
+                encoding = mapOf(
+                    "data" to Encoding(
+                        contentType = "application/json",
+                        encoding = mapOf(
+                            "nested" to Encoding(style = EncodingStyle.DEEP_OBJECT)
+                        )
+                    )
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `mediaType DSL should fail when encoding and prefixEncoding both set`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            mediaType {
+                schema {
+                    type = "object"
+                }
+                encoding {
+                    "field" to { style = EncodingStyle.FORM }
+                }
+                prefixEncoding {
+                    encoding { style = EncodingStyle.FORM }
+                }
+            }
+        }
+
+        assertEquals(
+            "MediaType 'encoding' is mutually exclusive with 'prefixEncoding' and 'itemEncoding'",
+            exception.message
+        )
+    }
+
+    @Test
+    fun `mediaType DSL should serialize encoding correctly`() {
+        val result = mediaType {
+            schema {
+                type = "object"
+            }
+            encoding {
+                "file" to {
+                    contentType = "application/octet-stream"
+                }
+            }
+        }
+        val json = compactJson.encodeToString(result)
+
+        val expected = """{"schema":{"type":"object"},"encoding":{"file":{"contentType":"application/octet-stream"}}}"""
+        assertEquals(expected, json)
+    }
+
+    // ============================================
+    // Content DSL Tests
+    // ============================================
+
+    @Test
+    fun `content DSL should create content map`() {
+        val result = content {
+            "application/json" to {
+                schema {
+                    type = "object"
+                }
+            }
+            "text/plain" to {
+                schema {
+                    type = "string"
+                }
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "application/json" to MediaType(
+                    schema = Schema(buildJsonObject { put("type", "object") })
+                ),
+                "text/plain" to MediaType(
+                    schema = Schema(buildJsonObject { put("type", "string") })
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `content DSL should create empty map`() {
+        val result = content {}
+
+        assertEquals(emptyMap<String, MediaType>(), result)
+    }
+
+    @Test
+    fun `content DSL should accept pre-built media types`() {
+        val preBuilt = MediaType(
+            description = "Pre-built media type",
+            schema = Schema(buildJsonObject { put("type", "number") })
+        )
+
+        val result = content {
+            "application/json" to preBuilt
+            "text/plain" to {
+                schema {
+                    type = "string"
+                }
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "application/json" to MediaType(
+                    description = "Pre-built media type",
+                    schema = Schema(buildJsonObject { put("type", "number") })
+                ),
+                "text/plain" to MediaType(
+                    schema = Schema(buildJsonObject { put("type", "string") })
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `content DSL should support nested encoding`() {
+        val result = content {
+            "multipart/form-data" to {
+                schema {
+                    type = "object"
+                }
+                encoding {
+                    "file" to {
+                        contentType = "image/png, image/jpeg"
+                        allowReserved = false
+                    }
+                }
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "multipart/form-data" to MediaType(
+                    schema = Schema(buildJsonObject { put("type", "object") }),
+                    encoding = mapOf(
+                        "file" to Encoding(
+                            contentType = "image/png, image/jpeg",
+                            allowReserved = false
+                        )
+                    )
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `content DSL should support examples with encoding`() {
+        val result = content {
+            "application/json" to {
+                schema {
+                    type = "object"
+                }
+                examples {
+                    "example1" to {
+                        summary = "First example"
+                        value = buildJsonObject {
+                            put("name", "John")
+                        }
+                    }
+                }
+                encoding {
+                    "data" to {
+                        style = EncodingStyle.DEEP_OBJECT
+                    }
+                }
+            }
+        }
+
+        assertEquals(
+            mapOf(
+                "application/json" to MediaType(
+                    schema = Schema(buildJsonObject { put("type", "object") }),
+                    examples = mapOf(
+                        "example1" to Example(
+                            summary = "First example",
+                            value = buildJsonObject { put("name", "John") }
+                        )
+                    ),
+                    encoding = mapOf(
+                        "data" to Encoding(style = EncodingStyle.DEEP_OBJECT)
+                    )
+                )
+            ),
+            result
+        )
+    }
+
+    @Test
+    fun `content DSL should serialize correctly`() {
+        val result = content {
+            "application/json" to {
+                schema {
+                    type = "object"
+                }
+            }
+        }
+        val json = compactJson.encodeToString(result)
+
+        assertEquals(
+            """{"application/json":{"schema":{"type":"object"}}}""",
+            json
+        )
+    }
+
+    @Test
+    fun `content DSL complex multipart form data example`() {
+        val result = content {
+            "multipart/form-data" to {
+                schema {
+                    type = "object"
+                    properties {
+                        "orderId" to stringSchema()
+                        "userId" to stringSchema()
+                        "profileImage" to schema {
+                            type = "string"
+                            format = "binary"
+                        }
+                        "address" to objectSchema {
+                            properties {
+                                "street" to stringSchema()
+                                "city" to stringSchema()
+                            }
+                        }
+                    }
+                }
+                encoding {
+                    "profileImage" to {
+                        contentType = "image/png, image/jpeg"
+                    }
+                    "address" to {
+                        style = EncodingStyle.DEEP_OBJECT
+                        explode = true
+                    }
+                }
+            }
+        }
+
+        // Verify structure
+        val mediaType = result["multipart/form-data"]!!
+        val encodingMap = mediaType.encoding!!
+        assertEquals(2, encodingMap.size)
+        assertEquals("image/png, image/jpeg", encodingMap["profileImage"]?.contentType)
+        assertEquals(EncodingStyle.DEEP_OBJECT, encodingMap["address"]?.style)
+        assertEquals(true, encodingMap["address"]?.explode)
+    }
 }

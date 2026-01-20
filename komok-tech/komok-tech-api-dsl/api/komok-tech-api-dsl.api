@@ -205,6 +205,30 @@ public final class io/heapy/komok/tech/api/dsl/Encoding$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/EncodingBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Encoding;
+	public final fun encoding (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAllowReserved ()Ljava/lang/Boolean;
+	public final fun getContentType ()Ljava/lang/String;
+	public final fun getEncoding ()Ljava/util/Map;
+	public final fun getExplode ()Ljava/lang/Boolean;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getItemEncoding ()Lio/heapy/komok/tech/api/dsl/Encoding;
+	public final fun getPrefixEncoding ()Ljava/util/List;
+	public final fun getStyle ()Lio/heapy/komok/tech/api/dsl/EncodingStyle;
+	public final fun itemEncoding (Lkotlin/jvm/functions/Function1;)V
+	public final fun prefixEncoding (Lkotlin/jvm/functions/Function1;)V
+	public final fun setAllowReserved (Ljava/lang/Boolean;)V
+	public final fun setContentType (Ljava/lang/String;)V
+	public final fun setEncoding (Ljava/util/Map;)V
+	public final fun setExplode (Ljava/lang/Boolean;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setItemEncoding (Lio/heapy/komok/tech/api/dsl/Encoding;)V
+	public final fun setPrefixEncoding (Ljava/util/List;)V
+	public final fun setStyle (Lio/heapy/komok/tech/api/dsl/EncodingStyle;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/EncodingStyle : java/lang/Enum {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/EncodingStyle$Companion;
 	public static final field DEEP_OBJECT Lio/heapy/komok/tech/api/dsl/EncodingStyle;
@@ -218,6 +242,14 @@ public final class io/heapy/komok/tech/api/dsl/EncodingStyle : java/lang/Enum {
 
 public final class io/heapy/komok/tech/api/dsl/EncodingStyle$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/EncodingsBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getEncodings ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Encoding;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Example : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -624,6 +656,7 @@ public final class io/heapy/komok/tech/api/dsl/MediaType$Companion {
 public final class io/heapy/komok/tech/api/dsl/MediaTypeBuilder {
 	public fun <init> ()V
 	public final fun build ()Lio/heapy/komok/tech/api/dsl/MediaType;
+	public final fun encoding (Lkotlin/jvm/functions/Function1;)V
 	public final fun examples (Lkotlin/jvm/functions/Function1;)V
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEncoding ()Ljava/util/Map;
@@ -634,7 +667,9 @@ public final class io/heapy/komok/tech/api/dsl/MediaTypeBuilder {
 	public final fun getItemSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
 	public final fun getPrefixEncoding ()Ljava/util/List;
 	public final fun getSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun itemEncoding (Lkotlin/jvm/functions/Function1;)V
 	public final fun itemSchema (Lkotlin/jvm/functions/Function1;)V
+	public final fun prefixEncoding (Lkotlin/jvm/functions/Function1;)V
 	public final fun schema (Lkotlin/jvm/functions/Function1;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEncoding (Ljava/util/Map;)V
@@ -1054,6 +1089,8 @@ public final class io/heapy/komok/tech/api/dsl/ParameterAndHeaderDslKt {
 	public static final fun content (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
 	public static final fun cookieParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
 	public static synthetic fun cookieParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun encoding (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Encoding;
+	public static final fun encodings (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
 	public static final fun header (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Header;
 	public static final fun headerParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
 	public static synthetic fun headerParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
@@ -1063,6 +1100,7 @@ public final class io/heapy/komok/tech/api/dsl/ParameterAndHeaderDslKt {
 	public static final fun parameters (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
 	public static final fun pathParameter (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
 	public static synthetic fun pathParameter$default (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun prefixEncodings (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
 	public static final fun queryParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
 	public static synthetic fun queryParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
 }
@@ -1213,6 +1251,14 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/Positive 
 }
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/PositiveOrZero : java/lang/annotation/Annotation {
+}
+
+public final class io/heapy/komok/tech/api/dsl/PrefixEncodingsBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/List;
+	public final fun encoding (Lio/heapy/komok/tech/api/dsl/Encoding;)V
+	public final fun encoding (Lkotlin/jvm/functions/Function1;)V
+	public final fun getEncodings ()Ljava/util/List;
 }
 
 public final class io/heapy/komok/tech/api/dsl/Reference : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/Referenceable {

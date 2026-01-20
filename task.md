@@ -66,9 +66,9 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Test: Parameter and Header DSL examples
 
 #### 11.5 Content and Encoding DSLs
-- [ ] Encoding DSL builder
+- [x] Encoding DSL builder
 - [x] MediaType DSL with encoding and examples builders
-- [ ] Test: Content and Encoding DSL examples
+- [x] Test: Content and Encoding DSL examples
 
 #### 11.6 Request and Response DSLs
 - [ ] RequestBody DSL with content builder
