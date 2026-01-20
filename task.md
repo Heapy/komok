@@ -41,14 +41,33 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Example DSL builder
 - [x] Test: Schema and Example DSL examples
 
+#### 11.3.1 Schema Inference from Kotlin Types
+- [x] Add kotlin-reflect dependency
+- [x] Create constraint annotations (@Min, @Max, @MinLength, @MaxLength, @NotEmpty, @NotBlank, @Pattern, @Positive, @Negative, etc.)
+- [x] Create format annotations (@Email, @Url, @Uuid, @Date, @DateTime, @Format)
+- [x] Create collection annotations (@MinItems, @MaxItems, @UniqueItems)
+- [x] Create documentation annotations (@SchemaTitle, @SchemaDescription)
+- [x] Create SchemaInference engine with support for:
+  - Primitive types (String, Int, Long, Float, Double, Boolean)
+  - Nullable types (generates `nullable: true`)
+  - Collections (List, Set -> array schema)
+  - Maps (-> additionalProperties)
+  - Enums (-> enum constraint)
+  - Sealed classes/interfaces (-> oneOf)
+  - Nested data classes
+  - Recursive type handling
+  - @SerialName support
+- [x] Create schemaOf<T>() inline function
+- [x] Test: Schema inference examples (50+ test cases)
+
 #### 11.4 Parameter and Header DSLs
-- [ ] Parameter DSL with style and schema builders
-- [ ] Header DSL builder
-- [ ] Test: Parameter and Header DSL examples
+- [x] Parameter DSL with style and schema builders
+- [x] Header DSL builder
+- [x] Test: Parameter and Header DSL examples
 
 #### 11.5 Content and Encoding DSLs
 - [ ] Encoding DSL builder
-- [ ] MediaType DSL with encoding and examples builders
+- [x] MediaType DSL with encoding and examples builders
 - [ ] Test: Content and Encoding DSL examples
 
 #### 11.6 Request and Response DSLs

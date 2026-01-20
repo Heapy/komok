@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinpoet)
     implementation(libs.kaml)
+    implementation(kotlin("reflect"))
 
     testImplementation(libs.logback)
     testImplementation(projects.komokTech.komokTechLogging)
