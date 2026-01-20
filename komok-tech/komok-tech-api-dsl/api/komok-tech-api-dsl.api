@@ -111,12 +111,38 @@ public final class io/heapy/komok/tech/api/dsl/ContactBuilder {
 	public final fun setUrl (Ljava/lang/String;)V
 }
 
+public final class io/heapy/komok/tech/api/dsl/ContentBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getContent ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/MediaType;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/CoreValueObjectDslKt {
 	public static final fun contact (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Contact;
 	public static final fun externalDocumentation (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
 	public static final fun license (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/License;
 	public static final fun tag (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Tag;
 	public static final fun tags (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Date : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/DateTime : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/DefaultBoolean : java/lang/annotation/Annotation {
+	public abstract fun value ()Z
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/DefaultNumber : java/lang/annotation/Annotation {
+	public abstract fun value ()D
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/DefaultString : java/lang/annotation/Annotation {
+	public abstract fun value ()Ljava/lang/String;
 }
 
 public final class io/heapy/komok/tech/api/dsl/Direct : io/heapy/komok/tech/api/dsl/Referenceable {
@@ -131,6 +157,9 @@ public final class io/heapy/komok/tech/api/dsl/Direct : io/heapy/komok/tech/api/
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (Lio/heapy/komok/tech/api/dsl/OpenAPIObject;)Ljava/lang/String;
 	public final synthetic fun unbox-impl ()Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Email : java/lang/annotation/Annotation {
 }
 
 public final class io/heapy/komok/tech/api/dsl/Encoding : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -261,6 +290,14 @@ public final class io/heapy/komok/tech/api/dsl/ExamplesBuilder {
 	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/ExclusiveMax : java/lang/annotation/Annotation {
+	public abstract fun value ()J
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/ExclusiveMin : java/lang/annotation/Annotation {
+	public abstract fun value ()J
+}
+
 public final class io/heapy/komok/tech/api/dsl/ExternalDocumentation : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/ExternalDocumentation$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
@@ -348,6 +385,42 @@ public final synthetic class io/heapy/komok/tech/api/dsl/Header$$serializer : ko
 
 public final class io/heapy/komok/tech/api/dsl/Header$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/HeaderBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Header;
+	public final fun content (Lkotlin/jvm/functions/Function1;)V
+	public final fun examples (Lkotlin/jvm/functions/Function1;)V
+	public final fun getContent ()Ljava/util/Map;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExample ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun getExplode ()Ljava/lang/Boolean;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRequired ()Z
+	public final fun getSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getStyle ()Ljava/lang/String;
+	public final fun schema (Lkotlin/jvm/functions/Function1;)V
+	public final fun setContent (Ljava/util/Map;)V
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExample (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setExamples (Ljava/util/Map;)V
+	public final fun setExplode (Ljava/lang/Boolean;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRequired (Z)V
+	public final fun setSchema-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setStyle (Ljava/lang/String;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/HeadersBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getHeaders ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Header;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Info : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -500,6 +573,10 @@ public final class io/heapy/komok/tech/api/dsl/Link$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Max : java/lang/annotation/Annotation {
+	public abstract fun value ()J
+}
+
 public final class io/heapy/komok/tech/api/dsl/MediaType : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/MediaType$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/json/JsonElement;Ljava/util/Map;Ljava/util/List;Lio/heapy/komok/tech/api/dsl/Encoding;Lkotlinx/serialization/json/JsonElement;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -542,6 +619,52 @@ public final synthetic class io/heapy/komok/tech/api/dsl/MediaType$$serializer :
 
 public final class io/heapy/komok/tech/api/dsl/MediaType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/MediaTypeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/MediaType;
+	public final fun examples (Lkotlin/jvm/functions/Function1;)V
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEncoding ()Ljava/util/Map;
+	public final fun getExample ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getItemEncoding ()Lio/heapy/komok/tech/api/dsl/Encoding;
+	public final fun getItemSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getPrefixEncoding ()Ljava/util/List;
+	public final fun getSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun itemSchema (Lkotlin/jvm/functions/Function1;)V
+	public final fun schema (Lkotlin/jvm/functions/Function1;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setEncoding (Ljava/util/Map;)V
+	public final fun setExample (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setExamples (Ljava/util/Map;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setItemEncoding (Lio/heapy/komok/tech/api/dsl/Encoding;)V
+	public final fun setItemSchema-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setPrefixEncoding (Ljava/util/List;)V
+	public final fun setSchema-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Min : java/lang/annotation/Annotation {
+	public abstract fun value ()J
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/MultipleOf : java/lang/annotation/Annotation {
+	public abstract fun value ()D
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Negative : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/NegativeOrZero : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/NotBlank : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/NotEmpty : java/lang/annotation/Annotation {
 }
 
 public abstract interface class io/heapy/komok/tech/api/dsl/OAuthFlow : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -927,6 +1050,59 @@ public final class io/heapy/komok/tech/api/dsl/Parameter$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/ParameterAndHeaderDslKt {
+	public static final fun content (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun cookieParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static synthetic fun cookieParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun header (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Header;
+	public static final fun headerParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static synthetic fun headerParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun headers (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun mediaType (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/MediaType;
+	public static final fun parameter (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun parameters (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static final fun pathParameter (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static synthetic fun pathParameter$default (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static final fun queryParameter (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Parameter;
+	public static synthetic fun queryParameter$default (Ljava/lang/String;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/Parameter;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ParameterBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Parameter;
+	public final fun content (Lkotlin/jvm/functions/Function1;)V
+	public final fun examples (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAllowEmptyValue ()Ljava/lang/Boolean;
+	public final fun getAllowReserved ()Ljava/lang/Boolean;
+	public final fun getContent ()Ljava/util/Map;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExample ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun getExplode ()Ljava/lang/Boolean;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getLocation ()Lio/heapy/komok/tech/api/dsl/ParameterLocation;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRequired ()Z
+	public final fun getSchema-WyGwgiw ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getStyle ()Lio/heapy/komok/tech/api/dsl/ParameterStyle;
+	public final fun schema (Lkotlin/jvm/functions/Function1;)V
+	public final fun setAllowEmptyValue (Ljava/lang/Boolean;)V
+	public final fun setAllowReserved (Ljava/lang/Boolean;)V
+	public final fun setContent (Ljava/util/Map;)V
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExample (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setExamples (Ljava/util/Map;)V
+	public final fun setExplode (Ljava/lang/Boolean;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setLocation (Lio/heapy/komok/tech/api/dsl/ParameterLocation;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setRequired (Z)V
+	public final fun setSchema-MWNW4Wg (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setStyle (Lio/heapy/komok/tech/api/dsl/ParameterStyle;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/ParameterLocation : java/lang/Enum {
 	public static final field COOKIE Lio/heapy/komok/tech/api/dsl/ParameterLocation;
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/ParameterLocation$Companion;
@@ -960,6 +1136,14 @@ public final class io/heapy/komok/tech/api/dsl/ParameterStyle : java/lang/Enum {
 
 public final class io/heapy/komok/tech/api/dsl/ParameterStyle$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ParametersBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/List;
+	public final fun getParameters ()Ljava/util/List;
+	public final fun parameter (Lio/heapy/komok/tech/api/dsl/Parameter;)V
+	public final fun parameter (Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/PathItem : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -1023,6 +1207,12 @@ public final class io/heapy/komok/tech/api/dsl/PathItem$Companion {
 
 public final class io/heapy/komok/tech/api/dsl/PathItemKt {
 	public static final fun paths ([Lkotlin/Pair;)Ljava/util/Map;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Positive : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/PositiveOrZero : java/lang/annotation/Annotation {
 }
 
 public final class io/heapy/komok/tech/api/dsl/Reference : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/Referenceable {
@@ -1379,12 +1569,74 @@ public final class io/heapy/komok/tech/api/dsl/SchemaBuilder {
 	public final fun setUniqueItems (Ljava/lang/Boolean;)V
 }
 
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaDescription : java/lang/annotation/Annotation {
+	public abstract fun value ()Ljava/lang/String;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaFormat : java/lang/annotation/Annotation {
+	public abstract fun value ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaInference {
+	public fun <init> ()V
+	public fun <init> (Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;)V
+	public synthetic fun <init> (Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun infer-BtD_vkw (Lkotlin/reflect/KClass;)Lkotlinx/serialization/json/JsonElement;
+	public final fun infer-BtD_vkw (Lkotlin/reflect/KType;)Lkotlinx/serialization/json/JsonElement;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaInferenceConfig {
+	public fun <init> ()V
+	public fun <init> (ZZ)V
+	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun copy (ZZ)Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;ZZILjava/lang/Object;)Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIncludeDefaults ()Z
+	public final fun getOpenApi30Nullable ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SchemaInferenceKt {
+	public static final fun schemaOf (Lkotlin/reflect/KClass;Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun schemaOf (Lkotlin/reflect/KType;Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun schemaOf$default (Lkotlin/reflect/KClass;Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+	public static synthetic fun schemaOf$default (Lkotlin/reflect/KType;Lio/heapy/komok/tech/api/dsl/SchemaInferenceConfig;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaMaxItems : java/lang/annotation/Annotation {
+	public abstract fun value ()I
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaMaxLength : java/lang/annotation/Annotation {
+	public abstract fun value ()I
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaMinItems : java/lang/annotation/Annotation {
+	public abstract fun value ()I
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaMinLength : java/lang/annotation/Annotation {
+	public abstract fun value ()I
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaPattern : java/lang/annotation/Annotation {
+	public abstract fun regex ()Ljava/lang/String;
+}
+
 public final class io/heapy/komok/tech/api/dsl/SchemaPropertiesBuilder {
 	public fun <init> ()V
 	public final fun build ()Ljava/util/Map;
 	public final fun getProperties ()Ljava/util/Map;
 	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun to-v8GvFto (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaTitle : java/lang/annotation/Annotation {
+	public abstract fun value ()Ljava/lang/String;
 }
 
 public final class io/heapy/komok/tech/api/dsl/SecurityRequirementKt {
@@ -1667,5 +1919,14 @@ public final class io/heapy/komok/tech/api/dsl/TagsBuilder {
 	public final fun getTags ()Ljava/util/List;
 	public final fun tag (Lio/heapy/komok/tech/api/dsl/Tag;)V
 	public final fun tag (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/UniqueItems : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Url : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class io/heapy/komok/tech/api/dsl/Uuid : java/lang/annotation/Annotation {
 }
 
