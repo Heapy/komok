@@ -19,6 +19,8 @@ dependencies {
 ```kotlin
 import io.heapy.komok.tech.di.delegate.bean
 import io.heapy.komok.tech.di.delegate.buildModule
+import io.heapy.komok.tech.di.delegate.buildModules
+import io.heapy.komok.tech.di.delegate.ModuleRegistry
 import io.heapy.komok.tech.di.delegate.MutableBean
 ```
 
@@ -26,30 +28,139 @@ import io.heapy.komok.tech.di.delegate.MutableBean
 
 - `bean` - Property delegate function to declare injectable beans
 - `MutableBean<V>` - Thread-safe lazy container that supports mocking and value override before initialization
-- `buildModule<T>()` - Reflectively constructs module tree by analyzing constructor parameters
+- `buildModule<T>()` - Reflectively constructs module tree and returns the root module
+- `buildModules<T>()` - Reflectively constructs module tree and returns `ModuleRegistry` for type-based lookup
+- `ModuleRegistry` - Container providing type-based access to any module in the tree
 
 ## Usage Pattern
 
+### Basic Module (no dependencies)
+
 ```kotlin
-// Define a module with beans
-class MyModule {
-    val myBean by bean {
-        MyBean()
+class ConfigurationModule {
+    val config by bean {
+        AppConfig(
+            host = System.getenv("HOST") ?: "localhost",
+            port = 8080
+        )
     }
 }
+```
 
-// Module with dependencies
+### Module with Dependencies
+
+Module dependencies are declared as **constructor parameters**. Keep them `private` if only used internally.
+
+```kotlin
+class UtilsModule(
+    private val configurationModule: ConfigurationModule,
+) {
+    val httpClient by bean<HttpClient> {
+        DefaultHttpClient(
+            timeout = configurationModule.config.value.timeout
+        )
+    }
+
+    val cache by bean<Cache> {
+        FileCache(
+            enabled = configurationModule.config.value.cacheEnabled
+        )
+    }
+}
+```
+
+### Composing Modules
+
+Higher-level modules depend on lower-level modules through constructor parameters:
+
+```kotlin
+class ApplicationModule(
+    private val utilsModule: UtilsModule,
+    private val serviceModule: ServiceModule,
+) {
+    val app by bean {
+        Application(
+            httpClient = utilsModule.httpClient.value,
+            userService = serviceModule.userService.value
+        )
+    }
+}
+```
+
+### Building the Module Tree
+
+Use `buildModule<T>()` to automatically construct the entire dependency tree:
+
+```kotlin
+fun main() {
+    val app = buildModule<ApplicationModule>()
+    app.app.value.start()
+}
+```
+
+The `buildModule` function reflectively analyzes constructor parameters and instantiates all required modules automatically.
+
+### Reusing Modules
+
+Modules can be reused in different contexts:
+
+```kotlin
+// In main application
+val app = buildModule<ApplicationModule>()
+
+// In a utility script that only needs HttpClient
+val utils = buildModule<UtilsModule>()
+val client = utils.httpClient.value
+```
+
+### Accessing Any Module via Type Lookup
+
+Use `buildModules<T>()` to get a `ModuleRegistry` that provides type-based access to any module in the tree:
+
+```kotlin
+val modules = buildModules<ApplicationModule>()
+
+// Access any module by type
+val app = modules<ApplicationModule>()
+val utils = modules<UtilsModule>()
+val config = modules<ConfigurationModule>()
+```
+
+This is useful when you need to access deeply nested modules without navigating through constructor parameters.
+
+## Bean Type Inference
+
+Explicit type can be specified when interface differs from implementation:
+
+```kotlin
+val httpClient by bean<HttpClient> {  // Interface type
+    DefaultHttpClient()                // Implementation
+}
+```
+
+Or let it be inferred when types match:
+
+```kotlin
+val config by bean {
+    AppConfig()  // Type inferred as AppConfig
+}
+```
+
+## Accessing Bean Values
+
+Bean values are accessed via `.value` property:
+
+```kotlin
 class ServiceModule(
-    val utilsModule: UtilsModule,
+    private val utilsModule: UtilsModule,
 ) {
     val userService by bean {
-        UserService(utilsModule.config.value)
+        UserService(
+            httpClient = utilsModule.httpClient.value,  // Access via .value
+            cache = utilsModule.cache.value
+        )
     }
 }
-
-// Build module tree automatically
-val app = buildModule<ApplicationModule>()
-app.server.value.start()
 ```
 
 ## Testing
@@ -58,7 +169,7 @@ Beans can be mocked before initialization:
 
 ```kotlin
 val module = buildModule<ServiceModule>()
-module.daoModule.userDao.mock {
+module.userDao.mock {
     mockk { every { getById(1) } returns User(1, "Test") }
 }
 ```
@@ -69,9 +180,43 @@ Or set directly:
 module.bean.setValue(testValue)
 ```
 
+### Mocking Beans in Nested Modules
+
+Use `buildModules<T>()` to access and mock beans in any module of the tree, even when constructor parameters are private:
+
+```kotlin
+@Test
+fun `test with mocked http client`() {
+    val modules = buildModules<ApplicationModule>()
+
+    // Access nested module directly by type (no need for public constructor params)
+    val utilsModule = modules<UtilsModule>()
+    utilsModule.httpClient.mock {
+        mockk { every { get(any()) } returns Response(200, "OK") }
+    }
+
+    // Mock configuration in deeply nested module
+    val configModule = modules<ConfigurationModule>()
+    configModule.config.setValue(AppConfig(host = "test", port = 9999))
+
+    // Now test the application with mocked dependencies
+    val app = modules<ApplicationModule>()
+    val result = app.app.value.doSomething()
+
+    assertEquals("expected", result)
+}
+```
+
+This approach is useful when:
+- Module constructor parameters are `private`
+- You need to mock beans several levels deep in the module tree
+- You want to avoid exposing internal modules just for testing
+
 ## Design Notes
 
 - Uses Double-Checked Locking (DCL) for thread-safe lazy initialization
-- Module dependencies are declared via constructor parameters
+- Module dependencies are declared via constructor parameters (not as beans)
 - Bean values accessed via `.value` property
 - Mocking must happen before first `.value` access
+- Constructor parameters should be `private` unless external access is needed
+- Implementation classes should be `internal` to allow direct instantiation in modules

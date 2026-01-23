@@ -2,8 +2,14 @@ public final class io/heapy/komok/tech/di/delegate/BeanKt {
 	public static final fun bean (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
 }
 
+public final class io/heapy/komok/tech/di/delegate/ModuleRegistry {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun get (Ljava/lang/Class;)Ljava/lang/Object;
+}
+
 public final class io/heapy/komok/tech/di/delegate/ModulesKt {
 	public static final fun buildModule (Ljava/lang/Class;)Ljava/lang/Object;
+	public static final fun buildModules (Ljava/lang/Class;)Lio/heapy/komok/tech/di/delegate/ModuleRegistry;
 }
 
 public final class io/heapy/komok/tech/di/delegate/MutableBean {

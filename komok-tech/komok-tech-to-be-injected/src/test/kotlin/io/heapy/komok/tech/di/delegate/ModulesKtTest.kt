@@ -47,4 +47,41 @@ class ModulesKtTest {
         assertSame(module.module1.bean1.value, module.module3.module1.bean1.value)
         assertSame(module.module1.bean1.value, module.module2.module1.bean1.value)
     }
+
+    @Test
+    fun `buildModules returns registry with type lookup`() {
+        val modules = buildModules<BuildModule4>()
+
+        val module4 = modules<BuildModule4>()
+        val module1 = modules<BuildModule1>()
+        val module2 = modules<BuildModule2>()
+        val module3 = modules<BuildModule3>()
+
+        assertNotNull(module4)
+        assertNotNull(module1)
+        assertNotNull(module2)
+        assertNotNull(module3)
+    }
+
+    @Test
+    fun `buildModules returns cached modules`() {
+        val modules = buildModules<BuildModule4>()
+
+        val module4 = modules<BuildModule4>()
+        val module1 = modules<BuildModule1>()
+
+        assertSame(module1, module4.module1)
+        assertSame(module1, modules<BuildModule1>())
+    }
+
+    @Test
+    fun `buildModules throws for unknown module type`() {
+        val modules = buildModules<BuildModule1>()
+
+        val exception = assertThrows(IllegalStateException::class.java) {
+            modules<BuildModule4>()
+        }
+
+        assertTrue(exception.message!!.contains("not found in registry"))
+    }
 }
