@@ -1,0 +1,77 @@
+# komok-tech-to-be-injected
+
+> Minimal dependency injection library for Kotlin based on property delegates
+
+## Overview
+
+This library provides a simple, compile-time safe dependency injection mechanism using Kotlin's `lazy` delegate pattern. It allows defining module classes with bean properties that are lazily initialized and can be mocked for testing.
+
+## Installation
+
+```kotlin
+dependencies {
+    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.13")
+}
+```
+
+## Imports
+
+```kotlin
+import io.heapy.komok.tech.di.delegate.bean
+import io.heapy.komok.tech.di.delegate.buildModule
+import io.heapy.komok.tech.di.delegate.MutableBean
+```
+
+## Key Components
+
+- `bean` - Property delegate function to declare injectable beans
+- `MutableBean<V>` - Thread-safe lazy container that supports mocking and value override before initialization
+- `buildModule<T>()` - Reflectively constructs module tree by analyzing constructor parameters
+
+## Usage Pattern
+
+```kotlin
+// Define a module with beans
+class MyModule {
+    val myBean by bean {
+        MyBean()
+    }
+}
+
+// Module with dependencies
+class ServiceModule(
+    val utilsModule: UtilsModule,
+) {
+    val userService by bean {
+        UserService(utilsModule.config.value)
+    }
+}
+
+// Build module tree automatically
+val app = buildModule<ApplicationModule>()
+app.server.value.start()
+```
+
+## Testing
+
+Beans can be mocked before initialization:
+
+```kotlin
+val module = buildModule<ServiceModule>()
+module.daoModule.userDao.mock {
+    mockk { every { getById(1) } returns User(1, "Test") }
+}
+```
+
+Or set directly:
+
+```kotlin
+module.bean.setValue(testValue)
+```
+
+## Design Notes
+
+- Uses Double-Checked Locking (DCL) for thread-safe lazy initialization
+- Module dependencies are declared via constructor parameters
+- Bean values accessed via `.value` property
+- Mocking must happen before first `.value` access
