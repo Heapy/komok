@@ -81,6 +81,90 @@ public final class io/heapy/komok/tech/api/dsl/ClientCredentialsFlowBuilder {
 	public final fun setTokenUrl (Ljava/lang/String;)V
 }
 
+public final class io/heapy/komok/tech/api/dsl/ComponentCallbacksBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getCallbacks ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Ljava/util/Map;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentExamplesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Example;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentHeadersBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getHeaders ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Header;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentLinksBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getLinks ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Link;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentMediaTypesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getMediaTypes ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/MediaType;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentParametersBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getParameters ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Parameter;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentPathItemsBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getPathItems ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/PathItem;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentRequestBodiesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getRequestBodies ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/RequestBody;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentResponsesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getResponses ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Response;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentSecuritySchemesBuilder {
+	public fun <init> ()V
+	public final fun apiKey (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun build ()Ljava/util/Map;
+	public final fun getSecuritySchemes ()Ljava/util/Map;
+	public final fun http (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun mutualTLS (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun oauth2 (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun openIdConnect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/SecurityScheme;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/Components : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/Components$Companion;
 	public fun <init> ()V
@@ -130,6 +214,65 @@ public final synthetic class io/heapy/komok/tech/api/dsl/Components$$serializer 
 
 public final class io/heapy/komok/tech/api/dsl/Components$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentsAndRootDslKt {
+	public static final fun componentCallbacks (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentExamples (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentHeaders (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentLinks (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentMediaTypes (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentParameters (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentPathItems (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentRequestBodies (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentResponses (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun componentSecuritySchemes (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun components (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Components;
+	public static final fun info (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Info;
+	public static final fun link (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Link;
+	public static final fun openAPI (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OpenAPI;
+	public static final fun schemas (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun webhooks (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ComponentsBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Components;
+	public final fun callbacks (Lkotlin/jvm/functions/Function1;)V
+	public final fun examples (Lkotlin/jvm/functions/Function1;)V
+	public final fun getCallbacks ()Ljava/util/Map;
+	public final fun getExamples ()Ljava/util/Map;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getHeaders ()Ljava/util/Map;
+	public final fun getLinks ()Ljava/util/Map;
+	public final fun getMediaTypes ()Ljava/util/Map;
+	public final fun getParameters ()Ljava/util/Map;
+	public final fun getPathItems ()Ljava/util/Map;
+	public final fun getRequestBodies ()Ljava/util/Map;
+	public final fun getResponses ()Ljava/util/Map;
+	public final fun getSchemas ()Ljava/util/Map;
+	public final fun getSecuritySchemes ()Ljava/util/Map;
+	public final fun headers (Lkotlin/jvm/functions/Function1;)V
+	public final fun links (Lkotlin/jvm/functions/Function1;)V
+	public final fun mediaTypes (Lkotlin/jvm/functions/Function1;)V
+	public final fun parameters (Lkotlin/jvm/functions/Function1;)V
+	public final fun pathItems (Lkotlin/jvm/functions/Function1;)V
+	public final fun requestBodies (Lkotlin/jvm/functions/Function1;)V
+	public final fun responses (Lkotlin/jvm/functions/Function1;)V
+	public final fun schemas (Lkotlin/jvm/functions/Function1;)V
+	public final fun securitySchemes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setCallbacks (Ljava/util/Map;)V
+	public final fun setExamples (Ljava/util/Map;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setHeaders (Ljava/util/Map;)V
+	public final fun setLinks (Ljava/util/Map;)V
+	public final fun setMediaTypes (Ljava/util/Map;)V
+	public final fun setParameters (Ljava/util/Map;)V
+	public final fun setPathItems (Ljava/util/Map;)V
+	public final fun setRequestBodies (Ljava/util/Map;)V
+	public final fun setResponses (Ljava/util/Map;)V
+	public final fun setSchemas (Ljava/util/Map;)V
+	public final fun setSecuritySchemes (Ljava/util/Map;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Contact : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -611,6 +754,29 @@ public final class io/heapy/komok/tech/api/dsl/Info$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/InfoBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Info;
+	public final fun contact (Lkotlin/jvm/functions/Function1;)V
+	public final fun getContact ()Lio/heapy/komok/tech/api/dsl/Contact;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getLicense ()Lio/heapy/komok/tech/api/dsl/License;
+	public final fun getSummary ()Ljava/lang/String;
+	public final fun getTermsOfService ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public final fun license (Lkotlin/jvm/functions/Function1;)V
+	public final fun setContact (Lio/heapy/komok/tech/api/dsl/Contact;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setLicense (Lio/heapy/komok/tech/api/dsl/License;)V
+	public final fun setSummary (Ljava/lang/String;)V
+	public final fun setTermsOfService (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public final fun setVersion (Ljava/lang/String;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/JsonArrayBuilderScope {
 	public fun <init> (Lkotlinx/serialization/json/JsonArrayBuilder;)V
 	public final fun add (Ljava/lang/Number;)Z
@@ -717,6 +883,26 @@ public final synthetic class io/heapy/komok/tech/api/dsl/Link$$serializer : kotl
 
 public final class io/heapy/komok/tech/api/dsl/Link$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/LinkBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/Link;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getOperationId ()Ljava/lang/String;
+	public final fun getOperationRef ()Ljava/lang/String;
+	public final fun getParameters ()Ljava/util/Map;
+	public final fun getRequestBody ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getServer ()Lio/heapy/komok/tech/api/dsl/Server;
+	public final fun server (Lkotlin/jvm/functions/Function1;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setOperationId (Ljava/lang/String;)V
+	public final fun setOperationRef (Ljava/lang/String;)V
+	public final fun setParameters (Ljava/util/Map;)V
+	public final fun setRequestBody (Lkotlinx/serialization/json/JsonElement;)V
+	public final fun setServer (Lio/heapy/komok/tech/api/dsl/Server;)V
 }
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/Max : java/lang/annotation/Annotation {
@@ -1144,6 +1330,43 @@ public final synthetic class io/heapy/komok/tech/api/dsl/OpenAPI$$serializer : k
 
 public final class io/heapy/komok/tech/api/dsl/OpenAPI$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/heapy/komok/tech/api/dsl/OpenAPIBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OpenAPI;
+	public final fun components (Lkotlin/jvm/functions/Function1;)V
+	public final fun externalDocs (Lkotlin/jvm/functions/Function1;)V
+	public final fun getComponents ()Lio/heapy/komok/tech/api/dsl/Components;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getExternalDocs ()Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;
+	public final fun getInfo ()Lio/heapy/komok/tech/api/dsl/Info;
+	public final fun getJsonSchemaDialect ()Ljava/lang/String;
+	public final fun getOpenapi ()Ljava/lang/String;
+	public final fun getPaths ()Ljava/util/Map;
+	public final fun getSecurity ()Ljava/util/List;
+	public final fun getSelf ()Ljava/lang/String;
+	public final fun getServers ()Ljava/util/List;
+	public final fun getTags ()Ljava/util/List;
+	public final fun getWebhooks ()Ljava/util/Map;
+	public final fun info (Lkotlin/jvm/functions/Function1;)V
+	public final fun paths (Lkotlin/jvm/functions/Function1;)V
+	public final fun security (Lkotlin/jvm/functions/Function1;)V
+	public final fun servers (Lkotlin/jvm/functions/Function1;)V
+	public final fun setComponents (Lio/heapy/komok/tech/api/dsl/Components;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setExternalDocs (Lio/heapy/komok/tech/api/dsl/ExternalDocumentation;)V
+	public final fun setInfo (Lio/heapy/komok/tech/api/dsl/Info;)V
+	public final fun setJsonSchemaDialect (Ljava/lang/String;)V
+	public final fun setOpenapi (Ljava/lang/String;)V
+	public final fun setPaths (Ljava/util/Map;)V
+	public final fun setSecurity (Ljava/util/List;)V
+	public final fun setSelf (Ljava/lang/String;)V
+	public final fun setServers (Ljava/util/List;)V
+	public final fun setTags (Ljava/util/List;)V
+	public final fun setWebhooks (Ljava/util/Map;)V
+	public final fun tags (Lkotlin/jvm/functions/Function1;)V
+	public final fun webhooks (Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract interface class io/heapy/komok/tech/api/dsl/OpenAPIObject {
@@ -2076,6 +2299,14 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaTit
 	public abstract fun value ()Ljava/lang/String;
 }
 
+public final class io/heapy/komok/tech/api/dsl/SchemasBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getSchemas ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun to-v8GvFto (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/SecurityDslKt {
 	public static final fun apiKeyScheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
 	public static final fun authorizationCodeFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$AuthorizationCode;
@@ -2388,5 +2619,13 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/Url : jav
 }
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/Uuid : java/lang/annotation/Annotation {
+}
+
+public final class io/heapy/komok/tech/api/dsl/WebhooksBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun getWebhooks ()Ljava/util/Map;
+	public final fun to (Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/PathItem;)V
+	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 

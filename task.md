@@ -90,11 +90,11 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Test: Security DSL examples
 
 #### 11.9 Components and Root DSLs
-- [ ] Components DSL with typed component builders
-- [ ] Link DSL builder
-- [ ] Info DSL with contact and license builders
-- [ ] OpenAPI root DSL with fluent API
-- [ ] Test: Components and Root DSL examples
+- [x] Components DSL with typed component builders
+- [x] Link DSL builder
+- [x] Info DSL with contact and license builders
+- [x] OpenAPI root DSL with fluent API
+- [x] Test: Components and Root DSL examples
 
 ### Phase 12: API Documentation UI (komok-tech-api-dsl-ui module)
 Create a web-server-agnostic UI module for displaying OpenAPI documentation:
