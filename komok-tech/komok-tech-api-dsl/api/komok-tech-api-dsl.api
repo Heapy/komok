@@ -20,6 +20,37 @@ public final class io/heapy/komok/tech/api/dsl/ApiKeyLocation$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/ApiKeySchemeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getLocation ()Lio/heapy/komok/tech/api/dsl/ApiKeyLocation;
+	public final fun getName ()Ljava/lang/String;
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setLocation (Lio/heapy/komok/tech/api/dsl/ApiKeyLocation;)V
+	public final fun setName (Ljava/lang/String;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/AuthorizationCodeFlowBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$AuthorizationCode;
+	public final fun getAuthorizationUrl ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRefreshUrl ()Ljava/lang/String;
+	public final fun getScopes ()Ljava/util/Map;
+	public final fun getTokenUrl ()Ljava/lang/String;
+	public final fun scopes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setAuthorizationUrl (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRefreshUrl (Ljava/lang/String;)V
+	public final fun setScopes (Ljava/util/Map;)V
+	public final fun setTokenUrl (Ljava/lang/String;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/CallbackBuilder {
 	public fun <init> ()V
 	public final fun build ()Ljava/util/Map;
@@ -34,6 +65,20 @@ public final class io/heapy/komok/tech/api/dsl/CallbacksBuilder {
 	public final fun getCallbacks ()Ljava/util/Map;
 	public final fun to (Ljava/lang/String;Ljava/util/Map;)V
 	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ClientCredentialsFlowBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$ClientCredentials;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRefreshUrl ()Ljava/lang/String;
+	public final fun getScopes ()Ljava/util/Map;
+	public final fun getTokenUrl ()Ljava/lang/String;
+	public final fun scopes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRefreshUrl (Ljava/lang/String;)V
+	public final fun setScopes (Ljava/util/Map;)V
+	public final fun setTokenUrl (Ljava/lang/String;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Components : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -167,6 +212,22 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/DefaultNu
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/DefaultString : java/lang/annotation/Annotation {
 	public abstract fun value ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/api/dsl/DeviceAuthorizationFlowBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$DeviceAuthorization;
+	public final fun getDeviceAuthorizationUrl ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRefreshUrl ()Ljava/lang/String;
+	public final fun getScopes ()Ljava/util/Map;
+	public final fun getTokenUrl ()Ljava/lang/String;
+	public final fun scopes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setDeviceAuthorizationUrl (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRefreshUrl (Ljava/lang/String;)V
+	public final fun setScopes (Ljava/util/Map;)V
+	public final fun setTokenUrl (Ljava/lang/String;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Direct : io/heapy/komok/tech/api/dsl/Referenceable {
@@ -479,6 +540,35 @@ public final class io/heapy/komok/tech/api/dsl/HeadersBuilder {
 	public final fun to (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
+public final class io/heapy/komok/tech/api/dsl/HttpSchemeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public final fun getBearerFormat ()Ljava/lang/String;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getScheme ()Ljava/lang/String;
+	public final fun setBearerFormat (Ljava/lang/String;)V
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setScheme (Ljava/lang/String;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/ImplicitFlowBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$Implicit;
+	public final fun getAuthorizationUrl ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRefreshUrl ()Ljava/lang/String;
+	public final fun getScopes ()Ljava/util/Map;
+	public final fun scopes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setAuthorizationUrl (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRefreshUrl (Ljava/lang/String;)V
+	public final fun setScopes (Ljava/util/Map;)V
+}
+
 public final class io/heapy/komok/tech/api/dsl/Info : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/Info$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/api/dsl/Contact;Lio/heapy/komok/tech/api/dsl/License;Ljava/util/Map;)V
@@ -714,6 +804,17 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/MultipleO
 	public abstract fun value ()D
 }
 
+public final class io/heapy/komok/tech/api/dsl/MutualTLSSchemeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+}
+
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/Negative : java/lang/annotation/Annotation {
 }
 
@@ -724,6 +825,22 @@ public abstract interface annotation class io/heapy/komok/tech/api/dsl/NotBlank 
 }
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/NotEmpty : java/lang/annotation/Annotation {
+}
+
+public final class io/heapy/komok/tech/api/dsl/OAuth2SchemeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public final fun flows (Lkotlin/jvm/functions/Function1;)V
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getFlows ()Lio/heapy/komok/tech/api/dsl/OAuthFlows;
+	public final fun getOauth2MetadataUrl ()Ljava/lang/String;
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setFlows (Lio/heapy/komok/tech/api/dsl/OAuthFlows;)V
+	public final fun setOauth2MetadataUrl (Ljava/lang/String;)V
 }
 
 public abstract interface class io/heapy/komok/tech/api/dsl/OAuthFlow : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -948,6 +1065,35 @@ public final class io/heapy/komok/tech/api/dsl/OAuthFlows$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/OAuthFlowsBuilder {
+	public fun <init> ()V
+	public final fun authorizationCode (Lkotlin/jvm/functions/Function1;)V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlows;
+	public final fun clientCredentials (Lkotlin/jvm/functions/Function1;)V
+	public final fun deviceAuthorization (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAuthorizationCode ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$AuthorizationCode;
+	public final fun getClientCredentials ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$ClientCredentials;
+	public final fun getDeviceAuthorization ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$DeviceAuthorization;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getImplicit ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$Implicit;
+	public final fun getPassword ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$Password;
+	public final fun implicit (Lkotlin/jvm/functions/Function1;)V
+	public final fun password (Lkotlin/jvm/functions/Function1;)V
+	public final fun setAuthorizationCode (Lio/heapy/komok/tech/api/dsl/OAuthFlow$AuthorizationCode;)V
+	public final fun setClientCredentials (Lio/heapy/komok/tech/api/dsl/OAuthFlow$ClientCredentials;)V
+	public final fun setDeviceAuthorization (Lio/heapy/komok/tech/api/dsl/OAuthFlow$DeviceAuthorization;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setImplicit (Lio/heapy/komok/tech/api/dsl/OAuthFlow$Implicit;)V
+	public final fun setPassword (Lio/heapy/komok/tech/api/dsl/OAuthFlow$Password;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/OAuthScopesBuilder {
+	public fun <init> ()V
+	public final fun build ()Ljava/util/Map;
+	public final fun description (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getScopes ()Ljava/util/Map;
+}
+
 public final class io/heapy/komok/tech/api/dsl/OpenAPI : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
 	public static final field Companion Lio/heapy/komok/tech/api/dsl/OpenAPI$Companion;
 	public static final field DEFAULT_JSON_SCHEMA_DIALECT Ljava/lang/String;
@@ -1001,6 +1147,19 @@ public final class io/heapy/komok/tech/api/dsl/OpenAPI$Companion {
 }
 
 public abstract interface class io/heapy/komok/tech/api/dsl/OpenAPIObject {
+}
+
+public final class io/heapy/komok/tech/api/dsl/OpenIdConnectSchemeBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public final fun getDeprecated ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getOpenIdConnectUrl ()Ljava/lang/String;
+	public final fun setDeprecated (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setOpenIdConnectUrl (Ljava/lang/String;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/Operation : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -1256,6 +1415,20 @@ public final class io/heapy/komok/tech/api/dsl/ParametersBuilder {
 	public final fun getParameters ()Ljava/util/List;
 	public final fun parameter (Lio/heapy/komok/tech/api/dsl/Parameter;)V
 	public final fun parameter (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/api/dsl/PasswordFlowBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/api/dsl/OAuthFlow$Password;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getRefreshUrl ()Ljava/lang/String;
+	public final fun getScopes ()Ljava/util/Map;
+	public final fun getTokenUrl ()Ljava/lang/String;
+	public final fun scopes (Lkotlin/jvm/functions/Function1;)V
+	public final fun setExtensions (Ljava/util/Map;)V
+	public final fun setRefreshUrl (Ljava/lang/String;)V
+	public final fun setScopes (Ljava/util/Map;)V
+	public final fun setTokenUrl (Ljava/lang/String;)V
 }
 
 public final class io/heapy/komok/tech/api/dsl/PathItem : io/heapy/komok/tech/api/dsl/OpenAPIObject, io/heapy/komok/tech/api/dsl/SupportsExtensions {
@@ -1901,6 +2074,21 @@ public final class io/heapy/komok/tech/api/dsl/SchemaPropertiesBuilder {
 
 public abstract interface annotation class io/heapy/komok/tech/api/dsl/SchemaTitle : java/lang/annotation/Annotation {
 	public abstract fun value ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/api/dsl/SecurityDslKt {
+	public static final fun apiKeyScheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public static final fun authorizationCodeFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$AuthorizationCode;
+	public static final fun clientCredentialsFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$ClientCredentials;
+	public static final fun deviceAuthorizationFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$DeviceAuthorization;
+	public static final fun httpScheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public static final fun implicitFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$Implicit;
+	public static final fun mutualTLSScheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public static final fun oauth2Scheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public static final fun oauthFlows (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlows;
+	public static final fun oauthScopes (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun openIdConnectScheme (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/SecurityScheme;
+	public static final fun passwordFlow (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/OAuthFlow$Password;
 }
 
 public final class io/heapy/komok/tech/api/dsl/SecurityRequirementKt {

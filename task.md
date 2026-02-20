@@ -84,10 +84,10 @@ Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail
 - [x] Test: Operation and Path DSL examples
 
 #### 11.8 Security DSLs
-- [ ] OAuthFlow DSL builders (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
-- [ ] SecurityScheme DSL for all types (apiKey, http, mutualTLS, oauth2, openIdConnect)
-- [ ] SecurityRequirement DSL
-- [ ] Test: Security DSL examples
+- [x] OAuthFlow DSL builders (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
+- [x] SecurityScheme DSL for all types (apiKey, http, mutualTLS, oauth2, openIdConnect)
+- [x] SecurityRequirement DSL
+- [x] Test: Security DSL examples
 
 #### 11.9 Components and Root DSLs
 - [ ] Components DSL with typed component builders
