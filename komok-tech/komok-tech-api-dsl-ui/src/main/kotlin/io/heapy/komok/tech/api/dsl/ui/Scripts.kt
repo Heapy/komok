@@ -10,6 +10,8 @@ package io.heapy.komok.tech.api.dsl.ui
  * - Smooth scrolling for navigation
  * - Deep linking support
  * - Collapsible sidebar groups with state persistence
+ * - Collapsible operations with state persistence
+ * - HTTP file download
  * - Local storage for theme and sidebar state persistence
  */
 internal val JAVASCRIPT_CODE = """
@@ -245,6 +247,90 @@ internal val JAVASCRIPT_CODE = """
             }
             saveCollapsedGroups(currentCollapsed);
         });
+    });
+})();
+
+// ===== Operation Collapse =====
+(function initOperationCollapse() {
+    const STORAGE_KEY = 'collapsed-operations';
+
+    function getCollapsedOperations() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch {
+            return [];
+        }
+    }
+
+    function saveCollapsedOperations(ops) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(ops));
+        } catch {
+            // Ignore storage errors
+        }
+    }
+
+    const operations = document.querySelectorAll('.operation');
+    const collapsedOps = getCollapsedOperations();
+
+    operations.forEach(operation => {
+        const opId = operation.id;
+        const header = operation.querySelector('.operation-header');
+        const toggle = operation.querySelector('.operation-toggle');
+
+        if (!header || !toggle) return;
+
+        // Restore collapsed state
+        if (opId && collapsedOps.includes(opId)) {
+            operation.classList.add('collapsed');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        // Click on header or toggle button collapses
+        header.addEventListener('click', (e) => {
+            // Don't collapse if clicking on a link
+            if (e.target.tagName === 'A') return;
+
+            const isCollapsed = operation.classList.toggle('collapsed');
+            toggle.setAttribute('aria-expanded', !isCollapsed);
+
+            if (opId) {
+                const currentCollapsed = getCollapsedOperations();
+                if (isCollapsed) {
+                    if (!currentCollapsed.includes(opId)) {
+                        currentCollapsed.push(opId);
+                    }
+                } else {
+                    const idx = currentCollapsed.indexOf(opId);
+                    if (idx > -1) {
+                        currentCollapsed.splice(idx, 1);
+                    }
+                }
+                saveCollapsedOperations(currentCollapsed);
+            }
+        });
+    });
+})();
+
+// ===== HTTP File Download =====
+(function initHttpFileDownload() {
+    const downloadBtn = document.getElementById('download-http-file');
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener('click', () => {
+        const title = downloadBtn.dataset.openapiTitle || 'API';
+        const content = downloadBtn.dataset.httpContent || '';
+
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase() + '.http';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     });
 })();
 

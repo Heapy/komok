@@ -1,3 +1,7 @@
+public final class io/heapy/komok/tech/api/dsl/ui/HttpFileGeneratorKt {
+	public static final fun generateHttpFile (Lio/heapy/komok/tech/api/dsl/OpenAPI;)Ljava/lang/String;
+}
+
 public final class io/heapy/komok/tech/api/dsl/ui/OpenApiDocRendererKt {
 	public static final fun renderOpenApiDoc (Lio/heapy/komok/tech/api/dsl/OpenAPI;)Ljava/lang/String;
 }

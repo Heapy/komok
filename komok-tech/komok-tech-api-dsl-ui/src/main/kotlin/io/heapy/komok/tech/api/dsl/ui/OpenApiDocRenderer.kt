@@ -1,10 +1,50 @@
 package io.heapy.komok.tech.api.dsl.ui
 
+import io.heapy.komok.tech.api.dsl.ApiKeyLocation
+import io.heapy.komok.tech.api.dsl.Content
 import io.heapy.komok.tech.api.dsl.Direct
+import io.heapy.komok.tech.api.dsl.ExternalDocumentation
+import io.heapy.komok.tech.api.dsl.MediaType
+import io.heapy.komok.tech.api.dsl.OAuthFlow
 import io.heapy.komok.tech.api.dsl.OpenAPI
 import io.heapy.komok.tech.api.dsl.Reference
+import io.heapy.komok.tech.api.dsl.Schema
+import io.heapy.komok.tech.api.dsl.SecuritySchemeType
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
+
+private val prettyJson = Json { prettyPrint = true }
+
+/**
+ * Extracts a `$ref` value from a schema if it is a simple reference object.
+ * Returns null if the schema is not a `$ref`.
+ */
+private fun Schema.refOrNull(): String? {
+    val obj = schema as? JsonObject ?: return null
+    if (obj.size == 1 && obj.containsKey("\$ref")) {
+        return obj["\$ref"]?.jsonPrimitive?.content
+    }
+    return null
+}
+
+/**
+ * Extracts the short name from a `$ref` path like `#/components/schemas/Pet` -> `Pet`.
+ */
+private fun refShortName(ref: String): String =
+    ref.substringAfterLast("/")
+
+/**
+ * Returns the CSS class suffix for a response status code.
+ * Maps numeric codes to their Nxx class, and "default" to "default".
+ */
+private fun statusCodeCssClass(statusCode: String): String {
+    val first = statusCode.firstOrNull()
+    return if (first != null && first.isDigit()) "status-${first}xx" else "status-default"
+}
 
 /**
  * Renders an OpenAPI document as a self-contained HTML page with embedded CSS and JavaScript.
@@ -86,6 +126,18 @@ private fun FlowContent.renderHeader(openapi: OpenAPI) {
             }
 
             div(classes = "header-right") {
+                // HTTP file download button
+                openapi.paths?.takeIf { it.isNotEmpty() }?.let {
+                    val httpFileContent = generateHttpFile(openapi)
+                    button(classes = "download-http-file") {
+                        id = "download-http-file"
+                        attributes["aria-label"] = "Download HTTP file"
+                        attributes["data-openapi-title"] = openapi.info.title
+                        attributes["data-http-content"] = httpFileContent
+                        +"Download .http"
+                    }
+                }
+
                 // Theme toggle button
                 button(classes = "theme-toggle") {
                     id = "theme-toggle"
@@ -128,7 +180,7 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
             openapi.servers?.takeIf { it.isNotEmpty() }?.let {
                 li { a(href = "#servers") { +"Servers" } }
             }
-            openapi.security?.takeIf { it.isNotEmpty() }?.let {
+            openapi.components?.securitySchemes?.takeIf { it.isNotEmpty() }?.let {
                 li { a(href = "#security") { +"Security" } }
             }
         }
@@ -290,6 +342,9 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                 }
             }
         }
+
+        // Root external documentation
+        openapi.externalDocs?.let { renderExternalDocs(it) }
     }
 
     // Servers section
@@ -309,6 +364,11 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                 }
             }
         }
+    }
+
+    // Security schemes section
+    openapi.components?.securitySchemes?.takeIf { it.isNotEmpty() }?.let { securitySchemes ->
+        renderSecuritySchemes(securitySchemes, openapi.security)
     }
 
     // Paths/Endpoints section - grouped by tags
@@ -358,6 +418,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                                 markdown(desc)
                             }
                         }
+                        tagInfo?.externalDocs?.let { renderExternalDocs(it) }
                     } else {
                         h3(classes = "tag-name") { +"Untagged" }
                     }
@@ -381,9 +442,326 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                     h3 { +name }
 
                     pre(classes = "schema-code") {
-                        code {
-                            // Simplified schema representation
-                            +schema.toString()
+                        code(classes = "language-json") {
+                            +prettyJson.encodeToString(JsonElement.serializer(), schema.schema)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Renders an external documentation link.
+ */
+private fun FlowContent.renderExternalDocs(externalDocs: ExternalDocumentation) {
+    a(href = externalDocs.url, target = "_blank", classes = "external-docs-link") {
+        +(externalDocs.description ?: "External Documentation")
+    }
+}
+
+/**
+ * Renders the security schemes section.
+ */
+private fun FlowContent.renderSecuritySchemes(
+    securitySchemes: Map<String, io.heapy.komok.tech.api.dsl.SecurityScheme>,
+    globalSecurity: List<Map<String, List<String>>>?,
+) {
+    section(classes = "content-section") {
+        id = "security"
+        h2 { +"Security" }
+
+        // Global security requirements
+        globalSecurity?.takeIf { it.isNotEmpty() }?.let { requirements ->
+            div(classes = "security-global") {
+                h3 { +"Global Security Requirements" }
+                p { +"The following security schemes are required globally:" }
+                ul {
+                    requirements.forEach { requirement ->
+                        requirement.forEach { (schemeName, scopes) ->
+                            li {
+                                strong { +schemeName }
+                                if (scopes.isNotEmpty()) {
+                                    +" (scopes: ${scopes.joinToString(", ")})"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Individual security schemes
+        securitySchemes.forEach { (name, scheme) ->
+            div(classes = "security-scheme") {
+                div(classes = "security-scheme-header") {
+                    h3 { +name }
+                    span(classes = "security-scheme-type") {
+                        +when (scheme.type) {
+                            SecuritySchemeType.API_KEY -> "API Key"
+                            SecuritySchemeType.HTTP -> "HTTP"
+                            SecuritySchemeType.MUTUAL_TLS -> "Mutual TLS"
+                            SecuritySchemeType.OAUTH2 -> "OAuth 2.0"
+                            SecuritySchemeType.OPEN_ID_CONNECT -> "OpenID Connect"
+                        }
+                    }
+                    if (scheme.deprecated) {
+                        span(classes = "deprecated-badge") { +"Deprecated" }
+                    }
+                }
+
+                scheme.description?.let { desc ->
+                    div(classes = "security-scheme-description") {
+                        markdown(desc)
+                    }
+                }
+
+                // Type-specific details
+                when (scheme.type) {
+                    SecuritySchemeType.API_KEY -> {
+                        table(classes = "security-details-table") {
+                            tbody {
+                                tr {
+                                    td { strong { +"Parameter Name" } }
+                                    td { code { +(scheme.name ?: "") } }
+                                }
+                                tr {
+                                    td { strong { +"Location" } }
+                                    td {
+                                        +when (scheme.location) {
+                                            ApiKeyLocation.QUERY -> "query"
+                                            ApiKeyLocation.HEADER -> "header"
+                                            ApiKeyLocation.COOKIE -> "cookie"
+                                            null -> ""
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    SecuritySchemeType.HTTP -> {
+                        table(classes = "security-details-table") {
+                            tbody {
+                                tr {
+                                    td { strong { +"Scheme" } }
+                                    td { code { +(scheme.scheme ?: "") } }
+                                }
+                                scheme.bearerFormat?.let { format ->
+                                    tr {
+                                        td { strong { +"Bearer Format" } }
+                                        td { code { +format } }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    SecuritySchemeType.MUTUAL_TLS -> {
+                        // No additional details beyond description
+                    }
+                    SecuritySchemeType.OAUTH2 -> {
+                        scheme.flows?.let { flows ->
+                            div(classes = "security-flows") {
+                                flows.implicit?.let { renderOAuthFlow("Implicit", it) }
+                                flows.password?.let { renderOAuthFlow("Password", it) }
+                                flows.clientCredentials?.let { renderOAuthFlow("Client Credentials", it) }
+                                flows.authorizationCode?.let { renderOAuthFlow("Authorization Code", it) }
+                                flows.deviceAuthorization?.let { renderOAuthFlow("Device Authorization", it) }
+                            }
+                        }
+                    }
+                    SecuritySchemeType.OPEN_ID_CONNECT -> {
+                        table(classes = "security-details-table") {
+                            tbody {
+                                tr {
+                                    td { strong { +"Discovery URL" } }
+                                    td {
+                                        a(href = scheme.openIdConnectUrl ?: "", target = "_blank") {
+                                            +(scheme.openIdConnectUrl ?: "")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Renders an OAuth flow section.
+ */
+private fun FlowContent.renderOAuthFlow(flowName: String, flow: OAuthFlow) {
+    div(classes = "security-flow") {
+        h4 { +flowName }
+
+        table(classes = "security-details-table") {
+            tbody {
+                when (flow) {
+                    is OAuthFlow.Implicit -> {
+                        tr {
+                            td { strong { +"Authorization URL" } }
+                            td { a(href = flow.authorizationUrl, target = "_blank") { +flow.authorizationUrl } }
+                        }
+                    }
+                    is OAuthFlow.Password -> {
+                        tr {
+                            td { strong { +"Token URL" } }
+                            td { a(href = flow.tokenUrl, target = "_blank") { +flow.tokenUrl } }
+                        }
+                    }
+                    is OAuthFlow.ClientCredentials -> {
+                        tr {
+                            td { strong { +"Token URL" } }
+                            td { a(href = flow.tokenUrl, target = "_blank") { +flow.tokenUrl } }
+                        }
+                    }
+                    is OAuthFlow.AuthorizationCode -> {
+                        tr {
+                            td { strong { +"Authorization URL" } }
+                            td { a(href = flow.authorizationUrl, target = "_blank") { +flow.authorizationUrl } }
+                        }
+                        tr {
+                            td { strong { +"Token URL" } }
+                            td { a(href = flow.tokenUrl, target = "_blank") { +flow.tokenUrl } }
+                        }
+                    }
+                    is OAuthFlow.DeviceAuthorization -> {
+                        tr {
+                            td { strong { +"Device Authorization URL" } }
+                            td { a(href = flow.deviceAuthorizationUrl, target = "_blank") { +flow.deviceAuthorizationUrl } }
+                        }
+                        tr {
+                            td { strong { +"Token URL" } }
+                            td { a(href = flow.tokenUrl, target = "_blank") { +flow.tokenUrl } }
+                        }
+                    }
+                }
+                flow.refreshUrl?.let { refreshUrl ->
+                    tr {
+                        td { strong { +"Refresh URL" } }
+                        td { a(href = refreshUrl, target = "_blank") { +refreshUrl } }
+                    }
+                }
+            }
+        }
+
+        if (flow.scopes.isNotEmpty()) {
+            table(classes = "security-scopes-table") {
+                thead {
+                    tr {
+                        th { +"Scope" }
+                        th { +"Description" }
+                    }
+                }
+                tbody {
+                    flow.scopes.forEach { (scope, description) ->
+                        tr {
+                            td { code { +scope } }
+                            td { +description }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Renders a schema - either as a $ref link or as pretty-printed JSON.
+ */
+private fun FlowContent.renderSchema(schema: Schema) {
+    val ref = schema.refOrNull()
+    if (ref != null) {
+        val name = refShortName(ref)
+        a(href = "#schema-$name", classes = "schema-ref") {
+            +name
+        }
+    } else {
+        pre(classes = "schema-code") {
+            code(classes = "language-json") {
+                +prettyJson.encodeToString(JsonElement.serializer(), schema.schema)
+            }
+        }
+    }
+}
+
+/**
+ * Renders content (media types) grouped by schema to avoid duplication.
+ * If multiple content types share the same schema, they are shown together.
+ */
+private fun FlowContent.renderContent(content: Content, showSchemaHeading: Boolean = true) {
+    // Group content types by their schema JSON string to deduplicate
+    data class ContentGroup(
+        val contentTypes: MutableList<String>,
+        val mediaType: MediaType,
+    )
+
+    val groups = mutableListOf<ContentGroup>()
+    content.forEach { (contentType, mediaType) ->
+        val schemaKey = mediaType.schema?.let {
+            prettyJson.encodeToString(JsonElement.serializer(), it.schema)
+        } ?: ""
+        val existing = groups.find { group ->
+            val existingKey = group.mediaType.schema?.let {
+                prettyJson.encodeToString(JsonElement.serializer(), it.schema)
+            } ?: ""
+            existingKey == schemaKey
+                && group.mediaType.example == mediaType.example
+                && group.mediaType.examples == mediaType.examples
+        }
+        if (existing != null) {
+            existing.contentTypes.add(contentType)
+        } else {
+            groups.add(ContentGroup(mutableListOf(contentType), mediaType))
+        }
+    }
+
+    groups.forEach { group ->
+        div(classes = "content-type-section") {
+            div(classes = "content-types") {
+                group.contentTypes.forEach { ct ->
+                    span(classes = "content-type-badge") { +ct }
+                }
+            }
+
+            group.mediaType.schema?.let { schema ->
+                div(classes = "schema-display") {
+                    if (showSchemaHeading) {
+                        h5 { +"Schema" }
+                    }
+                    renderSchema(schema)
+                }
+            }
+
+            group.mediaType.example?.let { example ->
+                div(classes = "example-display") {
+                    h5 { +"Example" }
+                    pre(classes = "schema-code") {
+                        code(classes = "language-json") {
+                            +prettyJson.encodeToString(JsonElement.serializer(), example)
+                        }
+                    }
+                }
+            }
+
+            group.mediaType.examples?.takeIf { it.isNotEmpty() }?.let { examples ->
+                div(classes = "examples-display") {
+                    h5 { +"Examples" }
+                    examples.forEach { (exampleName, example) ->
+                        div(classes = "named-example") {
+                            h6 { +exampleName }
+                            example.summary?.let { p { em { +it } } }
+                            example.description?.let { desc -> div { markdown(desc) } }
+                            example.value?.let { value ->
+                                pre(classes = "schema-code") {
+                                    code(classes = "language-json") {
+                                        +prettyJson.encodeToString(JsonElement.serializer(), value)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -420,6 +798,11 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
         id = "${method.lowercase()}-${sanitizePathForId(path)}"
 
         div(classes = "operation-header") {
+            button(classes = "operation-toggle") {
+                attributes["type"] = "button"
+                attributes["aria-label"] = "Toggle operation details"
+                span(classes = "operation-toggle-icon") { +"▼" }
+            }
             span(classes = "method-badge method-${method.lowercase()}") { +method }
             code(classes = "operation-path") { +path }
 
@@ -428,50 +811,56 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
             }
         }
 
-        operation.description?.let { desc ->
-            div(classes = "operation-description") {
-                markdown(desc)
+        // Operation details - collapsible
+        div(classes = "operation-details") {
+            operation.description?.let { desc ->
+                div(classes = "operation-description") {
+                    markdown(desc)
+                }
             }
-        }
 
-        // Parameters
-        operation.parameters?.takeIf { it.isNotEmpty() }?.let { parameters ->
-            div(classes = "operation-section") {
-                h4 { +"Parameters" }
+            // External documentation
+            operation.externalDocs?.let { renderExternalDocs(it) }
 
-                table(classes = "params-table") {
-                    thead {
-                        tr {
-                            th { +"Name" }
-                            th { +"In" }
-                            th { +"Type" }
-                            th { +"Required" }
-                            th { +"Description" }
-                        }
-                    }
-                    tbody {
-                        parameters.forEach { paramRef ->
+            // Parameters
+            operation.parameters?.takeIf { it.isNotEmpty() }?.let { parameters ->
+                div(classes = "operation-section") {
+                    h4 { +"Parameters" }
+
+                    table(classes = "params-table") {
+                        thead {
                             tr {
-                                when (paramRef) {
-                                    is Direct -> {
-                                        val param = paramRef.value
-                                        td { code { +param.name } }
-                                        td { span(classes = "param-in") { +param.location.name.lowercase() } }
-                                        td { +"string" } // Simplified
-                                        td { +(if (param.required) "✓" else "-") }
-                                        td {
-                                            param.description?.let { desc ->
-                                                markdown(desc)
-                                            } ?: run { +"-" }
+                                th { +"Name" }
+                                th { +"In" }
+                                th { +"Type" }
+                                th { +"Required" }
+                                th { +"Description" }
+                            }
+                        }
+                        tbody {
+                            parameters.forEach { paramRef ->
+                                tr {
+                                    when (paramRef) {
+                                        is Direct -> {
+                                            val param = paramRef.value
+                                            td { code { +param.name } }
+                                            td { span(classes = "param-in") { +param.location.name.lowercase() } }
+                                            td { +"string" } // Simplified
+                                            td { +(if (param.required) "✓" else "-") }
+                                            td {
+                                                param.description?.let { desc ->
+                                                    markdown(desc)
+                                                } ?: run { +"-" }
+                                            }
                                         }
-                                    }
-                                    is Reference -> {
-                                        td {
-                                            colSpan = "5"
-                                            code { +paramRef.ref }
-                                            paramRef.description?.let { desc ->
-                                                +" - "
-                                                +desc
+                                        is Reference -> {
+                                            td {
+                                                colSpan = "5"
+                                                code { +paramRef.ref }
+                                                paramRef.description?.let { desc ->
+                                                    +" - "
+                                                    +desc
+                                                }
                                             }
                                         }
                                     }
@@ -481,44 +870,49 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                     }
                 }
             }
-        }
 
-        // Request Body
-        operation.requestBody?.let { requestBody ->
-            div(classes = "operation-section") {
-                h4 { +"Request Body" }
+            // Request Body
+            operation.requestBody?.let { requestBody ->
+                div(classes = "operation-section") {
+                    h4 { +"Request Body" }
 
-                requestBody.description?.let { desc ->
-                    div {
-                        markdown(desc)
+                    requestBody.description?.let { desc ->
+                        div {
+                            markdown(desc)
+                        }
                     }
-                }
 
-                div(classes = "content-types") {
-                    requestBody.content.forEach { (contentType, _) ->
-                        span(classes = "content-type-badge") { +contentType }
+                    if (requestBody.required) {
+                        span(classes = "required-badge") { +"Required" }
                     }
+
+                    renderContent(requestBody.content)
                 }
             }
-        }
 
-        // Responses
-        if (operation.responses.isNotEmpty()) {
-            div(classes = "operation-section") {
-                h4 { +"Responses" }
+            // Responses
+            if (operation.responses.isNotEmpty()) {
+                div(classes = "operation-section") {
+                    h4 { +"Responses" }
 
-                div(classes = "responses") {
-                    operation.responses.forEach { (statusCode, response) ->
-                        div(classes = "response-item") {
-                            span(classes = "status-code status-${statusCode.firstOrNull() ?: '2'}xx") {
-                                +statusCode
-                            }
-                            response.summary?.let {
-                                span(classes = "response-summary") { +it }
-                            }
-                            response.description?.let { desc ->
-                                div(classes = "response-description") {
-                                    markdown(desc)
+                    div(classes = "responses") {
+                        operation.responses.forEach { (statusCode, response) ->
+                            div(classes = "response-item") {
+                                span(classes = "status-code ${statusCodeCssClass(statusCode)}") {
+                                    +statusCode
+                                }
+                                response.summary?.let {
+                                    span(classes = "response-summary") { +it }
+                                }
+                                response.description?.let { desc ->
+                                    div(classes = "response-description") {
+                                        markdown(desc)
+                                    }
+                                }
+
+                                // Response content types and schemas
+                                response.content?.let { responseContent ->
+                                    renderContent(responseContent, showSchemaHeading = false)
                                 }
                             }
                         }

@@ -2,8 +2,11 @@ package io.heapy.komok.tech.api.dsl.ui
 
 import io.heapy.komok.tech.api.dsl.*
 import io.heapy.komok.tech.logging.Logger
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+import kotlinx.serialization.json.putJsonObject
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -318,5 +321,377 @@ class OpenApiDocRendererTest {
         assertEquals(1, bodyCloseTagCount, "Should have exactly one </body> tag")
 
         println("Generated HTML length: ${html.length} characters")
+    }
+
+    @Test
+    fun `should render security schemes for all types`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Security Test API",
+                version = "1.0.0"
+            ),
+            components = Components(
+                securitySchemes = mapOf(
+                    "api_key" to SecurityScheme.apiKey(
+                        name = "X-API-Key",
+                        location = ApiKeyLocation.HEADER,
+                        description = "API key authentication"
+                    ),
+                    "bearer_auth" to SecurityScheme.http(
+                        scheme = "bearer",
+                        bearerFormat = "JWT",
+                        description = "JWT authentication"
+                    ),
+                    "mutual_tls" to SecurityScheme.mutualTLS(
+                        description = "Mutual TLS authentication"
+                    ),
+                    "oauth2" to SecurityScheme.oauth2(
+                        description = "OAuth 2.0 authentication",
+                        flows = OAuthFlows(
+                            authorizationCode = OAuthFlow.AuthorizationCode(
+                                authorizationUrl = "https://auth.example.com/authorize",
+                                tokenUrl = "https://auth.example.com/token",
+                                scopes = mapOf(
+                                    "read:users" to "Read user data",
+                                    "write:users" to "Modify user data"
+                                )
+                            ),
+                            implicit = OAuthFlow.Implicit(
+                                authorizationUrl = "https://auth.example.com/authorize",
+                                scopes = mapOf(
+                                    "read:users" to "Read user data"
+                                )
+                            )
+                        )
+                    ),
+                    "openid" to SecurityScheme.openIdConnect(
+                        openIdConnectUrl = "https://auth.example.com/.well-known/openid-configuration",
+                        description = "OpenID Connect authentication"
+                    )
+                )
+            ),
+            security = listOf(
+                securityRequirement("bearer_auth" to emptyList()),
+                securityRequirement("oauth2" to listOf("read:users"))
+            ),
+            paths = emptyMap()
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify security section exists
+        assertTrue(html.contains("id=\"security\""), "Should have security section with id")
+        assertTrue(html.contains("Security"), "Should have security heading")
+
+        // Verify API Key scheme
+        assertTrue(html.contains("api_key"), "Should contain api_key scheme name")
+        assertTrue(html.contains("API Key"), "Should contain API Key type badge")
+        assertTrue(html.contains("X-API-Key"), "Should contain API key parameter name")
+        assertTrue(html.contains("header"), "Should contain API key location")
+        assertTrue(html.contains("API key authentication"), "Should contain api_key description")
+
+        // Verify HTTP Bearer scheme
+        assertTrue(html.contains("bearer_auth"), "Should contain bearer_auth scheme name")
+        assertTrue(html.contains("HTTP"), "Should contain HTTP type badge")
+        assertTrue(html.contains("bearer"), "Should contain bearer scheme")
+        assertTrue(html.contains("JWT"), "Should contain JWT bearer format")
+        assertTrue(html.contains("JWT authentication"), "Should contain bearer_auth description")
+
+        // Verify Mutual TLS scheme
+        assertTrue(html.contains("mutual_tls"), "Should contain mutual_tls scheme name")
+        assertTrue(html.contains("Mutual TLS"), "Should contain Mutual TLS type badge")
+        assertTrue(html.contains("Mutual TLS authentication"), "Should contain mutual_tls description")
+
+        // Verify OAuth2 scheme
+        assertTrue(html.contains("oauth2"), "Should contain oauth2 scheme name")
+        assertTrue(html.contains("OAuth 2.0"), "Should contain OAuth 2.0 type badge")
+        assertTrue(html.contains("Authorization Code"), "Should contain Authorization Code flow")
+        assertTrue(html.contains("Implicit"), "Should contain Implicit flow")
+        assertTrue(html.contains("https://auth.example.com/authorize"), "Should contain authorization URL")
+        assertTrue(html.contains("https://auth.example.com/token"), "Should contain token URL")
+        assertTrue(html.contains("read:users"), "Should contain scope name")
+        assertTrue(html.contains("Read user data"), "Should contain scope description")
+        assertTrue(html.contains("write:users"), "Should contain write scope")
+
+        // Verify OpenID Connect scheme
+        assertTrue(html.contains("openid"), "Should contain openid scheme name")
+        assertTrue(html.contains("OpenID Connect"), "Should contain OpenID Connect type badge")
+        assertTrue(
+            html.contains("https://auth.example.com/.well-known/openid-configuration"),
+            "Should contain discovery URL"
+        )
+
+        // Verify global security requirements
+        assertTrue(html.contains("Global Security Requirements"), "Should show global security requirements")
+        assertTrue(html.contains("bearer_auth"), "Should list bearer_auth in global requirements")
+    }
+
+    @Test
+    fun `should render external documentation links`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "External Docs Test API",
+                version = "1.0.0"
+            ),
+            externalDocs = ExternalDocumentation(
+                url = "https://docs.example.com",
+                description = "Full API documentation"
+            ),
+            tags = listOf(
+                Tag(
+                    name = "users",
+                    description = "User management endpoints",
+                    externalDocs = ExternalDocumentation(
+                        url = "https://docs.example.com/users",
+                        description = "User docs"
+                    )
+                )
+            ),
+            paths = mapOf(
+                "/users" to PathItem(
+                    get = Operation(
+                        tags = listOf("users"),
+                        summary = "List users",
+                        externalDocs = ExternalDocumentation(
+                            url = "https://docs.example.com/users/list",
+                            description = "List users documentation"
+                        ),
+                        responses = mapOf(
+                            "200" to Response(description = "Success")
+                        )
+                    )
+                )
+            )
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify root external docs
+        assertTrue(html.contains("https://docs.example.com"), "Should contain root external docs URL")
+        assertTrue(html.contains("Full API documentation"), "Should contain root external docs description")
+        assertTrue(html.contains("external-docs-link"), "Should use external-docs-link CSS class")
+
+        // Verify tag external docs
+        assertTrue(html.contains("https://docs.example.com/users"), "Should contain tag external docs URL")
+        assertTrue(html.contains("User docs"), "Should contain tag external docs description")
+
+        // Verify operation external docs
+        assertTrue(html.contains("https://docs.example.com/users/list"), "Should contain operation external docs URL")
+        assertTrue(html.contains("List users documentation"), "Should contain operation external docs description")
+    }
+
+    @Test
+    fun `should render collapsible operation HTML structure`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Collapsible Test API",
+                version = "1.0.0"
+            ),
+            paths = mapOf(
+                "/test" to PathItem(
+                    get = Operation(
+                        summary = "Test endpoint",
+                        description = "A test endpoint with collapsible details",
+                        parameters = listOf(
+                            Direct(
+                                Parameter(
+                                    name = "q",
+                                    location = ParameterLocation.QUERY,
+                                    description = "Search query",
+                                    schema = Schema(buildJsonObject { put("type", "string") })
+                                )
+                            )
+                        ),
+                        responses = mapOf(
+                            "200" to Response(description = "Success")
+                        )
+                    )
+                )
+            )
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify collapsible structure
+        assertTrue(html.contains("operation-toggle"), "Should have operation toggle button")
+        assertTrue(html.contains("operation-toggle-icon"), "Should have toggle icon")
+        assertTrue(html.contains("operation-details"), "Should have operation-details wrapper")
+        assertTrue(html.contains("initOperationCollapse"), "JavaScript should have operation collapse init")
+        assertTrue(html.contains("collapsed-operations"), "JavaScript should use collapsed-operations localStorage key")
+    }
+
+    @Test
+    fun `should render schema as pretty-printed JSON`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Schema Test API",
+                version = "1.0.0"
+            ),
+            components = Components(
+                schemas = mapOf(
+                    "User" to Schema(
+                        buildJsonObject {
+                            put("type", "object")
+                            putJsonObject("properties") {
+                                putJsonObject("id") {
+                                    put("type", "integer")
+                                }
+                                putJsonObject("name") {
+                                    put("type", "string")
+                                }
+                            }
+                            putJsonArray("required") {
+                                add(JsonPrimitive("id"))
+                                add(JsonPrimitive("name"))
+                            }
+                        }
+                    )
+                )
+            ),
+            paths = emptyMap()
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify pretty-printed JSON - content is HTML-escaped in the output
+        assertTrue(html.contains("language-json"), "Should use language-json CSS class for syntax highlighting hint")
+        // In HTML output, quotes are escaped as &quot;
+        assertTrue(html.contains("&quot;type&quot;: &quot;object&quot;"), "Should contain pretty-printed type field")
+        assertTrue(html.contains("&quot;properties&quot;"), "Should contain properties key")
+        assertTrue(html.contains("&quot;id&quot;"), "Should contain id property")
+        assertTrue(html.contains("&quot;name&quot;"), "Should contain name property")
+
+        // Should NOT contain raw toString output
+        assertFalse(
+            html.contains("Schema(schema="),
+            "Should not contain raw Schema.toString() output"
+        )
+    }
+
+    @Test
+    fun `should render request body with schema and examples`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Request Body Test API",
+                version = "1.0.0"
+            ),
+            paths = mapOf(
+                "/users" to PathItem(
+                    post = Operation(
+                        summary = "Create user",
+                        requestBody = RequestBody(
+                            description = "User data",
+                            required = true,
+                            content = mapOf(
+                                "application/json" to MediaType(
+                                    schema = Schema(
+                                        buildJsonObject {
+                                            put("type", "object")
+                                            putJsonObject("properties") {
+                                                putJsonObject("name") {
+                                                    put("type", "string")
+                                                }
+                                            }
+                                        }
+                                    ),
+                                    example = buildJsonObject {
+                                        put("name", "John Doe")
+                                    }
+                                )
+                            )
+                        ),
+                        responses = mapOf(
+                            "201" to Response(
+                                description = "Created",
+                                content = mapOf(
+                                    "application/json" to MediaType(
+                                        schema = Schema(
+                                            buildJsonObject {
+                                                put("type", "object")
+                                                putJsonObject("properties") {
+                                                    putJsonObject("id") {
+                                                        put("type", "integer")
+                                                    }
+                                                    putJsonObject("name") {
+                                                        put("type", "string")
+                                                    }
+                                                }
+                                            }
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify request body schema
+        assertTrue(html.contains("Request Body"), "Should have Request Body section")
+        assertTrue(html.contains("application/json"), "Should show content type")
+        assertTrue(html.contains("Required"), "Should show required badge")
+        assertTrue(html.contains("schema-display"), "Should have schema display for request body")
+        assertTrue(html.contains("Schema"), "Should have Schema heading")
+
+        // Verify example
+        assertTrue(html.contains("Example"), "Should have Example heading")
+        assertTrue(html.contains("John Doe"), "Should contain example value")
+
+        // Verify response schema (HTML-escaped)
+        assertTrue(html.contains("&quot;id&quot;"), "Should show response schema id property")
+    }
+
+    @Test
+    fun `should include HTTP file download button`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Download Test API",
+                version = "1.0.0"
+            ),
+            paths = mapOf(
+                "/test" to PathItem(
+                    get = Operation(
+                        summary = "Test",
+                        responses = mapOf("200" to Response(description = "OK"))
+                    )
+                )
+            )
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        assertTrue(html.contains("download-http-file"), "Should have HTTP file download button")
+        assertTrue(html.contains("Download .http"), "Should have download button text")
+        assertTrue(html.contains("initHttpFileDownload"), "JavaScript should have HTTP file download init")
+    }
+
+    @Test
+    fun `should not include HTTP file download button for API without paths`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "No Paths API",
+                version = "1.0.0"
+            ),
+            paths = emptyMap()
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // The JS code will always contain "download-http-file" as a string reference,
+        // but the actual button element should not be present
+        assertFalse(
+            html.contains("Download .http"),
+            "Should not have HTTP file download button text when no paths"
+        )
     }
 }

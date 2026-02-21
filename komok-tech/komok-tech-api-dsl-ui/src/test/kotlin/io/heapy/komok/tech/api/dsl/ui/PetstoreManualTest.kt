@@ -140,4 +140,25 @@ class PetstoreManualTest {
         assert(html.contains("/hello")) { "Should contain endpoint" }
         assert(html.contains("Say Hello")) { "Should contain operation summary" }
     }
+
+    @Test
+    fun `generate HTTP file from Petstore OpenAPI spec`() {
+        val petstoreJsonPath = Paths.get("../komok-tech-api-dsl/src/test/resources/petstore-full-3.0.0.json")
+        val petstoreJson = petstoreJsonPath.readText()
+        val updatedJson = petstoreJson.replace("\"openapi\": \"3.0.0\"", "\"openapi\": \"3.2.0\"")
+        val openapi = json.decodeFromString<OpenAPI>(updatedJson)
+
+        val httpFile = generateHttpFile(openapi)
+
+        val outputPath = Paths.get("build/petstore.http")
+        Files.createDirectories(outputPath.parent)
+        outputPath.writeText(httpFile)
+
+        println("Generated HTTP file: ${outputPath.toAbsolutePath()}")
+        println("HTTP file size: ${httpFile.length} characters")
+        println("HTTP file lines: ${httpFile.lines().size}")
+
+        assert(httpFile.contains("### Add a new pet to the store.")) { "Should contain addPet summary" }
+        assert(httpFile.contains("\"name\": \"doggie\"")) { "Should contain generated example from Pet schema" }
+    }
 }

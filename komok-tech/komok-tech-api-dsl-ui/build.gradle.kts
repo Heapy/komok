@@ -33,8 +33,8 @@ dependencies {
     implementation(projects.komokTech.komokTechApiDsl)
     implementation(libs.kotlinx.html)
     implementation(libs.commonmark)
+    implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.kotlinx.serialization.json)
     testImplementation(libs.kaml)
     testImplementation(libs.logback)
     testImplementation(projects.komokTech.komokTechLogging)
