@@ -175,9 +175,9 @@ Generate downloadable `.http` files for use with IntelliJ IDEA / VS Code REST Cl
 - [ ] Add comprehensive example showcasing all UI features
 
 ### Phase 13: Validation and Integration
-- [ ] Add model-level validation (required fields, pattern matching, mutual exclusivity)
-- [ ] Test: Complex nested documents
-- [ ] Test: Real-world OpenAPI 3.2 examples (Stripe, GitHub APIs - need to obtain/convert to 3.2)
+- [x] Add model-level validation (required fields, pattern matching, mutual exclusivity)
+- [x] Test: Complex nested documents
+- [x] Test: Real-world OpenAPI 3.2 examples (Stripe, GitHub APIs - need to obtain/convert to 3.2)
 - [ ] Test: Ensure 100% code coverage for all model classes
 
 ### Phase 14: Documentation and Examples
