@@ -13,8 +13,10 @@ import io.heapy.komok.tech.api.dsl.SecuritySchemeType
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonPrimitive
 
 private val prettyJson = Json { prettyPrint = true }
@@ -441,9 +443,15 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                     id = "schema-$name"
                     h3 { +name }
 
-                    pre(classes = "schema-code") {
-                        code(classes = "language-json") {
-                            +prettyJson.encodeToString(JsonElement.serializer(), schema.schema)
+                    val obj = schema.schema as? JsonObject
+                    val typeValue = (obj?.get("type") as? JsonPrimitive)?.content
+                    if (obj != null && typeValue == "object" && obj.containsKey("properties")) {
+                        renderSchemaTree(obj, schemas)
+                    } else {
+                        pre(classes = "schema-code") {
+                            code(classes = "language-json") {
+                                +prettyJson.encodeToString(JsonElement.serializer(), schema.schema)
+                            }
                         }
                     }
                 }
@@ -684,6 +692,173 @@ private fun FlowContent.renderSchema(schema: Schema) {
             code(classes = "language-json") {
                 +prettyJson.encodeToString(JsonElement.serializer(), schema.schema)
             }
+        }
+    }
+}
+
+/**
+ * Extracts the type description from a JSON schema element.
+ * Returns a human-readable type string (e.g., "string", "integer", "array[string]").
+ */
+private fun schemaTypeDescription(element: JsonObject): String {
+    val ref = element["\$ref"]?.jsonPrimitive?.content
+    if (ref != null) return refShortName(ref)
+
+    val typeElement = element["type"]
+    val type = when (typeElement) {
+        is JsonPrimitive -> typeElement.content
+        is JsonArray -> typeElement
+            .filterIsInstance<JsonPrimitive>()
+            .joinToString(" | ") { it.content }
+        else -> null
+    }
+
+    val format = element["format"]?.jsonPrimitive?.content
+
+    return when (type) {
+        "array" -> {
+            val items = element["items"] as? JsonObject
+            val itemType = if (items != null) schemaTypeDescription(items) else "any"
+            "array[$itemType]"
+        }
+        else -> {
+            val base = type ?: "any"
+            if (format != null) "$base ($format)" else base
+        }
+    }
+}
+
+/**
+ * Renders an object schema as an interactive tree table with expand/collapse.
+ * Properties are shown in a structured format with name, type, required flag, and description.
+ * Nested objects and $ref types are expandable.
+ */
+private fun FlowContent.renderSchemaTree(
+    schemaObj: JsonObject,
+    allSchemas: Map<String, Schema>,
+) {
+    val requiredSet = (schemaObj["required"] as? JsonArray)
+        ?.filterIsInstance<JsonPrimitive>()
+        ?.map { it.content }
+        ?.toSet()
+        ?: emptySet()
+
+    val properties = schemaObj["properties"] as? JsonObject ?: return
+
+    div(classes = "schema-tree") {
+        table(classes = "schema-tree-table") {
+            thead {
+                tr {
+                    th { +"Name" }
+                    th { +"Type" }
+                    th { +"Required" }
+                    th { +"Description" }
+                }
+            }
+            tbody {
+                renderSchemaProperties(properties, requiredSet, allSchemas, depth = 0)
+            }
+        }
+    }
+}
+
+/**
+ * Renders schema properties as table rows, recursively rendering nested objects.
+ */
+private fun TBODY.renderSchemaProperties(
+    properties: JsonObject,
+    requiredSet: Set<String>,
+    allSchemas: Map<String, Schema>,
+    depth: Int,
+) {
+    properties.forEach { (propName, propValue) ->
+        val propObj = propValue as? JsonObject ?: return@forEach
+        val isRequired = propName in requiredSet
+        val typeDesc = schemaTypeDescription(propObj)
+        val description = (propObj["description"] as? JsonPrimitive)?.content ?: ""
+        val ref = propObj["\$ref"]?.jsonPrimitive?.content
+
+        // Check if this property has nested properties (inline object)
+        val nestedProps = propObj["properties"] as? JsonObject
+        // Check if this is an array of objects
+        val arrayItemProps = (propObj["items"] as? JsonObject)?.get("properties") as? JsonObject
+        // Check if $ref resolves to an object schema
+        val refSchemaProps = if (ref != null) {
+            val refName = refShortName(ref)
+            val refSchema = allSchemas[refName]?.schema as? JsonObject
+            if ((refSchema?.get("type") as? JsonPrimitive)?.content == "object") {
+                refSchema["properties"] as? JsonObject
+            } else null
+        } else null
+
+        val hasChildren = nestedProps != null || arrayItemProps != null || refSchemaProps != null
+
+        tr(classes = "schema-prop-row${if (hasChildren) " schema-expandable" else ""}") {
+            attributes["data-depth"] = depth.toString()
+            if (hasChildren) {
+                attributes["data-expanded"] = "false"
+            }
+
+            td {
+                span(classes = "schema-prop-indent") {
+                    if (depth > 0) {
+                        attributes["style"] = "padding-left: ${depth * 20}px"
+                    }
+                    if (hasChildren) {
+                        span(classes = "schema-expand-icon") { +"▶" }
+                    }
+                    code { +propName }
+                }
+            }
+            td {
+                if (ref != null) {
+                    a(href = "#schema-${refShortName(ref)}", classes = "schema-ref") {
+                        +typeDesc
+                    }
+                } else {
+                    span(classes = "schema-type") { +typeDesc }
+                }
+            }
+            td { +(if (isRequired) "Yes" else "No") }
+            td {
+                +description
+                // Show constraints
+                val constraints = buildList {
+                    (propObj["minLength"] as? JsonPrimitive)?.content?.let { add("minLength: $it") }
+                    (propObj["maxLength"] as? JsonPrimitive)?.content?.let { add("maxLength: $it") }
+                    (propObj["minimum"] as? JsonPrimitive)?.content?.let { add("min: $it") }
+                    (propObj["maximum"] as? JsonPrimitive)?.content?.let { add("max: $it") }
+                    (propObj["pattern"] as? JsonPrimitive)?.content?.let { add("pattern: $it") }
+                    (propObj["enum"] as? JsonArray)?.let { e ->
+                        val values = e.filterIsInstance<JsonPrimitive>().joinToString(", ") { it.content }
+                        if (values.isNotEmpty()) add("enum: $values")
+                    }
+                }
+                if (constraints.isNotEmpty()) {
+                    span(classes = "schema-constraints") {
+                        +" (${constraints.joinToString(", ")})"
+                    }
+                }
+            }
+        }
+
+        // Render nested children (hidden by default, toggled by JS)
+        if (hasChildren) {
+            val childProps = nestedProps ?: arrayItemProps ?: refSchemaProps!!
+            val childRequired = when {
+                nestedProps != null -> (propObj["required"] as? JsonArray)
+                    ?.filterIsInstance<JsonPrimitive>()?.map { it.content }?.toSet() ?: emptySet()
+                arrayItemProps != null -> ((propObj["items"] as? JsonObject)?.get("required") as? JsonArray)
+                    ?.filterIsInstance<JsonPrimitive>()?.map { it.content }?.toSet() ?: emptySet()
+                refSchemaProps != null -> {
+                    val refName = refShortName(ref!!)
+                    val refSchema = allSchemas[refName]?.schema as? JsonObject
+                    (refSchema?.get("required") as? JsonArray)
+                        ?.filterIsInstance<JsonPrimitive>()?.map { it.content }?.toSet() ?: emptySet()
+                }
+                else -> emptySet()
+            }
+            renderSchemaProperties(childProps, childRequired, allSchemas, depth + 1)
         }
     }
 }

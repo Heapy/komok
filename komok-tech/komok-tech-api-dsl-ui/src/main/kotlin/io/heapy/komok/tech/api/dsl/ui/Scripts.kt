@@ -353,5 +353,102 @@ internal val JAVASCRIPT_CODE = """
     }
 })();
 
+// ===== Schema Tree Expand/Collapse =====
+(function initSchemaTree() {
+    document.querySelectorAll('.schema-tree-table').forEach(function(table) {
+        var rows = Array.from(table.querySelectorAll('tbody tr'));
+
+        // Mark child rows
+        rows.forEach(function(row, index) {
+            var depth = parseInt(row.dataset.depth || '0', 10);
+            if (depth > 0) {
+                row.classList.add('schema-child-row');
+            }
+        });
+
+        // Add click handlers to expandable rows
+        rows.forEach(function(row, index) {
+            if (!row.classList.contains('schema-expandable')) return;
+
+            var parentDepth = parseInt(row.dataset.depth || '0', 10);
+
+            row.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') return;
+
+                var isExpanded = row.dataset.expanded === 'true';
+                row.dataset.expanded = isExpanded ? 'false' : 'true';
+
+                // Find direct children and toggle their visibility
+                for (var i = index + 1; i < rows.length; i++) {
+                    var childRow = rows[i];
+                    var childDepth = parseInt(childRow.dataset.depth || '0', 10);
+
+                    if (childDepth <= parentDepth) break;
+
+                    if (childDepth === parentDepth + 1) {
+                        if (isExpanded) {
+                            childRow.classList.remove('visible');
+                            // Also collapse any expanded children
+                            if (childRow.dataset.expanded === 'true') {
+                                childRow.dataset.expanded = 'false';
+                            }
+                        } else {
+                            childRow.classList.add('visible');
+                        }
+                    } else if (isExpanded) {
+                        // Hide all deeper children when collapsing
+                        childRow.classList.remove('visible');
+                        if (childRow.dataset.expanded === 'true') {
+                            childRow.dataset.expanded = 'false';
+                        }
+                    }
+                }
+            });
+        });
+    });
+})();
+
+// ===== JSON Syntax Highlighting =====
+(function initSyntaxHighlight() {
+    function highlightJson(text) {
+        // HTML-decode &quot; back to " for parsing, then re-highlight
+        const decoded = text
+            .replace(/&quot;/g, '"')
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>');
+
+        return decoded.replace(
+            /("(?:[^"\\]|\\.)*")\s*(:)|("(?:[^"\\]|\\.)*")|\b(true|false)\b|\b(null)\b|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/g,
+            function(match, key, colon, string, bool, nil, num) {
+                if (key) {
+                    return '<span class="json-key">' + escapeHtml(key) + '</span>' + colon;
+                }
+                if (string) {
+                    return '<span class="json-string">' + escapeHtml(string) + '</span>';
+                }
+                if (bool) {
+                    return '<span class="json-boolean">' + bool + '</span>';
+                }
+                if (nil) {
+                    return '<span class="json-null">' + nil + '</span>';
+                }
+                if (num) {
+                    return '<span class="json-number">' + num + '</span>';
+                }
+                return match;
+            }
+        );
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    document.querySelectorAll('code.language-json').forEach(function(block) {
+        block.innerHTML = highlightJson(block.textContent);
+    });
+})();
+
 console.log('OpenAPI Documentation UI initialized');
 """.trimIndent()

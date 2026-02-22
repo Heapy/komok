@@ -524,7 +524,7 @@ class OpenApiDocRendererTest {
     }
 
     @Test
-    fun `should render schema as pretty-printed JSON`() {
+    fun `should render object schema as interactive tree table`() {
         val openapi = OpenAPI(
             openapi = "3.2.0",
             info = Info(
@@ -557,19 +557,128 @@ class OpenApiDocRendererTest {
 
         val html = renderOpenApiDoc(openapi)
 
-        // Verify pretty-printed JSON - content is HTML-escaped in the output
-        assertTrue(html.contains("language-json"), "Should use language-json CSS class for syntax highlighting hint")
-        // In HTML output, quotes are escaped as &quot;
-        assertTrue(html.contains("&quot;type&quot;: &quot;object&quot;"), "Should contain pretty-printed type field")
-        assertTrue(html.contains("&quot;properties&quot;"), "Should contain properties key")
-        assertTrue(html.contains("&quot;id&quot;"), "Should contain id property")
-        assertTrue(html.contains("&quot;name&quot;"), "Should contain name property")
+        // Verify schema tree table structure
+        assertTrue(html.contains("schema-tree"), "Should use schema-tree class")
+        assertTrue(html.contains("schema-tree-table"), "Should render schema as tree table")
+        assertTrue(html.contains("id"), "Should contain id property name")
+        assertTrue(html.contains("name"), "Should contain name property name")
+        assertTrue(html.contains("integer"), "Should show integer type")
+        assertTrue(html.contains("string"), "Should show string type")
+        assertTrue(html.contains("initSchemaTree"), "JavaScript should have schema tree init")
 
         // Should NOT contain raw toString output
         assertFalse(
             html.contains("Schema(schema="),
             "Should not contain raw Schema.toString() output"
         )
+    }
+
+    @Test
+    fun `should render non-object schema as pretty-printed JSON`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Schema Test API",
+                version = "1.0.0"
+            ),
+            components = Components(
+                schemas = mapOf(
+                    "Status" to Schema(
+                        buildJsonObject {
+                            put("type", "string")
+                            putJsonArray("enum") {
+                                add(JsonPrimitive("active"))
+                                add(JsonPrimitive("inactive"))
+                            }
+                        }
+                    )
+                )
+            ),
+            paths = emptyMap()
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Non-object schemas should still render as JSON
+        assertTrue(html.contains("language-json"), "Should use language-json CSS class")
+        assertTrue(html.contains("&quot;type&quot;: &quot;string&quot;"), "Should contain pretty-printed type field")
+    }
+
+    @Test
+    fun `should render schema tree with nested objects and constraints`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Schema Tree Test API",
+                version = "1.0.0"
+            ),
+            components = Components(
+                schemas = mapOf(
+                    "User" to Schema(
+                        buildJsonObject {
+                            put("type", "object")
+                            putJsonObject("properties") {
+                                putJsonObject("id") {
+                                    put("type", "integer")
+                                    put("minimum", 1)
+                                }
+                                putJsonObject("name") {
+                                    put("type", "string")
+                                    put("minLength", 1)
+                                    put("maxLength", 100)
+                                }
+                                putJsonObject("email") {
+                                    put("type", "string")
+                                    put("format", "email")
+                                }
+                                putJsonObject("address") {
+                                    put("type", "object")
+                                    putJsonObject("properties") {
+                                        putJsonObject("street") {
+                                            put("type", "string")
+                                        }
+                                        putJsonObject("city") {
+                                            put("type", "string")
+                                        }
+                                    }
+                                    putJsonArray("required") {
+                                        add(JsonPrimitive("street"))
+                                    }
+                                }
+                            }
+                            putJsonArray("required") {
+                                add(JsonPrimitive("id"))
+                                add(JsonPrimitive("name"))
+                            }
+                        }
+                    )
+                )
+            ),
+            paths = emptyMap()
+        )
+
+        val html = renderOpenApiDoc(openapi)
+
+        // Verify tree table structure
+        assertTrue(html.contains("schema-tree-table"), "Should render as tree table")
+        assertTrue(html.contains("schema-expandable"), "Should have expandable rows for nested objects")
+        assertTrue(html.contains("schema-expand-icon"), "Should have expand icons")
+
+        // Verify property display
+        assertTrue(html.contains("id"), "Should show id property")
+        assertTrue(html.contains("integer"), "Should show integer type")
+        assertTrue(html.contains("email"), "Should show email property")
+        assertTrue(html.contains("string (email)"), "Should show format in type description")
+
+        // Verify nested properties
+        assertTrue(html.contains("address"), "Should show address property")
+        assertTrue(html.contains("street"), "Should show nested street property")
+        assertTrue(html.contains("city"), "Should show nested city property")
+
+        // Verify constraints
+        assertTrue(html.contains("min: 1"), "Should show minimum constraint")
+        assertTrue(html.contains("minLength: 1"), "Should show minLength constraint")
+        assertTrue(html.contains("maxLength: 100"), "Should show maxLength constraint")
     }
 
     @Test

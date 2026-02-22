@@ -112,8 +112,8 @@ Create a web-server-agnostic UI module for displaying OpenAPI documentation:
 - [x] Implement navigation/table of contents for endpoints
 - [x] Implement main content area for operation details
 - [x] Implement sidebar for model schemas
-- [ ] Support for external documentation links (not fully implemented for tags and info)
-- [ ] Support for security scheme documentation (not rendered yet)
+- [x] Support for external documentation links (root, tag, and operation level)
+- [x] Support for security scheme documentation (all scheme types rendered)
 
 #### 12.3 Styling (Embedded CSS)
 - [x] Create clean, modern CSS layout (embedded in HTML head)
@@ -133,18 +133,18 @@ Note: Implementation uses vanilla JavaScript instead of Preact for simplicity
 - [x] Implement keyboard navigation support (Ctrl/Cmd+K for search, Ctrl/Cmd+D for theme)
 - [x] Smooth scrolling for navigation
 - [x] Active section highlighting with IntersectionObserver
-- [ ] Implement collapsible sections for operations (not implemented)
-- [ ] Create interactive schema browser with expand/collapse (not implemented)
-- [ ] Add request/response example display with syntax highlighting (not implemented)
+- [x] Implement collapsible sections for operations (with state persistence)
+- [x] Create interactive schema browser with expand/collapse (tree table for object schemas)
+- [x] Add request/response example display with syntax highlighting (JSON highlighting)
 
 #### 12.8 HTTP File Generation
 Generate downloadable `.http` files for use with IntelliJ IDEA / VS Code REST Client:
-- [ ] Create `fun generateHttpFile(openapi: OpenAPI): String` function
-- [ ] Generate one request per operation with documentation comments
-- [ ] Include path parameters, query parameters, headers, and request body examples
-- [ ] Support for multiple servers (base URLs)
-- [ ] Add download button in UI to get the .http file
-- [ ] Test: Generated .http file syntax is valid
+- [x] Create `fun generateHttpFile(openapi: OpenAPI): String` function
+- [x] Generate one request per operation with documentation comments
+- [x] Include path parameters, query parameters, headers, and request body examples
+- [x] Support for multiple servers (base URLs, commented alternatives)
+- [x] Add download button in UI to get the .http file
+- [x] Test: Generated .http file syntax is valid
 
 #### 12.5 Performance Optimization
 - [x] Add performance monitoring hooks (console logging)
@@ -152,7 +152,7 @@ Generate downloadable `.http` files for use with IntelliJ IDEA / VS Code REST Cl
 - [x] Minimal JavaScript bundle (vanilla JS, no frameworks)
 - [ ] Implement virtual scrolling for APIs with many endpoints
 - [ ] Optimize initial render time (target: <100ms for HTML generation) - needs benchmarking
-- [ ] Use CSS containment for layout performance
+- [x] Use CSS containment for layout performance
 - [ ] Minimize DOM nodes for large schemas
 - [ ] Benchmark against Swagger UI for comparison
 

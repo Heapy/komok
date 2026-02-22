@@ -37,9 +37,21 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
     }
     appendLine()
 
-    // Base URL from first server or placeholder
-    val baseUrl = openapi.servers?.firstOrNull()?.url ?: "{{baseUrl}}"
-    appendLine("@baseUrl = $baseUrl")
+    // Base URLs from servers
+    val servers = openapi.servers
+    if (servers != null && servers.size > 1) {
+        servers.forEachIndexed { index, server ->
+            val desc = server.description?.let { " # $it" } ?: ""
+            if (index == 0) {
+                appendLine("@baseUrl = ${server.url}$desc")
+            } else {
+                appendLine("# @baseUrl = ${server.url}$desc")
+            }
+        }
+    } else {
+        val baseUrl = servers?.firstOrNull()?.url ?: "{{baseUrl}}"
+        appendLine("@baseUrl = $baseUrl")
+    }
     appendLine()
 
     // Collect component schemas for $ref resolution
@@ -95,6 +107,14 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
                 pathParams.forEach { (name, desc) ->
                     val descSuffix = desc?.let { " - $it" } ?: ""
                     appendLine("# @param {$name}$descSuffix")
+                }
+            }
+
+            // Document responses as comments (before request line to avoid being parsed as body)
+            if (operation.responses.isNotEmpty()) {
+                operation.responses.forEach { (statusCode, response) ->
+                    val desc = response.description ?: response.summary ?: ""
+                    appendLine("# $statusCode: $desc")
                 }
             }
 
@@ -164,15 +184,6 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
                 if (body != null) {
                     appendLine()
                     appendLine(body)
-                }
-            }
-
-            // Document responses as comments
-            if (operation.responses.isNotEmpty()) {
-                appendLine()
-                operation.responses.forEach { (statusCode, response) ->
-                    val desc = response.description ?: response.summary ?: ""
-                    appendLine("# $statusCode: $desc")
                 }
             }
 

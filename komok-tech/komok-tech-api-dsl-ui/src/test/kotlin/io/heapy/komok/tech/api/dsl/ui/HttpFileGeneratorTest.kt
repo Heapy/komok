@@ -336,6 +336,45 @@ class HttpFileGeneratorTest {
     }
 
     @Test
+    fun `should list multiple servers with first active and rest commented`() {
+        val openapi = OpenAPI(
+            openapi = "3.2.0",
+            info = Info(
+                title = "Multi-Server API",
+                version = "1.0.0"
+            ),
+            servers = listOf(
+                Server(url = "https://api.example.com/v1", description = "Production"),
+                Server(url = "https://staging.example.com/v1", description = "Staging"),
+                Server(url = "http://localhost:8080", description = "Local")
+            ),
+            paths = mapOf(
+                "/test" to PathItem(
+                    get = Operation(
+                        summary = "Test",
+                        responses = mapOf("200" to Response(description = "OK"))
+                    )
+                )
+            )
+        )
+
+        val httpFile = generateHttpFile(openapi)
+
+        assertTrue(
+            httpFile.contains("@baseUrl = https://api.example.com/v1 # Production"),
+            "First server should be active"
+        )
+        assertTrue(
+            httpFile.contains("# @baseUrl = https://staging.example.com/v1 # Staging"),
+            "Second server should be commented out"
+        )
+        assertTrue(
+            httpFile.contains("# @baseUrl = http://localhost:8080 # Local"),
+            "Third server should be commented out"
+        )
+    }
+
+    @Test
     fun `should generate empty content for API without paths`() {
         val openapi = OpenAPI(
             openapi = "3.2.0",

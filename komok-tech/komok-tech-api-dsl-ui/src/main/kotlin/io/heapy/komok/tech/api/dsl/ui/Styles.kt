@@ -414,6 +414,7 @@ a.sidebar-tag-name:hover {
     background-color: var(--bg-secondary);
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    contain: layout style;
 }
 
 .operation-header {
@@ -875,6 +876,7 @@ a.sidebar-tag-name:hover {
 /* ===== Schemas ===== */
 .schema-item {
     margin-bottom: var(--spacing-lg);
+    contain: layout style;
 }
 
 .schema-code {
@@ -931,6 +933,108 @@ a.sidebar-tag-name:hover {
     outline: 2px solid var(--text-link);
     outline-offset: 2px;
 }
+
+/* ===== Schema Tree Browser ===== */
+.schema-tree {
+    margin-top: var(--spacing-sm);
+}
+
+.schema-tree-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-primary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.schema-tree-table th {
+    background-color: var(--bg-tertiary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.schema-tree-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    font-size: var(--font-size-sm);
+    vertical-align: top;
+}
+
+.schema-tree-table code {
+    font-family: var(--font-family-mono);
+    background-color: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.schema-prop-indent {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.schema-expand-icon {
+    cursor: pointer;
+    font-size: 0.6rem;
+    transition: transform 0.2s ease;
+    display: inline-block;
+    color: var(--text-secondary);
+    user-select: none;
+    width: 12px;
+    text-align: center;
+}
+
+.schema-expandable[data-expanded="true"] > td .schema-expand-icon {
+    transform: rotate(90deg);
+}
+
+.schema-expandable {
+    cursor: pointer;
+}
+
+.schema-expandable:hover {
+    background-color: var(--bg-secondary);
+}
+
+.schema-prop-row.schema-child-row {
+    display: none;
+}
+
+.schema-prop-row.schema-child-row.visible {
+    display: table-row;
+}
+
+.schema-type {
+    color: var(--text-secondary);
+    font-family: var(--font-family-mono);
+    font-size: 0.85em;
+}
+
+.schema-constraints {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+/* ===== JSON Syntax Highlighting ===== */
+.json-key { color: #0451a5; }
+.json-string { color: #a31515; }
+.json-number { color: #098658; }
+.json-boolean { color: #0000ff; }
+.json-null { color: #0000ff; }
+.json-punctuation { color: var(--text-secondary); }
+
+[data-theme="dark"] .json-key { color: #9cdcfe; }
+[data-theme="dark"] .json-string { color: #ce9178; }
+[data-theme="dark"] .json-number { color: #b5cea8; }
+[data-theme="dark"] .json-boolean { color: #569cd6; }
+[data-theme="dark"] .json-null { color: #569cd6; }
 
 /* ===== Utility Classes ===== */
 .hidden {
