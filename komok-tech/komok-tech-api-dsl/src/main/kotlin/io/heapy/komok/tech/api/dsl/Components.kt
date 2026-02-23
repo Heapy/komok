@@ -36,9 +36,11 @@ data class Components(
     val headers: Map<String, Header>? = null,
     val securitySchemes: Map<String, SecurityScheme>? = null,
     val links: Map<String, Link>? = null,
-    val callbacks: Map<String, Callback>? = null,
+    @Serializable(with = ReferenceableCallbackMapSerializer::class)
+    val callbacks: Map<String, Referenceable<Callback>>? = null,
     val pathItems: Map<String, PathItem>? = null,
-    val mediaTypes: Map<String, MediaType>? = null,
+    @Serializable(with = ReferenceableMediaTypeMapSerializer::class)
+    val mediaTypes: Map<String, Referenceable<MediaType>>? = null,
     override val extensions: Map<String, JsonElement>? = null,
 ) : OpenAPIObject, SupportsExtensions {
     init {

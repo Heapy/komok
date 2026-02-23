@@ -373,15 +373,15 @@ class ContentAndMediaTypeTest {
     @Test
     fun `should serialize Content map`() {
         val content: Content = mapOf(
-            "application/json" to MediaType(
+            "application/json" to Direct(MediaType(
                 schema = Schema(buildJsonObject { put("type", "object") })
-            ),
-            "application/xml" to MediaType(
+            )),
+            "application/xml" to Direct(MediaType(
                 schema = Schema(buildJsonObject { put("type", "object") })
-            )
+            ))
         )
 
-        val json = compactJson.encodeToString(content)
+        val json = compactJson.encodeToString(ReferenceableMediaTypeMapSerializer, content)
         val expected = """{"application/json":{"schema":{"type":"object"}},"application/xml":{"schema":{"type":"object"}}}"""
         assertEquals(expected, json)
     }
@@ -404,7 +404,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `should serialize complex Content with encodings and examples`() {
         val content: Content = mapOf(
-            "multipart/form-data" to MediaType(
+            "multipart/form-data" to Direct(MediaType(
                 schema = Schema(buildJsonObject {
                     put("type", "object")
                     put("properties", buildJsonObject {
@@ -420,10 +420,10 @@ class ContentAndMediaTypeTest {
                         allowReserved = false
                     )
                 )
-            )
+            ))
         )
 
-        val json = compactJson.encodeToString(content)
+        val json = compactJson.encodeToString(ReferenceableMediaTypeMapSerializer, content)
         val expected = """{"multipart/form-data":{"schema":{"type":"object","properties":{"file":{"type":"string","format":"binary"}}},"encoding":{"file":{"contentType":"image/png, image/jpeg","allowReserved":false}}}}"""
         assertEquals(expected, json)
     }
@@ -924,12 +924,12 @@ class ContentAndMediaTypeTest {
 
         assertEquals(
             mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                ),
-                "text/plain" to MediaType(
+                )),
+                "text/plain" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             ),
             result
         )
@@ -960,13 +960,13 @@ class ContentAndMediaTypeTest {
 
         assertEquals(
             mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     description = "Pre-built media type",
                     schema = Schema(buildJsonObject { put("type", "number") })
-                ),
-                "text/plain" to MediaType(
+                )),
+                "text/plain" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             ),
             result
         )
@@ -990,7 +990,7 @@ class ContentAndMediaTypeTest {
 
         assertEquals(
             mapOf(
-                "multipart/form-data" to MediaType(
+                "multipart/form-data" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") }),
                     encoding = mapOf(
                         "file" to Encoding(
@@ -998,7 +998,7 @@ class ContentAndMediaTypeTest {
                             allowReserved = false
                         )
                     )
-                )
+                ))
             ),
             result
         )
@@ -1029,7 +1029,7 @@ class ContentAndMediaTypeTest {
 
         assertEquals(
             mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") }),
                     examples = mapOf(
                         "example1" to Example(
@@ -1040,7 +1040,7 @@ class ContentAndMediaTypeTest {
                     encoding = mapOf(
                         "data" to Encoding(style = EncodingStyle.DEEP_OBJECT)
                     )
-                )
+                ))
             ),
             result
         )
@@ -1055,7 +1055,7 @@ class ContentAndMediaTypeTest {
                 }
             }
         }
-        val json = compactJson.encodeToString(result)
+        val json = compactJson.encodeToString(ReferenceableMediaTypeMapSerializer, result)
 
         assertEquals(
             """{"application/json":{"schema":{"type":"object"}}}""",
@@ -1097,7 +1097,7 @@ class ContentAndMediaTypeTest {
         }
 
         // Verify structure
-        val mediaType = result["multipart/form-data"]!!
+        val mediaType = (result["multipart/form-data"]!! as Direct).value
         val encodingMap = mediaType.encoding!!
         assertEquals(2, encodingMap.size)
         assertEquals("image/png, image/jpeg", encodingMap["profileImage"]?.contentType)

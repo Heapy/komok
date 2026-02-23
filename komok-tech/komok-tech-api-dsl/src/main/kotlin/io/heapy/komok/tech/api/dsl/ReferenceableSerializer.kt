@@ -163,6 +163,22 @@ object ReferenceableResponseSerializer : KSerializer<Referenceable<Response>>
 object ReferenceableSecuritySchemeSerializer : KSerializer<Referenceable<SecurityScheme>>
     by ReferenceableSerializer(SecurityScheme.serializer())
 
+/**
+ * Concrete serializer for [Referenceable]<[Callback]>.
+ *
+ * Use this with `@Serializable(with = ReferenceableCallbackSerializer::class)` annotation.
+ */
+object ReferenceableCallbackSerializer : KSerializer<Referenceable<Callback>>
+    by ReferenceableSerializer(CallbackSerializer)
+
+/**
+ * Concrete serializer for [Referenceable]<[MediaType]>.
+ *
+ * Use this with `@Serializable(with = ReferenceableMediaTypeSerializer::class)` annotation.
+ */
+object ReferenceableMediaTypeSerializer : KSerializer<Referenceable<MediaType>>
+    by ReferenceableSerializer(MediaType.serializer())
+
 // Map Serializers for common patterns
 
 /**
@@ -180,6 +196,22 @@ object ReferenceableHeaderMapSerializer : KSerializer<Map<String, Referenceable<
  */
 object ReferenceableExampleMapSerializer : KSerializer<Map<String, Referenceable<Example>>>
     by MapSerializer(String.serializer(), ReferenceableExampleSerializer)
+
+/**
+ * Serializer for `Map<String, Referenceable<Callback>>`.
+ *
+ * Use this with `@Serializable(with = ReferenceableCallbackMapSerializer::class)` annotation.
+ */
+object ReferenceableCallbackMapSerializer : KSerializer<Map<String, Referenceable<Callback>>>
+    by MapSerializer(String.serializer(), ReferenceableCallbackSerializer)
+
+/**
+ * Serializer for `Map<String, Referenceable<MediaType>>`.
+ *
+ * Use this with `@Serializable(with = ReferenceableMediaTypeMapSerializer::class)` annotation.
+ */
+object ReferenceableMediaTypeMapSerializer : KSerializer<Map<String, Referenceable<MediaType>>>
+    by MapSerializer(String.serializer(), ReferenceableMediaTypeSerializer)
 
 /**
  * Serializer for `Map<String, Referenceable<Link>>`.

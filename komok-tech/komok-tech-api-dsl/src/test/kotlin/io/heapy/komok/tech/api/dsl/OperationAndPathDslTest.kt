@@ -217,7 +217,7 @@ class OperationAndPathDslTest {
         }
 
         assertNotNull(result.requestBody)
-        assertEquals(true, result.requestBody?.required)
+        assertEquals(true, (result.requestBody as Direct).value.required)
     }
 
     @Test
@@ -326,8 +326,8 @@ class OperationAndPathDslTest {
             }
         }
 
-        assertEquals(1, result.size)
-        assertNotNull(result["{${'$'}request.body#/callbackUrl}"]?.post)
+        assertEquals(1, result.pathItems.size)
+        assertNotNull(result.pathItems["{${'$'}request.body#/callbackUrl}"]?.post)
     }
 
     @Test
@@ -342,8 +342,8 @@ class OperationAndPathDslTest {
             "{${'$'}request.body#/url}" to preBuilt
         }
 
-        assertEquals(1, result.size)
-        assertNotNull(result["{${'$'}request.body#/url}"])
+        assertEquals(1, result.pathItems.size)
+        assertNotNull(result.pathItems["{${'$'}request.body#/url}"])
     }
 
     @Test
@@ -823,8 +823,8 @@ class OperationAndPathDslTest {
 
         assertNotNull(result.requestBody)
         assertEquals(1, result.callbacks?.size)
-        val callback = result.callbacks?.get("onEvent")!!
-        val pathItem = callback["{${'$'}request.body#/callbackUrl}"]!!
+        val callback = (result.callbacks?.get("onEvent")!! as Direct).value
+        val pathItem = callback.pathItems["{${'$'}request.body#/callbackUrl}"]!!
         assertNotNull(pathItem.post)
     }
 }

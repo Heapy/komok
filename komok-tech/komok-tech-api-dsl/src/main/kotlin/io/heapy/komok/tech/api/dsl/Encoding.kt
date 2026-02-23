@@ -24,7 +24,8 @@ import kotlinx.serialization.json.JsonElement
 @Serializable
 data class Encoding(
     val contentType: String? = null,
-    // Temporarily removed: val headers: Map<String, Referenceable<Header>>? = null,
+    @Serializable(with = ReferenceableHeaderMapSerializer::class)
+    val headers: Map<String, Referenceable<Header>>? = null,
     val style: EncodingStyle? = null,
     val explode: Boolean? = null,
     val allowReserved: Boolean? = null,

@@ -1,6 +1,12 @@
 package io.heapy.komok.tech.api.dsl
 
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 
 /**
@@ -34,8 +40,10 @@ data class Operation(
     val operationId: String? = null,
     @Serializable(with = ReferenceableParameterListSerializer::class)
     val parameters: List<Referenceable<Parameter>>? = null,
-    val requestBody: RequestBody? = null,
-    val callbacks: Map<String, Callback>? = null,
+    @Serializable(with = ReferenceableRequestBodySerializer::class)
+    val requestBody: Referenceable<RequestBody>? = null,
+    @Serializable(with = ReferenceableCallbackMapSerializer::class)
+    val callbacks: Map<String, Referenceable<Callback>>? = null,
     val deprecated: Boolean = false,
     val security: List<SecurityRequirement>? = null,
     val servers: List<Server>? = null,
@@ -56,6 +64,30 @@ data class Operation(
  * The key value used to identify the path item object is an expression,
  * evaluated at runtime, that identifies a URL to use for the callback operation.
  *
+ * @property pathItems The map of runtime expressions to PathItem objects
+ *
  * @see <a href="https://spec.openapis.org/oas/v3.2#callback-object">Callback Object</a>
  */
-typealias Callback = Map<String, PathItem>
+@Serializable(with = CallbackSerializer::class)
+@JvmInline
+value class Callback(val pathItems: Map<String, PathItem>) : OpenAPIObject
+
+/**
+ * Serializer for [Callback] that delegates to `Map<String, PathItem>` serialization.
+ *
+ * This ensures a Callback serializes as a flat JSON object (the map itself),
+ * not as a wrapper object with a "pathItems" field.
+ */
+object CallbackSerializer : KSerializer<Callback> {
+    private val delegateSerializer = MapSerializer(String.serializer(), PathItem.serializer())
+
+    override val descriptor: SerialDescriptor = delegateSerializer.descriptor
+
+    override fun serialize(encoder: Encoder, value: Callback) {
+        delegateSerializer.serialize(encoder, value.pathItems)
+    }
+
+    override fun deserialize(decoder: Decoder): Callback {
+        return Callback(delegateSerializer.deserialize(decoder))
+    }
+}

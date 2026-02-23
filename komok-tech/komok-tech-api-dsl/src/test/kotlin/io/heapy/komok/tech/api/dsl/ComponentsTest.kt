@@ -66,9 +66,9 @@ class ComponentsTest {
                 "GeneralError" to Response(
                     description = "General error",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Error") })
-                        )
+                        ))
                     )
                 )
             )
@@ -152,20 +152,20 @@ class ComponentsTest {
                 "UserArray" to RequestBody(
                     description = "List of user objects",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject {
                                 put("type", "array")
                                 put("items", buildJsonObject { put("\$ref", "#/components/schemas/User") })
                             })
-                        )
+                        ))
                     )
                 ),
                 "Pet" to RequestBody(
                     description = "Pet object to be added",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pet") })
-                        )
+                        ))
                     ),
                     required = true
                 )
@@ -264,20 +264,20 @@ class ComponentsTest {
     fun `should serialize Components with callbacks`() {
         val components = Components(
             callbacks = mapOf(
-                "onData" to mapOf(
+                "onData" to Direct(Callback(mapOf(
                     "{${'$'}request.body#/callbackUrl}/data" to PathItem(
                         post = Operation(
-                            requestBody = RequestBody(
+                            requestBody = Direct(RequestBody(
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("type", "object") })
-                                    )
+                                    ))
                                 )
-                            ),
+                            )),
                             responses = responses("200" to Response(description = "OK"))
                         )
                     )
-                )
+                )))
             )
         )
         val json = compactJson.encodeToString(components)
@@ -311,9 +311,9 @@ class ComponentsTest {
     fun `should serialize Components with mediaTypes`() {
         val components = Components(
             mediaTypes = mapOf(
-                "jsonMediaType" to MediaType(
+                "jsonMediaType" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(components)

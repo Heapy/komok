@@ -6,8 +6,6 @@ import kotlinx.serialization.json.JsonElement
 /**
  * Describes a single response from an API Operation.
  *
- * Note: Links are not yet implemented (deferred to later phase).
- *
  * @property description A description of the response
  * @property summary A short summary of the response
  * @property headers Maps a header name to its definition (can be inline or `$ref`)
@@ -22,9 +20,10 @@ data class Response(
     val summary: String? = null,
     @Serializable(with = ReferenceableHeaderMapSerializer::class)
     val headers: Map<String, Referenceable<Header>>? = null,
+    @Serializable(with = ReferenceableMediaTypeMapSerializer::class)
     val content: Content? = null,
-    // TODO: Add links support in later phase
-    // val links: Map<String, Referenceable<Link>>? = null,
+    @Serializable(with = ReferenceableLinkMapSerializer::class)
+    val links: Map<String, Referenceable<Link>>? = null,
     override val extensions: Map<String, JsonElement>? = null,
 ) : OpenAPIObject, SupportsExtensions
 

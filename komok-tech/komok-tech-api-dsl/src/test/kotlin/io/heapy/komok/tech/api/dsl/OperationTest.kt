@@ -134,9 +134,9 @@ class OperationTest {
     fun `should serialize Operation with requestBody`() {
         val operation = Operation(
             summary = "Create user",
-            requestBody = RequestBody(
+            requestBody = Direct(RequestBody(
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject {
                             put("type", "object")
                             put("properties", buildJsonObject {
@@ -144,11 +144,11 @@ class OperationTest {
                                 put("email", buildJsonObject { put("type", "string") })
                             })
                         })
-                    )
+                    ))
                 ),
                 description = "User to create",
                 required = true
-            ),
+            )),
             responses = responses(
                 "201" to Response(description = "User created")
             )
@@ -169,9 +169,9 @@ class OperationTest {
                 "200" to Response(
                     description = "User updated successfully",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject { put("type", "object") })
-                        )
+                        ))
                     )
                 ),
                 "400" to Response(description = "Invalid input"),
@@ -269,13 +269,13 @@ class OperationTest {
         val operation = Operation(
             summary = "Subscribe to webhook",
             callbacks = mapOf(
-                "orderUpdate" to mapOf(
+                "orderUpdate" to Direct(Callback(mapOf(
                     "{${'$'}request.body#/callbackUrl}" to PathItem(
                         post = Operation(
                             summary = "Order status changed",
-                            requestBody = RequestBody(
+                            requestBody = Direct(RequestBody(
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject {
                                             put("type", "object")
                                             put("properties", buildJsonObject {
@@ -283,15 +283,15 @@ class OperationTest {
                                                 put("status", buildJsonObject { put("type", "string") })
                                             })
                                         })
-                                    )
+                                    ))
                                 )
-                            ),
+                            )),
                             responses = responses(
                                 "200" to Response(description = "Callback received")
                             )
                         )
                     )
-                )
+                )))
             ),
             responses = responses(
                 "201" to Response(description = "Subscription created")
@@ -385,14 +385,14 @@ class OperationTest {
                     schema = Schema(buildJsonObject { put("type", "string") })
                 ))
             ),
-            requestBody = RequestBody(
+            requestBody = Direct(RequestBody(
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 ),
                 required = true
-            ),
+            )),
             responses = responses(
                 "201" to Response(
                     description = "User created",
@@ -448,22 +448,22 @@ class OperationTest {
                 "200" to Response(
                     description = "Successful operation",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject {
                                 put("type", "array")
                                 put("items", buildJsonObject {
                                     put("\$ref", "#/components/schemas/Pet")
                                 })
                             })
-                        ),
-                        "application/xml" to MediaType(
+                        )),
+                        "application/xml" to Direct(MediaType(
                             schema = Schema(buildJsonObject {
                                 put("type", "array")
                                 put("items", buildJsonObject {
                                     put("\$ref", "#/components/schemas/Pet")
                                 })
                             })
-                        )
+                        ))
                     )
                 ),
                 "400" to Response(description = "Invalid status value")
@@ -479,9 +479,9 @@ class OperationTest {
             summary = "Register webhook",
             description = "Registers a webhook to receive notifications",
             operationId = "registerWebhook",
-            requestBody = RequestBody(
+            requestBody = Direct(RequestBody(
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject {
                             put("type", "object")
                             put("properties", buildJsonObject {
@@ -495,33 +495,33 @@ class OperationTest {
                                 })
                             })
                         })
-                    )
+                    ))
                 ),
                 required = true
-            ),
+            )),
             responses = responses(
                 "201" to Response(
                     description = "Webhook registered",
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject {
                                 put("type", "object")
                                 put("properties", buildJsonObject {
                                     put("webhookId", buildJsonObject { put("type", "string") })
                                 })
                             })
-                        )
+                        ))
                     )
                 )
             ),
             callbacks = mapOf(
-                "notification" to mapOf(
+                "notification" to Direct(Callback(mapOf(
                     "{${'$'}request.body#/url}" to PathItem(
                         post = Operation(
                             summary = "Notification callback",
-                            requestBody = RequestBody(
+                            requestBody = Direct(RequestBody(
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject {
                                             put("type", "object")
                                             put("properties", buildJsonObject {
@@ -529,15 +529,15 @@ class OperationTest {
                                                 put("data", buildJsonObject { put("type", "object") })
                                             })
                                         })
-                                    )
+                                    ))
                                 )
-                            ),
+                            )),
                             responses = responses(
                                 "200" to Response(description = "Notification acknowledged")
                             )
                         )
                     )
-                )
+                )))
             )
         )
 

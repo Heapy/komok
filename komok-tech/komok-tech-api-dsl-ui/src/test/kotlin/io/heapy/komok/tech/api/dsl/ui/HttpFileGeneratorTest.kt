@@ -84,9 +84,9 @@ class HttpFileGeneratorTest {
                     post = Operation(
                         summary = "Create user",
                         description = "Creates a new user account",
-                        requestBody = RequestBody(
-                            content = mapOf("application/json" to MediaType())
-                        ),
+                        requestBody = Direct(RequestBody(
+                            content = mapOf("application/json" to Direct(MediaType()))
+                        )),
                         responses = mapOf("201" to Response(description = "Created"))
                     )
                 ),
@@ -194,16 +194,16 @@ class HttpFileGeneratorTest {
                 "/users" to PathItem(
                     post = Operation(
                         summary = "Create user",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     example = buildJsonObject {
                                         put("name", "John Doe")
                                         put("email", "john@example.com")
                                     }
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = mapOf("201" to Response(description = "Created"))
                     )
                 )
@@ -251,17 +251,17 @@ class HttpFileGeneratorTest {
                 "/users" to PathItem(
                     post = Operation(
                         summary = "Create user",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(
                                         buildJsonObject {
                                             put("\$ref", "#/components/schemas/User")
                                         }
                                     )
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = mapOf("201" to Response(description = "Created"))
                     )
                 )
@@ -292,7 +292,7 @@ class HttpFileGeneratorTest {
                             "200" to Response(
                                 description = "Success",
                                 content = mapOf(
-                                    "application/json" to MediaType()
+                                    "application/json" to Direct(MediaType())
                                 )
                             )
                         )

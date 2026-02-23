@@ -15,6 +15,7 @@ import kotlinx.serialization.json.JsonElement
  */
 @Serializable
 data class RequestBody(
+    @Serializable(with = ReferenceableMediaTypeMapSerializer::class)
     val content: Content,
     val description: String? = null,
     val required: Boolean = false,

@@ -17,9 +17,9 @@ class RequestBodyTest {
     fun `should serialize minimal RequestBody`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(requestBody)
@@ -32,9 +32,9 @@ class RequestBodyTest {
     fun `should serialize RequestBody with description`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             ),
             description = "User object to be created"
         )
@@ -48,9 +48,9 @@ class RequestBodyTest {
     fun `should serialize RequestBody with required flag`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             ),
             description = "Pet to add to the store",
             required = true
@@ -65,7 +65,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with multiple content types`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -73,8 +73,8 @@ class RequestBodyTest {
                             put("name", buildJsonObject { put("type", "string") })
                         })
                     })
-                ),
-                "application/xml" to MediaType(
+                )),
+                "application/xml" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -82,10 +82,10 @@ class RequestBodyTest {
                             put("name", buildJsonObject { put("type", "string") })
                         })
                     })
-                ),
-                "text/plain" to MediaType(
+                )),
+                "text/plain" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             ),
             description = "User data in various formats"
         )
@@ -101,7 +101,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with examples`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -125,7 +125,7 @@ class RequestBodyTest {
                             }
                         )
                     )
-                )
+                ))
             ),
             description = "Create a new user"
         )
@@ -141,9 +141,9 @@ class RequestBodyTest {
     fun `should serialize RequestBody with specification extensions`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             ),
             description = "Custom request body",
             extensions = mapOf("x-internal-id" to JsonPrimitive("rb-123"))
@@ -160,7 +160,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with form data`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/x-www-form-urlencoded" to MediaType(
+                "application/x-www-form-urlencoded" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -168,7 +168,7 @@ class RequestBodyTest {
                             put("password", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             ),
             description = "Login credentials"
         )
@@ -183,7 +183,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with multipart form data`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "multipart/form-data" to MediaType(
+                "multipart/form-data" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -199,7 +199,7 @@ class RequestBodyTest {
                             contentType = "image/png, image/jpeg"
                         )
                     )
-                )
+                ))
             ),
             description = "Upload file with metadata"
         )
@@ -214,12 +214,12 @@ class RequestBodyTest {
     fun `should serialize RequestBody with binary data`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/octet-stream" to MediaType(
+                "application/octet-stream" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "string")
                         put("format", "binary")
                     })
-                )
+                ))
             ),
             description = "Raw binary data"
         )
@@ -256,9 +256,9 @@ class RequestBodyTest {
         assertEquals(
             RequestBody(
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 ),
                 description = "User data",
                 required = true
@@ -281,7 +281,7 @@ class RequestBodyTest {
     fun `should round-trip RequestBody with single content type`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("required", buildJsonObject {
@@ -292,7 +292,7 @@ class RequestBodyTest {
                             put("age", buildJsonObject { put("type", "integer") })
                         })
                     })
-                )
+                ))
             ),
             description = "User registration data",
             required = true
@@ -305,12 +305,12 @@ class RequestBodyTest {
     fun `should round-trip RequestBody with multiple content types`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                ),
-                "application/xml" to MediaType(
+                )),
+                "application/xml" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             ),
             description = "Data in multiple formats"
         )
@@ -324,7 +324,7 @@ class RequestBodyTest {
     fun `should serialize complex RequestBody for user creation`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("required", buildJsonObject {
@@ -356,7 +356,7 @@ class RequestBodyTest {
                         put("fullName", "John Doe")
                         put("age", 30)
                     }
-                )
+                ))
             ),
             description = "User registration data with validation",
             required = true
@@ -369,7 +369,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with nested schema`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -386,7 +386,7 @@ class RequestBodyTest {
                             })
                         })
                     })
-                )
+                ))
             ),
             description = "Nested user data with metadata"
         )
@@ -398,7 +398,7 @@ class RequestBodyTest {
     fun `should serialize RequestBody with array schema`() {
         val requestBody = RequestBody(
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "array")
                         put("items", buildJsonObject {
@@ -419,7 +419,7 @@ class RequestBodyTest {
                             put("name", "Item 2")
                         })
                     }
-                )
+                ))
             ),
             description = "Array of items to create",
             required = true

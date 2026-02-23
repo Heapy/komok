@@ -67,13 +67,13 @@ class OpenAPITest {
             webhooks = mapOf(
                 "newPet" to PathItem(
                     post = Operation(
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(buildJsonObject { put("type", "object") })
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = responses("200" to Response(description = "OK"))
                     )
                 )
@@ -475,22 +475,22 @@ class OpenAPITest {
                         tags = listOf("pet"),
                         summary = "Add a new pet to the store",
                         operationId = "addPet",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             description = "Create a new pet in the store",
                             required = true,
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pet") })
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = responses(
                             "200" to Response(
                                 description = "Successful operation",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pet") })
-                                    )
+                                    ))
                                 )
                             ),
                             "405" to Response(description = "Invalid input")

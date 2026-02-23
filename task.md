@@ -21,188 +21,33 @@ Update this document with comprehensive list of tasks.
 
 ## Comprehensive Task Breakdown
 
-### Phase 11: Kotlin DSL Builders
-Create idiomatic Kotlin DSL for each model class. DSL builders should use **fail-fast validation** - throw meaningful exceptions immediately when invalid values are provided (e.g., missing required fields, invalid patterns, mutual exclusivity violations).
+### Phase 15: Complete Referenceable Support & Reference Resolution
 
-#### 11.1 Core Value Object DSLs
-- [x] Contact DSL builder
-- [x] License DSL builder
-- [x] ExternalDocumentation DSL builder
-- [x] Tag DSL builder
-- [x] Test: Core value object DSL examples
+#### 15.1 Complete Referenceable Type Gaps
+Already done: `Referenceable<T>` sealed interface, `Direct<T>`, `Reference`, `ReferenceableSerializer`, and support for Parameter, Header, Example, RequestBody, Link, Response, SecurityScheme.
 
-#### 11.2 Server DSLs
-- [x] ServerVariable DSL builder
-- [x] Server DSL with variables builder
-- [x] Test: Server DSL examples
-
-#### 11.3 Schema and Example DSLs
-- [x] Schema DSL builder (JSON Schema integration)
-- [x] Example DSL builder
-- [x] Test: Schema and Example DSL examples
-
-#### 11.3.1 Schema Inference from Kotlin Types
-- [x] Add kotlin-reflect dependency
-- [x] Create constraint annotations (@Min, @Max, @MinLength, @MaxLength, @NotEmpty, @NotBlank, @Pattern, @Positive, @Negative, etc.)
-- [x] Create format annotations (@Email, @Url, @Uuid, @Date, @DateTime, @Format)
-- [x] Create collection annotations (@MinItems, @MaxItems, @UniqueItems)
-- [x] Create documentation annotations (@SchemaTitle, @SchemaDescription)
-- [x] Create SchemaInference engine with support for:
-  - Primitive types (String, Int, Long, Float, Double, Boolean)
-  - Nullable types (generates `nullable: true`)
-  - Collections (List, Set -> array schema)
-  - Maps (-> additionalProperties)
-  - Enums (-> enum constraint)
-  - Sealed classes/interfaces (-> oneOf)
-  - Nested data classes
-  - Recursive type handling
-  - @SerialName support
-- [x] Create schemaOf<T>() inline function
-- [x] Test: Schema inference examples (50+ test cases)
-
-#### 11.4 Parameter and Header DSLs
-- [x] Parameter DSL with style and schema builders
-- [x] Header DSL builder
-- [x] Test: Parameter and Header DSL examples
-
-#### 11.5 Content and Encoding DSLs
-- [x] Encoding DSL builder
-- [x] MediaType DSL with encoding and examples builders
-- [x] Test: Content and Encoding DSL examples
-
-#### 11.6 Request and Response DSLs
-- [x] RequestBody DSL with content builder
-- [x] Response DSL with headers and content builders
-- [x] Responses container DSL
-- [x] Test: Request and Response DSL examples
-
-#### 11.7 Operation and Path DSLs
-- [x] Operation DSL with parameters, requestBody, and responses builders
-- [x] PathItem DSL with operation builders for each HTTP method (get, post, put, delete, etc.)
-- [x] Paths container DSL
-- [x] Callback DSL
-- [x] Test: Operation and Path DSL examples
-
-#### 11.8 Security DSLs
-- [x] OAuthFlow DSL builders (implicit, password, clientCredentials, authorizationCode, deviceAuthorization)
-- [x] SecurityScheme DSL for all types (apiKey, http, mutualTLS, oauth2, openIdConnect)
-- [x] SecurityRequirement DSL
-- [x] Test: Security DSL examples
-
-#### 11.9 Components and Root DSLs
-- [x] Components DSL with typed component builders
-- [x] Link DSL builder
-- [x] Info DSL with contact and license builders
-- [x] OpenAPI root DSL with fluent API
-- [x] Test: Components and Root DSL examples
-
-### Phase 12: API Documentation UI (komok-tech-api-dsl-ui module)
-Create a web-server-agnostic UI module for displaying OpenAPI documentation:
-
-#### 12.1 Module Setup
-- [x] Create `:komok-tech:komok-tech-api-dsl-ui` module
-- [x] Add kotlinx-html dependency for HTML generation
-- [x] Set up build configuration for embedding static resources (CSS, JS)
-- [x] Create main function signature: `fun renderOpenApiDoc(openapi: OpenAPI): String`
-
-#### 12.2 HTML Structure and Layout
-- [x] Design semantic HTML structure for OpenAPI documentation
-- [x] Implement header section (API title, version, description)
-- [x] Implement server information display
-- [x] Implement navigation/table of contents for endpoints
-- [x] Implement main content area for operation details
-- [x] Implement sidebar for model schemas
-- [x] Support for external documentation links (root, tag, and operation level)
-- [x] Support for security scheme documentation (all scheme types rendered)
-
-#### 12.3 Styling (Embedded CSS)
-- [x] Create clean, modern CSS layout (embedded in HTML head)
-- [x] Implement responsive design for mobile/tablet/desktop
-- [x] Design HTTP method badges (GET, POST, PUT, DELETE, etc.)
-- [x] Style request/response sections
-- [x] Style schema tables and object hierarchies
-- [x] Implement dark/light theme support
-- [x] Add smooth transitions and micro-interactions
-- [x] Ensure readability and accessibility (WCAG compliant)
-
-#### 12.4 Interactive JavaScript UI (Vanilla JS - simplified approach)
-Note: Implementation uses vanilla JavaScript instead of Preact for simplicity
-- [x] Theme toggle functionality with localStorage persistence
-- [x] Create search/filter functionality for endpoints
-- [x] Add deep linking support (URL fragments for specific operations)
-- [x] Implement keyboard navigation support (Ctrl/Cmd+K for search, Ctrl/Cmd+D for theme)
-- [x] Smooth scrolling for navigation
-- [x] Active section highlighting with IntersectionObserver
-- [x] Implement collapsible sections for operations (with state persistence)
-- [x] Create interactive schema browser with expand/collapse (tree table for object schemas)
-- [x] Add request/response example display with syntax highlighting (JSON highlighting)
-
-#### 12.8 HTTP File Generation
-Generate downloadable `.http` files for use with IntelliJ IDEA / VS Code REST Client:
-- [x] Create `fun generateHttpFile(openapi: OpenAPI): String` function
-- [x] Generate one request per operation with documentation comments
-- [x] Include path parameters, query parameters, headers, and request body examples
-- [x] Support for multiple servers (base URLs, commented alternatives)
-- [x] Add download button in UI to get the .http file
-- [x] Test: Generated .http file syntax is valid
-
-#### 12.5 Performance Optimization
-- [x] Add performance monitoring hooks (console logging)
-- [x] Use IntersectionObserver for active section tracking
-- [x] Minimal JavaScript bundle (vanilla JS, no frameworks)
-- [ ] Implement virtual scrolling for APIs with many endpoints
-- [ ] Optimize initial render time (target: <100ms for HTML generation) - needs benchmarking
-- [x] Use CSS containment for layout performance
-- [ ] Minimize DOM nodes for large schemas
-- [ ] Benchmark against Swagger UI for comparison
-
-#### 12.6 Testing
-- [x] Test: HTML generation from minimal OpenAPI object
-- [x] Test: Validate HTML structure and semantics
-- [x] Test: Verify OpenAPI elements are rendered (info, servers, endpoints, operations, parameters)
-- [x] Test: CSS is properly embedded
-- [x] Test: JavaScript is properly embedded
-- [x] Test: Generated HTML size is reasonable
-- [ ] Test: HTML generation from complex OpenAPI documents (needs more comprehensive tests)
-- [ ] Test: Performance benchmarks for various document sizes
-- [ ] Test: Accessibility compliance (ARIA labels, semantic HTML) - needs specific test
-
-#### 12.7 Documentation and Examples
-- [x] Add KDoc for public API (partial - main functions documented)
-- [x] Manual test example with Petstore (PetstoreManualTest.kt)
-- [ ] Create usage examples for different web servers (Ktor, Spring, etc.)
-- [ ] Document customization options (themes, layouts)
-- [ ] Add comprehensive example showcasing all UI features
-
-### Phase 13: Validation and Integration
-- [x] Add model-level validation (required fields, pattern matching, mutual exclusivity)
-- [x] Test: Complex nested documents
-- [x] Test: Real-world OpenAPI 3.2 examples (Stripe, GitHub APIs - need to obtain/convert to 3.2)
-- [ ] Test: Ensure 100% code coverage for all model classes
-
-### Phase 14: Documentation and Examples
-- [ ] Add KDoc documentation to all public APIs
-- [ ] Create example OpenAPI documents using the DSL
-- [ ] Add validation error messages with helpful hints
-- [ ] Create user guide for the DSL
-
-### Phase 15: Reference Resolution & Referenceable Types
-Advanced reference handling for complete OpenAPI document processing.
-
-#### 15.1 Referenceable Type Support
-Extend model classes to accept either inline definitions or `$ref` references:
-- [ ] Create `Referenceable<T>` sealed type (either `Inline<T>` or `Ref`)
-- [ ] Update MediaType fields to support Referenceable where spec allows
-- [ ] Update Example fields to support Referenceable where spec allows
-- [ ] Update Header fields to support Referenceable where spec allows
-- [ ] Custom serializer for Referenceable that outputs either inline object or `{"$ref": "..."}`
-- [ ] Test: Referenceable serialization/deserialization round-trip
+Remaining work to match the OpenAPI 3.2 JSON Schema:
+- [ ] Add `Referenceable<MediaType>` support: `Content` type alias becomes `Map<String, Referenceable<MediaType>>` (JSON Schema `content` uses `media-type-or-reference`)
+- [ ] Add `ReferenceableMediaTypeSerializer` and `ReferenceableMediaTypeMapSerializer`
+- [ ] Update `Components.mediaTypes` to `Map<String, Referenceable<MediaType>>`
+- [ ] Add `Referenceable<Callback>` support: `Operation.callbacks` becomes `Map<String, Referenceable<Callback>>` (JSON Schema uses `callbacks-or-reference`)
+- [ ] Add `ReferenceableCallbackSerializer` and `ReferenceableCallbackMapSerializer`
+- [ ] Update `Components.callbacks` to `Map<String, Referenceable<Callback>>`
+- [ ] Note: `Callback` is currently a type alias (`Map<String, PathItem>`) — needs to become a proper class implementing `OpenAPIObject` to work with `Referenceable<T>`
+- [ ] Restore `Encoding.headers: Map<String, Referenceable<Header>>` (currently commented out)
+- [ ] Restore `Response.links: Map<String, Referenceable<Link>>` (currently commented out as TODO)
+- [ ] Add `Referenceable<RequestBody>` to `Operation.requestBody` (JSON Schema uses `request-body-or-reference`)
+- [ ] Update DSL builders for new Referenceable fields (Content, Callbacks, Encoding headers, Response links, Operation requestBody)
+- [ ] Test: MediaType reference serialization/deserialization round-trip
+- [ ] Test: Callback reference serialization/deserialization round-trip
+- [ ] Test: Restored Encoding.headers and Response.links round-trip
+- [ ] Test: Operation.requestBody as reference round-trip
 
 #### 15.2 Reference Resolution
 Resolve `$ref` pointers to actual objects within a document:
 - [ ] Create `ReferenceResolver` that takes an `OpenAPI` document
 - [ ] Implement JSON Pointer parsing (`#/components/schemas/Pet` → path segments)
-- [ ] Implement resolution for all component types (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems)
+- [ ] Implement resolution for all component types (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems, mediaTypes)
 - [ ] Return resolved object or error if reference is invalid
 - [ ] Test: Resolution of valid references
 - [ ] Test: Error handling for missing references
@@ -215,6 +60,9 @@ Validate all references in a document:
 - [ ] Test: Circular reference detection
 - [ ] Test: Missing reference detection
 - [ ] Test: Valid document passes validation
+
+### Phase 16: Documentation and Examples
+- [ ] Create llms.txt for komok-tech-api-dsl and komok-tech-api-dsl-ui modules
 
 ---
 

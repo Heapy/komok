@@ -87,17 +87,17 @@ class OpenAPIIntegrationTest {
                                     ))
                                 ),
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pets") })
-                                    )
+                                    ))
                                 )
                             ),
                             "default" to Response(
                                 description = "Unexpected error",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Error") })
-                                    )
+                                    ))
                                 )
                             )
                         )
@@ -106,23 +106,23 @@ class OpenAPIIntegrationTest {
                         tags = listOf("pet"),
                         summary = "Create a pet",
                         operationId = "createPets",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             description = "Pet to add to the store",
                             required = true,
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pet") })
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = responses(
                             "201" to Response(description = "Null response"),
                             "default" to Response(
                                 description = "Unexpected error",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Error") })
-                                    )
+                                    ))
                                 )
                             )
                         ),
@@ -150,17 +150,17 @@ class OpenAPIIntegrationTest {
                             "200" to Response(
                                 description = "Expected response to a valid request",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Pet") })
-                                    )
+                                    ))
                                 )
                             ),
                             "default" to Response(
                                 description = "Unexpected error",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Error") })
-                                    )
+                                    ))
                                 )
                             )
                         )
@@ -225,9 +225,9 @@ class OpenAPIIntegrationTest {
                     "UnexpectedError" to Response(
                         description = "Unexpected error",
                         content = mapOf(
-                            "application/json" to MediaType(
+                            "application/json" to Direct(MediaType(
                                 schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/Error") })
-                            )
+                            ))
                         )
                     )
                 ),
@@ -320,9 +320,9 @@ class OpenAPIIntegrationTest {
                     post = Operation(
                         summary = "New pet webhook",
                         description = "Triggered when a new pet is added",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(buildJsonObject {
                                         put("type", "object")
                                         put("properties", buildJsonObject {
@@ -330,9 +330,9 @@ class OpenAPIIntegrationTest {
                                             put("name", buildJsonObject { put("type", "string") })
                                         })
                                     })
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = responses(
                             "200" to Response(description = "Return a 200 status to indicate that the data was received successfully")
                         )
@@ -471,12 +471,12 @@ class OpenAPIIntegrationTest {
                             "200" to Response(
                                 description = "Success",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(buildJsonObject {
                                             put("type", "array")
                                             put("items", buildJsonObject { put("\$ref", "#/components/schemas/User") })
                                         })
-                                    )
+                                    ))
                                 )
                             )
                         )

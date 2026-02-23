@@ -443,9 +443,9 @@ class PathItemTest {
                     "200" to Response(
                         description = "List of pets",
                         content = mapOf(
-                            "application/json" to MediaType(
+                            "application/json" to Direct(MediaType(
                                 schema = Schema(buildJsonObject { put("type", "array") })
-                            )
+                            ))
                         )
                     )
                 )
@@ -627,9 +627,9 @@ class PathItemTest {
                     "200" to Response(
                         description = "User details retrieved",
                         content = mapOf(
-                            "application/json" to MediaType(
+                            "application/json" to Direct(MediaType(
                                 schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/User") })
-                            )
+                            ))
                         )
                     ),
                     "404" to Response(description = "User not found")
@@ -639,14 +639,14 @@ class PathItemTest {
                 summary = "Update user",
                 operationId = "updateUser",
                 tags = listOf("users"),
-                requestBody = RequestBody(
+                requestBody = Direct(RequestBody(
                     content = mapOf(
-                        "application/json" to MediaType(
+                        "application/json" to Direct(MediaType(
                             schema = Schema(buildJsonObject { put("\$ref", "#/components/schemas/UserUpdate") })
-                        )
+                        ))
                     ),
                     required = true
-                ),
+                )),
                 responses = responses(
                     "200" to Response(description = "User updated"),
                     "404" to Response(description = "User not found")

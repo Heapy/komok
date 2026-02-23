@@ -30,9 +30,9 @@ class RequestAndResponseDslTest {
         assertEquals(
             RequestBody(
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 )
             ),
             result
@@ -169,7 +169,7 @@ class RequestAndResponseDslTest {
             }
         }
 
-        val mediaType = result.content["multipart/form-data"]!!
+        val mediaType = (result.content["multipart/form-data"]!! as Direct).value
         assertEquals("application/octet-stream", mediaType.encoding?.get("file")?.contentType)
     }
 
@@ -316,7 +316,7 @@ class RequestAndResponseDslTest {
             }
         }
 
-        val mediaType = result.content?.get("application/json")
+        val mediaType = (result.content?.get("application/json") as Direct?)?.value
         assertEquals(1, mediaType?.examples?.size)
         assertEquals("First example", mediaType?.examples?.get("example1")?.summary)
     }
@@ -666,7 +666,7 @@ class RequestAndResponseDslTest {
         val okResponse = result["200"]!!
         assertEquals(1, okResponse.headers?.size)
         assertEquals(1, okResponse.content?.size)
-        assertEquals(1, okResponse.content?.get("application/json")?.examples?.size)
+        assertEquals(1, (okResponse.content?.get("application/json") as Direct?)?.value?.examples?.size)
     }
 
     // ============================================

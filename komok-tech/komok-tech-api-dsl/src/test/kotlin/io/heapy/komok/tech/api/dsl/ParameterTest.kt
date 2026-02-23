@@ -67,9 +67,9 @@ class ParameterTest {
             location = ParameterLocation.QUERYSTRING,
             description = "Complex filter",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(parameter)
@@ -294,7 +294,7 @@ class ParameterTest {
             name = "coordinates",
             location = ParameterLocation.QUERY,
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("required", buildJsonObject {
@@ -302,7 +302,7 @@ class ParameterTest {
                             put("lng", "number")
                         })
                     })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(parameter)
@@ -377,9 +377,9 @@ class ParameterTest {
                 location = ParameterLocation.QUERY,
                 schema = Schema(buildJsonObject { put("type", "string") }),
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "string") })
-                    )
+                    ))
                 )
             )
         }
@@ -450,12 +450,12 @@ class ParameterTest {
                 name = "data",
                 location = ParameterLocation.QUERY,
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    ),
-                    "application/xml" to MediaType(
+                    )),
+                    "application/xml" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 )
             )
         }
@@ -473,9 +473,9 @@ class ParameterTest {
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 ),
                 style = ParameterStyle.FORM
             )
@@ -494,9 +494,9 @@ class ParameterTest {
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 ),
                 explode = true
             )
@@ -515,9 +515,9 @@ class ParameterTest {
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 ),
                 allowReserved = true
             )
@@ -613,7 +613,7 @@ class ParameterTest {
             location = ParameterLocation.QUERYSTRING,
             description = "Complex filter object",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -621,7 +621,7 @@ class ParameterTest {
                             put("age", buildJsonObject { put("type", "integer") })
                         })
                     })
-                )
+                ))
             )
         )
 

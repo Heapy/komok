@@ -3,6 +3,7 @@ package io.heapy.komok.tech.api.dsl.ui
 import io.heapy.komok.tech.api.dsl.Direct
 import io.heapy.komok.tech.api.dsl.OpenAPI
 import io.heapy.komok.tech.api.dsl.ParameterLocation
+import io.heapy.komok.tech.api.dsl.Reference
 import io.heapy.komok.tech.api.dsl.Schema
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -129,11 +130,18 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
 
             appendLine("$method {{baseUrl}}$urlPath")
 
+            // Unwrap request body reference
+            val requestBody = when (val rb = operation.requestBody) {
+                is Direct -> rb.value
+                is Reference -> null
+                null -> null
+            }
+
             // Add headers
             var hasContentType = false
-            operation.requestBody?.let { requestBody ->
-                val contentType = requestBody.content.keys.firstOrNull { it.contains("json") }
-                    ?: requestBody.content.keys.firstOrNull()
+            requestBody?.let { rb ->
+                val contentType = rb.content.keys.firstOrNull { it.contains("json") }
+                    ?: rb.content.keys.firstOrNull()
                     ?: "application/json"
                 appendLine("Content-Type: $contentType")
                 hasContentType = true
@@ -158,10 +166,15 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
             }
 
             // Add request body
-            operation.requestBody?.let { requestBody ->
-                val preferredKey = requestBody.content.keys.firstOrNull { it.contains("json") }
-                    ?: requestBody.content.keys.firstOrNull()
-                val mediaType = preferredKey?.let { requestBody.content[it] }
+            requestBody?.let { rb ->
+                val preferredKey = rb.content.keys.firstOrNull { it.contains("json") }
+                    ?: rb.content.keys.firstOrNull()
+                val mediaType = preferredKey?.let { key ->
+                    when (val ref = rb.content[key]) {
+                        is Direct -> ref.value
+                        else -> null
+                    }
+                }
 
                 // Try explicit example first
                 val exampleBody = mediaType?.example

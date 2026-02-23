@@ -50,10 +50,11 @@ data class MediaType(
 }
 
 /**
- * Type alias for Content, which is a map of media type strings to MediaType objects.
+ * Type alias for Content, which is a map of media type strings to Referenceable MediaType objects.
  *
  * The keys should be media type names (e.g., "application/json", "text/plain").
+ * Values can be either inline [Direct] media types or [Reference] pointers.
  *
  * @see <a href="https://spec.openapis.org/oas/v3.2#fixed-fields-10">Content</a>
  */
-typealias Content = Map<String, MediaType>
+typealias Content = Map<String, Referenceable<MediaType>>

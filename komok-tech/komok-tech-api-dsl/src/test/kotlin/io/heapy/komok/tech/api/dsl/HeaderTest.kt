@@ -41,9 +41,9 @@ class HeaderTest {
         val header = Header(
             description = "Custom header",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(header)
@@ -119,9 +119,9 @@ class HeaderTest {
                 description = "Invalid header",
                 schema = Schema(buildJsonObject { put("type", "string") }),
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "string") })
-                    )
+                    ))
                 )
             )
         }
@@ -182,7 +182,7 @@ class HeaderTest {
         val header = Header(
             description = "Complex header",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -190,7 +190,7 @@ class HeaderTest {
                             put("message", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             )
         )
 

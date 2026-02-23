@@ -693,11 +693,11 @@ class OpenApiDocRendererTest {
                 "/users" to PathItem(
                     post = Operation(
                         summary = "Create user",
-                        requestBody = RequestBody(
+                        requestBody = Direct(RequestBody(
                             description = "User data",
                             required = true,
                             content = mapOf(
-                                "application/json" to MediaType(
+                                "application/json" to Direct(MediaType(
                                     schema = Schema(
                                         buildJsonObject {
                                             put("type", "object")
@@ -711,14 +711,14 @@ class OpenApiDocRendererTest {
                                     example = buildJsonObject {
                                         put("name", "John Doe")
                                     }
-                                )
+                                ))
                             )
-                        ),
+                        )),
                         responses = mapOf(
                             "201" to Response(
                                 description = "Created",
                                 content = mapOf(
-                                    "application/json" to MediaType(
+                                    "application/json" to Direct(MediaType(
                                         schema = Schema(
                                             buildJsonObject {
                                                 put("type", "object")
@@ -732,7 +732,7 @@ class OpenApiDocRendererTest {
                                                 }
                                             }
                                         )
-                                    )
+                                    ))
                                 )
                             )
                         )

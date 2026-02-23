@@ -40,6 +40,7 @@ data class Parameter(
     val required: Boolean = false,
     val deprecated: Boolean = false,
     val schema: Schema? = null,
+    @Serializable(with = ReferenceableMediaTypeMapSerializer::class)
     val content: Content? = null,
     val style: ParameterStyle? = null,
     val explode: Boolean? = null,

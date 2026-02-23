@@ -201,9 +201,9 @@ class OperationBuilder {
     var externalDocs: ExternalDocumentation? = null
     var tags: List<String>? = null
     var parameters: List<Referenceable<Parameter>>? = null
-    var requestBody: RequestBody? = null
+    var requestBody: Referenceable<RequestBody>? = null
     var responses: Responses? = null
-    var callbacks: Map<String, Callback>? = null
+    var callbacks: Map<String, Referenceable<Callback>>? = null
     var deprecated: Boolean = false
     var security: List<SecurityRequirement>? = null
     var servers: List<Server>? = null
@@ -234,7 +234,14 @@ class OperationBuilder {
      * Configures the request body using DSL syntax.
      */
     inline fun requestBody(block: RequestBodyBuilder.() -> Unit) {
-        requestBody = io.heapy.komok.tech.api.dsl.requestBody(block)
+        requestBody = Direct(io.heapy.komok.tech.api.dsl.requestBody(block))
+    }
+
+    /**
+     * Sets the request body as a reference to a component.
+     */
+    fun requestBodyRef(ref: String, summary: String? = null, description: String? = null) {
+        requestBody = Reference(ref = ref, summary = summary, description = description)
     }
 
     /**
@@ -340,14 +347,14 @@ class CallbackBuilder {
         pathItems[this] = pathItem
     }
 
-    fun build(): Callback = pathItems.toMap()
+    fun build(): Callback = Callback(pathItems.toMap())
 }
 
 /**
  * Creates a [Callback] object using DSL syntax.
  *
  * @param block configuration block for the callback
- * @return configured Callback (Map<String, PathItem>)
+ * @return configured Callback object
  */
 inline fun callback(block: CallbackBuilder.() -> Unit): Callback {
     return CallbackBuilder().apply(block).build()
@@ -371,32 +378,46 @@ inline fun callback(block: CallbackBuilder.() -> Unit): Callback {
  */
 class CallbacksBuilder {
     @PublishedApi
-    internal val callbacks = mutableMapOf<String, Callback>()
+    internal val callbacks = mutableMapOf<String, Referenceable<Callback>>()
 
     /**
      * Adds a callback using DSL syntax.
      */
     inline infix fun String.to(block: CallbackBuilder.() -> Unit) {
-        callbacks[this] = callback(block)
+        callbacks[this] = Direct(callback(block))
     }
 
     /**
      * Adds a pre-built callback.
      */
     infix fun String.to(callback: Callback) {
-        callbacks[this] = callback
+        callbacks[this] = Direct(callback)
     }
 
-    fun build(): Map<String, Callback> = callbacks.toMap()
+    /**
+     * Adds a reference to a callback component.
+     */
+    infix fun String.toRef(ref: String) {
+        callbacks[this] = Reference(ref = ref)
+    }
+
+    /**
+     * Adds a reference with summary and description.
+     */
+    fun ref(name: String, ref: String, summary: String? = null, description: String? = null) {
+        callbacks[name] = Reference(ref = ref, summary = summary, description = description)
+    }
+
+    fun build(): Map<String, Referenceable<Callback>> = callbacks.toMap()
 }
 
 /**
  * Creates a map of callbacks using DSL syntax.
  *
  * @param block configuration block for the callbacks
- * @return map of callback names to Callback objects
+ * @return map of callback names to Referenceable Callback objects
  */
-inline fun callbacks(block: CallbacksBuilder.() -> Unit): Map<String, Callback> {
+inline fun callbacks(block: CallbacksBuilder.() -> Unit): Map<String, Referenceable<Callback>> {
     return CallbacksBuilder().apply(block).build()
 }
 

@@ -28,7 +28,8 @@ data class Header(
     val required: Boolean = false,
     val deprecated: Boolean = false,
     val schema: Schema? = null,
-    val content: Map<String, MediaType>? = null,
+    @Serializable(with = ReferenceableMediaTypeMapSerializer::class)
+    val content: Content? = null,
     val style: String? = null,
     val explode: Boolean? = null,
     val example: JsonElement? = null,

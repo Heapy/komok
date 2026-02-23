@@ -147,6 +147,68 @@ inline fun referenceableHeaders(block: ReferenceableHeadersBuilder.() -> Unit): 
 }
 
 /**
+ * DSL builder for referenceable links map.
+ *
+ * Allows building a map of links that can be either inline definitions
+ * or references to components.
+ *
+ * Example usage:
+ * ```kotlin
+ * val links = referenceableLinks {
+ *     "GetUser" to {
+ *         operationId = "getUser"
+ *         parameters = mapOf("userId" to "\$response.body#/id")
+ *     }
+ *     "GetPets" toRef "#/components/links/GetPets"
+ * }
+ * ```
+ */
+class ReferenceableLinksBuilder {
+    @PublishedApi
+    internal val links = mutableMapOf<String, Referenceable<Link>>()
+
+    /**
+     * Adds an inline link using DSL syntax.
+     */
+    inline infix fun String.to(block: LinkBuilder.() -> Unit) {
+        links[this] = Direct(link(block))
+    }
+
+    /**
+     * Adds a pre-built link as inline.
+     */
+    infix fun String.to(link: Link) {
+        links[this] = Direct(link)
+    }
+
+    /**
+     * Adds a reference to a link component.
+     */
+    infix fun String.toRef(ref: String) {
+        links[this] = Reference(ref = ref)
+    }
+
+    /**
+     * Adds a reference with summary and description.
+     */
+    fun ref(name: String, ref: String, summary: String? = null, description: String? = null) {
+        links[name] = Reference(ref = ref, summary = summary, description = description)
+    }
+
+    fun build(): Map<String, Referenceable<Link>> = links.toMap()
+}
+
+/**
+ * Creates a map of referenceable links using DSL syntax.
+ *
+ * @param block configuration block for the links
+ * @return map of link names to Referenceable<Link> objects
+ */
+inline fun referenceableLinks(block: ReferenceableLinksBuilder.() -> Unit): Map<String, Referenceable<Link>> {
+    return ReferenceableLinksBuilder().apply(block).build()
+}
+
+/**
  * DSL builder for [Response] object.
  *
  * Example usage:
@@ -175,6 +237,7 @@ class ResponseBuilder {
     var summary: String? = null
     var headers: Map<String, Referenceable<Header>>? = null
     var content: Content? = null
+    var links: Map<String, Referenceable<Link>>? = null
     var extensions: Map<String, JsonElement>? = null
 
     /**
@@ -214,12 +277,33 @@ class ResponseBuilder {
         content = io.heapy.komok.tech.api.dsl.content(block)
     }
 
+    /**
+     * Configures links using DSL syntax with support for references.
+     *
+     * Example:
+     * ```kotlin
+     * response {
+     *     links {
+     *         "GetUser" to {
+     *             operationId = "getUser"
+     *             parameters = mapOf("userId" to "\$response.body#/id")
+     *         }
+     *         "GetPets" toRef "#/components/links/GetPets"
+     *     }
+     * }
+     * ```
+     */
+    inline fun links(block: ReferenceableLinksBuilder.() -> Unit) {
+        links = referenceableLinks(block)
+    }
+
     fun build(): Response {
         return Response(
             description = description,
             summary = summary,
             headers = headers,
             content = content,
+            links = links,
             extensions = extensions,
         )
     }

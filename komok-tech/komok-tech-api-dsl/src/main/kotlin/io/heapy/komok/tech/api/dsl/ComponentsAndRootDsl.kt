@@ -454,29 +454,43 @@ inline fun componentLinks(block: ComponentLinksBuilder.() -> Unit): Map<String, 
  */
 class ComponentCallbacksBuilder {
     @PublishedApi
-    internal val callbacks = mutableMapOf<String, Callback>()
+    internal val callbacks = mutableMapOf<String, Referenceable<Callback>>()
 
     /**
      * Adds a callback using DSL syntax.
      */
     inline infix fun String.to(block: CallbackBuilder.() -> Unit) {
-        callbacks[this] = callback(block)
+        callbacks[this] = Direct(callback(block))
     }
 
     /**
      * Adds a pre-built callback.
      */
     infix fun String.to(callback: Callback) {
-        callbacks[this] = callback
+        callbacks[this] = Direct(callback)
     }
 
-    fun build(): Map<String, Callback> = callbacks.toMap()
+    /**
+     * Adds a reference to a callback component.
+     */
+    infix fun String.toRef(ref: String) {
+        callbacks[this] = Reference(ref = ref)
+    }
+
+    /**
+     * Adds a reference with summary and description.
+     */
+    fun ref(name: String, ref: String, summary: String? = null, description: String? = null) {
+        callbacks[name] = Reference(ref = ref, summary = summary, description = description)
+    }
+
+    fun build(): Map<String, Referenceable<Callback>> = callbacks.toMap()
 }
 
 /**
  * Creates a map of component callbacks using DSL syntax.
  */
-inline fun componentCallbacks(block: ComponentCallbacksBuilder.() -> Unit): Map<String, Callback> {
+inline fun componentCallbacks(block: ComponentCallbacksBuilder.() -> Unit): Map<String, Referenceable<Callback>> {
     return ComponentCallbacksBuilder().apply(block).build()
 }
 
@@ -516,29 +530,43 @@ inline fun componentPathItems(block: ComponentPathItemsBuilder.() -> Unit): Map<
  */
 class ComponentMediaTypesBuilder {
     @PublishedApi
-    internal val mediaTypes = mutableMapOf<String, MediaType>()
+    internal val mediaTypes = mutableMapOf<String, Referenceable<MediaType>>()
 
     /**
      * Adds a media type using DSL syntax.
      */
     inline infix fun String.to(block: MediaTypeBuilder.() -> Unit) {
-        mediaTypes[this] = mediaType(block)
+        mediaTypes[this] = Direct(mediaType(block))
     }
 
     /**
      * Adds a pre-built media type.
      */
     infix fun String.to(mediaType: MediaType) {
-        mediaTypes[this] = mediaType
+        mediaTypes[this] = Direct(mediaType)
     }
 
-    fun build(): Map<String, MediaType> = mediaTypes.toMap()
+    /**
+     * Adds a reference to a media type component.
+     */
+    infix fun String.toRef(ref: String) {
+        mediaTypes[this] = Reference(ref = ref)
+    }
+
+    /**
+     * Adds a reference with summary and description.
+     */
+    fun ref(name: String, ref: String, summary: String? = null, description: String? = null) {
+        mediaTypes[name] = Reference(ref = ref, summary = summary, description = description)
+    }
+
+    fun build(): Map<String, Referenceable<MediaType>> = mediaTypes.toMap()
 }
 
 /**
  * Creates a map of component media types using DSL syntax.
  */
-inline fun componentMediaTypes(block: ComponentMediaTypesBuilder.() -> Unit): Map<String, MediaType> {
+inline fun componentMediaTypes(block: ComponentMediaTypesBuilder.() -> Unit): Map<String, Referenceable<MediaType>> {
     return ComponentMediaTypesBuilder().apply(block).build()
 }
 
@@ -584,9 +612,9 @@ class ComponentsBuilder {
     var headers: Map<String, Header>? = null
     var securitySchemes: Map<String, SecurityScheme>? = null
     var links: Map<String, Link>? = null
-    var callbacks: Map<String, Callback>? = null
+    var callbacks: Map<String, Referenceable<Callback>>? = null
     var pathItems: Map<String, PathItem>? = null
-    var mediaTypes: Map<String, MediaType>? = null
+    var mediaTypes: Map<String, Referenceable<MediaType>>? = null
     var extensions: Map<String, JsonElement>? = null
 
     /**

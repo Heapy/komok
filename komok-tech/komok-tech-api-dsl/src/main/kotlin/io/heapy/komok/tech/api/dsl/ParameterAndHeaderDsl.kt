@@ -23,6 +23,7 @@ import kotlinx.serialization.json.JsonElement
  */
 class EncodingBuilder {
     var contentType: String? = null
+    var headers: Map<String, Referenceable<Header>>? = null
     var style: EncodingStyle? = null
     var explode: Boolean? = null
     var allowReserved: Boolean? = null
@@ -30,6 +31,13 @@ class EncodingBuilder {
     var prefixEncoding: List<Encoding>? = null
     var itemEncoding: Encoding? = null
     var extensions: Map<String, JsonElement>? = null
+
+    /**
+     * Configures headers using DSL syntax with support for references.
+     */
+    inline fun headers(block: ReferenceableHeadersBuilder.() -> Unit) {
+        headers = referenceableHeaders(block)
+    }
 
     /**
      * Configures nested encoding map using DSL syntax.
@@ -56,6 +64,7 @@ class EncodingBuilder {
         // Validation is handled by Encoding's init block
         return Encoding(
             contentType = contentType,
+            headers = headers,
             style = style,
             explode = explode,
             allowReserved = allowReserved,
@@ -307,20 +316,34 @@ inline fun mediaType(block: MediaTypeBuilder.() -> Unit): MediaType {
  */
 class ContentBuilder {
     @PublishedApi
-    internal val content = mutableMapOf<String, MediaType>()
+    internal val content = mutableMapOf<String, Referenceable<MediaType>>()
 
     /**
      * Adds a media type using DSL syntax.
      */
     inline infix fun String.to(block: MediaTypeBuilder.() -> Unit) {
-        content[this] = mediaType(block)
+        content[this] = Direct(mediaType(block))
     }
 
     /**
      * Adds a pre-built media type.
      */
     infix fun String.to(mediaType: MediaType) {
-        content[this] = mediaType
+        content[this] = Direct(mediaType)
+    }
+
+    /**
+     * Adds a reference to a media type component.
+     */
+    infix fun String.toRef(ref: String) {
+        content[this] = Reference(ref = ref)
+    }
+
+    /**
+     * Adds a reference with summary and description.
+     */
+    fun ref(name: String, ref: String, summary: String? = null, description: String? = null) {
+        content[name] = Reference(ref = ref, summary = summary, description = description)
     }
 
     fun build(): Content = content.toMap()
@@ -514,7 +537,7 @@ class HeaderBuilder {
     var required: Boolean = false
     var deprecated: Boolean = false
     var schema: Schema? = null
-    var content: Map<String, MediaType>? = null
+    var content: Content? = null
     var style: String? = null
     var explode: Boolean? = null
     var example: JsonElement? = null

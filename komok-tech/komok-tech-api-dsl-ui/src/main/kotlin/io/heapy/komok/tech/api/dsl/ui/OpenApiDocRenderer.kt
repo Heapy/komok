@@ -7,7 +7,9 @@ import io.heapy.komok.tech.api.dsl.ExternalDocumentation
 import io.heapy.komok.tech.api.dsl.MediaType
 import io.heapy.komok.tech.api.dsl.OAuthFlow
 import io.heapy.komok.tech.api.dsl.OpenAPI
+import io.heapy.komok.tech.api.dsl.Referenceable
 import io.heapy.komok.tech.api.dsl.Reference
+import io.heapy.komok.tech.api.dsl.RequestBody
 import io.heapy.komok.tech.api.dsl.Schema
 import io.heapy.komok.tech.api.dsl.SecuritySchemeType
 import kotlinx.html.*
@@ -875,7 +877,11 @@ private fun FlowContent.renderContent(content: Content, showSchemaHeading: Boole
     )
 
     val groups = mutableListOf<ContentGroup>()
-    content.forEach { (contentType, mediaType) ->
+    content.forEach { (contentType, mediaTypeRef) ->
+        val mediaType = when (mediaTypeRef) {
+            is Direct -> mediaTypeRef.value
+            is Reference -> return@forEach // Skip references for now
+        }
         val schemaKey = mediaType.schema?.let {
             prettyJson.encodeToString(JsonElement.serializer(), it.schema)
         } ?: ""
@@ -1047,21 +1053,35 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
             }
 
             // Request Body
-            operation.requestBody?.let { requestBody ->
-                div(classes = "operation-section") {
-                    h4 { +"Request Body" }
+            operation.requestBody?.let { requestBodyRef ->
+                val requestBody = when (requestBodyRef) {
+                    is Direct -> requestBodyRef.value
+                    is Reference -> null
+                }
+                if (requestBody != null) {
+                    div(classes = "operation-section") {
+                        h4 { +"Request Body" }
 
-                    requestBody.description?.let { desc ->
-                        div {
-                            markdown(desc)
+                        requestBody.description?.let { desc ->
+                            div {
+                                markdown(desc)
+                            }
+                        }
+
+                        if (requestBody.required) {
+                            span(classes = "required-badge") { +"Required" }
+                        }
+
+                        renderContent(requestBody.content)
+                    }
+                } else if (requestBodyRef is Reference) {
+                    div(classes = "operation-section") {
+                        h4 { +"Request Body" }
+                        code { +requestBodyRef.ref }
+                        requestBodyRef.description?.let { desc ->
+                            div { markdown(desc) }
                         }
                     }
-
-                    if (requestBody.required) {
-                        span(classes = "required-badge") { +"Required" }
-                    }
-
-                    renderContent(requestBody.content)
                 }
             }
 

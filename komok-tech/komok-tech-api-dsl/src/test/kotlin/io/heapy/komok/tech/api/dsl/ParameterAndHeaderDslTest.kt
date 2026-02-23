@@ -103,7 +103,7 @@ class ParameterAndHeaderDslTest {
         }
 
         assertEquals(1, result.size)
-        assertEquals("""{"type":"object"}""", compactJson.encodeToString(result["application/json"]?.schema))
+        assertEquals("""{"type":"object"}""", compactJson.encodeToString((result["application/json"] as Direct<MediaType>).value.schema))
     }
 
     @Test
@@ -118,8 +118,8 @@ class ParameterAndHeaderDslTest {
         }
 
         assertEquals(2, result.size)
-        assertEquals("""{"type":"object"}""", compactJson.encodeToString(result["application/json"]?.schema))
-        assertEquals("""{"type":"string"}""", compactJson.encodeToString(result["text/plain"]?.schema))
+        assertEquals("""{"type":"object"}""", compactJson.encodeToString((result["application/json"] as Direct<MediaType>).value.schema))
+        assertEquals("""{"type":"string"}""", compactJson.encodeToString((result["text/plain"] as Direct<MediaType>).value.schema))
     }
 
     @Test
@@ -130,7 +130,7 @@ class ParameterAndHeaderDslTest {
             "application/json" to preBuiltMediaType
         }
 
-        assertEquals(preBuiltMediaType, result["application/json"])
+        assertEquals(Direct(preBuiltMediaType), result["application/json"])
     }
 
     // ============================================
@@ -214,7 +214,7 @@ class ParameterAndHeaderDslTest {
         assertEquals(1, result.content?.size)
         assertEquals(
             """{"type":"object"}""",
-            compactJson.encodeToString(result.content?.get("application/json")?.schema)
+            compactJson.encodeToString((result.content?.get("application/json") as Direct<MediaType>).value.schema)
         )
     }
 
@@ -532,7 +532,7 @@ class ParameterAndHeaderDslTest {
         assertEquals(1, result.content?.size)
         assertEquals(
             """{"type":"object"}""",
-            compactJson.encodeToString(result.content?.get("application/json")?.schema)
+            compactJson.encodeToString((result.content?.get("application/json") as Direct<MediaType>).value.schema)
         )
     }
 

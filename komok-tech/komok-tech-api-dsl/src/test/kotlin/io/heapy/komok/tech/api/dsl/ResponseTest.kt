@@ -41,7 +41,7 @@ class ResponseTest {
         val response = Response(
             description = "User data",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -49,7 +49,7 @@ class ResponseTest {
                             put("name", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(response)
@@ -129,15 +129,15 @@ class ResponseTest {
         val response = Response(
             description = "Pet data in multiple formats",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                ),
-                "application/xml" to MediaType(
+                )),
+                "application/xml" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                ),
-                "text/plain" to MediaType(
+                )),
+                "text/plain" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "string") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(response)
@@ -152,7 +152,7 @@ class ResponseTest {
         val response = Response(
             description = "User response",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") }),
                     examples = mapOf(
                         "admin" to Example(
@@ -172,7 +172,7 @@ class ResponseTest {
                             }
                         )
                     )
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(response)
@@ -201,9 +201,9 @@ class ResponseTest {
             summary = "OK",
             description = "Successful operation",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
 
@@ -225,9 +225,9 @@ class ResponseTest {
                 ))
             ),
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject { put("type", "object") })
-                )
+                ))
             )
         )
         val json = compactJson.encodeToString(response)
@@ -253,7 +253,7 @@ class ResponseTest {
             summary = "Bad Request",
             description = "Invalid request parameters",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -261,7 +261,7 @@ class ResponseTest {
                             put("message", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             )
         )
 
@@ -274,14 +274,14 @@ class ResponseTest {
             summary = "Not Found",
             description = "The requested resource was not found",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
                             put("error", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             )
         )
 
@@ -294,7 +294,7 @@ class ResponseTest {
             summary = "Internal Server Error",
             description = "An unexpected error occurred",
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "object")
                         put("properties", buildJsonObject {
@@ -302,7 +302,7 @@ class ResponseTest {
                             put("timestamp", buildJsonObject { put("type", "string") })
                         })
                     })
-                )
+                ))
             )
         )
 
@@ -335,12 +335,12 @@ class ResponseTest {
                 ))
             ),
             content = mapOf(
-                "application/json" to MediaType(
+                "application/json" to Direct(MediaType(
                     schema = Schema(buildJsonObject {
                         put("type", "array")
                         put("items", buildJsonObject { put("type", "object") })
                     })
-                )
+                ))
             )
         )
 
@@ -520,9 +520,9 @@ class ResponseTest {
             "200" to Response(
                 description = "Success",
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "object") })
-                    )
+                    ))
                 )
             ),
             "404" to Response(
@@ -559,9 +559,9 @@ class ResponseTest {
                 summary = "Success",
                 description = "Successful operation",
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject { put("type", "array") })
-                    )
+                    ))
                 )
             ),
             "4XX" to Response(
@@ -602,7 +602,7 @@ class ResponseTest {
                     ))
                 ),
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject {
                             put("type", "array")
                             put("items", buildJsonObject {
@@ -613,21 +613,21 @@ class ResponseTest {
                                 })
                             })
                         })
-                    )
+                    ))
                 )
             ),
             "400" to Response(
                 summary = "Bad Request",
                 description = "Invalid query parameters",
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject {
                             put("type", "object")
                             put("properties", buildJsonObject {
                                 put("error", buildJsonObject { put("type", "string") })
                             })
                         })
-                    )
+                    ))
                 )
             ),
             "401" to Response(
@@ -638,7 +638,7 @@ class ResponseTest {
                 summary = "Server Error",
                 description = "Internal server error",
                 content = mapOf(
-                    "application/json" to MediaType(
+                    "application/json" to Direct(MediaType(
                         schema = Schema(buildJsonObject {
                             put("type", "object")
                             put("properties", buildJsonObject {
@@ -646,7 +646,7 @@ class ResponseTest {
                                 put("timestamp", buildJsonObject { put("type", "string") })
                             })
                         })
-                    )
+                    ))
                 )
             )
         )
