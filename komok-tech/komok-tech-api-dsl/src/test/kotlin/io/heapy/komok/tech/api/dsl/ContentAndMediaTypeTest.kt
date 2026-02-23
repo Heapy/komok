@@ -1,6 +1,5 @@
 package io.heapy.komok.tech.api.dsl
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -386,20 +385,49 @@ class ContentAndMediaTypeTest {
         assertEquals(expected, json)
     }
 
-    // TODO: Re-enable when Referenceable support is added
-    // @Test
-    // fun `should serialize Content with MediaType reference`() {
-    //     val content: Content = mapOf(
-    //         "application/json" to Reference(ref = "#/components/mediaTypes/JsonMediaType"),
-    //         "text/plain" to MediaType(
-    //             schema = Schema(buildJsonObject { put("type", "string") })
-    //         )
-    //     )
-    //
-    //     val json = compactJson.encodeToString(content)
-    //     val expected = """{"application/json":{"${'$'}ref":"#/components/mediaTypes/JsonMediaType"},"text/plain":{"schema":{"type":"string"}}}"""
-    //     assertEquals(expected, json)
-    // }
+    @Test
+    fun `should serialize Content with MediaType reference`() {
+        val content: Content = mapOf(
+            "application/json" to Reference(ref = "#/components/mediaTypes/JsonMediaType"),
+            "text/plain" to Direct(MediaType(
+                schema = Schema(buildJsonObject { put("type", "string") })
+            ))
+        )
+
+        val json = compactJson.encodeToString(ReferenceableMediaTypeMapSerializer, content)
+        val expected = """{"application/json":{"${'$'}ref":"#/components/mediaTypes/JsonMediaType"},"text/plain":{"schema":{"type":"string"}}}"""
+        assertEquals(expected, json)
+    }
+
+    @Test
+    fun `should round-trip Content with MediaType reference`() {
+        val content: Content = mapOf(
+            "application/json" to Reference(ref = "#/components/mediaTypes/JsonMediaType"),
+            "text/plain" to Direct(MediaType(
+                schema = Schema(buildJsonObject { put("type", "string") })
+            ))
+        )
+
+        val json = compactJson.encodeToString(ReferenceableMediaTypeMapSerializer, content)
+        val deserialized = compactJson.decodeFromString(ReferenceableMediaTypeMapSerializer, json)
+        assertEquals(content, deserialized)
+    }
+
+    @Test
+    fun `should round-trip Encoding with headers containing Direct and Reference`() {
+        val encoding = Encoding(
+            contentType = "multipart/form-data",
+            headers = mapOf(
+                "X-Custom" to Direct(Header(
+                    description = "Custom header",
+                    schema = Schema(buildJsonObject { put("type", "string") })
+                )),
+                "X-Shared" to Reference(ref = "#/components/headers/SharedHeader")
+            )
+        )
+
+        TestHelpers.testRoundTripWithoutValidation(Encoding.serializer(), encoding)
+    }
 
     @Test
     fun `should serialize complex Content with encodings and examples`() {

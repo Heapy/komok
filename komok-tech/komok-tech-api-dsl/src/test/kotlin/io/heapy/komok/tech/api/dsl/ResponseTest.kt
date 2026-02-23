@@ -583,6 +583,22 @@ class ResponseTest {
         assertEquals(responses["default"]?.description, deserialized["default"]?.description)
     }
 
+    @Test
+    fun `should round-trip Response with links containing Direct and Reference`() {
+        val response = Response(
+            description = "Successful operation",
+            links = mapOf(
+                "GetNextPage" to Direct(Link(
+                    operationId = "listUsers",
+                    parameters = mapOf("page" to "\$response.body#/nextPage")
+                )),
+                "GetPreviousPage" to Reference(ref = "#/components/links/PreviousPage")
+            )
+        )
+
+        TestHelpers.testRoundTripWithoutValidation(Response.serializer(), response)
+    }
+
     // Complex Real-world Examples
 
     @Test

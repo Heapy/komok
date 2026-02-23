@@ -414,6 +414,44 @@ class OperationTest {
         TestHelpers.testRoundTripWithoutValidation(Operation.serializer(), operation)
     }
 
+    @Test
+    fun `should round-trip Operation with callbacks containing Direct and Reference`() {
+        val operation = Operation(
+            summary = "Subscribe to events",
+            callbacks = mapOf(
+                "onEvent" to Direct(Callback(mapOf(
+                    "{${'$'}request.body#/callbackUrl}" to PathItem(
+                        post = Operation(
+                            summary = "Event notification",
+                            responses = responses(
+                                "200" to Response(description = "OK")
+                            )
+                        )
+                    )
+                ))),
+                "onError" to Reference(ref = "#/components/callbacks/ErrorCallback")
+            ),
+            responses = responses(
+                "201" to Response(description = "Subscription created")
+            )
+        )
+
+        TestHelpers.testRoundTripWithoutValidation(Operation.serializer(), operation)
+    }
+
+    @Test
+    fun `should round-trip Operation with requestBody as Reference`() {
+        val operation = Operation(
+            summary = "Create user",
+            requestBody = Reference(ref = "#/components/requestBodies/UserBody"),
+            responses = responses(
+                "201" to Response(description = "Created")
+            )
+        )
+
+        TestHelpers.testRoundTripWithoutValidation(Operation.serializer(), operation)
+    }
+
     // Complex Real-world Examples
 
     @Test

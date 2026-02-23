@@ -27,21 +27,21 @@ Update this document with comprehensive list of tasks.
 Already done: `Referenceable<T>` sealed interface, `Direct<T>`, `Reference`, `ReferenceableSerializer`, and support for Parameter, Header, Example, RequestBody, Link, Response, SecurityScheme.
 
 Remaining work to match the OpenAPI 3.2 JSON Schema:
-- [ ] Add `Referenceable<MediaType>` support: `Content` type alias becomes `Map<String, Referenceable<MediaType>>` (JSON Schema `content` uses `media-type-or-reference`)
-- [ ] Add `ReferenceableMediaTypeSerializer` and `ReferenceableMediaTypeMapSerializer`
-- [ ] Update `Components.mediaTypes` to `Map<String, Referenceable<MediaType>>`
-- [ ] Add `Referenceable<Callback>` support: `Operation.callbacks` becomes `Map<String, Referenceable<Callback>>` (JSON Schema uses `callbacks-or-reference`)
-- [ ] Add `ReferenceableCallbackSerializer` and `ReferenceableCallbackMapSerializer`
-- [ ] Update `Components.callbacks` to `Map<String, Referenceable<Callback>>`
-- [ ] Note: `Callback` is currently a type alias (`Map<String, PathItem>`) — needs to become a proper class implementing `OpenAPIObject` to work with `Referenceable<T>`
-- [ ] Restore `Encoding.headers: Map<String, Referenceable<Header>>` (currently commented out)
-- [ ] Restore `Response.links: Map<String, Referenceable<Link>>` (currently commented out as TODO)
-- [ ] Add `Referenceable<RequestBody>` to `Operation.requestBody` (JSON Schema uses `request-body-or-reference`)
-- [ ] Update DSL builders for new Referenceable fields (Content, Callbacks, Encoding headers, Response links, Operation requestBody)
-- [ ] Test: MediaType reference serialization/deserialization round-trip
-- [ ] Test: Callback reference serialization/deserialization round-trip
-- [ ] Test: Restored Encoding.headers and Response.links round-trip
-- [ ] Test: Operation.requestBody as reference round-trip
+- [x] Add `Referenceable<MediaType>` support: `Content` type alias becomes `Map<String, Referenceable<MediaType>>` (JSON Schema `content` uses `media-type-or-reference`)
+- [x] Add `ReferenceableMediaTypeSerializer` and `ReferenceableMediaTypeMapSerializer`
+- [x] Update `Components.mediaTypes` to `Map<String, Referenceable<MediaType>>`
+- [x] Add `Referenceable<Callback>` support: `Operation.callbacks` becomes `Map<String, Referenceable<Callback>>` (JSON Schema uses `callbacks-or-reference`)
+- [x] Add `ReferenceableCallbackSerializer` and `ReferenceableCallbackMapSerializer`
+- [x] Update `Components.callbacks` to `Map<String, Referenceable<Callback>>`
+- [x] Note: `Callback` is currently a type alias (`Map<String, PathItem>`) — needs to become a proper class implementing `OpenAPIObject` to work with `Referenceable<T>`
+- [x] Restore `Encoding.headers: Map<String, Referenceable<Header>>` (currently commented out)
+- [x] Restore `Response.links: Map<String, Referenceable<Link>>` (currently commented out as TODO)
+- [x] Add `Referenceable<RequestBody>` to `Operation.requestBody` (JSON Schema uses `request-body-or-reference`)
+- [x] Update DSL builders for new Referenceable fields (Content, Callbacks, Encoding headers, Response links, Operation requestBody)
+- [x] Test: MediaType reference serialization/deserialization round-trip
+- [x] Test: Callback reference serialization/deserialization round-trip
+- [x] Test: Restored Encoding.headers and Response.links round-trip
+- [x] Test: Operation.requestBody as reference round-trip
 
 #### 15.2 Reference Resolution
 Resolve `$ref` pointers to actual objects within a document:
