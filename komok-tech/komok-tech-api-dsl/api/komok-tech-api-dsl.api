@@ -1868,6 +1868,22 @@ public final class io/heapy/komok/tech/api/dsl/Reference$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class io/heapy/komok/tech/api/dsl/ReferenceResolutionException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getRef ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceResolver {
+	public static final field Companion Lio/heapy/komok/tech/api/dsl/ReferenceResolver$Companion;
+	public fun <init> (Lio/heapy/komok/tech/api/dsl/OpenAPI;)V
+	public final fun resolve (Lio/heapy/komok/tech/api/dsl/Reference;)Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+	public final fun resolve (Ljava/lang/String;)Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+	public final fun resolveReferenceable (Lio/heapy/komok/tech/api/dsl/Referenceable;)Lio/heapy/komok/tech/api/dsl/OpenAPIObject;
+}
+
+public final class io/heapy/komok/tech/api/dsl/ReferenceResolver$Companion {
+}
+
 public abstract interface class io/heapy/komok/tech/api/dsl/Referenceable : io/heapy/komok/tech/api/dsl/OpenAPIObject {
 }
 
