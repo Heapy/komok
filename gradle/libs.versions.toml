@@ -4,7 +4,7 @@ bouncycastle = "1.83"
 commonmark = "0.27.1"
 json-schema-validator = "3.0.0"
 junit = "6.0.3"
-kaml = "0.104.0"
+kotaml = "0.106.0"
 komok = "1.0.13"
 kotlin = "2.3.10"
 kotlinpoet = "2.2.0"
@@ -29,7 +29,7 @@ json-schema-validator = { module = "com.networknt:json-schema-validator", versio
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
 
-kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
+kotaml = { module = "io.heapy.kotaml:kotaml", version.ref = "kotaml" }
 
 komok-tech-di = { module = "io.heapy.komok:komok-tech-di", version.ref = "komok" }
 komok-tech-di-lib = { module = "io.heapy.komok:komok-tech-di-lib", version.ref = "komok" }

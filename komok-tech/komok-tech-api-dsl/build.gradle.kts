@@ -33,7 +33,7 @@ tasks
 dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinpoet)
-    implementation(libs.kaml)
+    implementation(libs.kotaml)
     implementation(kotlin("reflect"))
 
     testImplementation(libs.logback)

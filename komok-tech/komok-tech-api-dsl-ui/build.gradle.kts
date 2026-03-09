@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.commonmark)
     implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.kaml)
+    testImplementation(libs.kotaml)
     testImplementation(libs.logback)
     testImplementation(projects.komokTech.komokTechLogging)
     testImplementation(libs.junit.jupiter)
