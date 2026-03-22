@@ -4,7 +4,7 @@ bouncycastle = "1.83"
 commonmark = "0.27.1"
 json-schema-validator = "3.0.1"
 junit = "6.0.3"
-kotaml = "0.106.0"
+kotaml = "0.107.0"
 komok = "1.0.13"
 kotlin = "2.3.20"
 kotlinpoet = "2.2.0"
@@ -39,6 +39,7 @@ kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlin
 
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
 
 kotlinx-html = { module = "org.jetbrains.kotlinx:kotlinx-html", version.ref = "kotlinx-html" }
 
