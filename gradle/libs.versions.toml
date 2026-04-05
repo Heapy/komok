@@ -1,7 +1,7 @@
 [versions]
 binary-compatibility-validator = "0.18.1"
 bouncycastle = "1.83"
-commonmark = "0.27.1"
+commonmark = "0.28.0"
 json-schema-validator = "3.0.1"
 junit = "6.0.3"
 kotaml = "0.107.0"
