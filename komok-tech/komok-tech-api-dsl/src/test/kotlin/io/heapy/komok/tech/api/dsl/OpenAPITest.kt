@@ -134,7 +134,7 @@ class OpenAPITest {
     @Test
     fun `should reject invalid OpenAPI version 3_1_0`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            OpenAPI(
+            val _ = OpenAPI(
                 openapi = "3.1.0",
                 info = Info(title = "API", version = "1.0.0"),
                 paths = paths("/" to PathItem(get = Operation(responses = responses("200" to Response(description = "OK")))))
@@ -148,7 +148,7 @@ class OpenAPITest {
     @Test
     fun `should reject invalid OpenAPI version 3_0_0`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            OpenAPI(
+            val _ = OpenAPI(
                 openapi = "3.0.0",
                 info = Info(title = "API", version = "1.0.0"),
                 paths = paths("/" to PathItem(get = Operation(responses = responses("200" to Response(description = "OK")))))
@@ -161,7 +161,7 @@ class OpenAPITest {
     @Test
     fun `should reject invalid OpenAPI version without patch`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            OpenAPI(
+            val _ = OpenAPI(
                 openapi = "3.2",
                 info = Info(title = "API", version = "1.0.0"),
                 paths = paths("/" to PathItem(get = Operation(responses = responses("200" to Response(description = "OK")))))
@@ -176,7 +176,7 @@ class OpenAPITest {
     @Test
     fun `should reject OpenAPI without paths components or webhooks`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            OpenAPI(
+            val _ = OpenAPI(
                 openapi = "3.2.0",
                 info = Info(title = "API", version = "1.0.0")
             )
@@ -230,7 +230,7 @@ class OpenAPITest {
     @Test
     fun `should reject self URI with fragment`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            OpenAPI(
+            val _ = OpenAPI(
                 openapi = "3.2.0",
                 info = Info(title = "API", version = "1.0.0"),
                 paths = paths("/" to PathItem(get = Operation(responses = responses("200" to Response(description = "OK"))))),

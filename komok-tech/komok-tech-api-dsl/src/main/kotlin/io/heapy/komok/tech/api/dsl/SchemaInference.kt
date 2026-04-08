@@ -370,7 +370,7 @@ class SchemaInference(
 
             if (properties.isNotEmpty()) {
                 put("properties", buildJsonObject {
-                    properties.forEach { (name, schema) ->
+                    properties.forEach { [name, schema] ->
                         put(name, schema)
                     }
                 })

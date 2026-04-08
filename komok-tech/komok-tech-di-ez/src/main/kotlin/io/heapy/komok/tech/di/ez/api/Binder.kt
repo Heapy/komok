@@ -8,9 +8,7 @@ package io.heapy.komok.tech.di.ez.api
 interface Binder {
     val source: String
 
-    @ModuleDSL
     fun dependency(module: ModuleProvider)
 
-    @ModuleDSL
     fun contribute(binding: Binding<*>)
 }

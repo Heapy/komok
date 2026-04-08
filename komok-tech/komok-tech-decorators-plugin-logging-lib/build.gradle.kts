@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     api(libs.slf4j.api)
+    implementation(kotlin("reflect"))
     testImplementation(projects.komokTech.komokTechLogging)
     testImplementation(libs.logback)
 }
@@ -31,6 +32,9 @@ tasks
             jvmTarget = JvmTarget.JVM_21
             freeCompilerArgs.addAll(
                 "-Xcontext-parameters",
+                "-Xreturn-value-checker=full",
+                "-Xname-based-destructuring=complete",
             )
+            allWarningsAsErrors = true
         }
     }

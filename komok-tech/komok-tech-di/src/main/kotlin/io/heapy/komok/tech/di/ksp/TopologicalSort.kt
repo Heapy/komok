@@ -27,7 +27,7 @@ fun Map<KSClassDeclaration, List<KSClassDeclaration>>.sorted(): List<KSClassDecl
 
     // Queue to hold nodes with in-degree 0
     val queue: Queue<KSClassDeclaration> = LinkedList()
-    for ((node, degree) in inDegree) {
+    for ([node, degree] in inDegree) {
         if (degree == 0) {
             queue.offer(node)
         }

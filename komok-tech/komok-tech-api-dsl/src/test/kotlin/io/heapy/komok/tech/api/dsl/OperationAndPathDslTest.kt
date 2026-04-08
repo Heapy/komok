@@ -5,7 +5,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -233,7 +233,7 @@ class OperationAndPathDslTest {
         }
 
         assertNotNull(result.externalDocs)
-        assertEquals("https://docs.example.com", result.externalDocs?.url)
+        assertEquals("https://docs.example.com", result.externalDocs.url)
     }
 
     @Test
@@ -270,7 +270,7 @@ class OperationAndPathDslTest {
     @Test
     fun `operation DSL should fail when responses is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            operation {
+            val _ = operation {
                 summary = "Missing responses"
             }
         }
@@ -409,7 +409,7 @@ class OperationAndPathDslTest {
 
         assertNotNull(result.get)
         assertNull(result.post)
-        assertEquals("Get resource", result.get?.summary)
+        assertEquals("Get resource", result.get.summary)
     }
 
     @Test
@@ -603,7 +603,7 @@ class OperationAndPathDslTest {
     @Test
     fun `paths DSL should fail for path not starting with slash`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            paths {
+            val _ = paths {
                 "users" to {
                     get { responses { ok { description = "OK" } } }
                 }
@@ -749,18 +749,18 @@ class OperationAndPathDslTest {
         val petsPath = result["/pets"]!!
         assertNotNull(petsPath.get)
         assertNotNull(petsPath.post)
-        assertEquals("listPets", petsPath.get?.operationId)
-        assertEquals("createPet", petsPath.post?.operationId)
-        assertEquals(1, petsPath.get?.parameters?.size)
+        assertEquals("listPets", petsPath.get.operationId)
+        assertEquals("createPet", petsPath.post.operationId)
+        assertEquals(1, petsPath.get.parameters?.size)
 
         // Verify /pets/{petId} path
         val petByIdPath = result["/pets/{petId}"]!!
         assertEquals(1, petByIdPath.parameters?.size)
         assertNotNull(petByIdPath.get)
         assertNotNull(petByIdPath.delete)
-        assertEquals("getPetById", petByIdPath.get?.operationId)
-        assertEquals("deletePet", petByIdPath.delete?.operationId)
-        assertEquals(1, petByIdPath.delete?.security?.size)
+        assertEquals("getPetById", petByIdPath.get.operationId)
+        assertEquals("deletePet", petByIdPath.delete.operationId)
+        assertEquals(1, petByIdPath.delete.security?.size)
     }
 
     @Test

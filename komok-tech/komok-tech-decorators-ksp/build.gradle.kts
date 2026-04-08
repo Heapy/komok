@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation(libs.kotlinpoet.ksp)
     implementation(libs.ksp)
+    implementation(kotlin("reflect"))
     implementation(libs.logback)
     implementation(projects.komokTech.komokTechDecoratorsKspApi)
 }
@@ -31,6 +32,9 @@ tasks
             jvmTarget = JvmTarget.JVM_21
             freeCompilerArgs.addAll(
                 "-Xcontext-parameters",
+                "-Xreturn-value-checker=full",
+                "-Xname-based-destructuring=complete",
             )
+            allWarningsAsErrors = true
         }
     }

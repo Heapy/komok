@@ -19,7 +19,7 @@ internal class LambdaReflectionTest {
         assertThrows<RuntimeException> {
             val reflection = lambda.reflect()
                 ?: error("Reflection for lambda is null")
-            reflection.call(
+            val _ = reflection.call(
                 "Hello ",
                 42,
             )

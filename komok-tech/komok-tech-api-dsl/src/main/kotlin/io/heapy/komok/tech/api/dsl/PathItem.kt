@@ -98,7 +98,7 @@ typealias Paths = Map<String, PathItem>
  * @throws IllegalArgumentException if any path doesn't start with "/"
  */
 fun paths(vararg pairs: Pair<String, PathItem>): Paths {
-    pairs.forEach { (path, _) ->
+    pairs.forEach { [path, _] ->
         require(path.startsWith("/")) {
             "Path '$path' must start with a forward slash (/)"
         }

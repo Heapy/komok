@@ -29,7 +29,7 @@ class DuplicateBindingTest {
     fun `duplicate binding in module for same key should throw error`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                withDuplication
+                val _ = withDuplication
                     .createContext()
                     .get<String>()
             }
@@ -46,7 +46,7 @@ class DuplicateBindingTest {
     fun `duplicate binding for same key should throw error`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                module2
+                val _ = module2
                     .createContext()
                     .get<String>()
             }

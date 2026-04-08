@@ -333,7 +333,7 @@ class PathItemTest {
     @Test
     fun `should reject PathItem with standard method in additionalOperations`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            PathItem(
+            val _ = PathItem(
                 additionalOperations = mapOf(
                     "GET" to Operation(responses = responses("200" to Response(description = "OK")))
                 )
@@ -347,7 +347,7 @@ class PathItemTest {
     @Test
     fun `should reject PathItem with POST in additionalOperations`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            PathItem(
+            val _ = PathItem(
                 additionalOperations = mapOf(
                     "POST" to Operation(responses = responses("200" to Response(description = "OK")))
                 )
@@ -360,7 +360,7 @@ class PathItemTest {
     @Test
     fun `should reject PathItem with invalid method name pattern`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            PathItem(
+            val _ = PathItem(
                 additionalOperations = mapOf(
                     "INVALID METHOD" to Operation(responses = responses("200" to Response(description = "OK")))
                 )
@@ -374,7 +374,7 @@ class PathItemTest {
     @Test
     fun `should reject PathItem with method containing invalid characters`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            PathItem(
+            val _ = PathItem(
                 additionalOperations = mapOf(
                     "METHOD@INVALID" to Operation(responses = responses("200" to Response(description = "OK")))
                 )
@@ -499,7 +499,7 @@ class PathItemTest {
     @Test
     fun `should reject path not starting with forward slash`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            paths(
+            val _ = paths(
                 "users" to PathItem(
                     get = Operation(responses = responses("200" to Response(description = "OK")))
                 )
@@ -515,7 +515,7 @@ class PathItemTest {
     @Test
     fun `should reject path with invalid format`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            paths(
+            val _ = paths(
                 "api/users" to PathItem(
                     get = Operation(responses = responses("200" to Response(description = "OK")))
                 )

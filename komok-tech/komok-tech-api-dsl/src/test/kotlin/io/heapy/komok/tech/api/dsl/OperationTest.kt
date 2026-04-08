@@ -329,7 +329,7 @@ class OperationTest {
     @Test
     fun `should reject Operation with empty responses`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Operation(
+            val _ = Operation(
                 summary = "Invalid operation",
                 responses = emptyMap()
             )

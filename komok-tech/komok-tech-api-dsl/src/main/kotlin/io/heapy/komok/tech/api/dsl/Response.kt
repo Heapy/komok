@@ -54,7 +54,7 @@ fun responses(vararg pairs: Pair<String, Response>): Responses {
         "Responses must contain at least one response"
     }
 
-    pairs.forEach { (statusCode, _) ->
+    pairs.forEach { [statusCode, _] ->
         // Validate status code format: specific codes (200-599), wildcard patterns (1XX-5XX), or "default"
         val isValid = when {
             statusCode == "default" -> true

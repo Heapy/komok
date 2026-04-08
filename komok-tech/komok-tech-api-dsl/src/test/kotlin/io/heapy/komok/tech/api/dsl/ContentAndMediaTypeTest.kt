@@ -39,7 +39,7 @@ class ContentAndMediaTypeTest {
             EncodingStyle.DEEP_OBJECT to "deepObject"
         )
 
-        styles.forEach { (style, expectedName) ->
+        styles.forEach { [style, expectedName] ->
             val encoding = Encoding(style = style)
             val json = compactJson.encodeToString(encoding)
             assertEquals("""{"style":"$expectedName"}""", json)
@@ -112,7 +112,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `should reject Encoding with both encoding and prefixEncoding`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Encoding(
+            val _ = Encoding(
                 encoding = mapOf("field" to Encoding(style = EncodingStyle.FORM)),
                 prefixEncoding = listOf(Encoding(style = EncodingStyle.FORM))
             )
@@ -127,7 +127,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `should reject Encoding with both encoding and itemEncoding`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Encoding(
+            val _ = Encoding(
                 encoding = mapOf("field" to Encoding(style = EncodingStyle.FORM)),
                 itemEncoding = Encoding(style = EncodingStyle.FORM)
             )
@@ -300,7 +300,7 @@ class ContentAndMediaTypeTest {
     fun `should reject MediaType with both encoding and prefixEncoding`() {
         val schema = Schema(buildJsonObject { put("type", "object") })
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            MediaType(
+            val _ = MediaType(
                 schema = schema,
                 encoding = mapOf("field" to Encoding()),
                 prefixEncoding = listOf(Encoding())
@@ -317,7 +317,7 @@ class ContentAndMediaTypeTest {
     fun `should reject MediaType with both encoding and itemEncoding`() {
         val schema = Schema(buildJsonObject { put("type", "object") })
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            MediaType(
+            val _ = MediaType(
                 schema = schema,
                 encoding = mapOf("field" to Encoding()),
                 itemEncoding = Encoding()
@@ -334,7 +334,7 @@ class ContentAndMediaTypeTest {
     fun `should reject MediaType with both example and examples`() {
         val schema = Schema(buildJsonObject { put("type", "string") })
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            MediaType(
+            val _ = MediaType(
                 schema = schema,
                 example = JsonPrimitive("test"),
                 examples = mapOf("ex1" to Example(value = JsonPrimitive("test")))
@@ -587,7 +587,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `encoding DSL should fail when encoding and prefixEncoding both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            encoding {
+            val _ = encoding {
                 encoding {
                     "field" to { style = EncodingStyle.FORM }
                 }
@@ -606,7 +606,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `encoding DSL should fail when encoding and itemEncoding both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            encoding {
+            val _ = encoding {
                 encoding {
                     "field" to { style = EncodingStyle.FORM }
                 }
@@ -894,7 +894,7 @@ class ContentAndMediaTypeTest {
     @Test
     fun `mediaType DSL should fail when encoding and prefixEncoding both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            mediaType {
+            val _ = mediaType {
                 schema {
                     type = "object"
                 }
@@ -1100,8 +1100,7 @@ class ContentAndMediaTypeTest {
                     properties {
                         "orderId" to stringSchema()
                         "userId" to stringSchema()
-                        "profileImage" to schema {
-                            type = "string"
+                        "profileImage" to stringSchema {
                             format = "binary"
                         }
                         "address" to objectSchema {

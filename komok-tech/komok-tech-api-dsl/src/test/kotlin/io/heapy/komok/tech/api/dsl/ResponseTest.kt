@@ -443,7 +443,7 @@ class ResponseTest {
     @Test
     fun `should reject empty Responses`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses()
+            val _ = responses()
         }
 
         assertEquals(
@@ -455,7 +455,7 @@ class ResponseTest {
     @Test
     fun `should reject invalid status code - too low`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses("099" to Response(description = "Invalid"))
+            val _ = responses("099" to Response(description = "Invalid"))
         }
 
         assertEquals(
@@ -467,7 +467,7 @@ class ResponseTest {
     @Test
     fun `should reject invalid status code - too high`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses("600" to Response(description = "Invalid"))
+            val _ = responses("600" to Response(description = "Invalid"))
         }
 
         assertEquals(
@@ -479,7 +479,7 @@ class ResponseTest {
     @Test
     fun `should reject invalid wildcard pattern`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses("6XX" to Response(description = "Invalid"))
+            val _ = responses("6XX" to Response(description = "Invalid"))
         }
 
         assertEquals(
@@ -491,7 +491,7 @@ class ResponseTest {
     @Test
     fun `should reject invalid status code format`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses("abc" to Response(description = "Invalid"))
+            val _ = responses("abc" to Response(description = "Invalid"))
         }
 
         assertEquals(
@@ -503,7 +503,7 @@ class ResponseTest {
     @Test
     fun `should reject status code with wrong number of digits`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses("20" to Response(description = "Invalid"))
+            val _ = responses("20" to Response(description = "Invalid"))
         }
 
         assertEquals(

@@ -2,10 +2,10 @@ package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertNotNull
 
 class ComponentsAndRootDslTest {
 
@@ -74,7 +74,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `link DSL should fail when neither operationRef nor operationId is provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            link {
+            val _ = link {
                 description = "Missing operation"
             }
         }
@@ -88,7 +88,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `link DSL should fail when both operationRef and operationId are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            link {
+            val _ = link {
                 operationRef = "#/paths/~1users/get"
                 operationId = "getUsers"
             }
@@ -187,7 +187,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `info DSL should fail when title is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            info {
+            val _ = info {
                 version = "1.0.0"
             }
         }
@@ -198,7 +198,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `info DSL should fail when version is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            info {
+            val _ = info {
                 title = "My API"
             }
         }
@@ -266,8 +266,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.schemas)
-        assertEquals(1, result.schemas!!.size)
-        assertTrue(result.schemas!!.containsKey("Pet"))
+        assertEquals(1, result.schemas.size)
+        assertTrue(result.schemas.containsKey("Pet"))
     }
 
     @Test
@@ -284,9 +284,9 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.responses)
-        assertEquals(2, result.responses!!.size)
-        assertEquals("Resource not found", result.responses!!["NotFound"]?.description)
-        assertEquals("Authentication required", result.responses!!["Unauthorized"]?.description)
+        assertEquals(2, result.responses.size)
+        assertEquals("Resource not found", result.responses["NotFound"]?.description)
+        assertEquals("Authentication required", result.responses["Unauthorized"]?.description)
     }
 
     @Test
@@ -303,8 +303,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.parameters)
-        assertEquals(1, result.parameters!!.size)
-        assertEquals("limit", result.parameters!!["PaginationLimit"]?.name)
+        assertEquals(1, result.parameters.size)
+        assertEquals("limit", result.parameters["PaginationLimit"]?.name)
     }
 
     @Test
@@ -319,8 +319,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.examples)
-        assertEquals(1, result.examples!!.size)
-        assertEquals("A pet example", result.examples!!["PetExample"]?.summary)
+        assertEquals(1, result.examples.size)
+        assertEquals("A pet example", result.examples["PetExample"]?.summary)
     }
 
     @Test
@@ -339,8 +339,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.requestBodies)
-        assertEquals(1, result.requestBodies!!.size)
-        assertEquals("Pet to add", result.requestBodies!!["PetBody"]?.description)
+        assertEquals(1, result.requestBodies.size)
+        assertEquals("Pet to add", result.requestBodies["PetBody"]?.description)
     }
 
     @Test
@@ -355,8 +355,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.headers)
-        assertEquals(1, result.headers!!.size)
-        assertEquals("Rate limit", result.headers!!["X-Rate-Limit"]?.description)
+        assertEquals(1, result.headers.size)
+        assertEquals("Rate limit", result.headers["X-Rate-Limit"]?.description)
     }
 
     @Test
@@ -385,10 +385,10 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.securitySchemes)
-        assertEquals(3, result.securitySchemes!!.size)
-        assertEquals(SecuritySchemeType.API_KEY, result.securitySchemes!!["api_key"]?.type)
-        assertEquals(SecuritySchemeType.HTTP, result.securitySchemes!!["bearer_auth"]?.type)
-        assertEquals(SecuritySchemeType.OAUTH2, result.securitySchemes!!["petstore_auth"]?.type)
+        assertEquals(3, result.securitySchemes.size)
+        assertEquals(SecuritySchemeType.API_KEY, result.securitySchemes["api_key"]?.type)
+        assertEquals(SecuritySchemeType.HTTP, result.securitySchemes["bearer_auth"]?.type)
+        assertEquals(SecuritySchemeType.OAUTH2, result.securitySchemes["petstore_auth"]?.type)
     }
 
     @Test
@@ -403,8 +403,8 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.links)
-        assertEquals(1, result.links!!.size)
-        assertEquals("getUser", result.links!!["GetUserById"]?.operationId)
+        assertEquals(1, result.links.size)
+        assertEquals("getUser", result.links["GetUserById"]?.operationId)
     }
 
     @Test
@@ -424,7 +424,7 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.callbacks)
-        assertEquals(1, result.callbacks!!.size)
+        assertEquals(1, result.callbacks.size)
     }
 
     @Test
@@ -441,7 +441,7 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.pathItems)
-        assertEquals(1, result.pathItems!!.size)
+        assertEquals(1, result.pathItems.size)
     }
 
     @Test
@@ -455,14 +455,14 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.mediaTypes)
-        assertEquals(1, result.mediaTypes!!.size)
+        assertEquals(1, result.mediaTypes.size)
     }
 
     @Test
     fun `components DSL should reject invalid component names`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            components {
-                schemas = mapOf("invalid name!" to schema { type = "string" })
+            val _ = components {
+                schemas = mapOf("invalid name!" to stringSchema {})
             }
         }
 
@@ -590,7 +590,7 @@ class ComponentsAndRootDslTest {
         }
 
         assertNotNull(result.webhooks)
-        assertEquals(1, result.webhooks!!.size)
+        assertEquals(1, result.webhooks.size)
     }
 
     @Test
@@ -705,7 +705,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `openAPI DSL should fail when info is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            openAPI {
+            val _ = openAPI {
                 paths {
                     "/test" to {
                         get {
@@ -722,7 +722,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `openAPI DSL should fail when none of paths, components, or webhooks is defined`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            openAPI {
+            val _ = openAPI {
                 info {
                     title = "My API"
                     version = "1.0.0"
@@ -739,7 +739,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `openAPI DSL should fail with invalid version`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            openAPI {
+            val _ = openAPI {
                 openapi = "2.0"
                 info {
                     title = "My API"
@@ -759,7 +759,7 @@ class ComponentsAndRootDslTest {
     @Test
     fun `openAPI DSL should fail when self contains fragment`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            openAPI {
+            val _ = openAPI {
                 info {
                     title = "My API"
                     version = "1.0.0"
@@ -875,7 +875,7 @@ class ComponentsAndRootDslTest {
             }
         }
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), result)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), result)
     }
 
     // ============================================
@@ -1109,12 +1109,12 @@ class ComponentsAndRootDslTest {
         assertEquals(1, petstoreApi.servers!!.size)
         assertEquals(2, petstoreApi.paths!!.size)
         assertEquals(2, petstoreApi.components!!.schemas!!.size)
-        assertEquals(2, petstoreApi.components!!.securitySchemes!!.size)
+        assertEquals(2, petstoreApi.components.securitySchemes!!.size)
         assertEquals(1, petstoreApi.security!!.size)
         assertEquals(1, petstoreApi.tags!!.size)
 
         // Validate against OpenAPI schema
-        TestHelpers.testSerialization(OpenAPI.serializer(), petstoreApi)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), petstoreApi)
 
         // Verify round-trip
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), petstoreApi)
@@ -1161,6 +1161,6 @@ class ComponentsAndRootDslTest {
         }
 
         assertEquals(SecuritySchemeType.HTTP, result.securitySchemes!!["basic_auth"]?.type)
-        assertEquals("basic", result.securitySchemes!!["basic_auth"]?.scheme)
+        assertEquals("basic", result.securitySchemes["basic_auth"]?.scheme)
     }
 }

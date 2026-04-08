@@ -319,11 +319,11 @@ fun ApplicationResponse.setHtmxReplaceUrl(url: String) {
  * Sets a header to trigger client-side events
  */
 fun ApplicationResponse.setHtmxTrigger(events: Map<String, String?>) {
-    val eventString = events.entries.joinToString(",") { (event, detail) ->
+    val eventString = events.entries.joinToString(",") { [event, detail] ->
         if (detail == null) {
-            "\"$event\""
+            """"$event""""
         } else {
-            "\"$event\":$detail"
+            """"$event":$detail"""
         }
     }
     header(HtmxAttributes.ResponseHeaders.HX_TRIGGER, eventString)
@@ -333,11 +333,11 @@ fun ApplicationResponse.setHtmxTrigger(events: Map<String, String?>) {
  * Sets a header to trigger client-side events after swap
  */
 fun ApplicationResponse.setHtmxTriggerAfterSwap(events: Map<String, String?>) {
-    val eventString = events.entries.joinToString(",") { (event, detail) ->
+    val eventString = events.entries.joinToString(",") { [event, detail] ->
         if (detail == null) {
-            "\"$event\""
+            """"$event""""
         } else {
-            "\"$event\":$detail"
+            """"$event":$detail"""
         }
     }
     header(HtmxAttributes.ResponseHeaders.HX_TRIGGER_AFTER_SWAP, eventString)
@@ -347,11 +347,11 @@ fun ApplicationResponse.setHtmxTriggerAfterSwap(events: Map<String, String?>) {
  * Sets a header to trigger client-side events after settle
  */
 fun ApplicationResponse.setHtmxTriggerAfterSettle(events: Map<String, String?>) {
-    val eventString = events.entries.joinToString(",") { (event, detail) ->
+    val eventString = events.entries.joinToString(",") { [event, detail] ->
         if (detail == null) {
-            "\"$event\""
+            """"$event""""
         } else {
-            "\"$event\":$detail"
+            """"$event":$detail"""
         }
     }
     header(HtmxAttributes.ResponseHeaders.HX_TRIGGER_AFTER_SETTLE, eventString)
@@ -503,7 +503,7 @@ class TriggerBuilder {
             val triggerName = if (trigger.startsWith("every ")) "every" else trigger
             val mods = modifiers[triggerName]
 
-            if (mods == null || mods.isEmpty()) {
+            if (mods.isNullOrEmpty()) {
                 result.add(trigger)
             } else {
                 val modString = mods.entries.joinToString(" ") { (key, value) ->

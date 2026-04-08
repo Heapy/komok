@@ -79,7 +79,7 @@ class ModulesKtTest {
         val modules = buildModules<BuildModule1>()
 
         val exception = assertThrows(IllegalStateException::class.java) {
-            modules<BuildModule4>()
+            val _ = modules<BuildModule4>()
         }
 
         assertTrue(exception.message!!.contains("not found in registry"))

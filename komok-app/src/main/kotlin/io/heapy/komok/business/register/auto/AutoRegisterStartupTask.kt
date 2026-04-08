@@ -33,13 +33,13 @@ class AutoRegisterStartupTask(
                 """.trimIndent(),
             )
 
-            userDao.insertUser(
+            val id = userDao.insertUser(
                 email = autoRegisterStartupTaskConfiguration.email,
                 hash = passwordHasher.hash(password),
                 authenticatorKey = authenticatorKey,
             )
 
-            log.info("Default user created")
+            log.info("Default user with id=$id created")
         } else {
             log.info("Users already found")
         }

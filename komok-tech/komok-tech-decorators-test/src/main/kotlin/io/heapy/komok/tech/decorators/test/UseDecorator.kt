@@ -7,7 +7,7 @@ import org.slf4j.event.Level
 
 fun main() {
     val log = LoggerFactory.getLogger("test")
-    context(
+    val _ = context(
         log,
         ::testF,
         Log(level = Level.ERROR),

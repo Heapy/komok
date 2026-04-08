@@ -1,6 +1,5 @@
 package io.heapy.komok.tech.api.dsl
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -21,7 +20,7 @@ class ParameterAndHeaderDslTest {
         }
 
         assertEquals(
-            MediaType(schema = schema { type = "string" }),
+            MediaType(schema = stringSchema {}),
             result
         )
     }
@@ -58,7 +57,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `mediaType DSL should fail when both example and examples are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            mediaType {
+            val _ = mediaType {
                 schema { type = "string" }
                 example = JsonPrimitive("test")
                 examples {
@@ -124,7 +123,7 @@ class ParameterAndHeaderDslTest {
 
     @Test
     fun `content DSL should accept pre-built MediaType`() {
-        val preBuiltMediaType = MediaType(schema = schema { type = "boolean" })
+        val preBuiltMediaType = MediaType(schema = genericSchema { type = "boolean" })
 
         val result = content {
             "application/json" to preBuiltMediaType
@@ -151,7 +150,7 @@ class ParameterAndHeaderDslTest {
                 name = "userId",
                 location = ParameterLocation.PATH,
                 required = true,
-                schema = schema { type = "string" }
+                schema = stringSchema {}
             ),
             result
         )
@@ -244,7 +243,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when name is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 location = ParameterLocation.QUERY
                 schema { type = "string" }
             }
@@ -256,7 +255,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when location is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "test"
                 schema { type = "string" }
             }
@@ -268,7 +267,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when neither schema nor content is provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "test"
                 location = ParameterLocation.QUERY
             }
@@ -280,7 +279,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when both schema and content are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "test"
                 location = ParameterLocation.QUERY
                 schema { type = "string" }
@@ -296,7 +295,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when path parameter is not required`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "id"
                 location = ParameterLocation.PATH
                 required = false
@@ -310,7 +309,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when querystring uses schema instead of content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "data"
                 location = ParameterLocation.QUERYSTRING
                 schema { type = "object" }
@@ -323,7 +322,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when content has more than one entry`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "data"
                 location = ParameterLocation.QUERY
                 content {
@@ -339,7 +338,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when both example and examples are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "test"
                 location = ParameterLocation.QUERY
                 schema { type = "string" }
@@ -356,7 +355,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when style is used with content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "data"
                 location = ParameterLocation.QUERY
                 style = ParameterStyle.FORM
@@ -372,7 +371,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `parameter DSL should fail when allowEmptyValue is used with non-query location`() {
         val exception = assertThrows(IllegalStateException::class.java) {
-            parameter {
+            val _ = parameter {
                 name = "id"
                 location = ParameterLocation.PATH
                 required = true
@@ -452,7 +451,7 @@ class ParameterAndHeaderDslTest {
         val preBuiltParam = Parameter(
             name = "prebuilt",
             location = ParameterLocation.HEADER,
-            schema = schema { type = "string" }
+            schema = stringSchema {}
         )
 
         val result = parameters {
@@ -481,7 +480,7 @@ class ParameterAndHeaderDslTest {
         }
 
         assertEquals(
-            Header(schema = schema { type = "string" }),
+            Header(schema = stringSchema {}),
             result
         )
     }
@@ -555,7 +554,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `header DSL should fail when neither schema nor content is provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            header {}
+            val _ = header {}
         }
 
         assertEquals("Header must have exactly one of 'schema' or 'content' specified", exception.message)
@@ -564,7 +563,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `header DSL should fail when both schema and content are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            header {
+            val _ = header {
                 schema { type = "string" }
                 content {
                     "text/plain" to { schema { type = "string" } }
@@ -578,7 +577,7 @@ class ParameterAndHeaderDslTest {
     @Test
     fun `header DSL should fail when both example and examples are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            header {
+            val _ = header {
                 schema { type = "string" }
                 example = JsonPrimitive("test")
                 examples {
@@ -643,7 +642,7 @@ class ParameterAndHeaderDslTest {
     fun `headers DSL should accept pre-built headers`() {
         val preBuiltHeader = Header(
             description = "Pre-built header",
-            schema = schema { type = "boolean" }
+            schema = genericSchema { type = "boolean" }
         )
 
         val result = headers {

@@ -61,7 +61,7 @@ class ServerDslTest {
     @Test
     fun `serverVariable DSL should fail when default is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            serverVariable {
+            val _ = serverVariable {
                 enum = listOf("v1", "v2")
             }
         }
@@ -72,7 +72,7 @@ class ServerDslTest {
     @Test
     fun `serverVariable DSL should fail when enum is empty`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            serverVariable {
+            val _ = serverVariable {
                 default = "v1"
                 enum = emptyList()
             }
@@ -232,7 +232,7 @@ class ServerDslTest {
     @Test
     fun `server DSL should fail when url is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            server {
+            val _ = server {
                 description = "Missing URL server"
             }
         }
@@ -243,7 +243,7 @@ class ServerDslTest {
     @Test
     fun `server DSL should fail when nested variable has no default`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            server {
+            val _ = server {
                 url = "https://{env}.example.com"
                 variables {
                     "env" to {
@@ -353,7 +353,7 @@ class ServerDslTest {
     @Test
     fun `servers DSL should fail if any server is missing url`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            servers {
+            val _ = servers {
                 server {
                     url = "https://valid.example.com"
                 }

@@ -1,6 +1,6 @@
 package io.heapy.komok.tech.di.test2
 
-import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
 

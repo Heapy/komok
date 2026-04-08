@@ -99,10 +99,17 @@ class GitHubApiIntegrationTest {
         }
 
         private fun downloadFile(url: String, destination: Path) {
-            URI(url).toURL().openStream().use { input ->
-                Files.newOutputStream(destination).use { output ->
-                    input.copyTo(output)
+            val tempFile = Files.createTempFile(destination.parent, "download-", ".tmp")
+            try {
+                URI(url).toURL().openStream().use { input ->
+                    Files.newOutputStream(tempFile).use { output ->
+                        input.copyTo(output)
+                    }
                 }
+                Files.move(tempFile, destination, java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+            } catch (e: Exception) {
+                Files.deleteIfExists(tempFile)
+                throw e
             }
         }
 

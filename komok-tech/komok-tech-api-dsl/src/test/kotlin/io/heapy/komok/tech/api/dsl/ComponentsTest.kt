@@ -345,7 +345,7 @@ class ComponentsTest {
     @Test
     fun `should reject component name with spaces`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Components(
+            val _ = Components(
                 schemas = mapOf(
                     "User Model" to Schema(buildJsonObject { put("type", "object") })
                 )
@@ -360,7 +360,7 @@ class ComponentsTest {
     @Test
     fun `should reject component name with special characters`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Components(
+            val _ = Components(
                 parameters = mapOf(
                     "user@param" to Parameter(
                         name = "user",
@@ -378,7 +378,7 @@ class ComponentsTest {
     @Test
     fun `should reject component name starting with special character`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Components(
+            val _ = Components(
                 examples = mapOf(
                     "#example" to Example(value = JsonPrimitive("test"))
                 )
@@ -391,7 +391,7 @@ class ComponentsTest {
     @Test
     fun `should reject empty component name`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Components(
+            val _ = Components(
                 responses = mapOf(
                     "" to Response(description = "Empty name")
                 )

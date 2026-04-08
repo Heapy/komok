@@ -78,7 +78,7 @@ class JwtServiceTest : KomokBaseTest {
         }
 
         val exception = assertThrows<IllegalArgumentException> {
-            module.jwtService
+            val _ = module.jwtService
         }
 
         assertEquals(

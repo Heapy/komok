@@ -90,7 +90,7 @@ class ReferenceResolver(
             )
         }
 
-        val (root, type, name) = segments
+        val [root, type, name] = segments
 
         if (root != "components") {
             throw ReferenceResolutionException(

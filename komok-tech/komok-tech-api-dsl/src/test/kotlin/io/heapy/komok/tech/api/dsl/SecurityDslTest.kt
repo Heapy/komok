@@ -83,7 +83,7 @@ class SecurityDslTest {
     @Test
     fun `implicitFlow DSL should fail when authorizationUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            implicitFlow {
+            val _ = implicitFlow {
                 scopes = mapOf("read" to "Read access")
             }
         }
@@ -94,7 +94,7 @@ class SecurityDslTest {
     @Test
     fun `implicitFlow DSL should fail when scopes is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            implicitFlow {
+            val _ = implicitFlow {
                 authorizationUrl = "https://example.com/oauth/authorize"
             }
         }
@@ -181,7 +181,7 @@ class SecurityDslTest {
     @Test
     fun `passwordFlow DSL should fail when tokenUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            passwordFlow {
+            val _ = passwordFlow {
                 scopes = mapOf("read" to "Read access")
             }
         }
@@ -192,7 +192,7 @@ class SecurityDslTest {
     @Test
     fun `passwordFlow DSL should fail when scopes is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            passwordFlow {
+            val _ = passwordFlow {
                 tokenUrl = "https://example.com/oauth/token"
             }
         }
@@ -278,7 +278,7 @@ class SecurityDslTest {
     @Test
     fun `clientCredentialsFlow DSL should fail when tokenUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            clientCredentialsFlow {
+            val _ = clientCredentialsFlow {
                 scopes = mapOf("admin" to "Admin access")
             }
         }
@@ -289,7 +289,7 @@ class SecurityDslTest {
     @Test
     fun `clientCredentialsFlow DSL should fail when scopes is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            clientCredentialsFlow {
+            val _ = clientCredentialsFlow {
                 tokenUrl = "https://example.com/oauth/token"
             }
         }
@@ -378,7 +378,7 @@ class SecurityDslTest {
     @Test
     fun `authorizationCodeFlow DSL should fail when authorizationUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            authorizationCodeFlow {
+            val _ = authorizationCodeFlow {
                 tokenUrl = "https://example.com/oauth/token"
                 scopes = mapOf("read" to "Read access")
             }
@@ -390,7 +390,7 @@ class SecurityDslTest {
     @Test
     fun `authorizationCodeFlow DSL should fail when tokenUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            authorizationCodeFlow {
+            val _ = authorizationCodeFlow {
                 authorizationUrl = "https://example.com/oauth/authorize"
                 scopes = mapOf("read" to "Read access")
             }
@@ -402,7 +402,7 @@ class SecurityDslTest {
     @Test
     fun `authorizationCodeFlow DSL should fail when scopes is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            authorizationCodeFlow {
+            val _ = authorizationCodeFlow {
                 authorizationUrl = "https://example.com/oauth/authorize"
                 tokenUrl = "https://example.com/oauth/token"
             }
@@ -496,7 +496,7 @@ class SecurityDslTest {
     @Test
     fun `deviceAuthorizationFlow DSL should fail when deviceAuthorizationUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            deviceAuthorizationFlow {
+            val _ = deviceAuthorizationFlow {
                 tokenUrl = "https://example.com/oauth/token"
                 scopes = mapOf("read" to "Read access")
             }
@@ -508,7 +508,7 @@ class SecurityDslTest {
     @Test
     fun `deviceAuthorizationFlow DSL should fail when tokenUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            deviceAuthorizationFlow {
+            val _ = deviceAuthorizationFlow {
                 deviceAuthorizationUrl = "https://example.com/device/code"
                 scopes = mapOf("read" to "Read access")
             }
@@ -520,7 +520,7 @@ class SecurityDslTest {
     @Test
     fun `deviceAuthorizationFlow DSL should fail when scopes is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            deviceAuthorizationFlow {
+            val _ = deviceAuthorizationFlow {
                 deviceAuthorizationUrl = "https://example.com/device/code"
                 tokenUrl = "https://example.com/oauth/token"
             }
@@ -815,7 +815,7 @@ class SecurityDslTest {
     @Test
     fun `apiKeyScheme DSL should fail when name is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            apiKeyScheme {
+            val _ = apiKeyScheme {
                 location = ApiKeyLocation.HEADER
             }
         }
@@ -826,7 +826,7 @@ class SecurityDslTest {
     @Test
     fun `apiKeyScheme DSL should fail when location is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            apiKeyScheme {
+            val _ = apiKeyScheme {
                 name = "X-API-Key"
             }
         }
@@ -917,7 +917,7 @@ class SecurityDslTest {
     @Test
     fun `httpScheme DSL should fail when scheme is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            httpScheme {
+            val _ = httpScheme {
                 bearerFormat = "JWT"
             }
         }
@@ -1111,7 +1111,7 @@ class SecurityDslTest {
     @Test
     fun `oauth2Scheme DSL should fail when flows is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            oauth2Scheme {
+            val _ = oauth2Scheme {
                 description = "Missing flows"
             }
         }
@@ -1199,7 +1199,7 @@ class SecurityDslTest {
     @Test
     fun `openIdConnectScheme DSL should fail when openIdConnectUrl is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            openIdConnectScheme {
+            val _ = openIdConnectScheme {
                 description = "Missing URL"
             }
         }

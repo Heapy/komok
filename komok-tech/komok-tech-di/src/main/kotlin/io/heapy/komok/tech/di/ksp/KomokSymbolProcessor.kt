@@ -27,10 +27,10 @@ class KomokSymbolProcessor(
         val graph = getDeclarationsWithDependencies(rootDeclarations)
         val sortedGraph = graph.sorted()
         val resolvedGraph = graph.resolveAllDependencies()
-        val rootGraph = resolvedGraph.filter { (module, _) -> module in rootDeclarations }
+        val rootGraph = resolvedGraph.filterKeys { it in rootDeclarations }
 
         rootGraph
-            .forEach { (module, moduleDependencies) ->
+            .forEach { [module, moduleDependencies] ->
                 try {
                     val className = module.simpleName.asString()
                     val packageName = module.packageName.asString()

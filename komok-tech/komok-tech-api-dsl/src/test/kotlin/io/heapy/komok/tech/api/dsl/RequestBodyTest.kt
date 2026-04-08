@@ -234,7 +234,7 @@ class RequestBodyTest {
     @Test
     fun `should reject RequestBody with empty content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            RequestBody(
+            val _ = RequestBody(
                 content = emptyMap(),
                 description = "Invalid request body"
             )

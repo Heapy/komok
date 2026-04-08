@@ -1,10 +1,11 @@
 package io.heapy.komok.tech.api.dsl
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+import kotlinx.serialization.json.putJsonObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -15,9 +16,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create simple string schema`() {
-        val result = schema {
-            type = "string"
-        }
+        val result = stringSchema {}
         val json = compactJson.encodeToString(result)
 
         assertEquals("""{"type":"string"}""", json)
@@ -25,8 +24,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create string schema with constraints`() {
-        val result = schema {
-            type = "string"
+        val result = stringSchema {
             minLength = 1
             maxLength = 100
             pattern = "^[a-z]+$"
@@ -42,8 +40,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create integer schema with constraints`() {
-        val result = schema {
-            type = "integer"
+        val result = integerSchema {
             minimum = 0
             maximum = 100
             multipleOf = 5
@@ -58,8 +55,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create object schema with properties`() {
-        val result = schema {
-            type = "object"
+        val result = objectSchema {
             required("name", "email")
             properties {
                 "name" to { type = "string"; minLength = 1 }
@@ -75,7 +71,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create array schema`() {
-        val result = schema {
+        val result = genericSchema {
             type = "array"
             items = stringSchema()
             minItems = 1
@@ -92,7 +88,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create reference schema`() {
-        val result = schema {
+        val result = genericSchema {
             ref = "#/components/schemas/User"
         }
         val json = compactJson.encodeToString(result)
@@ -102,7 +98,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create schema with enum`() {
-        val result = schema {
+        val result = genericSchema {
             type = "string"
             enum("active", "inactive", "pending")
         }
@@ -116,7 +112,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create schema with composition`() {
-        val result = schema {
+        val result = genericSchema {
             allOf = listOf(
                 refSchema("#/components/schemas/Base"),
                 objectSchema {
@@ -134,7 +130,7 @@ class SchemaAndExampleDslTest {
 
     @Test
     fun `schema DSL should create nullable schema`() {
-        val result = schema {
+        val result = genericSchema {
             type = "string"
             nullable = true
         }
@@ -231,7 +227,7 @@ class SchemaAndExampleDslTest {
             put("type", "string")
             put("format", "uuid")
         }
-        val result = schema(jsonElement)
+        val result = genericSchema(jsonElement)
         val json = compactJson.encodeToString(result)
 
         assertEquals("""{"type":"string","format":"uuid"}""", json)
@@ -302,7 +298,7 @@ class SchemaAndExampleDslTest {
     fun `example DSL should support value builder`() {
         val result = example {
             summary = "User"
-            value {
+            value = buildJsonObject {
                 put("name", "John")
                 put("email", "john@example.com")
                 putJsonObject("address") {
@@ -364,7 +360,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `example DSL should support dataValue builder`() {
         val result = example {
-            dataValue {
+            dataValue = buildJsonObject {
                 put("id", 123)
                 put("status", "active")
             }
@@ -377,7 +373,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `example DSL should fail when value and externalValue both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            example {
+            val _ = example {
                 value = JsonPrimitive("test")
                 externalValue = "https://example.com/test.json"
             }
@@ -392,7 +388,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `example DSL should fail when value and dataValue both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            example {
+            val _ = example {
                 value = JsonPrimitive("test")
                 dataValue = JsonPrimitive("data")
             }
@@ -407,7 +403,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `example DSL should fail when value and serializedValue both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            example {
+            val _ = example {
                 value = JsonPrimitive("test")
                 serializedValue = "serialized"
             }
@@ -422,7 +418,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `example DSL should fail when serializedValue and externalValue both set`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            example {
+            val _ = example {
                 serializedValue = "serialized"
                 externalValue = "https://example.com/test.json"
             }
@@ -517,7 +513,7 @@ class SchemaAndExampleDslTest {
     @Test
     fun `examples DSL should fail if any example has mutual exclusivity violation`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            examples {
+            val _ = examples {
                 "valid" to {
                     value = JsonPrimitive("ok")
                 }

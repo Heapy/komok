@@ -1,7 +1,7 @@
 package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.SerialName
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.Test
 
 class SchemaInferenceTest {

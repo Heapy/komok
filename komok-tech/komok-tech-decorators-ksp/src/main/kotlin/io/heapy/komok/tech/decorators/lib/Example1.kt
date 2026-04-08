@@ -185,9 +185,9 @@ private open class BaseServiceDecorator(
 
 // For testing
 suspend fun main() {
-    ServiceDecorator().doSomething("hello")
+    val _ = ServiceDecorator().doSomething("hello")
     ServiceDecorator().doSomethingElse()
 
-    BaseServiceDecorator(Service()).doSomething("hello")
+    val _ = BaseServiceDecorator(Service()).doSomething("hello")
     BaseServiceDecorator(Service()).doSomethingElse()
 }

@@ -31,7 +31,7 @@ class SpecificationExtensionsTest {
     fun `should throw exception for invalid extension keys`() {
         // When creating extensions with invalid key (not starting with x-)
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            specificationExtensions(
+            val _ = specificationExtensions(
                 "invalid-key" to JsonPrimitive("value"),
             )
         }

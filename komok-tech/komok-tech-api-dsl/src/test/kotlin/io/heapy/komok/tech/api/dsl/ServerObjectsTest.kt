@@ -59,7 +59,7 @@ class ServerObjectsTest {
     @Test
     fun `should reject ServerVariable with empty enum`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            ServerVariable(
+            val _ = ServerVariable(
                 default = "v1",
                 enum = emptyList()
             )

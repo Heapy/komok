@@ -1,20 +1,18 @@
 package io.heapy.komok.tech.api.dsl
 
 import io.heapy.komok.tech.logging.Logger
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertNotNull
 
 /**
  * Integration tests for the complete OpenAPI model.
  * These tests verify that all components work together correctly and produce valid OpenAPI 3.2 documents.
  */
 class OpenAPIIntegrationTest {
-
     @Test
     fun `should create complete valid OpenAPI 3_2 document`() {
         // Create a complete OpenAPI document using all major components
@@ -275,7 +273,7 @@ class OpenAPIIntegrationTest {
         assertEquals(openAPI, deserialized, "Round-trip serialization should preserve all data")
 
         // Validate against JSON Schema
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
     }
 
     @Test
@@ -300,7 +298,7 @@ class OpenAPIIntegrationTest {
         val json = compactJson.encodeToString(openAPI)
 
         // Validate against JSON Schema
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
 
         // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
@@ -344,7 +342,7 @@ class OpenAPIIntegrationTest {
         val json = compactJson.encodeToString(openAPI)
 
         // Validate against JSON Schema
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
 
         // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
@@ -409,7 +407,7 @@ class OpenAPIIntegrationTest {
         val json = compactJson.encodeToString(openAPI)
 
         // Validate against JSON Schema
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
 
         // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)
@@ -523,7 +521,7 @@ class OpenAPIIntegrationTest {
         val json = compactJson.encodeToString(openAPI)
 
         // Validate against JSON Schema
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
 
         // Log for manual inspection (optional)
         log.info("Generated OpenAPI Document:")
@@ -569,7 +567,7 @@ class OpenAPIIntegrationTest {
         // Verify paths are parsed
         val paths = openAPI.paths
         assertNotNull(paths)
-        assertTrue(paths!!.containsKey("/pet"))
+        assertTrue(paths.containsKey("/pet"))
         assertTrue(paths.containsKey("/pet/findByStatus"))
         assertTrue(paths.containsKey("/pet/{petId}"))
         assertTrue(paths.containsKey("/user"))
@@ -577,29 +575,29 @@ class OpenAPIIntegrationTest {
         // Verify operations are parsed
         val petPath = paths["/pet"]
         assertNotNull(petPath)
-        assertNotNull(petPath!!.put)
+        assertNotNull(petPath.put)
         assertNotNull(petPath.post)
-        assertEquals("updatePet", petPath.put?.operationId)
-        assertEquals("addPet", petPath.post?.operationId)
+        assertEquals("updatePet", petPath.put.operationId)
+        assertEquals("addPet", petPath.post.operationId)
 
         // Verify components are parsed
         val components = openAPI.components
         assertNotNull(components)
-        assertNotNull(components!!.schemas)
-        assertTrue(components.schemas!!.containsKey("Pet"))
-        assertTrue(components.schemas!!.containsKey("Order"))
-        assertTrue(components.schemas!!.containsKey("User"))
+        assertNotNull(components.schemas)
+        assertTrue(components.schemas.containsKey("Pet"))
+        assertTrue(components.schemas.containsKey("Order"))
+        assertTrue(components.schemas.containsKey("User"))
 
         // Verify security schemes
         assertNotNull(components.securitySchemes)
-        assertTrue(components.securitySchemes!!.containsKey("petstore_auth"))
-        assertTrue(components.securitySchemes!!.containsKey("api_key"))
+        assertTrue(components.securitySchemes.containsKey("petstore_auth"))
+        assertTrue(components.securitySchemes.containsKey("api_key"))
 
         // Serialize back to JSON
         val serialized = compactJson.encodeToString(openAPI)
 
         // Validate against OpenAPI 3.2 JSON Schema
-        OpenAPISchemaValidator.validate(serialized)
+        OpenAPISchemaValidator.validateAndAssert(serialized)
 
         // Verify round-trip: deserialize the serialized JSON and compare full object
         val roundTrip = compactJson.decodeFromString<OpenAPI>(serialized)
@@ -607,8 +605,8 @@ class OpenAPIIntegrationTest {
 
         log.info("Successfully parsed, serialized, and validated Petstore OpenAPI document")
         log.info("Paths: ${paths.size}")
-        log.info("Schemas: ${components.schemas!!.size}")
-        log.info("Security Schemes: ${components.securitySchemes!!.size}")
+        log.info("Schemas: ${components.schemas.size}")
+        log.info("Security Schemes: ${components.securitySchemes.size}")
     }
 
     @Test
@@ -676,7 +674,7 @@ class OpenAPIIntegrationTest {
         outputFile.writeText(json)
 
         // Validate
-        OpenAPISchemaValidator.validate(json)
+        OpenAPISchemaValidator.validateAndAssert(json)
 
         // Verify round-trip with full object equality
         val deserialized = compactJson.decodeFromString<OpenAPI>(json)

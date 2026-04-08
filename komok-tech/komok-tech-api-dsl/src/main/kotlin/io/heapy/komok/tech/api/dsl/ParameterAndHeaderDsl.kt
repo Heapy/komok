@@ -220,14 +220,14 @@ class MediaTypeBuilder {
      * Configures the schema using DSL syntax.
      */
     inline fun schema(block: SchemaBuilder.() -> Unit) {
-        schema = io.heapy.komok.tech.api.dsl.schema(block)
+        schema = genericSchema(block)
     }
 
     /**
      * Configures the item schema using DSL syntax.
      */
     inline fun itemSchema(block: SchemaBuilder.() -> Unit) {
-        itemSchema = io.heapy.komok.tech.api.dsl.schema(block)
+        itemSchema = genericSchema(block)
     }
 
     /**
@@ -407,7 +407,7 @@ class ParameterBuilder {
      * Configures the schema using DSL syntax.
      */
     inline fun schema(block: SchemaBuilder.() -> Unit) {
-        schema = io.heapy.komok.tech.api.dsl.schema(block)
+        schema = genericSchema(block)
     }
 
     /**
@@ -548,7 +548,7 @@ class HeaderBuilder {
      * Configures the schema using DSL syntax.
      */
     inline fun schema(block: SchemaBuilder.() -> Unit) {
-        schema = io.heapy.komok.tech.api.dsl.schema(block)
+        schema = genericSchema(block)
     }
 
     /**

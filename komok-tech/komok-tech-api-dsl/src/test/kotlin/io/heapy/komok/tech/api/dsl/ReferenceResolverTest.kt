@@ -225,7 +225,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("https://example.com/schemas/Pet")
+            val _ = resolver.resolve("https://example.com/schemas/Pet")
         }
         assertEquals("https://example.com/schemas/Pet", ex.ref)
     }
@@ -236,7 +236,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/")
+            val _ = resolver.resolve("#/")
         }
         assertEquals("#/", ex.ref)
     }
@@ -247,7 +247,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/schemas")
+            val _ = resolver.resolve("#/components/schemas")
         }
         assertEquals("#/components/schemas", ex.ref)
     }
@@ -258,7 +258,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/info/title/x")
+            val _ = resolver.resolve("#/info/title/x")
         }
         assertEquals("#/info/title/x", ex.ref)
     }
@@ -273,7 +273,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/schemas/Pet")
+            val _ = resolver.resolve("#/components/schemas/Pet")
         }
         assertEquals("#/components/schemas/Pet", ex.ref)
     }
@@ -284,7 +284,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/foobar/X")
+            val _ = resolver.resolve("#/components/foobar/X")
         }
         assertEquals("#/components/foobar/X", ex.ref)
     }
@@ -299,7 +299,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/schemas/NonExistent")
+            val _ = resolver.resolve("#/components/schemas/NonExistent")
         }
         assertEquals("#/components/schemas/NonExistent", ex.ref)
     }
@@ -312,7 +312,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/callbacks/loop")
+            val _ = resolver.resolve("#/components/callbacks/loop")
         }
         assertEquals("#/components/callbacks/loop", ex.ref)
     }
@@ -323,7 +323,7 @@ class ReferenceResolverTest {
         val resolver = ReferenceResolver(doc)
 
         val ex = assertThrows(ReferenceResolutionException::class.java) {
-            resolver.resolve("#/components/schemas/Pet")
+            val _ = resolver.resolve("#/components/schemas/Pet")
         }
         assertEquals("#/components/schemas/Pet", ex.ref)
     }

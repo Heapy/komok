@@ -103,7 +103,7 @@ class HeaderTest {
     @Test
     fun `should reject Header without schema or content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Header(description = "Invalid header")
+            val _ = Header(description = "Invalid header")
         }
 
         assertEquals(
@@ -115,7 +115,7 @@ class HeaderTest {
     @Test
     fun `should reject Header with both schema and content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Header(
+            val _ = Header(
                 description = "Invalid header",
                 schema = Schema(buildJsonObject { put("type", "string") }),
                 content = mapOf(
@@ -135,7 +135,7 @@ class HeaderTest {
     @Test
     fun `should reject Header with both example and examples`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Header(
+            val _ = Header(
                 schema = Schema(buildJsonObject { put("type", "string") }),
                 example = JsonPrimitive("test"),
                 examples = mapOf("ex1" to Example(value = JsonPrimitive("test")))

@@ -150,7 +150,7 @@ class LinkTest {
     @Test
     fun `should reject Link without operationRef or operationId`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Link(
+            val _ = Link(
                 description = "Invalid link"
             )
         }
@@ -164,7 +164,7 @@ class LinkTest {
     @Test
     fun `should reject Link with both operationRef and operationId`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Link(
+            val _ = Link(
                 operationRef = "#/paths/~1users/get",
                 operationId = "getUsers"
             )

@@ -175,7 +175,7 @@ class SchemasBuilder {
      * Adds a schema using DSL syntax.
      */
     inline infix fun String.to(block: SchemaBuilder.() -> Unit) {
-        schemas[this] = schema(block)
+        schemas[this] = genericSchema(block)
     }
 
     /**

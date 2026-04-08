@@ -20,7 +20,7 @@ typealias SpecificationExtensions = Map<String, JsonElement>
  * @throws IllegalArgumentException if any key doesn't start with "x-"
  */
 fun specificationExtensions(vararg pairs: Pair<String, JsonElement>): SpecificationExtensions {
-    pairs.forEach { (key, _) ->
+    pairs.forEach { [key, _] ->
         require(key.startsWith("x-")) {
             "Specification extension keys must start with 'x-', but got: '$key'"
         }

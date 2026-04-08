@@ -357,7 +357,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter without schema or content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "invalid",
                 location = ParameterLocation.QUERY
             )
@@ -372,7 +372,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with both schema and content`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "invalid",
                 location = ParameterLocation.QUERY,
                 schema = Schema(buildJsonObject { put("type", "string") }),
@@ -393,7 +393,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with both example and examples`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "invalid",
                 location = ParameterLocation.QUERY,
                 schema = Schema(buildJsonObject { put("type", "string") }),
@@ -413,7 +413,7 @@ class ParameterTest {
     @Test
     fun `should reject querystring Parameter with schema`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "filter",
                 location = ParameterLocation.QUERYSTRING,
                 schema = Schema(buildJsonObject { put("type", "object") })
@@ -429,7 +429,7 @@ class ParameterTest {
     @Test
     fun `should reject path Parameter without required`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "id",
                 location = ParameterLocation.PATH,
                 required = false,
@@ -446,7 +446,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with content containing multiple media types`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "data",
                 location = ParameterLocation.QUERY,
                 content = mapOf(
@@ -469,7 +469,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with style but no schema`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
@@ -490,7 +490,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with explode but no schema`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
@@ -511,7 +511,7 @@ class ParameterTest {
     @Test
     fun `should reject Parameter with allowReserved but no schema`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "data",
                 location = ParameterLocation.QUERYSTRING,
                 content = mapOf(
@@ -532,7 +532,7 @@ class ParameterTest {
     @Test
     fun `should reject allowEmptyValue for non-query parameters`() {
         val exception = assertThrows(IllegalStateException::class.java) {
-            Parameter(
+            val _ = Parameter(
                 name = "id",
                 location = ParameterLocation.PATH,
                 required = true,

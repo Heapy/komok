@@ -193,7 +193,7 @@ class SchemaAndExampleTest {
     @Test
     fun `should reject Example with both value and externalValue`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Example(
+            val _ = Example(
                 value = JsonPrimitive("test"),
                 externalValue = "https://example.com/test.json"
             )
@@ -208,7 +208,7 @@ class SchemaAndExampleTest {
     @Test
     fun `should reject Example with both value and dataValue`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Example(
+            val _ = Example(
                 value = JsonPrimitive("test"),
                 dataValue = JsonPrimitive("data")
             )
@@ -223,7 +223,7 @@ class SchemaAndExampleTest {
     @Test
     fun `should reject Example with both value and serializedValue`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Example(
+            val _ = Example(
                 value = JsonPrimitive("test"),
                 serializedValue = "serialized"
             )
@@ -238,7 +238,7 @@ class SchemaAndExampleTest {
     @Test
     fun `should reject Example with both serializedValue and externalValue`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            Example(
+            val _ = Example(
                 serializedValue = "serialized",
                 externalValue = "https://example.com/test.json"
             )

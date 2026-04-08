@@ -109,7 +109,7 @@ class UserServiceTest {
         val module = buildModule<ServiceModule>()
 
         // Mock UserService dependency
-        module.daoModule.userDao.mock {
+        val userDao = module.daoModule.userDao.mock {
             mockk {
                 every {
                     getById(1)
@@ -135,7 +135,7 @@ class UserServiceTest {
 
         // Verify calls
         verifySequence {
-            module.daoModule.userDao.value.getById(1)
+            val _ = userDao.getById(1)
         }
     }
 }

@@ -1,6 +1,5 @@
 package io.heapy.komok.tech.api.dsl
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -130,7 +129,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `license DSL should fail when name is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            license {
+            val _ = license {
                 identifier = "MIT"
             }
         }
@@ -141,7 +140,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `license DSL should fail when both identifier and url are provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            license {
+            val _ = license {
                 name = "MIT"
                 identifier = "MIT"
                 url = "https://opensource.org/licenses/MIT"
@@ -213,7 +212,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `externalDocumentation DSL should fail when url is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            externalDocumentation {
+            val _ = externalDocumentation {
                 description = "Some description"
             }
         }
@@ -310,7 +309,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `tag DSL should fail when name is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            tag {
+            val _ = tag {
                 description = "Some tag"
             }
         }
@@ -321,7 +320,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `tag DSL should fail when nested externalDocs has no url`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            tag {
+            val _ = tag {
                 name = "pets"
                 externalDocs {
                     description = "Missing URL"
@@ -415,7 +414,7 @@ class CoreValueObjectDslTest {
     @Test
     fun `tags DSL should fail if any tag is missing required name`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            tags {
+            val _ = tags {
                 tag {
                     name = "valid"
                 }

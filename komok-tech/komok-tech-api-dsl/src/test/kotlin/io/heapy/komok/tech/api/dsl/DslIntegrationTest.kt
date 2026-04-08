@@ -2,9 +2,9 @@ package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertNotNull
 
 /**
  * Integration tests that exercise the complete DSL surface area
@@ -496,7 +496,7 @@ class DslIntegrationTest {
         assertNotNull(api.externalDocs)
 
         // Validate against OpenAPI 3.2 JSON Schema
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
 
         // Verify round-trip
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
@@ -586,7 +586,7 @@ class DslIntegrationTest {
         assertEquals(3, api.security!!.size)
 
         // Validate against OpenAPI 3.2 JSON Schema
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -645,7 +645,7 @@ class DslIntegrationTest {
         assertNotNull(path.options)
         assertNotNull(path.trace)
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -705,7 +705,7 @@ class DslIntegrationTest {
             }
         }
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -777,10 +777,10 @@ class DslIntegrationTest {
         }
 
         assertEquals(2, api.webhooks!!.size)
-        assertTrue(api.webhooks!!.containsKey("orderCreated"))
-        assertTrue(api.webhooks!!.containsKey("paymentReceived"))
+        assertTrue(api.webhooks.containsKey("orderCreated"))
+        assertTrue(api.webhooks.containsKey("paymentReceived"))
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -830,10 +830,10 @@ class DslIntegrationTest {
         }
 
         assertEquals(2, api.servers!!.size)
-        assertEquals(2, api.servers!![0].variables!!.size)
-        assertEquals(1, api.servers!![1].variables!!.size)
+        assertEquals(2, api.servers[0].variables!!.size)
+        assertEquals(1, api.servers[1].variables!!.size)
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -868,7 +868,7 @@ class DslIntegrationTest {
         }
 
         assertNotNull(api.extensions)
-        assertEquals(2, api.extensions!!.size)
+        assertEquals(2, api.extensions.size)
         assertNotNull(api.info.extensions)
 
         // Extensions are serialized as nested "extensions" field, not flattened as x- properties,
@@ -1015,9 +1015,9 @@ class DslIntegrationTest {
                                     "avatar_url" to stringSchema { format = "uri" }
                                 }
                             }
-                            "private" to schema { type = "boolean" }
+                            "private" to genericSchema { type = "boolean" }
                             "description" to stringSchema()
-                            "fork" to schema { type = "boolean" }
+                            "fork" to genericSchema { type = "boolean" }
                             "stargazers_count" to integerSchema()
                             "language" to stringSchema()
                         }
@@ -1072,7 +1072,7 @@ class DslIntegrationTest {
         assertEquals(2, api.components!!.schemas!!.size)
 
         // Validate against OpenAPI 3.2 JSON Schema
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -1152,7 +1152,7 @@ class DslIntegrationTest {
                                                 "data" to arraySchema {
                                                     items = refSchema("#/components/schemas/Charge")
                                                 }
-                                                "has_more" to schema { type = "boolean" }
+                                                "has_more" to genericSchema { type = "boolean" }
                                                 "url" to stringSchema()
                                             }
                                         }
@@ -1225,7 +1225,7 @@ class DslIntegrationTest {
         assertEquals(2, api.paths!!.size)
         assertEquals(1, api.components!!.schemas!!.size)
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -1275,7 +1275,7 @@ class DslIntegrationTest {
             }
         }
 
-        TestHelpers.testSerialization(OpenAPI.serializer(), api)
+        val _ = TestHelpers.testSerialization(OpenAPI.serializer(), api)
         TestHelpers.testRoundTripWithoutValidation(OpenAPI.serializer(), api)
     }
 
@@ -1325,6 +1325,6 @@ class DslIntegrationTest {
         outputFile.writeText(json)
 
         // Validate against schema
-        OpenAPISchemaValidator.validate(json)
+        val _ = OpenAPISchemaValidator.validate(json)
     }
 }

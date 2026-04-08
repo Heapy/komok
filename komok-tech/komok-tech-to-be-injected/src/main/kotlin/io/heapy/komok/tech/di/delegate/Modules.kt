@@ -3,6 +3,8 @@ package io.heapy.komok.tech.di.delegate
 import io.heapy.komok.tech.logging.logger
 import kotlin.time.measureTimedValue
 
+private val log = logger {}
+
 private fun traverseModuleTree(
     beans: MutableMap<Class<*>, Lazy<Any>>,
     type: Class<*>,
@@ -63,8 +65,6 @@ inline fun <reified T : Any> buildModules(): ModuleRegistry {
 internal fun buildModules(
     moduleType: Class<*>,
 ): ModuleRegistry {
-    val log = logger {}
-
     val beanTreeResult = measureTimedValue {
         val beans = mutableMapOf<Class<*>, Lazy<Any>>()
         traverseModuleTree(beans, moduleType)
@@ -75,7 +75,7 @@ internal fun buildModules(
 
     val result = measureTimedValue {
         // Force initialization of root module
-        beanTreeResult.value[moduleType]?.value
+        val _ = beanTreeResult.value[moduleType]?.value
             ?: error("Type $moduleType not found")
         ModuleRegistry(beanTreeResult.value)
     }
@@ -89,8 +89,6 @@ internal fun buildModules(
 internal fun buildModule(
     moduleType: Class<*>,
 ): Any {
-    val log = logger {}
-
     val beanTreeResult = measureTimedValue {
         val beans = mutableMapOf<Class<*>, Lazy<Any>>()
         traverseModuleTree(beans, moduleType)

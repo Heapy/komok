@@ -198,7 +198,7 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
             // Group operations by tag for sidebar
             val operationsByTag = mutableMapOf<String?, MutableList<Pair<String, io.heapy.komok.tech.api.dsl.PathItem>>>()
 
-            paths.forEach { (path, pathItem) ->
+            paths.forEach { [path, pathItem] ->
                 val operations = listOfNotNull(
                     pathItem.get,
                     pathItem.post,
@@ -242,7 +242,7 @@ private fun FlowContent.renderSidebar(openapi: OpenAPI) {
                     }
 
                     ul(classes = "endpoint-list") {
-                        operationsByTag[tag]?.distinctBy { it.first }?.forEach { (path, pathItem) ->
+                        operationsByTag[tag]?.distinctBy { it.first }?.forEach { [path, pathItem] ->
                             renderEndpointListItem(path, pathItem)
                         }
                     }
@@ -291,7 +291,7 @@ private fun UL.renderEndpointListItem(path: String, pathItem: io.heapy.komok.tec
         pathItem.trace?.let { "TRACE" to it }
     )
 
-    operations.forEach { (method, operation) ->
+    operations.forEach { [method, _] ->
         li(classes = "endpoint-item") {
             a(href = "#${method.lowercase()}-${sanitizePathForId(path)}") {
                 span(classes = "method-badge method-${method.lowercase()}") { +method }
@@ -383,7 +383,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
             // Group operations by tag
             val operationsByTag = mutableMapOf<String?, MutableList<Triple<String, String, io.heapy.komok.tech.api.dsl.Operation>>>()
 
-            paths.forEach { (path, pathItem) ->
+            paths.forEach { [path, pathItem] ->
                 val operations = listOfNotNull(
                     pathItem.get?.let { Triple("GET", path, it) },
                     pathItem.post?.let { Triple("POST", path, it) },
@@ -395,7 +395,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                     pathItem.trace?.let { Triple("TRACE", path, it) }
                 )
 
-                operations.forEach { (method, p, operation) ->
+                operations.forEach { [method, p, operation] ->
                     val tag = operation.tags?.firstOrNull()
                     operationsByTag.getOrPut(tag) { mutableListOf() }.add(Triple(method, p, operation))
                 }
@@ -427,7 +427,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
                         h3(classes = "tag-name") { +"Untagged" }
                     }
 
-                    operationsByTag[tag]?.forEach { (method, path, operation) ->
+                    operationsByTag[tag]?.forEach { [method, path, operation] ->
                         renderOperation(method, path, operation)
                     }
                 }
@@ -440,7 +440,7 @@ private fun FlowContent.renderContent(openapi: OpenAPI) {
         section(classes = "content-section") {
             h2 { +"Schemas" }
 
-            schemas.entries.sortedBy { it.key }.forEach { (name, schema) ->
+            schemas.entries.sortedBy { it.key }.forEach { [name, schema] ->
                 div(classes = "schema-item") {
                     id = "schema-$name"
                     h3 { +name }
@@ -489,7 +489,7 @@ private fun FlowContent.renderSecuritySchemes(
                 p { +"The following security schemes are required globally:" }
                 ul {
                     requirements.forEach { requirement ->
-                        requirement.forEach { (schemeName, scopes) ->
+                        requirement.forEach { [schemeName, scopes] ->
                             li {
                                 strong { +schemeName }
                                 if (scopes.isNotEmpty()) {
@@ -503,7 +503,7 @@ private fun FlowContent.renderSecuritySchemes(
         }
 
         // Individual security schemes
-        securitySchemes.forEach { (name, scheme) ->
+        securitySchemes.forEach { [name, scheme] ->
             div(classes = "security-scheme") {
                 div(classes = "security-scheme-header") {
                     h3 { +name }
@@ -667,7 +667,7 @@ private fun FlowContent.renderOAuthFlow(flowName: String, flow: OAuthFlow) {
                     }
                 }
                 tbody {
-                    flow.scopes.forEach { (scope, description) ->
+                    flow.scopes.forEach { [scope, description] ->
                         tr {
                             td { code { +scope } }
                             td { +description }
@@ -773,7 +773,7 @@ private fun TBODY.renderSchemaProperties(
     allSchemas: Map<String, Schema>,
     depth: Int,
 ) {
-    properties.forEach { (propName, propValue) ->
+    properties.forEach { [propName, propValue] ->
         val propObj = propValue as? JsonObject ?: return@forEach
         val isRequired = propName in requiredSet
         val typeDesc = schemaTypeDescription(propObj)
@@ -877,7 +877,7 @@ private fun FlowContent.renderContent(content: Content, showSchemaHeading: Boole
     )
 
     val groups = mutableListOf<ContentGroup>()
-    content.forEach { (contentType, mediaTypeRef) ->
+    content.forEach { [contentType, mediaTypeRef] ->
         val mediaType = when (mediaTypeRef) {
             is Direct -> mediaTypeRef.value
             is Reference -> return@forEach // Skip references for now
@@ -931,7 +931,7 @@ private fun FlowContent.renderContent(content: Content, showSchemaHeading: Boole
             group.mediaType.examples?.takeIf { it.isNotEmpty() }?.let { examples ->
                 div(classes = "examples-display") {
                     h5 { +"Examples" }
-                    examples.forEach { (exampleName, example) ->
+                    examples.forEach { [exampleName, example] ->
                         div(classes = "named-example") {
                             h6 { +exampleName }
                             example.summary?.let { p { em { +it } } }
@@ -966,7 +966,7 @@ private fun FlowContent.renderPathItem(path: String, pathItem: io.heapy.komok.te
         pathItem.trace?.let { "TRACE" to it }
     )
 
-    operations.forEach { (method, operation) ->
+    operations.forEach { [method, operation] ->
         renderOperation(method, path, operation)
     }
 }
@@ -1091,7 +1091,7 @@ private fun FlowContent.renderOperation(method: String, path: String, operation:
                     h4 { +"Responses" }
 
                     div(classes = "responses") {
-                        operation.responses.forEach { (statusCode, response) ->
+                        operation.responses.forEach { [statusCode, response] ->
                             div(classes = "response-item") {
                                 span(classes = "status-code ${statusCodeCssClass(statusCode)}") {
                                     +statusCode

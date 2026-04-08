@@ -23,7 +23,7 @@ class Base32Test {
             .base32
 
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            base32.decode("1234A234A234A234")
+            val _ = base32.decode("1234A234A234A234")
         }
 
         assertEquals(

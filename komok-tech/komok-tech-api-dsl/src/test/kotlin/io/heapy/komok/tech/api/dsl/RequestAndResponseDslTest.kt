@@ -90,7 +90,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `requestBody DSL should fail when content is not provided`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            requestBody {
+            val _ = requestBody {
                 description = "Missing content"
             }
         }
@@ -101,7 +101,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `requestBody DSL should fail when content is empty`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            requestBody {
+            val _ = requestBody {
                 content {}
             }
         }
@@ -154,8 +154,7 @@ class RequestAndResponseDslTest {
                     schema {
                         type = "object"
                         properties {
-                            "file" to schema {
-                                type = "string"
+                            "file" to stringSchema {
                                 format = "binary"
                             }
                         }
@@ -527,7 +526,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `responses DSL should fail when empty`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses {}
+            val _ = responses {}
         }
 
         assertEquals("Responses must contain at least one response", exception.message)
@@ -536,7 +535,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `responses DSL should fail for invalid status code`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses {
+            val _ = responses {
                 "999" to {
                     description = "Invalid"
                 }
@@ -549,7 +548,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `responses DSL should fail for non-numeric status code`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses {
+            val _ = responses {
                 "abc" to {
                     description = "Invalid"
                 }
@@ -562,7 +561,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `responses DSL should fail for invalid wildcard pattern`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses {
+            val _ = responses {
                 "6XX" to {
                     description = "Invalid wildcard"
                 }
@@ -575,7 +574,7 @@ class RequestAndResponseDslTest {
     @Test
     fun `responses DSL should fail for status code below 100`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            responses {
+            val _ = responses {
                 "099" to {
                     description = "Invalid"
                 }

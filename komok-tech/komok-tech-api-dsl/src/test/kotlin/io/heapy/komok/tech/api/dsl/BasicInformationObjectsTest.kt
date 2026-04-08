@@ -113,7 +113,7 @@ class BasicInformationObjectsTest {
     @Test
     fun `should reject License with both identifier and url`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
-            License(
+            val _ = License(
                 name = "MIT",
                 identifier = "MIT",
                 url = "https://opensource.org/licenses/MIT"

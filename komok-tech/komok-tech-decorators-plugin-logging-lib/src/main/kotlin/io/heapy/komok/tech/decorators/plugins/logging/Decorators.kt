@@ -16,7 +16,7 @@ internal inline fun <T> runAndLog(
 ): T {
     return try {
         if (annotation.includeExecutionTime) {
-            val (result, duration) = measureTimedValue { call() }
+            val [result, duration] = measureTimedValue { call() }
             if (annotation.includeResult) {
                 atLevel.log(
                     "{} returned: {}, took {}ms",

@@ -142,5 +142,5 @@ fun main() {
         }
     }
 
-    module.nettyServer.start()
+    val _ = module.nettyServer.start()
 }

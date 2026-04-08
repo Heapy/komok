@@ -38,9 +38,6 @@ public abstract interface class io/heapy/komok/tech/di/ez/api/Module {
 	public abstract fun getSource ()Ljava/lang/String;
 }
 
-public abstract interface annotation class io/heapy/komok/tech/di/ez/api/ModuleDSL : java/lang/annotation/Annotation {
-}
-
 public abstract interface class io/heapy/komok/tech/di/ez/api/ModuleProvider {
 	public abstract fun module ()Lio/heapy/komok/tech/di/ez/api/Module;
 }

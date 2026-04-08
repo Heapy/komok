@@ -58,7 +58,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
     // Collect component schemas for $ref resolution
     val componentSchemas = openapi.components?.schemas ?: emptyMap()
 
-    openapi.paths?.forEach { (path, pathItem) ->
+    openapi.paths?.forEach { [path, pathItem] ->
         val operations = listOfNotNull(
             pathItem.get?.let { "GET" to it },
             pathItem.post?.let { "POST" to it },
@@ -70,7 +70,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
             pathItem.trace?.let { "TRACE" to it },
         )
 
-        operations.forEach { (method, operation) ->
+        operations.forEach { [method, operation] ->
             // Section header with summary
             val summary = operation.summary ?: "$method $path"
             appendLine("### $summary")
@@ -105,7 +105,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
 
             // Document path parameters
             if (pathParams.isNotEmpty()) {
-                pathParams.forEach { (name, desc) ->
+                pathParams.forEach { [name, desc] ->
                     val descSuffix = desc?.let { " - $it" } ?: ""
                     appendLine("# @param {$name}$descSuffix")
                 }
@@ -113,7 +113,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
 
             // Document responses as comments (before request line to avoid being parsed as body)
             if (operation.responses.isNotEmpty()) {
-                operation.responses.forEach { (statusCode, response) ->
+                operation.responses.forEach { [statusCode, response] ->
                     val desc = response.description ?: response.summary ?: ""
                     appendLine("# $statusCode: $desc")
                 }
@@ -122,7 +122,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
             // Build URL with path parameters replaced and query parameters appended
             var urlPath = path.replace(Regex("\\{([^}]+)}")) { "{{${it.groupValues[1]}}}" }
             if (queryParams.isNotEmpty()) {
-                val queryString = queryParams.joinToString("&") { (name, _, _) ->
+                val queryString = queryParams.joinToString("&") { [name, _, _] ->
                     "$name={{$name}}"
                 }
                 urlPath = "$urlPath?$queryString"
@@ -159,7 +159,7 @@ fun generateHttpFile(openapi: OpenAPI): String = buildString {
             }
 
             // Add custom header parameters
-            headerParams.forEach { (name, desc, required) ->
+            headerParams.forEach { [name, desc, required] ->
                 val reqMarker = if (required) "" else " (optional)"
                 val descSuffix = desc?.let { " # $it$reqMarker" } ?: ""
                 appendLine("$name: {{$name}}$descSuffix")
@@ -257,7 +257,7 @@ private fun generateExampleFromJsonElement(
         "object" -> {
             val properties = element["properties"] as? JsonObject ?: return JsonObject(emptyMap())
             val result = mutableMapOf<String, JsonElement>()
-            properties.forEach { (propName, propValue) ->
+            properties.forEach { [propName, propValue] ->
                 val propExample = generateExampleFromJsonElement(propValue, componentSchemas, depth + 1)
                 if (propExample != null) {
                     result[propName] = propExample

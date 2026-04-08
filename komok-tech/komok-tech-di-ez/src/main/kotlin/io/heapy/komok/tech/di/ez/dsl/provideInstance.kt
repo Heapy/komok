@@ -1,12 +1,10 @@
 package io.heapy.komok.tech.di.ez.dsl
 
-import io.heapy.komok.tech.di.ez.api.ProviderBinding
 import io.heapy.komok.tech.di.ez.api.Binder
-import io.heapy.komok.tech.di.ez.api.ModuleDSL
+import io.heapy.komok.tech.di.ez.api.ProviderBinding
 import io.heapy.komok.tech.di.ez.api.genericKey
 import io.heapy.komok.tech.di.ez.impl.asMethodReference
 
-@ModuleDSL
 inline fun <reified I> Binder.provideInstance(
     instance: I,
 ) {

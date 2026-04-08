@@ -1,6 +1,6 @@
 package io.heapy.komok.tech.api.dsl
 
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

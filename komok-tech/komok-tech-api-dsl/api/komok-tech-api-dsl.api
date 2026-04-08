@@ -2264,6 +2264,8 @@ public final class io/heapy/komok/tech/api/dsl/SchemaAndExampleDslKt {
 	public static synthetic fun booleanTypeSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun example (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/api/dsl/Example;
 	public static final fun examples (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
+	public static final fun genericSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun genericSchema (Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun integerSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
 	public static synthetic fun integerSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun numberSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
@@ -2271,8 +2273,6 @@ public final class io/heapy/komok/tech/api/dsl/SchemaAndExampleDslKt {
 	public static final fun objectSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
 	public static synthetic fun objectSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun refSchema (Ljava/lang/String;)Lkotlinx/serialization/json/JsonElement;
-	public static final fun schema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
-	public static final fun schema (Lkotlinx/serialization/json/JsonElement;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun schemaProperties (Lkotlin/jvm/functions/Function1;)Ljava/util/Map;
 	public static final fun stringSchema (Lkotlin/jvm/functions/Function1;)Lkotlinx/serialization/json/JsonElement;
 	public static synthetic fun stringSchema$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/serialization/json/JsonElement;

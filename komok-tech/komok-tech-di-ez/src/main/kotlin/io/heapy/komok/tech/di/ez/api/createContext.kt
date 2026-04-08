@@ -17,7 +17,7 @@ fun ModuleProvider.createContext(): Context {
         modules = processedModules,
     )
 
-    processedModules.forEach { (_, module) ->
+    processedModules.forEach { [_, module] ->
         processBindings(
             bindings = bindings,
             module = module,

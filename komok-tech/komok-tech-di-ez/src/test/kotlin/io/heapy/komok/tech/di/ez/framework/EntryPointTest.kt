@@ -83,7 +83,7 @@ class EntryPointTest {
         private val service2: Service2,
     ) {
         fun run() {
-            service2.hello()
+            val _ = service2.hello()
         }
     }
 

@@ -209,7 +209,7 @@ class CyclicDependencyTest {
     fun `test cyclic dependencies`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                cyclic
+                val _ = cyclic
                     .createContext()
                     .get<Foo>()
             }
@@ -238,7 +238,7 @@ class ObjectBindingTest {
     fun `komok disallows object binding`() =
         runTest {
             val exception = assertThrows<ContextException> {
-                objectModule
+                val _ = objectModule
                     .createContext()
                     .get<ToBind>()
             }
@@ -271,7 +271,7 @@ class CircularDependencyTest {
     @Test
     fun `circular dependency in modules shouldn't throw error`() {
         runTest {
-            module3
+            val _ = module3
                 .createContext()
                 .get<HelloWorld>()
         }

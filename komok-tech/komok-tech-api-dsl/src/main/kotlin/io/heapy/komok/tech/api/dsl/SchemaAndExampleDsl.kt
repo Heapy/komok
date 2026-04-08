@@ -2,7 +2,6 @@ package io.heapy.komok.tech.api.dsl
 
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
@@ -147,7 +146,7 @@ class SchemaBuilder {
             requiredFields?.let { put("required", JsonArray(it.map { f -> JsonPrimitive(f) })) }
             schemaProperties?.let {
                 put("properties", buildJsonObject {
-                    it.forEach { (name, schema) -> put(name, schema.schema) }
+                    it.forEach { [name, schema] -> put(name, schema.schema) }
                 })
             }
             minProperties?.let { put("minProperties", it) }
@@ -164,7 +163,7 @@ class SchemaBuilder {
             nullable?.let { put("nullable", it) }
 
             // Custom properties
-            properties.forEach { (name, value) -> put(name, value) }
+            properties.forEach { [name, element] -> put(name, element) }
         })
     }
 }
@@ -180,7 +179,7 @@ class SchemaPropertiesBuilder {
      * Adds a property schema using DSL syntax.
      */
     inline infix fun String.to(block: SchemaBuilder.() -> Unit) {
-        properties[this] = schema(block)
+        properties[this] = genericSchema(block)
     }
 
     /**
@@ -206,14 +205,14 @@ inline fun schemaProperties(block: SchemaPropertiesBuilder.() -> Unit): Map<Stri
  * @param block configuration block for the schema
  * @return configured Schema object
  */
-inline fun schema(block: SchemaBuilder.() -> Unit): Schema {
+inline fun genericSchema(block: SchemaBuilder.() -> Unit): Schema {
     return SchemaBuilder().apply(block).build()
 }
 
 /**
  * Creates a Schema from a raw JsonElement.
  */
-fun schema(json: JsonElement): Schema = Schema(json)
+fun genericSchema(json: JsonElement): Schema = Schema(json)
 
 /**
  * Creates a boolean schema (true = any valid, false = none valid).
@@ -224,67 +223,67 @@ fun booleanSchema(value: Boolean): Schema = Schema(JsonPrimitive(value))
  * Creates a reference schema.
  */
 fun refSchema(ref: String): Schema = Schema(buildJsonObject {
-    put("\$ref", ref)
+    put($$"$ref", ref)
 })
 
 /**
  * Creates a string type schema.
  */
 inline fun stringSchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "string"
         block()
-    }.build()
+    }
 }
 
 /**
  * Creates an integer type schema.
  */
 inline fun integerSchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "integer"
         block()
-    }.build()
+    }
 }
 
 /**
  * Creates a number type schema.
  */
 inline fun numberSchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "number"
         block()
-    }.build()
+    }
 }
 
 /**
  * Creates a boolean type schema.
  */
 inline fun booleanTypeSchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "boolean"
         block()
-    }.build()
+    }
 }
 
 /**
  * Creates an array type schema.
  */
 inline fun arraySchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "array"
         block()
-    }.build()
+    }
 }
 
 /**
  * Creates an object type schema.
  */
 inline fun objectSchema(block: SchemaBuilder.() -> Unit = {}): Schema {
-    return SchemaBuilder().apply {
+    return genericSchema {
         type = "object"
         block()
-    }.build()
+    }
 }
 
 // ============================================
