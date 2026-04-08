@@ -5,3 +5,10 @@
 3. Use io.heapy.komok.tech.logging.Logger for logging.
 4. Refuse to unit test code that requires too many mocks because of bad structure and request to update code.
 5. Assert Whole Objects, Not Individual Fields.
+
+## Use Kotlin-specific assertions
+
+| Correct                             | Incorrect                                      |
+|-------------------------------------|------------------------------------------------|
+| org.junit.jupiter.api.assertNotNull | org.junit.jupiter.api.Assertions.assertNotNull |
+| org.junit.jupiter.api.assertAll     | org.junit.jupiter.api.Assertions.assertAll     |
