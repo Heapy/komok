@@ -10,7 +10,7 @@ This library provides a simple, compile-time safe dependency injection mechanism
 
 ```kotlin
 dependencies {
-    implementation("io.heapy.komok:komok-tech-to-be-injected:1.0.13")
+    implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
 }
 ```
 
