@@ -235,7 +235,6 @@ private fun TypeSpec.Builder.addDependentModules(
                 .builder(
                     dependencyPropertyName,
                 )
-                .addAnnotation(moduleDslMarker)
                 .addParameter(
                     "initializer",
                     LambdaTypeName.get(
@@ -310,7 +309,6 @@ private fun TypeSpec.Builder.addModuleProperties(
                     .builder(
                         moduleProperty.simpleName.asString(),
                     )
-                    .addAnnotation(moduleDslMarker)
                     .addParameter(
                         "initializer",
                         LambdaTypeName.get(

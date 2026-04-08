@@ -7,5 +7,9 @@ package io.heapy.komok.tech.di.lib
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Module
 
+@Deprecated(
+    level = DeprecationLevel.HIDDEN,
+    message = "This was not used as a real DslMarker",
+)
 @DslMarker
 annotation class KomokModuleDsl

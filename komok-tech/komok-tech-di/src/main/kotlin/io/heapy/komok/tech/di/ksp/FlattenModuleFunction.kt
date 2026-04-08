@@ -49,7 +49,6 @@ fun generateFlattenModuleFunction(
 
     return FunSpec
         .builder("createFlatten$className")
-        .addAnnotation(moduleDslMarker)
         .addParameter(
             "builder",
             LambdaTypeName.get(
