@@ -131,12 +131,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.6.0":
-  version: 25.6.0
-  resolution: "@types/node@npm:25.6.0"
+"@types/node@npm:^25.6.2":
+  version: 25.6.2
+  resolution: "@types/node@npm:25.6.2"
   dependencies:
     undici-types: "npm:~7.19.0"
-  checksum: 10c0/d2d2015630ff098a201407f55f5077a20270ae4f465c739b40865cd9933b91b9c5d2b85568eadaf3db0801b91e267333ca7eb39f007428b173d1cdab4b339ac5
+  checksum: 10c0/7f540331aa3ab88c285aeaf2eb43e3992f54f0cdb7f3593d156af67b199d4eaf56590fa1c310a00aa58ff69dba668cb3915a157fe83cd6b40a73bb338a12f09a
   languageName: node
   linkType: hard
 
@@ -1012,21 +1012,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "komok@workspace:."
   dependencies:
-    "@types/node": "npm:^25.6.0"
+    "@types/node": "npm:^25.6.2"
     "@types/react": "npm:^19.2.14"
     "@types/react-dom": "npm:^19.2.3"
     compression-webpack-plugin: "npm:^12.0.0"
     css-loader: "npm:^7.1.4"
     html-webpack-plugin: "npm:^5.6.7"
     mini-css-extract-plugin: "npm:^2.10.2"
-    react: "npm:^19.2.5"
-    react-dom: "npm:^19.2.5"
+    react: "npm:^19.2.6"
+    react-dom: "npm:^19.2.6"
     ts-loader: "npm:^9.5.7"
     tslib: "npm:^2.8.1"
     typescript: "npm:^6.0.3"
     webpack: "npm:^5.106.2"
     webpack-cli: "npm:^7.0.2"
-    zustand: "npm:^5.0.12"
+    zustand: "npm:^5.0.13"
   languageName: unknown
   linkType: soft
 
@@ -1327,21 +1327,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.2.5":
-  version: 19.2.5
-  resolution: "react-dom@npm:19.2.5"
+"react-dom@npm:^19.2.6":
+  version: 19.2.6
+  resolution: "react-dom@npm:19.2.6"
   dependencies:
     scheduler: "npm:^0.27.0"
   peerDependencies:
-    react: ^19.2.5
-  checksum: 10c0/8067606e9f58e4c2e8cb5f09570217dbc71c4843ebcaa20ae2085912d3e3a351f17d8f7c1713313cdda7f272840c8c34ff6c860fcb840862071bceea218e0c63
+    react: ^19.2.6
+  checksum: 10c0/dbf2aef67857c03a612bc9316a4562e5066f43fa04bf28f7f0734963fc1350da2c9f8eb973930655453281079f30cc8222bab383dbec4b5097084e2c081e3334
   languageName: node
   linkType: hard
 
-"react@npm:^19.2.5":
-  version: 19.2.5
-  resolution: "react@npm:19.2.5"
-  checksum: 10c0/4b5f231dbef92886f602533c9ce3bde04d99f0e71dfb5d794c43e02726efaad0421c08688f75fc98a6d6e1dc017372e1af7abbfecdc86a79968f461675931a7a
+"react@npm:^19.2.6":
+  version: 19.2.6
+  resolution: "react@npm:19.2.6"
+  checksum: 10c0/66afde33b9a9ee87b1e1cae39d8e7e040d1262e719524fd70660c4d4ce79929c532ac19fc3df5a911edaf02768fdf2c49de4ede1ba99bc6aad72796e0e26e798
   languageName: node
   linkType: hard
 
@@ -1874,9 +1874,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zustand@npm:^5.0.12":
-  version: 5.0.12
-  resolution: "zustand@npm:5.0.12"
+"zustand@npm:^5.0.13":
+  version: 5.0.13
+  resolution: "zustand@npm:5.0.13"
   peerDependencies:
     "@types/react": ">=18.0.0"
     immer: ">=9.0.6"
@@ -1891,6 +1891,6 @@ __metadata:
       optional: true
     use-sync-external-store:
       optional: true
-  checksum: 10c0/304c1dfb6033d758ddc7606c15df8566e6cace83ee4eeec721e8975f7813fd4cca2c68ff6b3eaa1841a9e53f0cf8486007217479785eccb845e3596de4df7f1e
+  checksum: 10c0/e4e76af1c324c797e3cc6ef094cb15c5884ca6713697140c2be292b2c612f5445fa21d222671b97797a4376154cac14a140f05728f0ac17b4b9e10f45e0ff29e
   languageName: node
   linkType: hard
