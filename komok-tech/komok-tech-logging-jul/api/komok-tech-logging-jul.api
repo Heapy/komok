@@ -1,0 +1,7 @@
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandler : java/util/logging/Handler {
+	public fun <init> (Lio/heapy/komok/tech/logging/LoggingContext;)V
+	public fun close ()V
+	public fun flush ()V
+	public fun publish (Ljava/util/logging/LogRecord;)V
+}
+
