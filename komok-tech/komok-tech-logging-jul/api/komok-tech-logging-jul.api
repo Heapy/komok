@@ -5,3 +5,26 @@ public final class io/heapy/komok/tech/logging/jul/KomokJulHandler : java/util/l
 	public fun publish (Ljava/util/logging/LogRecord;)V
 }
 
+public class io/heapy/komok/tech/logging/jul/KomokJulHandlerModule {
+	public fun <init> ()V
+	public fun getJulHandler ()Lio/heapy/komok/tech/logging/jul/KomokJulHandler;
+	public fun getLoggingContext ()Lio/heapy/komok/tech/logging/LoggingContext;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
+	public final fun julHandler (Lkotlin/jvm/functions/Function0;)V
+	public final fun loggingContext (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFactoryKt {
+	public static final fun createFlattenKomokJulHandlerModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFlatten;
+	public static final fun createKomokJulHandlerModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFlatten {
+	public fun <init> (Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;)V
+	public final fun getKomokJulHandlerModule ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
+}
+
