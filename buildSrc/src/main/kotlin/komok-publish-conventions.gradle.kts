@@ -39,6 +39,11 @@ val modules: Map<String, Map<String, String>> = mapOf(
     "komok-tech-logging" to mapOf(
         "publishName" to "Komok Tech Logging",
         "publishDescription" to "Logging module based on SLF4J",
+    ),
+    "komok-tech-logging-slf4j" to mapOf(
+        "publishName" to "Komok Tech Logging SLF4J Bridge",
+        "publishDescription" to "SLF4J ServiceProvider bridge for Komok Logging",
+    ),
     "komok-tech-logging-jul" to mapOf(
         "publishName" to "Komok Tech Logging JUL Bridge",
         "publishDescription" to "java.util.logging Handler bridge for Komok Logging",
