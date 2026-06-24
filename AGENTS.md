@@ -1,2 +1,2 @@
-Follow the following instructions:
+- How to code @.agents/RULES.md
 - Writing tests @.agents/TESTING.md
