@@ -37,8 +37,8 @@ tasks.test {
 }
 
 dependencies {
-    implementation("org.http4k:http4k-server-netty:6.50.0.0")
-    implementation("io.undertow:undertow-core:2.4.1.Final")
+    implementation("org.http4k:http4k-server-netty:6.54.0.0")
+    implementation("io.undertow:undertow-core:2.4.2.Final")
     implementation(projects.komokTech.komokTechConfig)
     implementation(projects.komokTech.komokTechConfigDotenv)
     implementation(projects.komokTech.komokTechLogging)
