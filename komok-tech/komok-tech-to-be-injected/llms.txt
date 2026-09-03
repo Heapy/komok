@@ -1,16 +1,21 @@
 # komok-tech-to-be-injected
 
-> Minimal dependency injection library for Kotlin based on property delegates
+> Minimal Kotlin Multiplatform dependency injection library based on property delegates
 
 ## Overview
 
 This library provides a simple, compile-time safe dependency injection mechanism using Kotlin's `lazy` delegate pattern. It allows defining module classes with bean properties that are lazily initialized and can be mocked for testing.
 
+Published targets include JVM, JS, Wasm-JS, Wasm-WASI, Linux, MinGW,
+macOS, iOS, tvOS, and watchOS.
+
 ## Installation
 
 ```kotlin
-dependencies {
-    implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+kotlin {
+    sourceSets.commonMain.dependencies {
+        implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+    }
 }
 ```
 
@@ -20,6 +25,7 @@ dependencies {
 import io.heapy.komok.tech.di.delegate.bean
 import io.heapy.komok.tech.di.delegate.buildModule
 import io.heapy.komok.tech.di.delegate.buildModules
+import io.heapy.komok.tech.di.delegate.ModuleGraphBuilder
 import io.heapy.komok.tech.di.delegate.ModuleRegistry
 import io.heapy.komok.tech.di.delegate.MutableBean
 ```
@@ -28,8 +34,10 @@ import io.heapy.komok.tech.di.delegate.MutableBean
 
 - `bean` - Property delegate function to declare injectable beans
 - `MutableBean<V>` - Thread-safe lazy container that supports mocking and value override before initialization
-- `buildModule<T>()` - Reflectively constructs module tree and returns the root module
-- `buildModules<T>()` - Reflectively constructs module tree and returns `ModuleRegistry` for type-based lookup
+- `ModuleGraphBuilder` - Registers portable, explicit module factories
+- `buildModule<T>(graph)` - Constructs a portable module graph and returns the root module
+- `buildModules(graph)` - Constructs a portable graph and returns `ModuleRegistry`
+- `buildModule<T>()` / `buildModules<T>()` - JVM-only reflective shortcuts
 - `ModuleRegistry` - Container providing type-based access to any module in the tree
 
 ## Usage Pattern
@@ -40,7 +48,7 @@ import io.heapy.komok.tech.di.delegate.MutableBean
 class ConfigurationModule {
     val config by bean {
         AppConfig(
-            host = System.getenv("HOST") ?: "localhost",
+            host = "localhost",
             port = 8080
         )
     }
@@ -87,18 +95,49 @@ class ApplicationModule(
 }
 ```
 
-### Building the Module Tree
+### Building the Module Tree on Every Platform
 
-Use `buildModule<T>()` to automatically construct the entire dependency tree:
+Native, JS, and Wasm do not expose JVM constructor reflection, so portable
+code declares module factories explicitly:
 
 ```kotlin
+fun applicationGraph(): ModuleGraphBuilder.() -> Unit = {
+    module<ConfigurationModule> {
+        ConfigurationModule()
+    }
+    module<UtilsModule> {
+        UtilsModule(configurationModule = invoke())
+    }
+    module<ServiceModule> {
+        ServiceModule(
+            utilsModule = invoke(),
+            daoModule = invoke(),
+        )
+    }
+    module<ApplicationModule> {
+        ApplicationModule(
+            utilsModule = invoke(),
+            serviceModule = invoke(),
+        )
+    }
+}
+
 fun main() {
-    val app = buildModule<ApplicationModule>()
+    val app = buildModule<ApplicationModule>(applicationGraph())
     app.app.value.start()
 }
 ```
 
-The `buildModule` function reflectively analyzes constructor parameters and instantiates all required modules automatically.
+Factories are lazy, and each module type is created at most once per graph.
+A dependency cycle fails on first access with the cycle path in the message.
+
+### JVM Reflection Shortcut
+
+JVM code can still ask the library to inspect constructors automatically:
+
+```kotlin
+val app = buildModule<ApplicationModule>()
+```
 
 ### Reusing Modules
 
@@ -106,19 +145,19 @@ Modules can be reused in different contexts:
 
 ```kotlin
 // In main application
-val app = buildModule<ApplicationModule>()
+val app = buildModule<ApplicationModule>(applicationGraph())
 
 // In a utility script that only needs HttpClient
-val utils = buildModule<UtilsModule>()
+val utils = buildModule<UtilsModule>(applicationGraph())
 val client = utils.httpClient.value
 ```
 
 ### Accessing Any Module via Type Lookup
 
-Use `buildModules<T>()` to get a `ModuleRegistry` that provides type-based access to any module in the tree:
+Use `buildModules(graph)` to get a `ModuleRegistry` that provides type-based access to any registered module:
 
 ```kotlin
-val modules = buildModules<ApplicationModule>()
+val modules = buildModules(applicationGraph())
 
 // Access any module by type
 val app = modules<ApplicationModule>()
@@ -168,11 +207,14 @@ class ServiceModule(
 Beans can be mocked before initialization:
 
 ```kotlin
-val module = buildModule<ServiceModule>()
+val module = buildModule<ServiceModule>(applicationGraph())
 module.userDao.mock {
     mockk { every { getById(1) } returns User(1, "Test") }
 }
 ```
+
+MockK is JVM-only. In common tests, type beans as interfaces and pass a
+portable fake to `setValue`, or create the fake in `mock`.
 
 Or set directly:
 
@@ -182,12 +224,12 @@ module.bean.setValue(testValue)
 
 ### Mocking Beans in Nested Modules
 
-Use `buildModules<T>()` to access and mock beans in any module of the tree, even when constructor parameters are private:
+Use `buildModules(graph)` to access and mock beans in any module of the tree, even when constructor parameters are private:
 
 ```kotlin
 @Test
 fun `test with mocked http client`() {
-    val modules = buildModules<ApplicationModule>()
+    val modules = buildModules(applicationGraph())
 
     // Access nested module directly by type (no need for public constructor params)
     val utilsModule = modules<UtilsModule>()
@@ -214,7 +256,9 @@ This approach is useful when:
 
 ## Design Notes
 
-- Uses Double-Checked Locking (DCL) for thread-safe lazy initialization
+- Uses common atomics and platform lazy synchronization for thread-safe initialization
+- JVM retains reflective graph construction and SLF4J logging
+- Native, JS, and Wasm use explicit factories and have no JVM dependencies
 - Module dependencies are declared via constructor parameters (not as beans)
 - Bean values accessed via `.value` property
 - Mocking must happen before first `.value` access

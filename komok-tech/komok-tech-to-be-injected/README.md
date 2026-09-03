@@ -1,6 +1,6 @@
 # To Be Injected
 
-Minimal and simple dependency injection library for Kotlin.
+Minimal and simple dependency injection library for Kotlin Multiplatform.
 Based on idea of using Kotlin `lazy` delegate:
 
 ```kotlin
@@ -11,17 +11,23 @@ open class MyModule {
 }
 ```
 
-But not requiring to extend modules for testing and manually build module tree.
+Modules do not need to inherit framework base types and remain directly usable
+in tests.
 
 ## Installation
 
-Add the following to your `build.gradle.kts`:
+Add the following to the source set that uses the library:
 
 ```kotlin
-dependencies {
-    implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+kotlin {
+    sourceSets.commonMain.dependencies {
+        implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+    }
 }
 ```
+
+Published targets include JVM, JS, Wasm-JS, Wasm-WASI, Linux, MinGW,
+macOS, iOS, tvOS, and watchOS.
 
 ## Usage
 
@@ -30,6 +36,8 @@ This is a simplified example of multi-module project with dependencies between t
 ```kotlin
 import io.heapy.komok.tech.di.delegate.bean
 import io.heapy.komok.tech.di.delegate.buildModule
+import io.heapy.komok.tech.di.delegate.buildModules
+import io.heapy.komok.tech.di.delegate.ModuleGraphBuilder
 
 // UtilsModule.kt
 class UtilsModule {
@@ -91,47 +99,77 @@ class ApplicationModule(
 }
 
 // main.kt
-fun main() {
-    val app = buildModule<ApplicationModule>()
-    app.server.value.start()
+fun applicationGraph(): ModuleGraphBuilder.() -> Unit = {
+    module<UtilsModule> {
+        UtilsModule()
+    }
+    module<DaoModule> {
+        DaoModule(utilsModule = invoke())
+    }
+    module<ServiceModule> {
+        ServiceModule(
+            utilsModule = invoke(),
+            daoModule = invoke(),
+        )
+    }
+    module<ControllerModule> {
+        ControllerModule(serviceModule = invoke())
+    }
+    module<ApplicationModule> {
+        ApplicationModule(controllerModule = invoke())
+    }
 }
 
-// UserServiceTest.kt
+fun main() {
+    val app = buildModule<ApplicationModule>(applicationGraph())
+    app.server.value.start()
+}
+```
+
+Factories are explicit because Kotlin/Native, Kotlin/JS, and Kotlin/Wasm do
+not provide JVM constructor reflection. On JVM, the reflective
+shortcut remains available:
+
+```kotlin
+val app = buildModule<ApplicationModule>()
+```
+
+The portable graph can also return a registry when tests or application code
+need more than the root module:
+
+```kotlin
+val modules = buildModules(applicationGraph())
+val app = modules<ApplicationModule>()
+val utils = modules<UtilsModule>()
+```
+
+## Testing
+
+The same graph works in common tests. Beans typed as interfaces can be replaced
+with portable fakes before their first use:
+
+```kotlin
 class UserServiceTest {
     @Test
     fun `test user service`() {
-        // Create module with all dependencies
-        val module = buildModule<ServiceModule>()
+        val modules = buildModules(applicationGraph())
+        val module = modules<ServiceModule>()
 
-        // Mock UserService dependency
-        module.daoModule.userDao.mock {
-            mockk {
-                every {
-                    getById(1)
-                } returns User(
-                    id = 1,
-                    name = "Mocked user",
-                )
-            }
-        }
+        module.daoModule.userDao.setValue(
+            UserDao(configuration = Configuration()),
+        )
 
-        // Run service method
         val userService = module.userService.value
         val user = userService.getUser(1)
 
-        // Assert Result
         assertEquals(
             User(
                 id = 1,
-                name = "Mocked user",
+                name = "User 1",
             ),
             user,
         )
 
-        // Verify calls
-        verifySequence {
-            module.daoModule.userDao.value.getById(1)
-        }
     }
 }
 ```

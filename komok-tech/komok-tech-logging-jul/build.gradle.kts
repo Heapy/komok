@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    api(projects.komokTech.komokTechLoggingApi)
+    api(projects.komokTech.komokTechLogging)
     implementation(projects.komokTech.komokTechDiLib)
     ksp(projects.komokTech.komokTechDi)
 

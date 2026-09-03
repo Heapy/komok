@@ -1,14 +1,38 @@
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.jvm.tasks.Jar
+
 plugins {
     signing
-    `java-library`
     `maven-publish`
 }
 
 group = "io.heapy.komok"
 
-java {
-    withJavadocJar()
-    withSourcesJar()
+val isMultiplatform = pluginManager.hasPlugin("org.jetbrains.kotlin.multiplatform")
+
+if (!isMultiplatform) {
+    pluginManager.apply("java-library")
+    extensions.configure<JavaPluginExtension> {
+        withJavadocJar()
+        withSourcesJar()
+    }
+}
+
+val multiplatformJavadocJars = if (isMultiplatform) {
+    mapOf(
+        "kotlinMultiplatform" to tasks.register<Jar>("multiplatformRootJavadocJar") {
+            archiveAppendix = "metadata"
+            archiveClassifier = "javadoc"
+            from(layout.projectDirectory.file("README.md"))
+        },
+        "jvm" to tasks.register<Jar>("multiplatformJvmJavadocJar") {
+            archiveAppendix = "jvm"
+            archiveClassifier = "javadoc"
+            from(layout.projectDirectory.file("README.md"))
+        },
+    )
+} else {
+    emptyMap()
 }
 
 val modules: Map<String, Map<String, String>> = mapOf(
@@ -95,10 +119,16 @@ fun Project.getPublishDescription(): String = modules.getValue(name).getValue("p
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
-            artifactId = project.name
+        if (!isMultiplatform) {
+            create<MavenPublication>("maven") {
+                artifactId = project.name
 
-            from(components["java"])
+                from(components["java"])
+            }
+        }
+
+        withType<MavenPublication>().configureEach {
+            multiplatformJavadocJars[name]?.let(::artifact)
 
             pom {
                 name = project.getPublishName()
@@ -137,5 +167,5 @@ publishing {
 }
 
 signing {
-    sign(publishing.publications["maven"])
+    sign(publishing.publications)
 }
