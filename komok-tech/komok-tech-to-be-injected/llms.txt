@@ -14,7 +14,7 @@ macOS, iOS, tvOS, and watchOS.
 ```kotlin
 kotlin {
     sourceSets.commonMain.dependencies {
-        implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+        implementation("io.heapy.komok:komok-tech-to-be-injected:1.2.0")
     }
 }
 ```

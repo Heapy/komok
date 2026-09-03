@@ -21,7 +21,7 @@ Add the following to the source set that uses the library:
 ```kotlin
 kotlin {
     sourceSets.commonMain.dependencies {
-        implementation("io.heapy.komok:komok-tech-to-be-injected:1.1.0")
+        implementation("io.heapy.komok:komok-tech-to-be-injected:1.2.0")
     }
 }
 ```
