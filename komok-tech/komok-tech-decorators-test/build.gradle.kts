@@ -27,7 +27,6 @@ tasks
         compilerOptions {
             jvmTarget = JvmTarget.JVM_21
             freeCompilerArgs.addAll(
-                "-Xcontext-parameters",
                 "-Xreturn-value-checker=full",
                 "-Xname-based-destructuring=complete",
             )
