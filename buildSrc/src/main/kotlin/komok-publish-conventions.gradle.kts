@@ -18,21 +18,13 @@ if (!isMultiplatform) {
     }
 }
 
-val multiplatformJavadocJars = if (isMultiplatform) {
-    mapOf(
-        "kotlinMultiplatform" to tasks.register<Jar>("multiplatformRootJavadocJar") {
-            archiveAppendix = "metadata"
-            archiveClassifier = "javadoc"
-            from(layout.projectDirectory.file("README.md"))
-        },
-        "jvm" to tasks.register<Jar>("multiplatformJvmJavadocJar") {
-            archiveAppendix = "jvm"
-            archiveClassifier = "javadoc"
-            from(layout.projectDirectory.file("README.md"))
-        },
-    )
+val multiplatformJavadocJar = if (isMultiplatform) {
+    tasks.register<Jar>("multiplatformJavadocJar") {
+        archiveClassifier = "javadoc"
+        from(layout.projectDirectory.file("README.md"))
+    }
 } else {
-    emptyMap()
+    null
 }
 
 val modules: Map<String, Map<String, String>> = mapOf(
@@ -132,7 +124,7 @@ publishing {
         }
 
         withType<MavenPublication>().configureEach {
-            multiplatformJavadocJars[name]?.let(::artifact)
+            multiplatformJavadocJar?.let(::artifact)
 
             pom {
                 name = project.getPublishName()
