@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    api(projects.komokTech.komokTechLogging)
+    api(projects.komokTech.komokTechLoggingApi)
     api(libs.slf4j.api)
 
     testImplementation(libs.junit.jupiter)

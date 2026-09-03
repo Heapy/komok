@@ -60,6 +60,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Config",
         "publishDescription" to "Configuration module based on .env and HOCON",
     ),
+    "komok-tech-logging-api" to mapOf(
+        "publishName" to "Komok Tech Logger API",
+        "publishDescription" to "Logging API: Logger, LogEvent, Level, Mdc, LoggingContext, LogHandler",
+    ),
     "komok-tech-logging" to mapOf(
         "publishName" to "Komok Tech Logging",
         "publishDescription" to "Logging module based on SLF4J",

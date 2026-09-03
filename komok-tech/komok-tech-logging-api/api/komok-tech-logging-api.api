@@ -1,0 +1,284 @@
+public abstract interface class io/heapy/komok/tech/logging/Encoder {
+	public abstract fun encode (Lio/heapy/komok/tech/logging/LogEvent;)Ljava/lang/String;
+}
+
+public abstract class io/heapy/komok/tech/logging/FormatElement {
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$AllMdc : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$AllMdc;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$Level : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$Level;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$Literal : io/heapy/komok/tech/logging/FormatElement {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/heapy/komok/tech/logging/FormatElement$Literal;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/logging/FormatElement$Literal;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/logging/FormatElement$Literal;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$LoggerName : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$LoggerName;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$LoggerNameShort : io/heapy/komok/tech/logging/FormatElement {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun copy (I)Lio/heapy/komok/tech/logging/FormatElement$LoggerNameShort;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/logging/FormatElement$LoggerNameShort;IILjava/lang/Object;)Lio/heapy/komok/tech/logging/FormatElement$LoggerNameShort;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSegments ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$MdcValue : io/heapy/komok/tech/logging/FormatElement {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/heapy/komok/tech/logging/FormatElement$MdcValue;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/logging/FormatElement$MdcValue;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/logging/FormatElement$MdcValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$Message : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$Message;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$Newline : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$Newline;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$ThreadName : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$ThreadName;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$ThrowableTrace : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$ThrowableTrace;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/FormatElement$Timestamp : io/heapy/komok/tech/logging/FormatElement {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/FormatElement$Timestamp;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public class io/heapy/komok/tech/logging/JvmLogger {
+	public fun <init> ()V
+	protected final fun getLog-c0A1pvE ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/Level : java/lang/Enum {
+	public static final field DEBUG Lio/heapy/komok/tech/logging/Level;
+	public static final field ERROR Lio/heapy/komok/tech/logging/Level;
+	public static final field INFO Lio/heapy/komok/tech/logging/Level;
+	public static final field OFF Lio/heapy/komok/tech/logging/Level;
+	public static final field TRACE Lio/heapy/komok/tech/logging/Level;
+	public static final field WARN Lio/heapy/komok/tech/logging/Level;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/heapy/komok/tech/logging/Level;
+	public static fun values ()[Lio/heapy/komok/tech/logging/Level;
+}
+
+public final class io/heapy/komok/tech/logging/LogEvent {
+	public fun <init> (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;Ljava/lang/String;Lio/heapy/komok/tech/logging/ThrowableProxy;Lkotlin/time/Instant;Lio/heapy/komok/tech/logging/Mdc;)V
+	public final fun getLevel ()Lio/heapy/komok/tech/logging/Level;
+	public final fun getLoggerName ()Ljava/lang/String;
+	public final fun getMdc ()Lio/heapy/komok/tech/logging/Mdc;
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getThreadName ()Ljava/lang/String;
+	public final fun getThrowable ()Lio/heapy/komok/tech/logging/ThrowableProxy;
+	public final fun getTimestamp ()Lkotlin/time/Instant;
+	public final fun prepareForDeferredProcessing ()V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/heapy/komok/tech/logging/LogHandler {
+	public static final field Companion Lio/heapy/komok/tech/logging/LogHandler$Companion;
+	public abstract fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+}
+
+public final class io/heapy/komok/tech/logging/LogHandler$Companion {
+	public final fun composite (Ljava/util/List;)Lio/heapy/komok/tech/logging/LogHandler;
+	public final fun composite ([Lio/heapy/komok/tech/logging/LogHandler;)Lio/heapy/komok/tech/logging/LogHandler;
+	public final fun noop ()Lio/heapy/komok/tech/logging/LogHandler;
+}
+
+public final class io/heapy/komok/tech/logging/LogHandlerKt {
+	public static final fun andThen (Lio/heapy/komok/tech/logging/LogHandlerWrapper;Lio/heapy/komok/tech/logging/LogHandlerWrapper;)Lio/heapy/komok/tech/logging/LogHandlerWrapper;
+	public static final fun wrappedBy (Lio/heapy/komok/tech/logging/LogHandler;Ljava/util/List;)Lio/heapy/komok/tech/logging/LogHandler;
+	public static final fun wrappedBy (Lio/heapy/komok/tech/logging/LogHandler;[Lio/heapy/komok/tech/logging/LogHandlerWrapper;)Lio/heapy/komok/tech/logging/LogHandler;
+}
+
+public abstract interface class io/heapy/komok/tech/logging/LogHandlerWrapper {
+	public static final field Companion Lio/heapy/komok/tech/logging/LogHandlerWrapper$Companion;
+	public abstract fun wrap (Lio/heapy/komok/tech/logging/LogHandler;)Lio/heapy/komok/tech/logging/LogHandler;
+}
+
+public final class io/heapy/komok/tech/logging/LogHandlerWrapper$Companion {
+	public final fun identity ()Lio/heapy/komok/tech/logging/LogHandlerWrapper;
+}
+
+public final class io/heapy/komok/tech/logging/Logger {
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lio/heapy/komok/tech/logging/Logger;
+	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun debug-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun debug-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public static final fun error-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun error-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public static final fun info-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun info-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun log-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Lio/heapy/komok/tech/logging/Level;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun trace-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun trace-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+	public static final fun warn-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun warn-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/logging/LoggerKt {
+	public static final fun getLogger (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun logger (Ljava/lang/Object;)Ljava/lang/String;
+	public static final fun logger (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun logger (Lkotlin/reflect/KClass;)Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/LoggingContext {
+	public fun <init> (Lio/heapy/komok/tech/logging/LogHandler;Lio/heapy/komok/tech/logging/Mdc;Lkotlin/jvm/functions/Function0;)V
+	public synthetic fun <init> (Lio/heapy/komok/tech/logging/LogHandler;Lio/heapy/komok/tech/logging/Mdc;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun dispatch (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public final fun getHandler ()Lio/heapy/komok/tech/logging/LogHandler;
+	public final fun getMdc ()Lio/heapy/komok/tech/logging/Mdc;
+	public final fun getNow ()Lkotlin/jvm/functions/Function0;
+	public fun toString ()Ljava/lang/String;
+	public final fun withMdc (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)Lio/heapy/komok/tech/logging/LoggingContext;
+	public final fun withMdc (Lio/heapy/komok/tech/logging/Mdc;)Lio/heapy/komok/tech/logging/LoggingContext;
+	public final fun withMdc (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/LoggingContext;
+}
+
+public final class io/heapy/komok/tech/logging/LoggingContextKt {
+	public static final fun getEmptyLoggingContext ()Lio/heapy/komok/tech/logging/LoggingContext;
+	public static final fun getLoggingContext (Lio/heapy/komok/tech/logging/LoggingContext;)Lio/heapy/komok/tech/logging/LoggingContext;
+	public static final fun withEmptyLoggingContext (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun withMdc (Lio/heapy/komok/tech/logging/LoggingContext;Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun withMdc (Lio/heapy/komok/tech/logging/LoggingContext;Lio/heapy/komok/tech/logging/Mdc;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun withMdc (Lio/heapy/komok/tech/logging/LoggingContext;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/logging/MapMdc : io/heapy/komok/tech/logging/Mdc {
+	public fun <init> (Ljava/util/Map;)V
+	public fun entries ()Ljava/util/Map;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun get (Lio/heapy/komok/tech/logging/Mdc$Key;)Ljava/lang/Object;
+	public final fun getMap ()Ljava/util/Map;
+	public fun getSize ()I
+	public fun hashCode ()I
+	public fun isEmpty ()Z
+	public fun minus (Lio/heapy/komok/tech/logging/Mdc$Key;)Lio/heapy/komok/tech/logging/Mdc;
+	public fun plus (Lio/heapy/komok/tech/logging/Mdc;)Lio/heapy/komok/tech/logging/Mdc;
+	public fun toString ()Ljava/lang/String;
+	public fun with (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)Lio/heapy/komok/tech/logging/Mdc;
+}
+
+public abstract interface class io/heapy/komok/tech/logging/Mdc {
+	public static final field Companion Lio/heapy/komok/tech/logging/Mdc$Companion;
+	public abstract fun entries ()Ljava/util/Map;
+	public abstract fun get (Lio/heapy/komok/tech/logging/Mdc$Key;)Ljava/lang/Object;
+	public abstract fun getSize ()I
+	public fun isEmpty ()Z
+	public abstract fun minus (Lio/heapy/komok/tech/logging/Mdc$Key;)Lio/heapy/komok/tech/logging/Mdc;
+	public abstract fun plus (Lio/heapy/komok/tech/logging/Mdc;)Lio/heapy/komok/tech/logging/Mdc;
+	public abstract fun with (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)Lio/heapy/komok/tech/logging/Mdc;
+}
+
+public final class io/heapy/komok/tech/logging/Mdc$Companion {
+	public final fun getEmpty ()Lio/heapy/komok/tech/logging/Mdc;
+	public final fun of (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)Lio/heapy/komok/tech/logging/Mdc;
+	public final fun of ([Lkotlin/Pair;)Lio/heapy/komok/tech/logging/Mdc;
+}
+
+public final class io/heapy/komok/tech/logging/Mdc$DefaultImpls {
+	public static fun isEmpty (Lio/heapy/komok/tech/logging/Mdc;)Z
+}
+
+public abstract class io/heapy/komok/tech/logging/Mdc$Key {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getName ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/MdcBuilder {
+	public fun <init> ()V
+	public final fun build ()Lio/heapy/komok/tech/logging/Mdc;
+	public final fun invoke (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)V
+	public final fun to (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/lang/Object;)V
+}
+
+public final class io/heapy/komok/tech/logging/MdcKt {
+	public static final fun buildMdc (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/Mdc;
+}
+
+public final class io/heapy/komok/tech/logging/StackTraceElementProxy {
+	public fun <init> (Ljava/lang/StackTraceElement;)V
+	public final fun getStackTraceElement ()Ljava/lang/StackTraceElement;
+	public final fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/ThrowableProxy {
+	public static final field Companion Lio/heapy/komok/tech/logging/ThrowableProxy$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lio/heapy/komok/tech/logging/StackTraceElementProxy;Lio/heapy/komok/tech/logging/ThrowableProxy;[Lio/heapy/komok/tech/logging/ThrowableProxy;I)V
+	public final fun getCause ()Lio/heapy/komok/tech/logging/ThrowableProxy;
+	public final fun getClassName ()Ljava/lang/String;
+	public final fun getCommonFramesCount ()I
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getStackTrace ()[Lio/heapy/komok/tech/logging/StackTraceElementProxy;
+	public final fun getSuppressed ()[Lio/heapy/komok/tech/logging/ThrowableProxy;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/logging/ThrowableProxy$Companion {
+	public final fun create (Ljava/lang/Throwable;)Lio/heapy/komok/tech/logging/ThrowableProxy;
+}
+

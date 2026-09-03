@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.binary.compatibility.validator)
     `komok-publish-conventions`
 }
@@ -12,10 +11,8 @@ repositories {
 }
 
 dependencies {
-    api(projects.komokTech.komokTechLoggingApi)
-    implementation(projects.komokTech.komokTechDiLib)
-    ksp(projects.komokTech.komokTechDi)
-
+    testImplementation(kotlin("reflect"))
+    testImplementation(libs.kotlinx.coroutines.jdk8)
     testImplementation(libs.junit.jupiter)
     runtimeOnly(libs.junit.platform.launcher)
 }
