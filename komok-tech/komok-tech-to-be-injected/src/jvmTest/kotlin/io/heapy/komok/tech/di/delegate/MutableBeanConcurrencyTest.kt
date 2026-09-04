@@ -3,8 +3,11 @@ package io.heapy.komok.tech.di.delegate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -69,4 +72,57 @@ class MutableBeanConcurrencyTest {
             val _ = executor.shutdownNow()
         }
     }
+
+    @Test
+    fun `mutually dependent beans read from two threads fail on both threads`() {
+        val startedFirst = CountDownLatch(1)
+        val startedSecond = CountDownLatch(1)
+        lateinit var first: MutableBean<String>
+        lateinit var second: MutableBean<String>
+
+        first = MutableBean(
+            initializer = {
+                startedFirst.countDown()
+                check(startedSecond.await(3, TimeUnit.SECONDS))
+                "first-${second.value}"
+            },
+            name = "test.first",
+        )
+        second = MutableBean(
+            initializer = {
+                startedSecond.countDown()
+                check(startedFirst.await(3, TimeUnit.SECONDS))
+                "second-${first.value}"
+            },
+            name = "test.second",
+        )
+        val executor = daemonExecutor()
+
+        try {
+            val a = executor.submit<String> { first.value }
+            val b = executor.submit<String> { second.value }
+
+            assertAll(
+                { assertReportsCycle { a.get(6, TimeUnit.SECONDS) } },
+                { assertReportsCycle { b.get(6, TimeUnit.SECONDS) } },
+            )
+        } finally {
+            val _ = executor.shutdownNow()
+        }
+    }
+}
+
+private fun daemonExecutor(): ExecutorService =
+    Executors.newFixedThreadPool(2) { runnable ->
+        Thread(runnable).also { it.isDaemon = true }
+    }
+
+private fun assertReportsCycle(read: () -> Any?) {
+    val cause = assertThrows<ExecutionException> { val _ = read() }.cause
+    val message = cause?.message.orEmpty()
+
+    assertTrue(
+        message.contains("cycle across threads") || message.contains("reads itself"),
+        "unexpected cause: $cause",
+    )
 }

@@ -27,10 +27,7 @@ class MutableBean<V> internal constructor(
     val value: V
         get() = when (val current = state.load()) {
             is BeanState.Initialized -> current.value
-            else -> {
-                gate
-                readInitialized()
-            }
+            else -> awaitInitialized()
         }
 
     val isInitialized: Boolean
@@ -65,10 +62,49 @@ class MutableBean<V> internal constructor(
         else -> "MutableBean $name value not initialized yet."
     }
 
+    private fun awaitInitialized(): V {
+        val token = currentThreadToken()
+        val outer = BlockedBeans.swap(token, this)
+
+        try {
+            rejectCycleAcrossThreads(token)
+            gate
+            return readInitialized()
+        } finally {
+            val _ = BlockedBeans.swap(token, outer)
+        }
+    }
+
+    /**
+     * Walks the wait-for chain that starts at this bean. Blocking on a bean
+     * whose owner waits, directly or not, for a bean owned by [token] would
+     * deadlock, because the initializer runs under [gate].
+     */
+    private fun rejectCycleAcrossThreads(token: Any) {
+        val visited = mutableSetOf<Any>()
+        var current: MutableBean<*> = this
+
+        while (true) {
+            val owner = (current.state.load() as? BeanState.Initializing)?.owner
+                ?: return
+            if (owner == token) {
+                check(current === this) {
+                    "Bean $name and bean ${current.name} form a dependency cycle across threads"
+                }
+                return
+            }
+            if (!visited.add(owner)) {
+                return
+            }
+            current = BlockedBeans.of(owner)
+                ?: return
+        }
+    }
+
     private fun runInitializer() {
         val witness = state.compareAndExchange(
             expectedValue = BeanState.Uninitialized,
-            newValue = BeanState.Initializing,
+            newValue = BeanState.Initializing(currentThreadToken()),
         )
         if (witness !is BeanState.Uninitialized) {
             check(witness !is BeanState.Initializing) {
@@ -112,10 +148,41 @@ class MutableBean<V> internal constructor(
     }
 }
 
+/**
+ * Beans that threads are blocked on, so that a waiter can see the chain it is
+ * about to join.
+ */
+@OptIn(ExperimentalAtomicApi::class)
+private object BlockedBeans {
+    private val entries = AtomicReference<Map<Any, MutableBean<*>>>(emptyMap())
+
+    fun of(token: Any): MutableBean<*>? = entries.load()[token]
+
+    fun swap(
+        token: Any,
+        bean: MutableBean<*>?,
+    ): MutableBean<*>? {
+        while (true) {
+            val current = entries.load()
+            val previous = current[token]
+            val updated = if (bean == null) {
+                current - token
+            } else {
+                current + (token to bean)
+            }
+            if (entries.compareAndSet(current, updated)) {
+                return previous
+            }
+        }
+    }
+}
+
 private sealed interface BeanState<out V> {
     object Uninitialized : BeanState<Nothing>
 
-    object Initializing : BeanState<Nothing>
+    class Initializing(
+        val owner: Any,
+    ) : BeanState<Nothing>
 
     class Initialized<V>(
         val value: V,

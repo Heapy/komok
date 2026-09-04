@@ -2,17 +2,9 @@ public final class io/heapy/komok/tech/di/delegate/BeanKt {
 	public static final fun bean (Lkotlin/jvm/functions/Function0;)Lkotlin/properties/ReadOnlyProperty;
 }
 
-public final class io/heapy/komok/tech/di/delegate/ModuleGraphBuilder {
-	public fun <init> ()V
-	public final fun module (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class io/heapy/komok/tech/di/delegate/ModuleGraphKt {
-	public static final fun buildModules (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/di/delegate/ModuleRegistry;
-}
-
 public final class io/heapy/komok/tech/di/delegate/ModuleRegistry {
-	public final fun get (Lkotlin/reflect/KClass;)Ljava/lang/Object;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun get (Ljava/lang/Class;)Ljava/lang/Object;
 }
 
 public final class io/heapy/komok/tech/di/delegate/ModulesKt {

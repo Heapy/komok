@@ -29,15 +29,24 @@ kotlin {
 Published targets include JVM, JS, Wasm-JS, Wasm-WASI, Linux, MinGW,
 macOS, iOS, tvOS, and watchOS.
 
+Build tools that do not read Gradle module metadata, such as Maven, must depend
+on the platform artifact directly:
+
+```xml
+<dependency>
+    <groupId>io.heapy.komok</groupId>
+    <artifactId>komok-tech-to-be-injected-jvm</artifactId>
+    <version>1.2.0</version>
+</dependency>
+```
+
 ## Usage
 
-This is a simplified example of multi-module project with dependencies between them.
+`bean` works on every target. This is a simplified example of a multi-module
+project with dependencies between the modules.
 
 ```kotlin
 import io.heapy.komok.tech.di.delegate.bean
-import io.heapy.komok.tech.di.delegate.buildModule
-import io.heapy.komok.tech.di.delegate.buildModules
-import io.heapy.komok.tech.di.delegate.ModuleGraphBuilder
 
 // UtilsModule.kt
 class UtilsModule {
@@ -56,8 +65,8 @@ class UtilsModule {
 class DaoModule(
     val utilsModule: UtilsModule,
 ) {
-    val userDao by bean {
-        UserDao(
+    val userDao: MutableBean<UserDao> by bean {
+        DefaultUserDao(
             configuration = utilsModule.configuration.value,
         )
     }
@@ -99,80 +108,80 @@ class ApplicationModule(
 }
 
 // main.kt
-fun applicationGraph(): ModuleGraphBuilder.() -> Unit = {
-    module<UtilsModule> {
-        UtilsModule()
-    }
-    module<DaoModule> {
-        DaoModule(utilsModule = invoke())
-    }
-    module<ServiceModule> {
-        ServiceModule(
-            utilsModule = invoke(),
-            daoModule = invoke(),
-        )
-    }
-    module<ControllerModule> {
-        ControllerModule(serviceModule = invoke())
-    }
-    module<ApplicationModule> {
-        ApplicationModule(controllerModule = invoke())
-    }
+fun main() {
+    val utilsModule = UtilsModule()
+    val daoModule = DaoModule(utilsModule)
+    val serviceModule = ServiceModule(utilsModule, daoModule)
+    val controllerModule = ControllerModule(serviceModule)
+    val applicationModule = ApplicationModule(controllerModule)
+
+    applicationModule.server.value.start()
 }
+```
+
+Modules are ordinary classes, so the compiler checks the wiring: a missing
+dependency is a compile error.
+
+## Reflective wiring on JVM
+
+On JVM the wiring can be derived from the constructors instead of written by
+hand. This uses JVM reflection and is therefore not available on other targets:
+
+```kotlin
+import io.heapy.komok.tech.di.delegate.buildModule
 
 fun main() {
-    val app = buildModule<ApplicationModule>(applicationGraph())
-    app.server.value.start()
+    val applicationModule = buildModule<ApplicationModule>()
+    applicationModule.server.value.start()
 }
 ```
 
-Factories are explicit because Kotlin/Native, Kotlin/JS, and Kotlin/Wasm do
-not provide JVM constructor reflection. On JVM, the reflective
-shortcut remains available:
+Every constructor parameter must itself be a module. A dependency cycle fails
+with the cycle path in the message.
+
+`buildModules` returns a registry when tests or application code need more than
+the root module:
 
 ```kotlin
-val app = buildModule<ApplicationModule>()
-```
+import io.heapy.komok.tech.di.delegate.buildModules
 
-The portable graph can also return a registry when tests or application code
-need more than the root module:
-
-```kotlin
-val modules = buildModules(applicationGraph())
-val app = modules<ApplicationModule>()
-val utils = modules<UtilsModule>()
+val modules = buildModules<ApplicationModule>()
+val applicationModule = modules<ApplicationModule>()
+val utilsModule = modules<UtilsModule>()
 ```
 
 ## Testing
 
-The same graph works in common tests. Beans typed as interfaces can be replaced
-with portable fakes before their first use:
+A bean typed as an interface can be replaced with a fake before its first read.
+This works on every target:
 
 ```kotlin
 class UserServiceTest {
     @Test
-    fun `test user service`() {
-        val modules = buildModules(applicationGraph())
-        val module = modules<ServiceModule>()
+    fun `user service reads the user from the dao`() {
+        val utilsModule = UtilsModule()
+        val daoModule = DaoModule(utilsModule)
+        val serviceModule = ServiceModule(utilsModule, daoModule)
 
-        module.daoModule.userDao.setValue(
-            UserDao(configuration = Configuration()),
+        daoModule.userDao.setValue(
+            FakeUserDao(
+                users = mapOf(1 to User(id = 1, name = "Test User")),
+            ),
         )
-
-        val userService = module.userService.value
-        val user = userService.getUser(1)
 
         assertEquals(
             User(
                 id = 1,
-                name = "User 1",
+                name = "Test User",
             ),
-            user,
+            serviceModule.userService.value.getUser(1),
         )
-
     }
 }
 ```
+
+Use `mock` instead of `setValue` when the replacement needs to be built lazily.
+Both calls fail once the bean is initialized.
 
 ## License
 

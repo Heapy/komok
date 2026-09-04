@@ -17,18 +17,4 @@ final class <#A: kotlin/Any?> io.heapy.komok.tech.di.delegate/MutableBean { // i
     final fun toString(): kotlin/String // io.heapy.komok.tech.di.delegate/MutableBean.toString|toString(){}[0]
 }
 
-final class io.heapy.komok.tech.di.delegate/ModuleGraphBuilder { // io.heapy.komok.tech.di.delegate/ModuleGraphBuilder|null[0]
-    constructor <init>() // io.heapy.komok.tech.di.delegate/ModuleGraphBuilder.<init>|<init>(){}[0]
-
-    final fun <#A1: kotlin/Any> module(kotlin.reflect/KClass<#A1>, kotlin/Function1<io.heapy.komok.tech.di.delegate/ModuleRegistry, #A1>) // io.heapy.komok.tech.di.delegate/ModuleGraphBuilder.module|module(kotlin.reflect.KClass<0:0>;kotlin.Function1<io.heapy.komok.tech.di.delegate.ModuleRegistry,0:0>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> module(noinline kotlin/Function1<io.heapy.komok.tech.di.delegate/ModuleRegistry, #A1>) // io.heapy.komok.tech.di.delegate/ModuleGraphBuilder.module|module(kotlin.Function1<io.heapy.komok.tech.di.delegate.ModuleRegistry,0:0>){0§<kotlin.Any>}[0]
-}
-
-final class io.heapy.komok.tech.di.delegate/ModuleRegistry { // io.heapy.komok.tech.di.delegate/ModuleRegistry|null[0]
-    final fun <#A1: kotlin/Any> get(kotlin.reflect/KClass<#A1>): #A1 // io.heapy.komok.tech.di.delegate/ModuleRegistry.get|get(kotlin.reflect.KClass<0:0>){0§<kotlin.Any>}[0]
-    final inline fun <#A1: reified kotlin/Any> invoke(): #A1 // io.heapy.komok.tech.di.delegate/ModuleRegistry.invoke|invoke(){0§<kotlin.Any>}[0]
-}
-
 final fun <#A: kotlin/Any?> io.heapy.komok.tech.di.delegate/bean(kotlin/Function0<#A>): kotlin.properties/ReadOnlyProperty<kotlin/Any, io.heapy.komok.tech.di.delegate/MutableBean<#A>> // io.heapy.komok.tech.di.delegate/bean|bean(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
-final fun io.heapy.komok.tech.di.delegate/buildModules(kotlin/Function1<io.heapy.komok.tech.di.delegate/ModuleGraphBuilder, kotlin/Unit>): io.heapy.komok.tech.di.delegate/ModuleRegistry // io.heapy.komok.tech.di.delegate/buildModules|buildModules(kotlin.Function1<io.heapy.komok.tech.di.delegate.ModuleGraphBuilder,kotlin.Unit>){}[0]
-final inline fun <#A: reified kotlin/Any> io.heapy.komok.tech.di.delegate/buildModule(noinline kotlin/Function1<io.heapy.komok.tech.di.delegate/ModuleGraphBuilder, kotlin/Unit>): #A // io.heapy.komok.tech.di.delegate/buildModule|buildModule(kotlin.Function1<io.heapy.komok.tech.di.delegate.ModuleGraphBuilder,kotlin.Unit>){0§<kotlin.Any>}[0]
