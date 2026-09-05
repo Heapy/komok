@@ -29,6 +29,7 @@ modules:
   - komok-tech/komok-tech-logging-api
   - komok-tech/komok-tech-logging-jul
   - komok-tech/komok-tech-logging-slf4j
+  - komok-tech/komok-tech-runtime
   - komok-tech/komok-tech-time
   - komok-tech/komok-tech-time-test-fixtures
   - komok-tech/komok-tech-to-be-injected
