@@ -32,6 +32,7 @@ public final class io/heapy/komok/tech/logging/ConsoleAppender : io/heapy/komok/
 	public fun <init> (Lio/heapy/komok/tech/logging/Encoder;Lio/heapy/komok/tech/logging/ConsoleTarget;)V
 	public synthetic fun <init> (Lio/heapy/komok/tech/logging/Encoder;Lio/heapy/komok/tech/logging/ConsoleTarget;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -63,6 +64,7 @@ public final class io/heapy/komok/tech/logging/FileAppender : io/heapy/komok/tec
 	public synthetic fun <init> (Lio/heapy/komok/tech/logging/Encoder;Ljava/nio/file/Path;Lio/heapy/komok/tech/logging/RollingPolicy;Lio/heapy/komok/tech/logging/Compression;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun close ()V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -131,6 +133,7 @@ public final class io/heapy/komok/tech/logging/LoggerRouter : io/heapy/komok/tec
 	public fun <init> (Ljava/util/List;Lio/heapy/komok/tech/logging/LogHandler;)V
 	public synthetic fun <init> (Ljava/util/List;Lio/heapy/komok/tech/logging/LogHandler;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -154,6 +157,7 @@ public final class io/heapy/komok/tech/logging/MdcRouter : io/heapy/komok/tech/l
 	public fun <init> (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/util/Map;Lio/heapy/komok/tech/logging/LogHandler;)V
 	public synthetic fun <init> (Lio/heapy/komok/tech/logging/Mdc$Key;Ljava/util/Map;Lio/heapy/komok/tech/logging/LogHandler;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -210,6 +214,7 @@ public final class io/heapy/komok/tech/logging/Router : io/heapy/komok/tech/logg
 	public fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lio/heapy/komok/tech/logging/LogHandler;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/Map;Lio/heapy/komok/tech/logging/LogHandler;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -229,6 +234,7 @@ public final class io/heapy/komok/tech/logging/SizeBasedRolling : io/heapy/komok
 public final class io/heapy/komok/tech/logging/Tee : io/heapy/komok/tech/logging/LogHandler {
 	public fun <init> (Ljava/util/List;)V
 	public fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 	public fun toString ()Ljava/lang/String;
 }
 

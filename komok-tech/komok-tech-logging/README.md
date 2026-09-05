@@ -97,7 +97,7 @@ enum class Level { TRACE, DEBUG, INFO, WARN, ERROR, OFF }
 
 ### Logger
 
-`@JvmInline value class`. All logging methods require `context(LoggingContext)`. Message lambda is only invoked when event passes pipeline.
+`@JvmInline value class`. All logging methods require `context(LoggingContext)`. Each call asks the pipeline whether the level is enabled first, so a rejected call never runs the message lambda and never builds an event.
 
 ```kotlin
 @JvmInline
@@ -105,6 +105,9 @@ value class Logger(val name: String) {
     context(ctx: LoggingContext)
     inline fun info(throwable: Throwable? = null, msg: () -> String)
     // trace, debug, warn, error — same signature
+
+    context(ctx: LoggingContext)
+    fun isEnabled(level: Level): Boolean
 }
 
 inline fun <reified T> logger(): Logger
@@ -201,9 +204,12 @@ inline fun <R : Any, T> withMdc(key: Mdc.Key<R>, value: R, block: context(Loggin
 
 Undertow-inspired pipeline composition.
 
+`isEnabled` is the fast path: it answers whether an event of that level and logger name can reach any appender, without an event to inspect. Implementations must stay side-effect free and answer `true` whenever the decision needs the event, so `LevelFilter` and `LoggerNameFilter` give real answers while `PredicateFilter`, `SamplingFilter` and `Tee` pass the question down.
+
 ```kotlin
 fun interface LogHandler {
     fun handle(event: LogEvent)
+    fun isEnabled(level: Level, loggerName: String): Boolean = true
     companion object {
         fun noop(): LogHandler
         fun composite(vararg handlers: LogHandler): LogHandler
@@ -363,6 +369,8 @@ All DSL classes annotated with `@LoggingDslMarker` to prevent scope leaking.
 ## Bridges
 
 ### SLF4J Bridge (komok-tech-logging-slf4j)
+
+`isTraceEnabled` and friends report the pipeline's answer, and a rejected call is dropped before the message is formatted.
 
 `KomokSLF4JServiceProvider` implements `SLF4JServiceProvider`. SLF4J creates it through `ServiceLoader`, so the `LoggingContext` is installed through `KomokSLF4JServiceProvider.loggingContext` and read on every call. Per-request MDC is not available for bridged third-party libs.
 

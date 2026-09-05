@@ -26,9 +26,13 @@ class KomokJulHandler(
     override fun publish(record: LogRecord?) {
         record ?: return
 
+        val level = mapLevel(record.level)
+        val loggerName = record.loggerName ?: "unknown"
+        if (!context.handler.isEnabled(level, loggerName)) return
+
         val event = LogEvent(
-            level = mapLevel(record.level),
-            loggerName = record.loggerName ?: "unknown",
+            level = level,
+            loggerName = loggerName,
             message = record.message ?: "",
             throwable = record.thrown?.let { ThrowableProxy.create(it) },
             timestamp = Instant.fromEpochMilliseconds(record.millis),

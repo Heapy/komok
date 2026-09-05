@@ -60,42 +60,50 @@ class AsyncHandler(
                 }
             }
         }
-        return LogHandler { event ->
-            event.prepareForDeferredProcessing()
-            when (overflowPolicy) {
-                OverflowPolicy.DROP_ALL -> {
-                    val result = channel.trySend(event)
-                    if (result.isSuccess) {
-                        enqueued.incrementAndGet()
-                    } else {
-                        dropped.incrementAndGet()
-                    }
-                }
-                OverflowPolicy.BLOCK_ALL -> {
-                    runBlocking {
-                        channel.send(event)
-                    }
-                    enqueued.incrementAndGet()
-                }
-                OverflowPolicy.HYBRID -> {
-                    if (event.level.ordinal >= Level.WARN.ordinal) {
-                        val sent = runBlocking {
-                            withTimeoutOrNull(highPriorityBlockTimeout) {
-                                channel.send(event)
-                                true
-                            }
-                        }
-                        if (sent == true) {
-                            enqueued.incrementAndGet()
-                        } else {
-                            dropped.incrementAndGet()
-                        }
-                    } else {
+        return object : LogHandler {
+            override fun isEnabled(
+                level: Level,
+                loggerName: String,
+            ): Boolean =
+                next.isEnabled(level, loggerName)
+
+            override fun handle(event: LogEvent) {
+                event.prepareForDeferredProcessing()
+                when (overflowPolicy) {
+                    OverflowPolicy.DROP_ALL -> {
                         val result = channel.trySend(event)
                         if (result.isSuccess) {
                             enqueued.incrementAndGet()
                         } else {
                             dropped.incrementAndGet()
+                        }
+                    }
+                    OverflowPolicy.BLOCK_ALL -> {
+                        runBlocking {
+                            channel.send(event)
+                        }
+                        enqueued.incrementAndGet()
+                    }
+                    OverflowPolicy.HYBRID -> {
+                        if (event.level.ordinal >= Level.WARN.ordinal) {
+                            val sent = runBlocking {
+                                withTimeoutOrNull(highPriorityBlockTimeout) {
+                                    channel.send(event)
+                                    true
+                                }
+                            }
+                            if (sent == true) {
+                                enqueued.incrementAndGet()
+                            } else {
+                                dropped.incrementAndGet()
+                            }
+                        } else {
+                            val result = channel.trySend(event)
+                            if (result.isSuccess) {
+                                enqueued.incrementAndGet()
+                            } else {
+                                dropped.incrementAndGet()
+                            }
                         }
                     }
                 }

@@ -129,12 +129,17 @@ public final class io/heapy/komok/tech/logging/LogEvent {
 public abstract interface class io/heapy/komok/tech/logging/LogHandler {
 	public static final field Companion Lio/heapy/komok/tech/logging/LogHandler$Companion;
 	public abstract fun handle (Lio/heapy/komok/tech/logging/LogEvent;)V
+	public fun isEnabled (Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 }
 
 public final class io/heapy/komok/tech/logging/LogHandler$Companion {
 	public final fun composite (Ljava/util/List;)Lio/heapy/komok/tech/logging/LogHandler;
 	public final fun composite ([Lio/heapy/komok/tech/logging/LogHandler;)Lio/heapy/komok/tech/logging/LogHandler;
 	public final fun noop ()Lio/heapy/komok/tech/logging/LogHandler;
+}
+
+public final class io/heapy/komok/tech/logging/LogHandler$DefaultImpls {
+	public static fun isEnabled (Lio/heapy/komok/tech/logging/LogHandler;Lio/heapy/komok/tech/logging/Level;Ljava/lang/String;)Z
 }
 
 public final class io/heapy/komok/tech/logging/LogHandlerKt {
@@ -167,6 +172,7 @@ public final class io/heapy/komok/tech/logging/Logger {
 	public static fun hashCode-impl (Ljava/lang/String;)I
 	public static final fun info-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun info-impl$default (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	public static final fun isEnabled-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Lio/heapy/komok/tech/logging/Level;)Z
 	public static final fun log-impl (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;Lio/heapy/komok/tech/logging/Level;Ljava/lang/Throwable;Lkotlin/jvm/functions/Function0;)V
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;

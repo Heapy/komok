@@ -2,6 +2,7 @@ package io.heapy.komok.tech.logging.jul
 
 import io.heapy.komok.tech.logging.Level
 import io.heapy.komok.tech.logging.LogEvent
+import io.heapy.komok.tech.logging.LogHandler
 import io.heapy.komok.tech.logging.LoggingContext
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -79,6 +80,19 @@ class KomokJulHandlerTest {
     }
 
     @Test
+    fun `JUL handler skips records the pipeline rejects`() {
+        val events = mutableListOf<LogEvent>()
+        val ctx = LoggingContext(handler = MinLevelHandler(Level.WARN, events))
+        val handler = KomokJulHandler(ctx)
+
+        val record = LogRecord(java.util.logging.Level.INFO, "dropped")
+        record.loggerName = "test"
+        handler.publish(record)
+
+        assertEquals(0, events.size)
+    }
+
+    @Test
     fun `JUL handler ignores null records`() {
         val events = mutableListOf<LogEvent>()
         val ctx = LoggingContext(handler = { events.add(it) })
@@ -86,5 +100,20 @@ class KomokJulHandlerTest {
 
         handler.publish(null)
         assertEquals(0, events.size)
+    }
+
+    private class MinLevelHandler(
+        private val minLevel: Level,
+        private val events: MutableList<LogEvent>,
+    ) : LogHandler {
+        override fun handle(event: LogEvent) {
+            events.add(event)
+        }
+
+        override fun isEnabled(
+            level: Level,
+            loggerName: String,
+        ): Boolean =
+            level.ordinal >= minLevel.ordinal
     }
 }

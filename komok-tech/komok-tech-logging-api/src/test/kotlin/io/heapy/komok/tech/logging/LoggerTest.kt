@@ -1,6 +1,8 @@
 package io.heapy.komok.tech.logging
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -111,6 +113,51 @@ class LoggerTest {
         }
 
         assertEquals(true, invoked)
+    }
+
+    @Test
+    fun `disabled level skips the message lambda`() {
+        var invoked = false
+        val events = mutableListOf<LogEvent>()
+        val ctx = LoggingContext(handler = MinLevelHandler(Level.WARN, events))
+        val log = logger<LoggerTest>()
+
+        with(ctx) {
+            log.debug {
+                invoked = true
+                "skipped"
+            }
+            log.error { "kept" }
+        }
+
+        assertFalse(invoked)
+        assertEquals(listOf("kept"), events.map { it.message })
+    }
+
+    @Test
+    fun `isEnabled follows the handler`() {
+        val ctx = LoggingContext(handler = MinLevelHandler(Level.WARN, mutableListOf()))
+        val log = logger<LoggerTest>()
+
+        with(ctx) {
+            assertFalse(log.isEnabled(Level.DEBUG))
+            assertTrue(log.isEnabled(Level.ERROR))
+        }
+    }
+
+    private class MinLevelHandler(
+        private val minLevel: Level,
+        private val events: MutableList<LogEvent>,
+    ) : LogHandler {
+        override fun handle(event: LogEvent) {
+            events.add(event)
+        }
+
+        override fun isEnabled(
+            level: Level,
+            loggerName: String,
+        ): Boolean =
+            level.ordinal >= minLevel.ordinal
     }
 
     private object TestRequestId : Mdc.Key<String>("requestId")

@@ -1,12 +1,23 @@
 package io.heapy.komok.tech.logging
 
+import java.util.concurrent.atomic.AtomicLong
+
 /**
  * Only passes events at or above [minLevel].
  */
 class LevelFilter(private val minLevel: Level) : LogHandlerWrapper {
-    override fun wrap(next: LogHandler): LogHandler = LogHandler { event ->
-        if (event.level.ordinal >= minLevel.ordinal) next.handle(event)
-    }
+    override fun wrap(next: LogHandler): LogHandler =
+        object : LogHandler {
+            override fun handle(event: LogEvent) {
+                if (event.level.ordinal >= minLevel.ordinal) next.handle(event)
+            }
+
+            override fun isEnabled(
+                level: Level,
+                loggerName: String,
+            ): Boolean =
+                level.ordinal >= minLevel.ordinal && next.isEnabled(level, loggerName)
+        }
 
     override fun toString(): String = "LevelFilter(>=$minLevel)"
 }
@@ -19,14 +30,25 @@ class LoggerNameFilter(
     private val matchExact: Boolean = false,
 ) : LogHandlerWrapper {
 
-    override fun wrap(next: LogHandler): LogHandler = LogHandler { event ->
-        val matches = if (matchExact) {
-            event.loggerName == prefix
+    private fun matches(loggerName: String): Boolean =
+        if (matchExact) {
+            loggerName == prefix
         } else {
-            event.loggerName == prefix || event.loggerName.startsWith("$prefix.")
+            loggerName == prefix || loggerName.startsWith("$prefix.")
         }
-        if (matches) next.handle(event)
-    }
+
+    override fun wrap(next: LogHandler): LogHandler =
+        object : LogHandler {
+            override fun handle(event: LogEvent) {
+                if (matches(event.loggerName)) next.handle(event)
+            }
+
+            override fun isEnabled(
+                level: Level,
+                loggerName: String,
+            ): Boolean =
+                matches(loggerName) && next.isEnabled(level, loggerName)
+        }
 
     override fun toString(): String = "LoggerNameFilter($prefix)"
 }
@@ -38,9 +60,18 @@ class PredicateFilter(
     private val predicate: EventFilter,
 ) : LogHandlerWrapper {
 
-    override fun wrap(next: LogHandler): LogHandler = LogHandler { event ->
-        if (predicate(event)) next.handle(event)
-    }
+    override fun wrap(next: LogHandler): LogHandler =
+        object : LogHandler {
+            override fun handle(event: LogEvent) {
+                if (predicate(event)) next.handle(event)
+            }
+
+            override fun isEnabled(
+                level: Level,
+                loggerName: String,
+            ): Boolean =
+                next.isEnabled(level, loggerName)
+        }
 
     override fun toString(): String = "PredicateFilter"
 }
@@ -52,11 +83,20 @@ class SamplingFilter(
     private val rate: Int,
 ) : LogHandlerWrapper {
 
-    private val counter = java.util.concurrent.atomic.AtomicLong(0)
+    private val counter = AtomicLong(0)
 
-    override fun wrap(next: LogHandler): LogHandler = LogHandler { event ->
-        if (counter.incrementAndGet() % rate == 0L) next.handle(event)
-    }
+    override fun wrap(next: LogHandler): LogHandler =
+        object : LogHandler {
+            override fun handle(event: LogEvent) {
+                if (counter.incrementAndGet() % rate == 0L) next.handle(event)
+            }
+
+            override fun isEnabled(
+                level: Level,
+                loggerName: String,
+            ): Boolean =
+                next.isEnabled(level, loggerName)
+        }
 
     override fun toString(): String = "SamplingFilter(1/$rate)"
 }

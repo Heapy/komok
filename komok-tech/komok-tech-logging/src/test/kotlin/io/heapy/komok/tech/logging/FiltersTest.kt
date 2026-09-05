@@ -1,6 +1,8 @@
 package io.heapy.komok.tech.logging
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import kotlin.time.Clock
 
@@ -17,6 +19,33 @@ class FiltersTest {
         timestamp = Clock.System.now(),
         mdc = Mdc.Empty,
     )
+
+    @Test
+    fun `LevelFilter reports levels below the threshold as disabled`() {
+        val handler = LevelFilter(Level.WARN).wrap(LogHandler { })
+
+        assertFalse(handler.isEnabled(Level.INFO, "com.example.Test"))
+        assertTrue(handler.isEnabled(Level.WARN, "com.example.Test"))
+    }
+
+    @Test
+    fun `LoggerNameFilter reports other loggers as disabled`() {
+        val handler = LoggerNameFilter("com.example").wrap(LogHandler { })
+
+        assertFalse(handler.isEnabled(Level.ERROR, "org.other.Test"))
+        assertTrue(handler.isEnabled(Level.ERROR, "com.example.Test"))
+    }
+
+    @Test
+    fun `SamplingFilter keeps its counter when asked isEnabled`() {
+        val events = mutableListOf<LogEvent>()
+        val handler = SamplingFilter(2).wrap(LogHandler { events.add(it) })
+
+        repeat(4) { assertTrue(handler.isEnabled(Level.INFO, "com.example.Test")) }
+        repeat(4) { handler.handle(event()) }
+
+        assertEquals(2, events.size)
+    }
 
     @Test
     fun `LevelFilter passes events at or above threshold`() {

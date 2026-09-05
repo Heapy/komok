@@ -1,6 +1,8 @@
 package io.heapy.komok.tech.logging
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import kotlin.time.Clock
 
@@ -19,6 +21,20 @@ class RoutersTest {
         timestamp = Clock.System.now(),
         mdc = mdc,
     )
+
+    @Test
+    fun `LoggerRouter resolves isEnabled through the matching route`() {
+        val router = LoggerRouter(
+            routes = listOf(
+                "com.example.audit" to LevelFilter(Level.ERROR).wrap(LogHandler { }),
+            ),
+            fallback = LogHandler { },
+        )
+
+        assertFalse(router.isEnabled(Level.INFO, "com.example.audit.Trail"))
+        assertTrue(router.isEnabled(Level.ERROR, "com.example.audit.Trail"))
+        assertTrue(router.isEnabled(Level.INFO, "org.other.Test"))
+    }
 
     @Test
     fun `LoggerRouter routes by prefix`() {

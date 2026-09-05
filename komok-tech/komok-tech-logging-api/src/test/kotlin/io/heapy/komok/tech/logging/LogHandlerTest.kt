@@ -1,6 +1,8 @@
 package io.heapy.komok.tech.logging
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import kotlin.time.Clock
 
@@ -107,6 +109,26 @@ class LogHandlerTest {
 
         handler.handle(testEvent("test"))
         assertEquals(1, events.size)
+    }
+
+    @Test
+    fun `noop handler is disabled`() {
+        assertFalse(LogHandler.noop().isEnabled(Level.ERROR, "test"))
+    }
+
+    @Test
+    fun `plain handler is enabled by default`() {
+        assertTrue(LogHandler { }.isEnabled(Level.TRACE, "test"))
+    }
+
+    @Test
+    fun `composite is enabled when any handler is enabled`() {
+        val enabled = LogHandler { }
+        val composite = LogHandler.composite(LogHandler.noop(), enabled)
+
+        assertTrue(composite.isEnabled(Level.INFO, "test"))
+        assertFalse(LogHandler.composite(LogHandler.noop(), LogHandler.noop())
+            .isEnabled(Level.INFO, "test"))
     }
 
     private fun testEvent(message: String) = LogEvent(

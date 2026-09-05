@@ -23,11 +23,16 @@ class KomokSLF4JLogger(
         this.name = name
     }
 
-    override fun isTraceEnabled(): Boolean = context() != null
-    override fun isDebugEnabled(): Boolean = context() != null
-    override fun isInfoEnabled(): Boolean = context() != null
-    override fun isWarnEnabled(): Boolean = context() != null
-    override fun isErrorEnabled(): Boolean = context() != null
+    override fun isTraceEnabled(): Boolean = isEnabled(Level.TRACE)
+    override fun isDebugEnabled(): Boolean = isEnabled(Level.DEBUG)
+    override fun isInfoEnabled(): Boolean = isEnabled(Level.INFO)
+    override fun isWarnEnabled(): Boolean = isEnabled(Level.WARN)
+    override fun isErrorEnabled(): Boolean = isEnabled(Level.ERROR)
+
+    private fun isEnabled(level: Level): Boolean {
+        val ctx = context() ?: return false
+        return ctx.handler.isEnabled(level, name)
+    }
 
     override fun getFullyQualifiedCallerName(): String? = null
 
@@ -39,6 +44,8 @@ class KomokSLF4JLogger(
         throwable: Throwable?,
     ) {
         val ctx = context() ?: return
+        val komokLevel = mapLevel(level)
+        if (!ctx.handler.isEnabled(komokLevel, name)) return
 
         val formattedMessage = if (arguments != null && messagePattern != null) {
             MessageFormatter.arrayFormat(messagePattern, arguments).message
@@ -47,7 +54,7 @@ class KomokSLF4JLogger(
         }
 
         val event = LogEvent(
-            level = mapLevel(level),
+            level = komokLevel,
             loggerName = name,
             message = formattedMessage,
             throwable = throwable?.let { ThrowableProxy.create(it) },

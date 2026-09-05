@@ -15,6 +15,13 @@ class Router<K>(
         handler.handle(event)
     }
 
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean =
+        routes.values.any { it.isEnabled(level, loggerName) } ||
+            fallback.isEnabled(level, loggerName)
+
     override fun toString(): String = "Router(${routes.size} routes)"
 }
 
@@ -28,13 +35,22 @@ class LoggerRouter(
 ) : LogHandler {
 
     override fun handle(event: LogEvent) {
+        route(event.loggerName).handle(event)
+    }
+
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean =
+        route(loggerName).isEnabled(level, loggerName)
+
+    private fun route(loggerName: String): LogHandler {
         for ([prefix, handler] in routes) {
-            if (event.loggerName == prefix || event.loggerName.startsWith("$prefix.")) {
-                handler.handle(event)
-                return
+            if (loggerName == prefix || loggerName.startsWith("$prefix.")) {
+                return handler
             }
         }
-        fallback.handle(event)
+        return fallback
     }
 
     override fun toString(): String =
@@ -56,6 +72,13 @@ class MdcRouter<T : Any>(
         handler.handle(event)
     }
 
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean =
+        routes.values.any { it.isEnabled(level, loggerName) } ||
+            fallback.isEnabled(level, loggerName)
+
     override fun toString(): String = "MdcRouter(${key.name}, ${routes.size} routes)"
 }
 
@@ -74,6 +97,12 @@ class Tee(
             }
         }
     }
+
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean =
+        branches.any { it.second.isEnabled(level, loggerName) }
 
     override fun toString(): String = "Tee(${branches.size} branches)"
 }

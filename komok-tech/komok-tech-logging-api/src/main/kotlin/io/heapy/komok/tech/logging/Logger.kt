@@ -66,6 +66,10 @@ value class Logger @PublishedApi internal constructor(
             msg = msg,
         )
 
+    context(_: LoggingContext)
+    fun isEnabled(level: Level): Boolean =
+        loggingContext.handler.isEnabled(level, name)
+
     @PublishedApi
     context(_: LoggingContext)
     internal inline fun log(
@@ -73,6 +77,8 @@ value class Logger @PublishedApi internal constructor(
         throwable: Throwable?,
         msg: () -> String,
     ) {
+        if (!loggingContext.handler.isEnabled(level, name)) return
+
         val event = LogEvent(
             level = level,
             loggerName = name,

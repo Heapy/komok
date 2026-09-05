@@ -7,9 +7,21 @@ package io.heapy.komok.tech.logging
 fun interface LogHandler {
     fun handle(event: LogEvent)
 
+    /**
+     * Whether an event of [level] from [loggerName] can reach any appender.
+     *
+     * Callers use this to skip building the event, so an implementation must
+     * not have side effects and must answer `true` whenever the decision needs
+     * the event itself.
+     */
+    fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean = true
+
     companion object {
         fun noop(): LogHandler =
-            LogHandler { }
+            NoopHandler
 
         fun composite(handlers: List<LogHandler>): LogHandler =
             when (handlers.size) {
@@ -32,6 +44,12 @@ private class CompositeHandler(
         }
     }
 
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean =
+        handlers.any { it.isEnabled(level, loggerName) }
+
     override fun toString(): String =
         "Composite(${handlers.size} handlers)"
 }
@@ -46,6 +64,18 @@ fun interface LogHandlerWrapper {
         fun identity(): LogHandlerWrapper =
             LogHandlerWrapper { it }
     }
+}
+
+private object NoopHandler : LogHandler {
+    override fun handle(event: LogEvent) {}
+
+    override fun isEnabled(
+        level: Level,
+        loggerName: String,
+    ): Boolean = false
+
+    override fun toString(): String =
+        "Noop"
 }
 
 infix fun LogHandlerWrapper.andThen(inner: LogHandlerWrapper): LogHandlerWrapper =

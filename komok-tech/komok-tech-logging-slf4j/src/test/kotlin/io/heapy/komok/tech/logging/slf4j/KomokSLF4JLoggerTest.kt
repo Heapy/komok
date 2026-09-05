@@ -2,6 +2,7 @@ package io.heapy.komok.tech.logging.slf4j
 
 import io.heapy.komok.tech.logging.Level
 import io.heapy.komok.tech.logging.LogEvent
+import io.heapy.komok.tech.logging.LogHandler
 import io.heapy.komok.tech.logging.LoggingContext
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -80,6 +81,36 @@ class KomokSLF4JLoggerTest {
         logger.info("stamped")
 
         assertEquals(fixed, events.single().timestamp)
+    }
+
+    @Test
+    fun `SLF4J logger reports the pipeline level and skips rejected calls`() {
+        val events = mutableListOf<LogEvent>()
+        val ctx = LoggingContext(handler = MinLevelHandler(Level.WARN, events))
+        val logger = KomokSLF4JLogger("test") { ctx }
+
+        assertFalse(logger.isInfoEnabled)
+        assertTrue(logger.isErrorEnabled)
+
+        logger.info("dropped")
+        logger.error("kept")
+
+        assertEquals(listOf("kept"), events.map { it.message })
+    }
+
+    private class MinLevelHandler(
+        private val minLevel: Level,
+        private val events: MutableList<LogEvent>,
+    ) : LogHandler {
+        override fun handle(event: LogEvent) {
+            events.add(event)
+        }
+
+        override fun isEnabled(
+            level: Level,
+            loggerName: String,
+        ): Boolean =
+            level.ordinal >= minLevel.ordinal
     }
 
     @Test
