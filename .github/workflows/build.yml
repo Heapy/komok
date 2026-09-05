@@ -2,8 +2,10 @@ name: "Build"
 permissions:
     contents: read
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
 concurrency:
   group: "build-${{ github.ref }}"
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
