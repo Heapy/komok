@@ -76,10 +76,6 @@ val modules: Map<String, Map<String, String>> = mapOf(
         "publishName" to "Komok Tech Time",
         "publishDescription" to "Library for working with time",
     ),
-    "komok-tech-ktor-htmx" to mapOf(
-        "publishName" to "Komok Tech Ktor HTMX",
-        "publishDescription" to "HTMX support for Ktor",
-    ),
     "komok-tech-decorators-ksp" to mapOf(
         "publishName" to "TODO",
         "publishDescription" to "TODO",
