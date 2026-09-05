@@ -2,7 +2,6 @@ package io.heapy.komok.business.entity
 
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.heapy.komok.auth.common.UserContext
-import io.heapy.komok.tech.utils.slf4j.Logger
 import kotlinx.coroutines.flow.toList
 import org.bson.Document
 import org.bson.types.ObjectId
@@ -30,7 +29,7 @@ class MongoEntityDao(
                 )
             )
             .also {
-                log.info("Inserted post: $it")
+                println("Inserted post: $it")
             }
             .let {
                 it.insertedId?.asObjectId()?.value?.toString()
@@ -88,12 +87,10 @@ class MongoEntityDao(
                 )
             )
             .also {
-                log.info("Marked post as read: $it")
+                println("Marked post as read: $it")
             }
             .let {
                 it.matchedCount
             }
     }
-
-    private companion object : Logger()
 }

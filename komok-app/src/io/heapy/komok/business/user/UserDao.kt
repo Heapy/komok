@@ -3,7 +3,6 @@ package io.heapy.komok.business.user
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.heapy.komok.dao.mg.MongoV1.User
-import io.heapy.komok.tech.utils.slf4j.Logger
 import kotlinx.coroutines.flow.firstOrNull
 import org.bson.types.ObjectId
 
@@ -29,7 +28,7 @@ class UserDao(
                 )
             )
             .also { result ->
-                log.info("User insert: {} acknowledged: {}", email, result.wasAcknowledged())
+                println("User insert: $email acknowledged: ${result.wasAcknowledged()}")
             }
 
         return objectId.toHexString()
@@ -74,6 +73,4 @@ class UserDao(
             )
             .firstOrNull()
     }
-
-    private companion object : Logger()
 }

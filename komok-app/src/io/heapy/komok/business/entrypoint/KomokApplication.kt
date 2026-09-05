@@ -2,7 +2,6 @@ package io.heapy.komok.business.entrypoint
 
 import io.heapy.komok.infra.startup_tasks.StartupTaskExecutor
 import io.heapy.komok.infra.uptime.JvmUptime
-import io.heapy.komok.tech.utils.slf4j.Logger
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
 
@@ -13,10 +12,8 @@ class KomokApplication(
 ) {
     fun run() {
         val uptime = jvmUptime.uptime()
-        log.info("Application started. JVM running for $uptime")
+        println("Application started. JVM running for $uptime")
         startupTaskExecutor.executeAll()
         server.start(wait = true)
     }
-
-    private companion object : Logger()
 }
