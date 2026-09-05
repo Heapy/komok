@@ -1,0 +1,22 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "Production method-call wrappers (@Log/@Metric/@Retry) for komok-tech-runtime"
+
+dependencies:
+  - //komok-tech/komok-tech-logging-api: exported
+  - $libs.micrometer.core: exported
+  - $libs.kotlinx.coroutines.jdk8: exported
+
+test-dependencies:
+  - $libs.junit.jupiter
+  - $libs.kotlinx.coroutines.test
+  - $libs.junit.platform.launcher: runtime-only
+
+settings:
+  publishing:
+    pom:
+      name: Komok Tech Runtime Wrappers

@@ -67,6 +67,7 @@ ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = 
 
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
+micrometer-core = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
