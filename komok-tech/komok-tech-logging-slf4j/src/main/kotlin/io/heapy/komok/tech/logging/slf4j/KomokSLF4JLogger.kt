@@ -8,7 +8,6 @@ import io.heapy.komok.tech.logging.ThrowableProxy
 import org.slf4j.Marker
 import org.slf4j.helpers.LegacyAbstractLogger
 import org.slf4j.helpers.MessageFormatter
-import kotlin.time.Clock
 
 /**
  * SLF4J Logger implementation that bridges to Komok Logging.
@@ -52,7 +51,7 @@ class KomokSLF4JLogger(
             loggerName = name,
             message = formattedMessage,
             throwable = throwable?.let { ThrowableProxy.create(it) },
-            timestamp = Clock.System.now(),
+            timestamp = ctx.now(),
             mdc = Mdc.Empty,
         )
 

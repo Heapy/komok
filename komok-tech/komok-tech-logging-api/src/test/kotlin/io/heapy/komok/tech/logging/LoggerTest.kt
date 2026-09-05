@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import kotlin.time.Instant
 
 class LoggerTest {
     suspend fun delay(time: Long) {
@@ -77,6 +78,23 @@ class LoggerTest {
         }
 
         assertEquals("req-123", events[0].mdc[TestRequestId])
+    }
+
+    @Test
+    fun `logger stamps events with the context clock`() {
+        val events = mutableListOf<LogEvent>()
+        val fixed = Instant.fromEpochMilliseconds(1_700_000_000_000)
+        val ctx = LoggingContext(handler = { events.add(it) }, now = { fixed })
+        val log = logger<LoggerTest>()
+
+        with(ctx) {
+            log.info { "from root context" }
+        }
+        with(ctx.withMdc(TestRequestId, "req-1")) {
+            log.info { "from derived context" }
+        }
+
+        assertEquals(listOf(fixed, fixed), events.map { it.timestamp })
     }
 
     @Test

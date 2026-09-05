@@ -1,7 +1,6 @@
 package io.heapy.komok.tech.logging
 
 import kotlin.reflect.KClass
-import kotlin.time.Clock
 
 /**
  * A logger is just a name — it carries no configuration, no appender references.
@@ -79,7 +78,7 @@ value class Logger @PublishedApi internal constructor(
             loggerName = name,
             message = msg(),
             throwable = throwable?.let { ThrowableProxy.create(it) },
-            timestamp = Clock.System.now(),
+            timestamp = loggingContext.now(),
             mdc = loggingContext.mdc,
         )
         loggingContext.dispatch(event)

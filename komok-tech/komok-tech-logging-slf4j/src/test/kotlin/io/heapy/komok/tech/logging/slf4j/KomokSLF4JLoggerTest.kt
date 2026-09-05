@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
+import kotlin.time.Instant
 
 class KomokSLF4JLoggerTest {
     @Test
@@ -67,6 +68,18 @@ class KomokSLF4JLoggerTest {
         val throwable = events[0].throwable
         assertNotNull(throwable)
         assertEquals("java.lang.RuntimeException", throwable.className)
+    }
+
+    @Test
+    fun `SLF4J logger stamps events with the context clock`() {
+        val events = mutableListOf<LogEvent>()
+        val fixed = Instant.fromEpochMilliseconds(1_700_000_000_000)
+        val ctx = LoggingContext(handler = { events.add(it) }, now = { fixed })
+        val logger = KomokSLF4JLogger("test") { ctx }
+
+        logger.info("stamped")
+
+        assertEquals(fixed, events.single().timestamp)
     }
 
     @Test
