@@ -1,4 +1,6 @@
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import org.gradle.api.tasks.Delete
 import org.gradle.jvm.tasks.Jar
 
 plugins {
@@ -158,6 +160,30 @@ publishing {
     }
 }
 
+val stagingDir = isolated.rootProject.projectDirectory.dir("build/staging-deploy")
+
+val pruneGeneratedChecksums = tasks.register<Delete>("pruneGeneratedChecksums") {
+    delete(
+        stagingDir.asFileTree.matching {
+            include(
+                "**/*.asc.*",
+                "**/*.sha256",
+                "**/*.sha512",
+            )
+        },
+    )
+}
+
+tasks.withType<PublishToMavenRepository>().configureEach {
+    finalizedBy(pruneGeneratedChecksums)
+}
+
 signing {
+    setRequired {
+        gradle.taskGraph.allTasks.any { task ->
+            task is PublishToMavenRepository
+        }
+    }
+
     sign(publishing.publications)
 }
