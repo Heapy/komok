@@ -151,9 +151,9 @@ publishing {
 
     repositories {
         maven {
-            url = rootProject.layout.buildDirectory
-                .dir("staging-deploy")
-                .get().asFile.toURI()
+            url = isolated.rootProject.projectDirectory
+                .dir("build/staging-deploy")
+                .asFile.toURI()
         }
     }
 }
