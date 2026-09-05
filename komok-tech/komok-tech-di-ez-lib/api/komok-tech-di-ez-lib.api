@@ -1,3 +1,0 @@
-public abstract interface annotation class io/heapy/komok/tech/di/ez/lib/Ez : java/lang/annotation/Annotation {
-}
-

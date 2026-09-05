@@ -78,8 +78,9 @@ used in commercial projects, encouraging broader adoption and innovation.
 
 List of libraries:
 
-- `io.heapy.komol:komok-tech-di`
-- `io.heapy.komol:komok-tech-di-lib`
+- `io.heapy.komol:komok-tech-runtime`
+- `io.heapy.komol:komok-tech-runtime-ksp`
+- `io.heapy.komol:komok-tech-runtime-wrappers`
 
 ### Application Code
 
@@ -104,4 +105,3 @@ following links:
 
 By contributing to or using this project, you agree to adhere to the terms of
 the respective licenses.
-
