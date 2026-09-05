@@ -1,0 +1,3 @@
+io.heapy.komok.tech.runtime.ksp.wrapper.LogWrapperPlugin
+io.heapy.komok.tech.runtime.ksp.wrapper.MetricWrapperPlugin
+io.heapy.komok.tech.runtime.ksp.wrapper.RetryWrapperPlugin
