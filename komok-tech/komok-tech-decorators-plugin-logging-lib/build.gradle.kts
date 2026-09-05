@@ -13,7 +13,7 @@ repositories {
 dependencies {
     api(libs.slf4j.api)
     implementation(kotlin("reflect"))
-    testImplementation(projects.komokTech.komokTechLogging)
+    testImplementation(projects.komokTech.komokTechUtilsSlf4j)
     testImplementation(libs.logback)
 }
 

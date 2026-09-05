@@ -1,10 +1,10 @@
 public final class io/heapy/komok/tech/logging/slf4j/KomokLoggerFactory : org/slf4j/ILoggerFactory {
-	public fun <init> (Lio/heapy/komok/tech/logging/LoggingContext;)V
+	public fun <init> (Lkotlin/jvm/functions/Function0;)V
 	public fun getLogger (Ljava/lang/String;)Lorg/slf4j/Logger;
 }
 
 public final class io/heapy/komok/tech/logging/slf4j/KomokSLF4JLogger : org/slf4j/helpers/LegacyAbstractLogger {
-	public fun <init> (Ljava/lang/String;Lio/heapy/komok/tech/logging/LoggingContext;)V
+	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public fun isDebugEnabled ()Z
 	public fun isErrorEnabled ()Z
 	public fun isInfoEnabled ()Z
@@ -13,12 +13,17 @@ public final class io/heapy/komok/tech/logging/slf4j/KomokSLF4JLogger : org/slf4
 }
 
 public final class io/heapy/komok/tech/logging/slf4j/KomokSLF4JServiceProvider : org/slf4j/spi/SLF4JServiceProvider {
+	public static final field Companion Lio/heapy/komok/tech/logging/slf4j/KomokSLF4JServiceProvider$Companion;
 	public fun <init> ()V
 	public fun getLoggerFactory ()Lorg/slf4j/ILoggerFactory;
 	public fun getMDCAdapter ()Lorg/slf4j/spi/MDCAdapter;
 	public fun getMarkerFactory ()Lorg/slf4j/IMarkerFactory;
 	public fun getRequestedApiVersion ()Ljava/lang/String;
 	public fun initialize ()V
-	public final fun initialize (Lio/heapy/komok/tech/logging/LoggingContext;)V
+}
+
+public final class io/heapy/komok/tech/logging/slf4j/KomokSLF4JServiceProvider$Companion {
+	public final fun getLoggingContext ()Lio/heapy/komok/tech/logging/LoggingContext;
+	public final fun setLoggingContext (Lio/heapy/komok/tech/logging/LoggingContext;)V
 }
 

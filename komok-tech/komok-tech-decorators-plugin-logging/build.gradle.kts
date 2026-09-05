@@ -14,7 +14,7 @@ dependencies {
     implementation(libs.ksp)
     implementation(projects.komokTech.komokTechDecoratorsPluginLoggingLib)
     implementation(projects.komokTech.komokTechDecoratorsKspApi)
-    implementation(projects.komokTech.komokTechLogging)
+    implementation(projects.komokTech.komokTechUtilsSlf4j)
 }
 
 kotlin {

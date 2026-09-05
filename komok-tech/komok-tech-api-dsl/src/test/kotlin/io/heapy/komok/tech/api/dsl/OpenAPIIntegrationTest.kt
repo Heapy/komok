@@ -1,6 +1,6 @@
 package io.heapy.komok.tech.api.dsl
 
-import io.heapy.komok.tech.logging.Logger
+import io.heapy.komok.tech.utils.slf4j.Logger
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals

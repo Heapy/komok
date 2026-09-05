@@ -2,7 +2,7 @@ package io.heapy.komok.business.entrypoint
 
 import io.heapy.komok.infra.startup_tasks.StartupTaskExecutor
 import io.heapy.komok.infra.uptime.JvmUptime
-import io.heapy.komok.tech.logging.Logger
+import io.heapy.komok.tech.utils.slf4j.Logger
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
 

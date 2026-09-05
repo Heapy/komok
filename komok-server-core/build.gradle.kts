@@ -40,7 +40,7 @@ dependencies {
     implementation("io.undertow:undertow-core:2.4.4.Final")
     implementation(projects.komokTech.komokTechConfig)
     implementation(projects.komokTech.komokTechConfigDotenv)
-    implementation(projects.komokTech.komokTechLogging)
+    implementation(projects.komokTech.komokTechUtilsSlf4j)
     ksp(projects.komokTech.komokTechDi)
     implementation(projects.komokTech.komokTechDiLib)
 

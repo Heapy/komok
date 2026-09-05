@@ -1,7 +1,7 @@
 package io.heapy.komok.tech.api.dsl.ui
 
 import io.heapy.komok.tech.api.dsl.*
-import io.heapy.komok.tech.logging.Logger
+import io.heapy.komok.tech.utils.slf4j.Logger
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put

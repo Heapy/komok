@@ -5,7 +5,7 @@ import io.heapy.komok.infra.argon2.PasswordHasher
 import io.heapy.komok.infra.password.PasswordGenerator
 import io.heapy.komok.infra.startup_tasks.StartupTask
 import io.heapy.komok.infra.totp.GenerateTimeBasedOneTimeKeyService
-import io.heapy.komok.tech.logging.Logger
+import io.heapy.komok.tech.utils.slf4j.Logger
 
 /**
  * This task creates a new user if no users found in the database

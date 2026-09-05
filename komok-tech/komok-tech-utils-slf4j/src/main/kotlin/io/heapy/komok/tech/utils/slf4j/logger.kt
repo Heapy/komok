@@ -1,4 +1,4 @@
-package io.heapy.komok.tech.logging
+package io.heapy.komok.tech.utils.slf4j
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

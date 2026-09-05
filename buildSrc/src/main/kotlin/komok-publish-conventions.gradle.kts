@@ -60,7 +60,7 @@ val modules: Map<String, Map<String, String>> = mapOf(
     ),
     "komok-tech-logging" to mapOf(
         "publishName" to "Komok Tech Logging",
-        "publishDescription" to "Logging module based on SLF4J",
+        "publishDescription" to "Logging implementation: appenders, encoders, DSL, async, routing",
     ),
     "komok-tech-logging-slf4j" to mapOf(
         "publishName" to "Komok Tech Logging SLF4J Bridge",
@@ -77,6 +77,10 @@ val modules: Map<String, Map<String, String>> = mapOf(
     "komok-tech-time" to mapOf(
         "publishName" to "Komok Tech Time",
         "publishDescription" to "Library for working with time",
+    ),
+    "komok-tech-utils-slf4j" to mapOf(
+        "publishName" to "Komok Tech Utils SLF4J",
+        "publishDescription" to "SLF4J logger helpers",
     ),
     "komok-tech-decorators-ksp" to mapOf(
         "publishName" to "TODO",

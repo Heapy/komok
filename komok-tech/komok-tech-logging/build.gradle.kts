@@ -11,7 +11,16 @@ repositories {
 }
 
 dependencies {
-    api(libs.slf4j.api)
+    api(projects.komokTech.komokTechLoggingApi)
+    api(libs.kotlinx.coroutines.jdk8)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.kotlinx.coroutines.test)
+    runtimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 kotlin {

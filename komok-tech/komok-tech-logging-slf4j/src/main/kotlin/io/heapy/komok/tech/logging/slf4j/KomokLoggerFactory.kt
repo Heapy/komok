@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Logger factory that creates [KomokSLF4JLogger] instances.
  */
 class KomokLoggerFactory(
-    private val context: LoggingContext?,
+    private val context: () -> LoggingContext?,
 ) : ILoggerFactory {
 
     private val loggers = ConcurrentHashMap<String, Logger>()

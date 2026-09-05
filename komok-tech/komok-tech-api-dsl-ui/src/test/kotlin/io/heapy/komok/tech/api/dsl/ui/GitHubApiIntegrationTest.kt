@@ -11,7 +11,7 @@ import com.charleskorn.kaml.YamlNull
 import com.charleskorn.kaml.YamlScalar
 import com.charleskorn.kaml.YamlTaggedNode
 import io.heapy.komok.tech.api.dsl.OpenAPI
-import io.heapy.komok.tech.logging.Logger
+import io.heapy.komok.tech.utils.slf4j.Logger
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement

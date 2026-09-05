@@ -11,14 +11,15 @@ import org.slf4j.spi.SLF4JServiceProvider
 /**
  * SLF4J ServiceProvider that bridges SLF4J logging calls to Komok Logging.
  *
- * **No global state.** Must be initialized with an explicit [LoggingContext]
- * before any logging occurs.
+ * SLF4J instantiates this class through `ServiceLoader`, so the [LoggingContext]
+ * cannot be passed in explicitly. Install it through [loggingContext]; every
+ * bridged call reads the current value.
  *
  * Register via `META-INF/services/org.slf4j.spi.SLF4JServiceProvider`.
  */
 class KomokSLF4JServiceProvider : SLF4JServiceProvider {
 
-    private lateinit var loggerFactory: KomokLoggerFactory
+    private val loggerFactory = KomokLoggerFactory { loggingContext }
     private val markerFactory = BasicMarkerFactory()
     private val mdcAdapter = NOPMDCAdapter()
 
@@ -27,11 +28,10 @@ class KomokSLF4JServiceProvider : SLF4JServiceProvider {
     override fun getMDCAdapter(): MDCAdapter = mdcAdapter
     override fun getRequestedApiVersion(): String = "2.0.99"
 
-    override fun initialize() {
-        loggerFactory = KomokLoggerFactory(null)
-    }
+    override fun initialize() {}
 
-    fun initialize(context: LoggingContext) {
-        loggerFactory = KomokLoggerFactory(context)
+    companion object {
+        @Volatile
+        var loggingContext: LoggingContext? = null
     }
 }

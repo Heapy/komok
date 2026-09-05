@@ -9,7 +9,7 @@ dependencies {
 //    ksp(projects.komokTech.komokTechDecoratorsKsp)
 //    ksp(projects.komokTech.komokTechDecoratorsPluginLogging)
     implementation(projects.komokTech.komokTechDecoratorsPluginLoggingLib)
-    implementation(projects.komokTech.komokTechLogging)
+    implementation(projects.komokTech.komokTechUtilsSlf4j)
     implementation(kotlin("reflect"))
 }
 

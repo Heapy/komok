@@ -39,7 +39,7 @@ dependencies {
     implementation(kotlin("reflect"))
 
     testImplementation(libs.logback)
-    testImplementation(projects.komokTech.komokTechLogging)
+    testImplementation(projects.komokTech.komokTechUtilsSlf4j)
     testImplementation(libs.json.schema.validator)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)

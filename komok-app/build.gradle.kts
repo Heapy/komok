@@ -55,7 +55,7 @@ dependencies {
     implementation(projects.komokInfra.komokAuthCommon)
     implementation(projects.komokTech.komokTechConfig)
     implementation(projects.komokTech.komokTechConfigDotenv)
-    implementation(projects.komokTech.komokTechLogging)
+    implementation(projects.komokTech.komokTechUtilsSlf4j)
     implementation(projects.komokTech.komokTechTime)
     implementation(projects.komokDaoMg)
     implementation(projects.komokServerCommon)

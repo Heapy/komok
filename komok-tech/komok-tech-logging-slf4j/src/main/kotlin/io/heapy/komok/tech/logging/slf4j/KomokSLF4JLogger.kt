@@ -13,24 +13,22 @@ import kotlin.time.Clock
 /**
  * SLF4J Logger implementation that bridges to Komok Logging.
  *
- * Uses the fixed [LoggingContext] provided at construction time.
- * Per-request MDC is NOT available for bridged third-party libs
- * (trade-off of no global state).
+ * Per-request MDC is NOT available for bridged third-party libs.
  */
 class KomokSLF4JLogger(
     name: String,
-    private val context: LoggingContext?,
+    private val context: () -> LoggingContext?,
 ) : LegacyAbstractLogger() {
 
     init {
         this.name = name
     }
 
-    override fun isTraceEnabled(): Boolean = context != null
-    override fun isDebugEnabled(): Boolean = context != null
-    override fun isInfoEnabled(): Boolean = context != null
-    override fun isWarnEnabled(): Boolean = context != null
-    override fun isErrorEnabled(): Boolean = context != null
+    override fun isTraceEnabled(): Boolean = context() != null
+    override fun isDebugEnabled(): Boolean = context() != null
+    override fun isInfoEnabled(): Boolean = context() != null
+    override fun isWarnEnabled(): Boolean = context() != null
+    override fun isErrorEnabled(): Boolean = context() != null
 
     override fun getFullyQualifiedCallerName(): String? = null
 
@@ -41,7 +39,7 @@ class KomokSLF4JLogger(
         arguments: Array<out Any?>?,
         throwable: Throwable?,
     ) {
-        val ctx = context ?: return
+        val ctx = context() ?: return
 
         val formattedMessage = if (arguments != null && messagePattern != null) {
             MessageFormatter.arrayFormat(messagePattern, arguments).message
