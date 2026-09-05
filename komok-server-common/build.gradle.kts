@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.jdk8)
     implementation(libs.kotlinx.serialization.json)
 
-    api(ktorLibs.server.cio)
+    api(libs.ktor.server.cio)
 
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
