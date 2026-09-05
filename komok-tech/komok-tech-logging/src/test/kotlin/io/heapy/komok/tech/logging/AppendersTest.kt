@@ -12,7 +12,10 @@ class AppendersTest {
 
     private val timestamp = Instant.parse("2025-01-15T10:30:00Z")
 
-    private fun event(message: String = "test message") = LogEvent(
+    private fun event(
+        message: String = "test message",
+        timestamp: Instant = this.timestamp,
+    ) = LogEvent(
         level = Level.INFO,
         loggerName = "com.example.Test",
         message = message,
@@ -73,6 +76,29 @@ class AppendersTest {
 
         assertTrue(Files.exists(logFile))
         assertTrue(Files.exists(tempDir.resolve("test.log.1")))
+    }
+
+    @Test
+    fun `FileAppender rolls daily on the UTC day of the event`(@TempDir tempDir: Path) {
+        val logFile = tempDir.resolve("test.log")
+        val encoder = Encoder { it.message }
+
+        val appender = FileAppender(
+            encoder = encoder,
+            path = logFile,
+            rolling = TimeBasedRolling(),
+        )
+
+        appender.handle(event("monday", Instant.parse("2025-01-13T23:59:00Z")))
+        appender.handle(event("still monday", Instant.parse("2025-01-13T23:59:30Z")))
+        appender.handle(event("tuesday", Instant.parse("2025-01-14T00:01:00Z")))
+        appender.close()
+
+        assertEquals(
+            listOf("monday", "still monday"),
+            Files.readAllLines(tempDir.resolve("test.2025-01-13.log")),
+        )
+        assertEquals(listOf("tuesday"), Files.readAllLines(logFile))
     }
 
     @Test

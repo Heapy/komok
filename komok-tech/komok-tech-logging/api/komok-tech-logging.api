@@ -195,8 +195,8 @@ public final class io/heapy/komok/tech/logging/PredicateFilter : io/heapy/komok/
 }
 
 public abstract interface class io/heapy/komok/tech/logging/RollingPolicy {
-	public abstract fun roll (Ljava/nio/file/Path;)V
-	public abstract fun shouldRoll (Ljava/nio/file/Path;)Z
+	public abstract fun roll (Ljava/nio/file/Path;Lkotlin/time/Instant;)V
+	public abstract fun shouldRoll (Ljava/nio/file/Path;Lkotlin/time/Instant;)Z
 }
 
 public final class io/heapy/komok/tech/logging/RouteDsl {
@@ -222,8 +222,8 @@ public final class io/heapy/komok/tech/logging/SamplingFilter : io/heapy/komok/t
 public final class io/heapy/komok/tech/logging/SizeBasedRolling : io/heapy/komok/tech/logging/RollingPolicy {
 	public fun <init> (JI)V
 	public synthetic fun <init> (JIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun roll (Ljava/nio/file/Path;)V
-	public fun shouldRoll (Ljava/nio/file/Path;)Z
+	public fun roll (Ljava/nio/file/Path;Lkotlin/time/Instant;)V
+	public fun shouldRoll (Ljava/nio/file/Path;Lkotlin/time/Instant;)Z
 }
 
 public final class io/heapy/komok/tech/logging/Tee : io/heapy/komok/tech/logging/LogHandler {
@@ -243,7 +243,7 @@ public final class io/heapy/komok/tech/logging/TimeBasedRolling : io/heapy/komok
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun roll (Ljava/nio/file/Path;)V
-	public fun shouldRoll (Ljava/nio/file/Path;)Z
+	public fun roll (Ljava/nio/file/Path;Lkotlin/time/Instant;)V
+	public fun shouldRoll (Ljava/nio/file/Path;Lkotlin/time/Instant;)Z
 }
 
