@@ -1,0 +1,9 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+
+# Test-only third-party wrapper: SPI on the processor classpath, helpers on the application classpath.
+dependencies:
+  - //komok-tech/komok-tech-runtime-ksp
+  - //komok-tech/komok-tech-runtime-wrappers: exported
