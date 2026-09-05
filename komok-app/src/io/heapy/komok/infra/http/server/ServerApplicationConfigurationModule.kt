@@ -3,37 +3,38 @@ package io.heapy.komok.infra.http.server
 import io.heapy.komok.infra.jwt.JwtModule
 import io.heapy.komok.metrics.MetricsModule
 import io.heapy.komok.server.common.KomokServerFeatures
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 
 @Module
 open class ServerApplicationConfigurationModule(
     private val metricsModule: MetricsModule,
     private val jwtModule: JwtModule,
 ) {
-    open val features: KomokServerFeatures by lazy {
+    context(_: KomokContext)
+    open suspend fun features(): KomokServerFeatures =
         KomokServerFeatures(
             features = listOf(
-                webSocketsFeature,
-                callLoggingFeature,
-                monitoringFeature,
-                defaultFeature,
+                webSocketsFeature(),
+                callLoggingFeature(),
+                monitoringFeature(),
+                defaultFeature(),
             ),
         )
-    }
 
-    open val defaultFeature by lazy {
-        DefaultFeature(jwtModule.jwtConfiguration)
-    }
+    context(_: KomokContext)
+    open suspend fun defaultFeature(): DefaultFeature =
+        DefaultFeature(jwtModule.jwtConfiguration())
 
-    open val callLoggingFeature by lazy {
+    context(_: KomokContext)
+    open suspend fun callLoggingFeature(): CallLoggingFeature =
         CallLoggingFeature()
-    }
 
-    open val monitoringFeature by lazy {
-        MonitoringFeature(metricsModule.meterRegistry)
-    }
+    context(_: KomokContext)
+    open suspend fun monitoringFeature(): MonitoringFeature =
+        MonitoringFeature(metricsModule.meterRegistry())
 
-    open val webSocketsFeature by lazy {
+    context(_: KomokContext)
+    open suspend fun webSocketsFeature(): WebSocketsFeature =
         WebSocketsFeature()
-    }
 }

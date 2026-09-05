@@ -3,7 +3,7 @@ product: jvm/lib
 apply:
   - //templates/jvm.module-template.yaml
   - //templates/serialization.module-template.yaml
-  - //templates/di.module-template.yaml
+  - //templates/runtime.module-template.yaml
 
 dependencies:
   - org.http4k:http4k-server-netty:6.61.0.0
@@ -11,7 +11,7 @@ dependencies:
   - //komok-tech/komok-tech-config
   - //komok-tech/komok-tech-config-dotenv
   - //komok-tech/komok-tech-utils-slf4j
-  - //komok-tech/komok-tech-di-lib
+  - //komok-tech/komok-tech-runtime
   - $libs.logback
   - $libs.kotlinx.coroutines.jdk8
   - $libs.kotlinx.serialization.json

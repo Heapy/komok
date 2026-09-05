@@ -2,14 +2,14 @@ product: jvm/lib
 
 apply:
   - //templates/jvm.module-template.yaml
-  - //templates/di.module-template.yaml
+  - //templates/runtime.module-template.yaml
   - //templates/publishing.module-template.yaml
 
 description: "java.util.logging Handler bridge for Komok Logging"
 
 dependencies:
   - //komok-tech/komok-tech-logging-api: exported
-  - //komok-tech/komok-tech-di-lib
+  - //komok-tech/komok-tech-runtime
   - $libs.junit.platform.launcher: runtime-only
 
 settings:

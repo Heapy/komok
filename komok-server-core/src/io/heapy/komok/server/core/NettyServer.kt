@@ -7,7 +7,6 @@ import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
 import io.netty.channel.MultiThreadIoEventLoopGroup
 import io.netty.channel.socket.SocketChannel
-import io.netty.handler.codec.http.HttpHeaderNames
 import io.netty.handler.codec.http.HttpObjectAggregator
 import io.netty.handler.codec.http.HttpServerCodec
 import io.netty.handler.codec.http.HttpServerKeepAliveHandler
@@ -115,32 +114,4 @@ class StartedServer(
 
         return StoppedServer(port)
     }
-}
-
-class CreateUserHandler : HttpHandler {
-    override suspend fun handleRequest(exchange: NettyHttpServerExchange) {
-        val requestBody = exchange.getRequestBody()
-        exchange.setStatusCode(201)
-        exchange.setResponseContent(requestBody)
-        exchange.getResponseHeaders()[HttpHeaderNames.CONTENT_TYPE] = "application/json; charset=UTF-8"
-        exchange.endExchange()
-    }
-}
-
-fun main() {
-    val module = createNettyServerModule {
-        config {
-            object : NettyServerConfiguration {
-                override val port = 8080
-                override val shutdownTimeout = 1000
-                override val keepAlive = true
-                override val backlog = 128
-            }
-        }
-        rootHandler {
-            CreateUserHandler()
-        }
-    }
-
-    val _ = module.nettyServer.start()
 }

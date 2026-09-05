@@ -1,3 +1,39 @@
+public final class io/heapy/komok/tech/time/IndexedTimeZone {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/heapy/komok/tech/time/IndexedTimeZone;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/time/IndexedTimeZone;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/time/IndexedTimeZone;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/heapy/komok/tech/time/IndexedTimeZoneKt {
+	public static final fun indexedTimeZone ()Lio/heapy/komok/tech/time/IndexedTimeZone;
+	public static final fun zoneTimeCodec ()Lio/heapy/komok/tech/time/TimeCodec;
+}
+
+public final class io/heapy/komok/tech/time/LegacyTimeProviders {
+	public static final field INSTANCE Lio/heapy/komok/tech/time/LegacyTimeProviders;
+	public final fun providersFromTimeZone ()Lio/heapy/komok/tech/time/ProvidersFromTimeZone;
+}
+
+public final class io/heapy/komok/tech/time/ProvidersFromTimeZone {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/heapy/komok/tech/time/ProvidersFromTimeZone;
+	public static synthetic fun copy$default (Lio/heapy/komok/tech/time/ProvidersFromTimeZone;Ljava/lang/String;ILjava/lang/Object;)Lio/heapy/komok/tech/time/ProvidersFromTimeZone;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/heapy/komok/tech/time/TimeCodec {
+	public abstract fun getName ()Ljava/lang/String;
+}
+
 public abstract interface class io/heapy/komok/tech/time/TimeSource {
 	public abstract fun getClock ()Ljava/time/Clock;
 	public abstract fun instant ()Ljava/time/Instant;
@@ -13,24 +49,70 @@ public final class io/heapy/komok/tech/time/TimeSourceKt {
 	public static final fun TimeSource (Ljava/time/Clock;)Lio/heapy/komok/tech/time/TimeSource;
 }
 
-public class io/heapy/komok/tech/time/TimeSourceModule {
+public abstract interface class io/heapy/komok/tech/time/TimeSourceModule {
+	public fun timeSource (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModule$DefaultImpls {
+	public static fun timeSource (Lio/heapy/komok/tech/time/TimeSourceModule;Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleForkScope {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun replaceTimeSource (Lio/heapy/komok/tech/time/TimeSource;)V
+	public final fun replaceTimeSourceWith (Lkotlin/jvm/functions/Function3;)V
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraph {
+	public final fun fork (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModuleGraph;
+	public final fun getModules ()Lio/heapy/komok/tech/time/TimeSourceModuleGraphModules;
+	public final fun graphPayload ()Lio/heapy/komok/tech/runtime/GraphPayload;
+	public final fun realizeAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun timeSource (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraphApi {
+	public fun <init> (Lio/heapy/komok/tech/runtime/RealmHandle;Lio/heapy/komok/tech/time/TimeSourceModule_Komok;)V
+	public final fun timeSource (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraphBuilder {
 	public fun <init> ()V
-	public fun getTimeSource ()Lio/heapy/komok/tech/time/TimeSource;
+	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public final fun getRootContext ()Lkotlin/coroutines/CoroutineContext;
+	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
+	public final fun setRootContext (Lkotlin/coroutines/CoroutineContext;)V
 }
 
-public final class io/heapy/komok/tech/time/TimeSourceModuleBuilder {
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraphForkScope {
+	public final fun timeSourceModule (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraphKt {
+	public static final fun createTimeSourceModuleGraph (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModuleGraph;
+	public static synthetic fun createTimeSourceModuleGraph$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/time/TimeSourceModuleGraph;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleGraphModules {
+	public final fun getTimeSourceModule ()Lio/heapy/komok/tech/time/TimeSourceModuleGraphApi;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleKeys {
+	public static final field INSTANCE Lio/heapy/komok/tech/time/TimeSourceModuleKeys;
+	public final fun getTimeSource ()Lio/heapy/komok/tech/runtime/BindingId;
+}
+
+public final class io/heapy/komok/tech/time/TimeSourceModuleProviderScope {
+}
+
+public class io/heapy/komok/tech/time/TimeSourceModule_Komok : io/heapy/komok/tech/time/TimeSourceModule {
+	public fun <init> (Lio/heapy/komok/tech/runtime/KomokRuntime;)V
+	public fun timeSource (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class komok/index/__KOMOK__Index__ {
 	public fun <init> ()V
-	public final fun build ()Lio/heapy/komok/tech/time/TimeSourceModule;
-	public final fun timeSource (Lkotlin/jvm/functions/Function0;)V
-}
-
-public final class io/heapy/komok/tech/time/TimeSourceModuleFactoryKt {
-	public static final fun createFlattenTimeSourceModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModuleFlatten;
-	public static final fun createTimeSourceModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/time/TimeSourceModule;
-}
-
-public final class io/heapy/komok/tech/time/TimeSourceModuleFlatten {
-	public fun <init> (Lio/heapy/komok/tech/time/TimeSourceModule;)V
-	public final fun getTimeSourceModule ()Lio/heapy/komok/tech/time/TimeSourceModule;
 }
 

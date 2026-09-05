@@ -5,8 +5,8 @@ import io.heapy.komok.infra.argon2.PasswordHasherModule
 import io.heapy.komok.infra.password.PasswordGeneratorModule
 import io.heapy.komok.infra.totp.TimeBasedOneTimePasswordModule
 import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.di.lib.Module
-import kotlin.getValue
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 
 @Module
 open class AutoRegisterStartupTaskModule(
@@ -16,19 +16,19 @@ open class AutoRegisterStartupTaskModule(
     private val configurationModule: ConfigurationModule,
     private val timeBasedOneTimePasswordModule: TimeBasedOneTimePasswordModule,
 ) {
-    open val autoRegisterStartupTask by lazy {
+    context(_: KomokContext)
+    open suspend fun autoRegisterStartupTask(): AutoRegisterStartupTask =
         AutoRegisterStartupTask(
-            userDao = userDaoModule.userDao,
-            passwordGenerator = passwordGeneratorModule.passwordGenerator,
-            passwordHasher = passwordHasherModule.passwordHasher,
-            autoRegisterStartupTaskConfiguration = autoRegisterStartupTaskConfiguration,
-            generateTimeBasedOneTimeKeyService = timeBasedOneTimePasswordModule.generateTimeBasedOneTimeKeyService,
+            userDao = userDaoModule.userDao(),
+            passwordGenerator = passwordGeneratorModule.passwordGenerator(),
+            passwordHasher = passwordHasherModule.passwordHasher(),
+            autoRegisterStartupTaskConfiguration = autoRegisterStartupTaskConfiguration(),
+            generateTimeBasedOneTimeKeyService = timeBasedOneTimePasswordModule.generateTimeBasedOneTimeKeyService(),
         )
-    }
 
-    open val autoRegisterStartupTaskConfiguration: AutoRegisterStartupTaskConfiguration by lazy {
+    context(_: KomokContext)
+    open suspend fun autoRegisterStartupTaskConfiguration(): AutoRegisterStartupTaskConfiguration =
         configurationModule
-            .config
+            .config()
             .read(AutoRegisterStartupTaskConfiguration.serializer(), "auto-register")
-    }
 }

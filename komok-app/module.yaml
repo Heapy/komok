@@ -3,7 +3,7 @@ product: jvm/app
 apply:
   - //templates/jvm.module-template.yaml
   - //templates/serialization.module-template.yaml
-  - //templates/di.module-template.yaml
+  - //templates/runtime.module-template.yaml
 
 dependencies:
   - //komok-infra/komok-auth-common
@@ -14,7 +14,7 @@ dependencies:
   - //komok-dao-mg
   - //komok-server-common
   - $libs.bouncycastle.bcpkix
-  - //komok-tech/komok-tech-di-lib
+  - //komok-tech/komok-tech-runtime
   - $libs.kotlinx.coroutines.jdk8
   - $libs.kotlinx.serialization.json
   - $libs.netty

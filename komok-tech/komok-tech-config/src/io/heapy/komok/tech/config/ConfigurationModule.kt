@@ -2,42 +2,44 @@ package io.heapy.komok.tech.config
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
-import io.heapy.komok.tech.di.lib.Module
 import io.heapy.komok.tech.config.dotenv.DotenvModule
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 
 @Module
 open class ConfigurationModule(
     private val dotenvModule: DotenvModule,
 ) {
-    open val config: KomokConfiguration by lazy {
-        HoconKomokConfiguration(hoconConfig)
-    }
+    context(_: KomokContext)
+    open suspend fun config(): KomokConfiguration =
+        HoconKomokConfiguration(hoconConfig())
 
-    open val environmentOverrides: Map<String, String> by lazy {
+    context(_: KomokContext)
+    open suspend fun environmentOverrides(): Map<String, String> =
         mapOf()
-    }
 
-    open val systemEnvironment: Map<String, String> by lazy {
+    context(_: KomokContext)
+    open suspend fun systemEnvironment(): Map<String, String> =
         System.getenv()
-    }
 
-    open val effectiveEnvironment: Map<String, String> by lazy {
+    context(_: KomokContext)
+    open suspend fun effectiveEnvironment(): Map<String, String> =
         buildMap {
-            putAll(systemEnvironment)
-            putAll(dotenvModule.dotenv.properties)
-            putAll(environmentOverrides)
+            putAll(systemEnvironment())
+            putAll(dotenvModule.dotenv().properties)
+            putAll(environmentOverrides())
         }
-    }
 
-    open val hoconConfig: Config by lazy {
+    context(_: KomokContext)
+    open suspend fun hoconConfig(): Config {
         // Set system properties, so Hocon can read them and use as substitution variables
-        effectiveEnvironment.forEach {
+        effectiveEnvironment().forEach {
             System.setProperty(
                 it.key,
                 it.value
             )
         }
 
-        ConfigFactory.load()
+        return ConfigFactory.load()
     }
 }

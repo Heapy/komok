@@ -7,24 +7,68 @@ public final class io/heapy/komok/tech/logging/jul/KomokJulHandler : java/util/l
 
 public class io/heapy/komok/tech/logging/jul/KomokJulHandlerModule {
 	public fun <init> ()V
-	public fun getJulHandler ()Lio/heapy/komok/tech/logging/jul/KomokJulHandler;
-	public fun getLoggingContext ()Lio/heapy/komok/tech/logging/LoggingContext;
+	public fun julHandler (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun loggingContext (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleBuilder {
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleForkScope {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun replaceJulHandler (Lio/heapy/komok/tech/logging/jul/KomokJulHandler;)V
+	public final fun replaceJulHandlerWith (Lkotlin/jvm/functions/Function3;)V
+	public final fun replaceLoggingContext (Lio/heapy/komok/tech/logging/LoggingContext;)V
+	public final fun replaceLoggingContextWith (Lkotlin/jvm/functions/Function3;)V
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraph {
+	public final fun fork (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraph;
+	public final fun getModules ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphModules;
+	public final fun graphPayload ()Lio/heapy/komok/tech/runtime/GraphPayload;
+	public final fun julHandler (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun loggingContext (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun realizeAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphApi {
+	public fun <init> (Lio/heapy/komok/tech/runtime/RealmHandle;Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule_Komok;)V
+	public final fun julHandler (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun loggingContext (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphBuilder {
 	public fun <init> ()V
-	public final fun build ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
-	public final fun julHandler (Lkotlin/jvm/functions/Function0;)V
-	public final fun loggingContext (Lkotlin/jvm/functions/Function0;)V
+	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public final fun getRootContext ()Lkotlin/coroutines/CoroutineContext;
+	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
+	public final fun setRootContext (Lkotlin/coroutines/CoroutineContext;)V
 }
 
-public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFactoryKt {
-	public static final fun createFlattenKomokJulHandlerModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFlatten;
-	public static final fun createKomokJulHandlerModule (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphForkScope {
+	public final fun komokJulHandlerModule (Lkotlin/jvm/functions/Function1;)V
 }
 
-public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleFlatten {
-	public fun <init> (Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;)V
-	public final fun getKomokJulHandlerModule ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModule;
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphKt {
+	public static final fun createKomokJulHandlerModuleGraph (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraph;
+	public static synthetic fun createKomokJulHandlerModuleGraph$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraph;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphModules {
+	public final fun getKomokJulHandlerModule ()Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleGraphApi;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleKeys {
+	public static final field INSTANCE Lio/heapy/komok/tech/logging/jul/KomokJulHandlerModuleKeys;
+	public final fun getJulHandler ()Lio/heapy/komok/tech/runtime/BindingId;
+	public final fun getLoggingContext ()Lio/heapy/komok/tech/runtime/BindingId;
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModuleProviderScope {
+}
+
+public final class io/heapy/komok/tech/logging/jul/KomokJulHandlerModule_Komok : io/heapy/komok/tech/logging/jul/KomokJulHandlerModule {
+	public fun <init> (Lio/heapy/komok/tech/runtime/KomokRuntime;)V
+	public fun julHandler (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun loggingContext (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

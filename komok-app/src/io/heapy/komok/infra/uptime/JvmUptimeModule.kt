@@ -1,10 +1,11 @@
 package io.heapy.komok.infra.uptime
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 
 @Module
 open class JvmUptimeModule {
-    open val jvmUptime: JvmUptime by lazy {
+    context(_: KomokContext)
+    open suspend fun jvmUptime(): JvmUptime =
         DefaultJvmUptime()
-    }
 }

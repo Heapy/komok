@@ -1,6 +1,7 @@
 package io.heapy.komok.metrics
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 import io.micrometer.common.util.internal.logging.InternalLoggerFactory
 import io.micrometer.common.util.internal.logging.Slf4JLoggerFactory
 import io.micrometer.prometheusmetrics.PrometheusConfig
@@ -8,8 +9,9 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 @Module
 open class MetricsModule {
-    open val meterRegistry: PrometheusMeterRegistry by lazy {
+    context(_: KomokContext)
+    open suspend fun meterRegistry(): PrometheusMeterRegistry {
         InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE)
-        PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+        return PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     }
 }

@@ -1,11 +1,12 @@
 package io.heapy.komok.tech.config.dotenv
 
 import io.heapy.komok.tech.config.common.Environment
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 
 @Module
 open class DotenvModule {
-    open val dotenv: Environment by lazy {
-        dotenv()
-    }
+    context(_: KomokContext)
+    open suspend fun dotenv(): Environment =
+        io.heapy.komok.tech.config.dotenv.dotenv()
 }

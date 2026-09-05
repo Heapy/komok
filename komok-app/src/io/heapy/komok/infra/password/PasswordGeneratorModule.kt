@@ -1,17 +1,18 @@
 package io.heapy.komok.infra.password
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.komok.tech.runtime.KomokContext
+import io.heapy.komok.tech.runtime.Module
 import java.security.SecureRandom
 
 @Module
 open class PasswordGeneratorModule {
-    open val random by lazy {
+    context(_: KomokContext)
+    open suspend fun random(): SecureRandom =
         SecureRandom()
-    }
 
-    open val passwordGenerator by lazy {
+    context(_: KomokContext)
+    open suspend fun passwordGenerator(): PasswordGenerator =
         PasswordGenerator(
-            random = random,
+            random = random(),
         )
-    }
 }

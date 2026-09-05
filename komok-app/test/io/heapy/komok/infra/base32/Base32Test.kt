@@ -1,13 +1,14 @@
 package io.heapy.komok.infra.base32
 
 import io.heapy.komok.UnitTest
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 
 class Base32Test {
     @UnitTest
-    fun `decode 16 bytes`() {
-        val base32 = createBase32Module {}
-            .base32
+    fun `decode 16 bytes`() = runTest {
+        val base32 = createBase32ModuleGraph()
+            .base32()
 
         val decoded = base32.decode("A234A234A234A234")
 
@@ -18,9 +19,9 @@ class Base32Test {
     }
 
     @UnitTest
-    fun `decode invalid bytes`() {
-        val base32 = createBase32Module {}
-            .base32
+    fun `decode invalid bytes`() = runTest {
+        val base32 = createBase32ModuleGraph()
+            .base32()
 
         val exception = assertThrows(IllegalArgumentException::class.java) {
             val _ = base32.decode("1234A234A234A234")

@@ -2,15 +2,19 @@ product: jvm/lib
 
 apply:
   - //templates/jvm.module-template.yaml
-  - //templates/di.module-template.yaml
+  - //templates/runtime.module-template.yaml
   - //templates/publishing.module-template.yaml
 
 description: "Library for working with time"
 
 dependencies:
-  - //komok-tech/komok-tech-di-lib
+  - //komok-tech/komok-tech-runtime
 
 settings:
+  kotlin:
+    allOpen:
+      enabled: true
+      annotations: [io.heapy.komok.tech.runtime.Module]
   publishing:
     pom:
       name: "Komok Tech Time"

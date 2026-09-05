@@ -2,18 +2,17 @@ package io.heapy.komok.infra.totp
 
 import io.heapy.komok.UnitTest
 import io.heapy.komok.tech.time.TestTimeSource
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 
 class TimeBasedOneTimePasswordTest {
     @UnitTest
-    fun generate() {
+    fun generate() = runTest {
         val timeSource = TestTimeSource()
-        val module = createTimeBasedOneTimePasswordModule {
+        val graph = createTimeBasedOneTimePasswordModuleGraph().fork {
             timeSourceModule {
-                timeSource {
-                    timeSource
-                }
+                replaceTimeSource(timeSource)
             }
         }
 
@@ -21,7 +20,7 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159128),
         )
 
-        val totp = module.timeBasedOneTimePasswordService
+        val totp = graph.timeBasedOneTimePasswordService()
             .generate("JBSWY3DPEHPK3PXP")
 
         assertEquals(
@@ -31,13 +30,11 @@ class TimeBasedOneTimePasswordTest {
     }
 
     @UnitTest
-    fun validate() {
+    fun validate() = runTest {
         val timeSource = TestTimeSource()
-        val module = createTimeBasedOneTimePasswordModule {
+        val graph = createTimeBasedOneTimePasswordModuleGraph().fork {
             timeSourceModule {
-                timeSource {
-                    timeSource
-                }
+                replaceTimeSource(timeSource)
             }
         }
 
@@ -45,7 +42,7 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159128),
         )
 
-        val decision1 = module.timeBasedOneTimePasswordService
+        val decision1 = graph.timeBasedOneTimePasswordService()
             .validate(
                 secret = "JBSWY3DPEHPK3PXP",
                 totp = "476288",
@@ -57,7 +54,7 @@ class TimeBasedOneTimePasswordTest {
             new = Instant.ofEpochSecond(1720159158),
         )
 
-        val decision2 = module.timeBasedOneTimePasswordService
+        val decision2 = graph.timeBasedOneTimePasswordService()
             .validate(
                 secret = "JBSWY3DPEHPK3PXP",
                 totp = "476288",
