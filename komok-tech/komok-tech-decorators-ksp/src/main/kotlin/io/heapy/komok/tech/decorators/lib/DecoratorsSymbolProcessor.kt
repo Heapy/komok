@@ -51,7 +51,7 @@ class DecoratorsSymbolProcessor(
         annotatedSymbols.forEach { symbol ->
             if (symbol in processedSymbols) return@forEach
 
-            if (!symbol.validate()) {
+            if (!symbol.validate(enableNewFeatures = false)) {
                 deferredSymbols.add(symbol)
                 return@forEach
             }

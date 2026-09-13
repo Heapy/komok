@@ -2,6 +2,7 @@ package io.heapy.komok.tech.di.ez.ksp
 
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSAnnotation
+import com.google.devtools.ksp.symbol.KSBackingField
 import com.google.devtools.ksp.symbol.KSCallableReference
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSClassifierReference
@@ -25,12 +26,12 @@ import com.google.devtools.ksp.symbol.KSTypeParameter
 import com.google.devtools.ksp.symbol.KSTypeReference
 import com.google.devtools.ksp.symbol.KSValueArgument
 import com.google.devtools.ksp.symbol.KSValueParameter
-import com.google.devtools.ksp.symbol.KSVisitor
+import com.google.devtools.ksp.symbol.KSVisitorNext
 
 /**
  * Visitor to collect list of functions and classes participating in DI
  */
-class KomokEzVisitor : KSVisitor<Unit, Unit> {
+class KomokEzVisitor : KSVisitorNext<Unit, Unit> {
     val functions = mutableListOf<KSFunctionDeclaration>()
     val classes = mutableListOf<KSClassDeclaration>()
 
@@ -57,6 +58,13 @@ class KomokEzVisitor : KSVisitor<Unit, Unit> {
 
     override fun visitAnnotation(
         annotation: KSAnnotation,
+        data: Unit,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitBackingField(
+        backingField: KSBackingField,
         data: Unit,
     ) {
         TODO("Not yet implemented")
