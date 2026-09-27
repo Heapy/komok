@@ -16,9 +16,9 @@ ksp = "2.3.12"
 logback = "1.6.3"
 micrometer = "1.17.1"
 mockk = "1.14.11"
-mongo = "5.11.1"
+mongo = "5.12.0"
 netty = "4.2.18.Final"
-slf4j = "2.0.19"
+slf4j = "2.0.20"
 
 [libraries]
 bouncycastle-bcpkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
