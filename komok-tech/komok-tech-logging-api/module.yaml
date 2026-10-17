@@ -1,0 +1,25 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "Logging API: Logger, LogEvent, Level, Mdc, LoggingContext, LogHandler"
+
+dependencies:
+  - $libs.junit.platform.launcher: runtime-only
+
+test-dependencies:
+  - $libs.junit.jupiter
+  - $libs.kotlin.reflect
+  - $libs.kotlinx.coroutines.jdk8
+
+settings:
+  kotlin:
+    allWarningsAsErrors: false
+  publishing:
+    pom:
+      name: "Komok Tech Logger API"
+
+plugins:
+  bcv: enabled

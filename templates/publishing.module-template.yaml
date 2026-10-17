@@ -1,0 +1,25 @@
+repositories:
+  - url: mavenLocal
+    publish: true
+
+settings:
+  publishing:
+    enabled: true
+    group: io.heapy.komok
+    version: 1.2.0
+    mavenCentral: enabled
+    signArtifacts: true
+    publishSources: true
+    pom:
+      url: https://github.com/Heapy/komok
+      licenses:
+        - name: Apache-2.0
+          url: https://spdx.org/licenses/Apache-2.0.html
+      developers:
+        - id: ruslan.ibrahimau
+          name: Ruslan Ibrahimau
+          email: ruslan@heapy.io
+      scm:
+        url: https://github.com/Heapy/komok
+        connection: scm:git:https://github.com/Heapy/komok.git
+        developerConnection: scm:git:ssh://github.com/Heapy/komok.git

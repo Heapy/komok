@@ -1,0 +1,8 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+
+dependencies:
+  - $libs.kotlinpoet.ksp
+  - $libs.ksp

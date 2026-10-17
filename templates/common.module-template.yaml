@@ -1,0 +1,13 @@
+settings:
+  kotlin:
+    version: 2.4.21
+    allWarningsAsErrors: true
+    freeCompilerArgs:
+      - -Xreturn-value-checker=full
+      - -Xname-based-destructuring=complete
+  jvm:
+    jdk:
+      version: 25
+    release: 21
+    test:
+      junitPlatformVersion: 6.1.3

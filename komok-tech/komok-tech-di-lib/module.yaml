@@ -1,0 +1,18 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "Support library for komok-tech-di"
+
+dependencies:
+  - $libs.slf4j.api: exported
+
+settings:
+  publishing:
+    pom:
+      name: "Komok Tech DI Support Library"
+
+plugins:
+  bcv: enabled

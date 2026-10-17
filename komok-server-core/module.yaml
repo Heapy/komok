@@ -1,0 +1,27 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/serialization.module-template.yaml
+  - //templates/di.module-template.yaml
+
+dependencies:
+  - org.http4k:http4k-server-netty:6.61.0.0
+  - io.undertow:undertow-core:2.4.4.Final
+  - //komok-tech/komok-tech-config
+  - //komok-tech/komok-tech-config-dotenv
+  - //komok-tech/komok-tech-utils-slf4j
+  - //komok-tech/komok-tech-di-lib
+  - $libs.logback
+  - $libs.kotlinx.coroutines.jdk8
+  - $libs.kotlinx.serialization.json
+  - $libs.netty: exported
+  - $libs.netty.kqueue
+  - $libs.netty.epoll
+  - $libs.netty.iouring
+  - $libs.junit.platform.launcher: runtime-only
+
+test-dependencies:
+  - $libs.junit.jupiter
+  - $libs.kotlinx.coroutines.test
+  - $libs.mockk

@@ -1,5 +1,33 @@
 # komok [![Build](https://github.com/Heapy/komok/actions/workflows/build.yml/badge.svg)](https://github.com/Heapy/komok/actions/workflows/build.yml)
 
+## Build
+
+```sh
+./ktc-plugins sync
+./ktc-plugins verify
+./kotlin build --platform jvm
+./kotlin test --platform jvm
+./kotlin check apiCheck klibApiCheck
+./kotlin check koverCheck -m komok-app
+```
+
+## Run and package
+
+```sh
+./kotlin run -m komok-app
+./kotlin do installDist -m komok-app
+./kotlin do distTar -m komok-app
+./kotlin do distZip -m komok-app
+```
+
+## Publish libraries
+
+```sh
+./kotlin publish mavenLocal
+./kotlin package -m komok-tech-api-dsl --format maven-central-bundle
+./kotlin publish mavenCentral
+```
+
 ## Local-First challenges
 
 1. Represent every change in the system like event

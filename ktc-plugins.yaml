@@ -1,0 +1,17 @@
+schemaVersion: 1
+plugins:
+  'bcv':
+    repository: 'Heapy/ktc-bcv'
+    ref:
+      branch: 'main'
+    mode: downloaded
+  'kover':
+    repository: 'Heapy/ktc-kover'
+    ref:
+      branch: 'main'
+    mode: downloaded
+  'application':
+    repository: 'Heapy/ktc-application'
+    ref:
+      tag: 'v0.2.0'
+    mode: downloaded

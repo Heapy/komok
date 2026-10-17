@@ -1,0 +1,21 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "TODO"
+
+dependencies:
+  - $libs.ksp
+  - //komok-tech/komok-tech-decorators-plugin-logging-lib
+  - //komok-tech/komok-tech-decorators-ksp-api
+  - //komok-tech/komok-tech-utils-slf4j
+
+settings:
+  publishing:
+    pom:
+      name: "TODO"
+
+plugins:
+  bcv: enabled

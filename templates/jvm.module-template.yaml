@@ -1,0 +1,4 @@
+apply:
+  - //templates/common.module-template.yaml
+
+layout: default

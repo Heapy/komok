@@ -1,0 +1,20 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/di.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "Simple .env implementation"
+
+dependencies:
+  - //komok-tech/komok-tech-config-common: exported
+  - //komok-tech/komok-tech-di-lib
+
+settings:
+  publishing:
+    pom:
+      name: "Komok Tech Dotenv"
+
+plugins:
+  bcv: enabled

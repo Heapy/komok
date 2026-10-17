@@ -1,0 +1,51 @@
+#!/bin/sh
+set -eu
+umask 077
+version='0.3.0' # VERSION
+fail() { printf '%s\n' "ktc-plugins: $*" >&2; exit 1; }
+# Explicit development override; published wrappers always verify the pinned artifact.
+if [ -n "${KTC_PLUGINS_BINARY:-}" ]; then
+    [ -x "$KTC_PLUGINS_BINARY" ] || fail "KTC_PLUGINS_BINARY is not executable"
+    exec "$KTC_PLUGINS_BINARY" "$@"
+fi
+case "$(uname -s)/$(uname -m)" in
+    Darwin/arm64) target=macos-arm64; sha='e3e936ee1c8c4635932d5bf9ca559e3543a8cdd95c7fef0db33f588376d87c5b' ;; # SHA_MACOS_ARM64
+    Linux/x86_64) target=linux-x64; sha='3946fe6d573ee02b845848253d6c767a70f3ccd96ee3beb4ff1a11966b483390' ;; # SHA_LINUX_X64
+    Linux/aarch64|Linux/arm64) target=linux-arm64; sha='7be95fe4128add8db49df35ea8f6202ed031fb3fb495c7830b10cb27bd9bdaee' ;; # SHA_LINUX_ARM64
+    *) fail "Unsupported host: $(uname -s)/$(uname -m)" ;;
+esac
+[ "$sha" != UNRELEASED ] || fail "This checkout has no published release pins. Build locally and set KTC_PLUGINS_BINARY; release bundles contain pinned wrappers."
+if [ -n "${KTC_PLUGINS_BINARY_CACHE:-}" ]; then cache=$KTC_PLUGINS_BINARY_CACHE
+else
+    case "$target" in
+        macos-*) cache="$HOME/Library/Caches/ktc-plugins/binaries" ;;
+        *) cache="${XDG_CACHE_HOME:-$HOME/.cache}/ktc-plugins/binaries" ;;
+    esac
+fi
+artifact="ktc-plugins-$version-$target"
+folder="$cache/$version/$target"
+binary="$folder/$artifact"
+digest() {
+    if command -v sha256sum >/dev/null 2>&1; then sha256sum "$1" | cut -d ' ' -f 1
+    elif command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1" | cut -d ' ' -f 1
+    elif command -v openssl >/dev/null 2>&1; then openssl dgst -sha256 "$1" | sed 's/^.*= //'
+    else fail "Install sha256sum, shasum, or openssl to verify downloads"; fi
+}
+mkdir -p "$folder"
+[ ! -L "$binary" ] || fail "Refusing a symlink in the binary cache"
+if [ ! -f "$binary" ]; then
+    command -v curl >/dev/null 2>&1 || fail "Install curl to download the native executable"
+    staging=$(mktemp -d "$folder/.download.XXXXXXXX")
+    trap 'rm -rf "$staging"' EXIT HUP INT TERM
+    curl --disable --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
+        --connect-timeout 15 --max-time 300 --retry 2 \
+        "https://github.com/Heapy/ktc-plugins/releases/download/v$version/$artifact" -o "$staging/binary"
+    [ "$(digest "$staging/binary")" = "$sha" ] || fail "Downloaded executable checksum mismatch"
+    chmod 700 "$staging/binary"
+    # Independent verified downloads may race; rename exposes only a complete executable.
+    mv -f "$staging/binary" "$binary"
+    rm -rf "$staging"
+    trap - EXIT HUP INT TERM
+fi
+[ "$(digest "$binary")" = "$sha" ] || fail "Cached executable checksum mismatch; remove $binary and retry"
+exec "$binary" "$@"

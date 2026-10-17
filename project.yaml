@@ -1,0 +1,43 @@
+modules:
+  - komok-app
+  - komok-dao-mg
+  - komok-infra/komok-auth-common
+  - komok-server-common
+  - komok-server-cookie-auth
+  - komok-server-core
+  - komok-tech/komok-tech-api-dsl
+  - komok-tech/komok-tech-api-dsl-ui
+  - komok-tech/komok-tech-config
+  - komok-tech/komok-tech-config-common
+  - komok-tech/komok-tech-config-dotenv
+  - komok-tech/komok-tech-decorators-ksp
+  - komok-tech/komok-tech-decorators-ksp-api
+  - komok-tech/komok-tech-decorators-lib
+  - komok-tech/komok-tech-decorators-plugin-logging
+  - komok-tech/komok-tech-decorators-plugin-logging-lib
+  - komok-tech/komok-tech-decorators-test
+  - komok-tech/komok-tech-di
+  - komok-tech/komok-tech-di-ez
+  - komok-tech/komok-tech-di-ez-ksp
+  - komok-tech/komok-tech-di-ez-lib
+  - komok-tech/komok-tech-di-ez-test
+  - komok-tech/komok-tech-di-lib
+  - komok-tech/komok-tech-di-test
+  - komok-tech/komok-tech-di-test-central
+  - komok-tech/komok-tech-di-test-next
+  - komok-tech/komok-tech-logging
+  - komok-tech/komok-tech-logging-api
+  - komok-tech/komok-tech-logging-jul
+  - komok-tech/komok-tech-logging-slf4j
+  - komok-tech/komok-tech-time
+  - komok-tech/komok-tech-time-test-fixtures
+  - komok-tech/komok-tech-to-be-injected
+  - komok-tech/komok-tech-utils-slf4j
+  - plugins/application
+  - plugins/bcv
+  - plugins/kover
+
+plugins:
+  - //plugins/bcv
+  - //plugins/kover
+  - //plugins/application

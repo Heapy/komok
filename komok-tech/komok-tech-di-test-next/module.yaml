@@ -1,0 +1,12 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/di.module-template.yaml
+
+dependencies:
+  - $libs.logback
+  - //komok-tech/komok-tech-di-test
+  - //komok-tech/komok-tech-di-lib
+  - $libs.junit.jupiter
+  - $libs.junit.platform.launcher: runtime-only

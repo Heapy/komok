@@ -1,0 +1,125 @@
+schemaVersion: 1
+plugins:
+  'application':
+    repository: 'Heapy/ktc-application'
+    declarationSha256: 'fd897cd83fdd6a10be5d110323d39f4d476cf95b392e0f6de75174737ac2c2ec'
+    commit: '1d3a6451b6cdda0ecfc8e4cf09d41b26fc014ac3'
+    sourcePath: 'plugins/application'
+    destination: 'plugins/application'
+    mode: 'downloaded'
+    pluginId: 'application'
+    treeSha256: 'f47ad78ac01c011e8318f2b2ddebf7160339fc85cec074f5d72bd2eefa34222e'
+    producer:
+      path: ktc-plugin.yaml
+      sha256: 'ef118ea7c5b672b3a03b4354eb3ff7911563de23e7d84fe736f7293a375e6732'
+      plugin: 'application'
+    files:
+      '.ktc-licenses/LICENSE':
+        sha256: 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30'
+        executable: false
+      'module.yaml':
+        sha256: 'f42008b345ab2a87139321599aa41f1bb869d3b7fb3b18919c82ab34c6a03dae'
+        executable: false
+      'plugin.yaml':
+        sha256: 'c506544186dd9f3938a69096a494d2bd000b7af908904b904ab181f2859ed912'
+        executable: false
+      'src/ApplicationSettings.kt':
+        sha256: '2e0dd9f690b82992966f44eb58bc7cbeea88cc73794be2cea590e651c093b82d'
+        executable: false
+      'src/Archives.kt':
+        sha256: 'e387abac1980d571dae06baf535e506c3549e40d84112489508c2e9456cad63b'
+        executable: false
+      'src/Distribution.kt':
+        sha256: '4320ae93059ddfd77f42bd5391258889eb7eb0c4a6e096ba9f447a9367874f39'
+        executable: false
+      'test/DistributionTest.kt':
+        sha256: 'c795f23d97abbf9cfb1a5b9bbd188e9a35dad25bd7a2ce9277eef0a3d3888f68'
+        executable: false
+  'bcv':
+    repository: 'Heapy/ktc-bcv'
+    declarationSha256: '21bca3872cdfcbec792cc56b9bc145e26590ee99ed836b3378f3e5e661a8867c'
+    commit: 'e02709f8c1dd3f30bf8c3111f2c7c96d19c2f515'
+    sourcePath: 'plugins/bcv'
+    destination: 'plugins/bcv'
+    mode: 'downloaded'
+    pluginId: 'bcv'
+    treeSha256: '2640f80c5e1f59fd9be76576b00bd3af5cba613e3d15b4d136d12086f67fce03'
+    producer:
+      path: ktc-plugin.yaml
+      sha256: '9d8c0cb70d7e6b7bae923e9ec85b39422ad726e571aacfa1a654d7931c7e0a5b'
+      plugin: 'bcv'
+    files:
+      '.ktc-licenses/LICENSE':
+        sha256: 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30'
+        executable: false
+      'module.yaml':
+        sha256: '106eb372a1d4c0a00b0be4457057ca854e1faf7be46b5aae792675a965c48084'
+        executable: false
+      'plugin.yaml':
+        sha256: '2a65b18f388641a9ca8b72920451e58991b21b8d8e348a0e9d337ca3242352c1'
+        executable: false
+      'resources/worker/main.kt':
+        sha256: 'ac8928097e3c5463f19366b7d05e83d1992db8ed1949127fe505f2e94db3e125'
+        executable: false
+      'src/AbiWorker.kt':
+        sha256: '14f489c437f6ccb158b685f9106b13b84988885907c66bfec4ccc640aec35e71'
+        executable: false
+      'src/ApiTasks.kt':
+        sha256: '5a39bb5173bcd87fb8ea14c9396f6c310fdc3d102c031e76707614677ee3f1a1'
+        executable: false
+      'src/BcvSettings.kt':
+        sha256: 'bbaabf695678fd32323b1ef3cc728f4af4dc62f0af66800e75f1cfd3d16c3aa8'
+        executable: false
+      'src/BuildTasks.kt':
+        sha256: '443b165de670fce12b034fedf1d2aadc63acaf2237c1cbc6bf2803876d0fc23b'
+        executable: false
+      'src/KlibApiTasks.kt':
+        sha256: '505d6afa0c6f3f601f2de0e45590accde06ba2a1e8e5595caef3715cef54d32b'
+        executable: false
+      'src/Processes.kt':
+        sha256: 'd2010094d979ab7ebf898d36819c0a2b8e240d73247228910e2337c611580ce3'
+        executable: false
+      'src/TargetPlan.kt':
+        sha256: 'ce440bac6be68fe4f09966c14b9513e9eae63b98b7c2965d6daf894be953a546'
+        executable: false
+      'test/ApiCheckTest.kt':
+        sha256: 'c7dfc1fc0dafa3e34361a07aa19241a3435ee2e680e238c47c09be22f9718290'
+        executable: false
+      'test/KlibApiTest.kt':
+        sha256: '1b2edd5c9d275b547ad7ad36a73b73e0de49a9bdf767f5f8f913823ed91858f3'
+        executable: false
+      'test/TargetPlanTest.kt':
+        sha256: '1039763534a1394f697b9a80a8288654837f4cf5617a7f19be8b63a8cbaa92b4'
+        executable: false
+  'kover':
+    repository: 'Heapy/ktc-kover'
+    declarationSha256: '7a63b9515c1a3d9cb9037a47f2849c9f0e1b0e510fd11dc6ce7369fa3f725d79'
+    commit: 'e575c9e215b955b5737303af627bb683f591eb97'
+    sourcePath: 'plugins/kover'
+    destination: 'plugins/kover'
+    mode: 'downloaded'
+    pluginId: 'kover'
+    treeSha256: '6f82da11b6c1f98171a5eccf78cbd7d01b83a2971be493ac540ae26074e0ba79'
+    producer:
+      path: ktc-plugin.yaml
+      sha256: 'a37925fda206e4af2ee20a460c2b5b0609b700058cac443ff0f0afbca34c5b4a'
+      plugin: 'kover'
+    files:
+      '.ktc-licenses/LICENSE':
+        sha256: 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30'
+        executable: false
+      'module.yaml':
+        sha256: 'e645e4c8c34dbd6347acd671d16a8d77c4cf2df87eaf0ec9c73ccc256462f700'
+        executable: false
+      'plugin.yaml':
+        sha256: '461e4123d2e14ebdfeccababf4cc33ecf82d11eadb19465ad63b94336e1c2040'
+        executable: false
+      'src/Kover.kt':
+        sha256: '9a638eff06dc46149a72ac76d8f1bb644664fb939fde9e6d1ca8935d88983afb'
+        executable: false
+      'src/KoverSettings.kt':
+        sha256: '6df47529c66bebb36c1e4e7e0641fdaf775d86f609e3a2d18ebceece7d534182'
+        executable: false
+      'test/KoverTest.kt':
+        sha256: '4d14dbad71114861f6c973f5b2217ec248961dbe8ed9ea6b21ea5939c0044bd1'
+        executable: false

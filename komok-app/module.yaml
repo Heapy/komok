@@ -1,0 +1,56 @@
+product: jvm/app
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/serialization.module-template.yaml
+  - //templates/di.module-template.yaml
+
+dependencies:
+  - //komok-infra/komok-auth-common
+  - //komok-tech/komok-tech-config
+  - //komok-tech/komok-tech-config-dotenv
+  - //komok-tech/komok-tech-utils-slf4j
+  - //komok-tech/komok-tech-time
+  - //komok-dao-mg
+  - //komok-server-common
+  - $libs.bouncycastle.bcpkix
+  - //komok-tech/komok-tech-di-lib
+  - $libs.kotlinx.coroutines.jdk8
+  - $libs.kotlinx.serialization.json
+  - $libs.netty
+  - $libs.logback
+  - $libs.ktor.serialization.kotlinx.json
+  - $libs.ktor.client.cio
+  - $libs.ktor.server.content.negotiation
+  - $libs.ktor.server.cio
+  - $libs.ktor.server.resources
+  - $libs.ktor.server.websockets
+  - $libs.ktor.client.content.negotiation
+  - $libs.ktor.server.auth.jwt
+  - $libs.ktor.server.metrics.micrometer
+  - $libs.micrometer.registry.prometheus
+  - $libs.ktor.server.call.logging
+  - $libs.ktor.server.default.headers
+  - $libs.ktor.server.caching.headers
+  - $libs.ktor.server.status.pages
+  - $libs.junit.platform.launcher: runtime-only
+
+test-dependencies:
+  - $libs.junit.jupiter
+  - $libs.ktor.server.test.host
+  - $libs.kotlinx.coroutines.test
+  - $libs.mockk
+  - //komok-tech/komok-tech-time-test-fixtures
+
+settings:
+  jvm:
+    mainClass: io.heapy.komok.Application
+    test:
+      freeJvmArgs: [-Xmx2048m]
+
+plugins:
+  kover: enabled
+  application:
+    enabled: true
+    applicationName: backend
+    distributionName: komok-app

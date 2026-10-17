@@ -1,0 +1,9 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+
+dependencies:
+  - //komok-tech/komok-tech-decorators-plugin-logging-lib
+  - //komok-tech/komok-tech-utils-slf4j
+  - $libs.kotlin.reflect

@@ -1,0 +1,19 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: "TODO"
+
+dependencies:
+  - $libs.kotlinpoet.ksp
+  - $libs.ksp
+  - $libs.kotlin.reflect
+  - $libs.logback
+  - //komok-tech/komok-tech-decorators-ksp-api
+
+settings:
+  publishing:
+    pom:
+      name: "TODO"

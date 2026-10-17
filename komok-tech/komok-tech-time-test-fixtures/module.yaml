@@ -1,0 +1,15 @@
+product: jvm/lib
+
+apply:
+  - //templates/common.module-template.yaml
+  - //templates/publishing.module-template.yaml
+
+description: Test time source for applications using komok-tech-time
+
+dependencies:
+  - //komok-tech/komok-tech-time: exported
+
+settings:
+  publishing:
+    pom:
+      name: Komok Tech Time Test Fixtures

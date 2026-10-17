@@ -5,8 +5,7 @@ out/
 *.iws
 *.ipr
 
-# Gradle
-.gradle
+# Build output
 build/
 
 # Kotlin
@@ -17,10 +16,12 @@ build/
 /frontend/node_modules/
 
 # Project
-komok-app/src/main/resources/application.conf
+komok-app/resources/application.conf
 
 # System
 .DS_Store
 
 # Publish
 publish.sh
+# ktc-plugins managed entries
+/.ktc-plugins/
