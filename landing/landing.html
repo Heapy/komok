@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Komok connects your plans, knowledge and memories. See the Stream and Library prototype of a personal information system by Heapy. In development." />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Komok by Heapy — Plans, knowledge and memories, connected</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="site.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header page-width">
+        <a class="brand" href="index.html">komok <span>by Heapy</span></a>
+        <nav aria-label="Main">
+            <a href="#inside">Inside Komok</a>
+            <a href="#your-data">Your data</a>
+            <a href="https://github.com/Heapy/komok">GitHub</a>
+        </nav>
+    </header>
+    <main id="content" class="page-width">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-heading">
+                <p class="eyebrow">A personal information system <span class="status">In development</span></p>
+                <h1 id="hero-title">{{hero.title}}</h1>
+            </div>
+            <div class="hero-copy">
+                {{hero.body}}
+                <a class="primary-link" href="#inside">See how it fits together</a>
+            </div>
+        </section>
+
+        <section id="inside" class="product" aria-labelledby="product-title">
+            <div class="section-label"><h2 id="product-title">Two ways into the same world</h2><span>From the working prototype · Sample data</span></div>
+            <div class="view-tabs" role="tablist" aria-label="Explore Komok" hidden>
+                <button id="stream-tab" type="button" role="tab" aria-selected="true" aria-controls="stream-panel" tabindex="0"><strong>Stream</strong><span>What matters now</span></button>
+                <button id="library-tab" type="button" role="tab" aria-selected="false" aria-controls="library-panel" tabindex="-1"><strong>Library</strong><span>Everything you keep</span></button>
+            </div>
+            <div id="stream-panel" class="product-panel" role="tabpanel" aria-labelledby="stream-tab" tabindex="0">
+                <div class="view-intro"><h3>{{stream.title}}</h3>{{stream.body}}</div>
+                <figure>
+                    <p class="mobile-preview-hint">Swipe across the screenshot, or open it full size.</p>
+                    <a class="screenshot-link" href="assets/komok-stream.png" target="_blank" rel="noopener" aria-label="View the Stream screenshot at full size (opens a new tab)"><img src="assets/komok-stream.png" width="1488" height="1058" alt="Komok Stream: a compact list of daily items with The island trip expanded to show dates, saved places, a map and notes from a video." fetchpriority="high" /></a>
+                    <figcaption><span>Stream / The island trip, opened in context.</span><a href="assets/komok-stream.png" target="_blank" rel="noopener">View full size<span class="sr-only"> (opens a new tab)</span></a></figcaption>
+                </figure>
+            </div>
+            <div id="library-panel" class="product-panel" role="tabpanel" aria-labelledby="library-tab" tabindex="0">
+                <div class="view-intro"><h3>{{library.title}}</h3>{{library.body}}</div>
+                <figure>
+                    <p class="mobile-preview-hint">Swipe across the screenshot, or open it full size.</p>
+                    <a class="screenshot-link" href="assets/komok-library.png" target="_blank" rel="noopener" aria-label="View the Library screenshot at full size (opens a new tab)"><img src="assets/komok-library.png" width="1488" height="1058" alt="Komok Library: a compact table of people, places, notes and projects, with type, collection and connected entities visible in each row." loading="lazy" /></a>
+                    <figcaption><span>Library / The same entities, organised and connected.</span><a href="assets/komok-library.png" target="_blank" rel="noopener">View full size<span class="sr-only"> (opens a new tab)</span></a></figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="connected chapter" aria-labelledby="connection-title">
+            <div class="chapter-heading"><p class="eyebrow">The connections are the point</p><h2 id="connection-title">{{connection.title}}</h2>{{connection.body}}</div>
+            <ol class="trip-story">
+                <li><span class="step-label">In your stream</span><div><h3>Choose the dates.</h3><p>Booking a place to stay can wait until you know when you are going. The stream brings forward the next useful step.</p></div></li>
+                <li><span class="step-label">In your library</span><div><h3>Bring the pieces together.</h3><p>A coastal walk, a friend's recommendation, a note from a video. Open the trip to find them together, with links back to where they came from.</p></div></li>
+                <li><span class="step-label">After you get home</span><div><h3>The plan becomes a memory.</h3><p>Your photos join the places, people and days of the trip. You can find them again from any of those connections.</p></div></li>
+            </ol>
+        </section>
+
+        <section class="knowledge chapter" aria-labelledby="knowledge-title">
+            <div class="chapter-heading"><p class="eyebrow">A growing body of knowledge</p><h2 id="knowledge-title">{{knowledge.title}}</h2></div>
+            <div class="knowledge-copy">{{knowledge.body}}<div class="assistant"><h3>{{assistant.title}}</h3>{{assistant.body}}</div></div>
+        </section>
+
+        <section id="your-data" class="ownership chapter" aria-labelledby="ownership-title">
+            <div class="chapter-heading"><p class="eyebrow">Your data</p><h2 id="ownership-title">{{ownership.title}}</h2>{{ownership.body}}</div>
+            <dl class="principles">
+                <div><dt>With you, offline</dt><dd>The plans, notes and other essentials you choose to take with you should work on the plane, too.</dd></div>
+                <div><dt>A home for family memories</dt><dd>A shared archive, with each person able to find their own way through it.</dd></div>
+                <div><dt>Shared only by your choice</dt><dd>A collection for a friend. A page for your blog. You approve the content and who can see it before anything is published.</dd></div>
+            </dl>
+        </section>
+
+        <section class="invitation chapter" aria-labelledby="invitation-title">
+            <div class="chapter-heading"><p class="eyebrow">Komok is taking shape</p><h2 id="invitation-title">{{invitation.title}}</h2></div>
+            <div>{{invitation.body}}<p class="maker">Heapy is the Kotlin ecosystem growing around Komok: useful products, and reusable libraries built along the way.</p><div class="project-links"><a class="primary-link" href="https://github.com/Heapy/komok">Follow Komok on GitHub</a><a href="https://github.com/Heapy">Explore Heapy</a></div></div>
+        </section>
+    </main>
+    {{footer}}
+</body>
+</html>
