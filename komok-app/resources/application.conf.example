@@ -1,7 +1,7 @@
 server {
     port = 9556
     host = "127.0.0.1"
-    resources = "./frontend/dist"
+    resources = "./public"
 }
 
 jwt {
