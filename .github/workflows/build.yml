@@ -28,12 +28,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
+      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
       - name: "Restore locked build plugins"
         run: |
           ./ktc-plugins sync
           ./ktc-plugins verify
-      - uses: Heapy/ktc-check@e86a342c115a59c2243c45b5a784e7003a372359 # v1.1.0
+      - uses: Heapy/ktc-check@4575484d8e2596bde65d671991e72fadc42ad47b # v1.1.0
         with:
           platforms: jvm, linuxX64, wasmJs
       - run: ./kotlin 'do' distTar -m komok-app
@@ -55,7 +55,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
-      - uses: Heapy/setup-ktc@cc63216665ce07ce0709fe52ef4a4b0b63aeaddc # v1.1.0
+      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
       - name: "Restore locked build plugins (Unix)"
         if: runner.os != 'Windows'
         run: |
@@ -68,7 +68,7 @@ jobs:
           ./ktc-plugins.bat sync
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           ./ktc-plugins.bat verify
-      - uses: Heapy/ktc-check@e86a342c115a59c2243c45b5a784e7003a372359 # v1.1.0
+      - uses: Heapy/ktc-check@4575484d8e2596bde65d671991e72fadc42ad47b # v1.1.0
         with:
           modules: komok-tech-to-be-injected
           platforms: ${{ matrix.platform }}
