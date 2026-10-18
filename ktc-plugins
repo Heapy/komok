@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 umask 077
-version='0.3.0' # VERSION
+version='0.3.1' # VERSION
 fail() { printf '%s\n' "ktc-plugins: $*" >&2; exit 1; }
 # Explicit development override; published wrappers always verify the pinned artifact.
 if [ -n "${KTC_PLUGINS_BINARY:-}" ]; then
@@ -9,9 +9,9 @@ if [ -n "${KTC_PLUGINS_BINARY:-}" ]; then
     exec "$KTC_PLUGINS_BINARY" "$@"
 fi
 case "$(uname -s)/$(uname -m)" in
-    Darwin/arm64) target=macos-arm64; sha='e3e936ee1c8c4635932d5bf9ca559e3543a8cdd95c7fef0db33f588376d87c5b' ;; # SHA_MACOS_ARM64
-    Linux/x86_64) target=linux-x64; sha='3946fe6d573ee02b845848253d6c767a70f3ccd96ee3beb4ff1a11966b483390' ;; # SHA_LINUX_X64
-    Linux/aarch64|Linux/arm64) target=linux-arm64; sha='7be95fe4128add8db49df35ea8f6202ed031fb3fb495c7830b10cb27bd9bdaee' ;; # SHA_LINUX_ARM64
+    Darwin/arm64) target=macos-arm64; sha='c1cd0168a128f0e340cd61129bdd748f178a495b59bae38d4c24195b5d423e0d' ;; # SHA_MACOS_ARM64
+    Linux/x86_64) target=linux-x64; sha='fb537d38a9f77321369b6437d019760ae32a7ed90af3d2aac08f85d2ba4b50ec' ;; # SHA_LINUX_X64
+    Linux/aarch64|Linux/arm64) target=linux-arm64; sha='33901136e03a567de70a033e0fc915315fbbab0f1a8d896ca710c235da86d667' ;; # SHA_LINUX_ARM64
     *) fail "Unsupported host: $(uname -s)/$(uname -m)" ;;
 esac
 [ "$sha" != UNRELEASED ] || fail "This checkout has no published release pins. Build locally and set KTC_PLUGINS_BINARY; release bundles contain pinned wrappers."
