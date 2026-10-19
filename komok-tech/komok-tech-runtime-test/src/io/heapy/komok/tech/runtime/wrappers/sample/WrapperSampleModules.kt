@@ -10,8 +10,8 @@ import io.micrometer.core.instrument.MeterRegistry
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * P7 sample: decoratable service interfaces returned by a `@Module`. The KSP processor
- * generates `Greeter_KomokDecorated` / `FlakyService_KomokDecorated` and wraps the
+ * P7 sample: decoratable service interfaces returned by a `@Module`. The compiler plugin
+ * generates interface decorators and wraps the
  * `greeter()` / `flakyService()` bindings, so reads return the decorated value.
  */
 
@@ -88,16 +88,16 @@ class RealChainedService(
 }
 
 @Module
-open class WrapperModule {
+class WrapperModule {
     context(_: KomokContext)
-    open suspend fun greeter(): Greeter =
+    suspend fun greeter(): Greeter =
         RealGreeter()
 
     context(_: KomokContext)
-    open suspend fun flakyService(): FlakyService =
+    suspend fun flakyService(): FlakyService =
         RealFlaky(failuresBeforeSuccess = 2)
 
     context(_: KomokContext)
-    open suspend fun chainedService(): ChainedService =
+    suspend fun chainedService(): ChainedService =
         RealChainedService(failuresBeforeSuccess = 2)
 }

@@ -6,9 +6,9 @@ import io.heapy.komok.tech.runtime.Module
 class ShapeService(val value: String)
 
 @Module
-open class ProviderShapeModule {
+class ProviderShapeModule {
     context(_: KomokContext)
-    open suspend fun service(): ShapeService =
+    suspend fun service(): ShapeService =
         ShapeService(
             value = listOf(
                 privateHelper(),
@@ -22,15 +22,15 @@ open class ProviderShapeModule {
         "private"
 
     context(_: KomokContext)
-    open suspend fun publicHelperWithValueParam(value: String): String =
+    suspend fun publicHelperWithValueParam(value: String): String =
         value
 
     context(_: KomokContext)
-    open fun nonSuspendHelper(): String =
+    fun nonSuspendHelper(): String =
         "non-suspend"
 
     context(_: KomokContext)
-    open suspend fun unitHelper() {
+    suspend fun unitHelper() {
         // Unit-returning helpers are not provider bindings.
     }
 }

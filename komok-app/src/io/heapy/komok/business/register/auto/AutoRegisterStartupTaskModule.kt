@@ -9,7 +9,7 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class AutoRegisterStartupTaskModule(
+class AutoRegisterStartupTaskModule(
     private val userDaoModule: UserDaoModule,
     private val passwordGeneratorModule: PasswordGeneratorModule,
     private val passwordHasherModule: PasswordHasherModule,
@@ -17,7 +17,7 @@ open class AutoRegisterStartupTaskModule(
     private val timeBasedOneTimePasswordModule: TimeBasedOneTimePasswordModule,
 ) {
     context(_: KomokContext)
-    open suspend fun autoRegisterStartupTask(): AutoRegisterStartupTask =
+    suspend fun autoRegisterStartupTask(): AutoRegisterStartupTask =
         AutoRegisterStartupTask(
             userDao = userDaoModule.userDao(),
             passwordGenerator = passwordGeneratorModule.passwordGenerator(),
@@ -27,7 +27,7 @@ open class AutoRegisterStartupTaskModule(
         )
 
     context(_: KomokContext)
-    open suspend fun autoRegisterStartupTaskConfiguration(): AutoRegisterStartupTaskConfiguration =
+    suspend fun autoRegisterStartupTaskConfiguration(): AutoRegisterStartupTaskConfiguration =
         configurationModule
             .config()
             .read(AutoRegisterStartupTaskConfiguration.serializer(), "auto-register")

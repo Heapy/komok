@@ -5,11 +5,11 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class ServerConfigurationModule(
+class ServerConfigurationModule(
     private val configurationModule: ConfigurationModule,
 ) {
     context(_: KomokContext)
-    open suspend fun config(): ServerConfiguration =
+    suspend fun config(): ServerConfiguration =
         configurationModule
             .config()
             .read(

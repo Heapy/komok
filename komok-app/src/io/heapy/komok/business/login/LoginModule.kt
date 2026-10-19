@@ -9,7 +9,7 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class LoginModule(
+class LoginModule(
     private val userDaoModule: UserDaoModule,
     private val userSessionDaoModule: UserSessionDaoModule,
     private val sessionTokenServiceModule: SessionTokenServiceModule,
@@ -17,7 +17,7 @@ open class LoginModule(
     private val passwordHasherModule: PasswordHasherModule,
 ) {
     context(_: KomokContext)
-    open suspend fun loginService(): LoginService =
+    suspend fun loginService(): LoginService =
         LoginService(
             userDao = userDaoModule.userDao(),
             userSessionDao = userSessionDaoModule.userSessionDao(),
@@ -27,7 +27,7 @@ open class LoginModule(
         )
 
     context(_: KomokContext)
-    open suspend fun loginRoute(): LoginRoute =
+    suspend fun loginRoute(): LoginRoute =
         LoginRoute(
             loginService = loginService(),
         )

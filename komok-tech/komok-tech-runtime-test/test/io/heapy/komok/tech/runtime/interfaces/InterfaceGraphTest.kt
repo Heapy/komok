@@ -1,7 +1,8 @@
 package io.heapy.komok.tech.runtime.interfaces
 
+import io.heapy.komok.tech.runtime.*
 import io.heapy.komok.tech.runtime.EdgeDescriptor
-import io.heapy.komok.tech.runtime.services.AppServicesKeys
+import io.heapy.komok.tech.runtime.services.serviceInterfaceCodec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,9 +15,9 @@ class InterfaceGraphTest {
     /** Interface-module no-arg providers are generated as leaf bindings. */
     @Test
     fun `interface module leaf provider is available through the generated graph`() = runTest {
-        val graph = createInterfaceLeafModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<InterfaceLeafModule> { dispatcher = Dispatchers.Default }
 
-        val answer = graph.modules.interfaceLeafModule.answer()
+        val answer = graph.read { module<InterfaceLeafModule>().answer() }
         val payload = graph.graphPayload()
 
         assertAll(
@@ -36,9 +37,9 @@ class InterfaceGraphTest {
     /** Interface-module value parameters are resolved as dependencies inside the binding body. */
     @Test
     fun `interface module param-wired provider resolves dependencies and records edges`() = runTest {
-        val graph = createInterfaceParamModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<InterfaceParamModule> { dispatcher = Dispatchers.Default }
 
-        val endpoint = graph.endpoint()
+        val endpoint = graph[InterfaceParamModule.Bindings.endpoint]
         val payload = graph.graphPayload()
 
         assertAll(
@@ -47,15 +48,15 @@ class InterfaceGraphTest {
                 assertEquals(
                     "(io.heapy.komok.tech.runtime.interfaces.InterfaceHost, " +
                         "io.heapy.komok.tech.runtime.interfaces.InterfacePort)",
-                    InterfaceParamModuleKeys.endpoint.signature.valueParamsDescriptor,
+                    InterfaceParamModule.Bindings.endpoint.id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     payload.edges.contains(
                         EdgeDescriptor(
-                            InterfaceParamModuleKeys.endpoint.display(),
-                            InterfaceParamModuleKeys.host.display(),
+                            InterfaceParamModule.Bindings.endpoint.id.display(),
+                            InterfaceParamModule.Bindings.host.id.display(),
                         ),
                     ),
                 )
@@ -64,8 +65,8 @@ class InterfaceGraphTest {
                 assertTrue(
                     payload.edges.contains(
                         EdgeDescriptor(
-                            InterfaceParamModuleKeys.endpoint.display(),
-                            InterfaceParamModuleKeys.port.display(),
+                            InterfaceParamModule.Bindings.endpoint.id.display(),
+                            InterfaceParamModule.Bindings.port.id.display(),
                         ),
                     ),
                 )
@@ -77,28 +78,22 @@ class InterfaceGraphTest {
     /** #24 — module @IntoSet providers aggregate into an ordered Set<T> binding. */
     @Test
     fun `interface module into-set contributions aggregate and preserve fork replacement semantics`() = runTest {
-        val graph = createInterfaceSetModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<InterfaceSetModule> { dispatcher = Dispatchers.Default }
 
-        val registry = graph.interfaceCodecRegistry()
-        val aggregate = graph.modules.interfaceSetModule.interfaceCodecSet()
+        val registry = graph[InterfaceSetModule.Bindings.interfaceCodecRegistry]
+        val aggregate = graph.resolve<Set<InterfaceCodec>>()
         val contributionFork = graph.fork {
-            interfaceSetModule {
-                replaceJsonInterfaceCodec(InterfaceNamedCodec("yaml"))
-            }
+            replace(InterfaceSetModule.Bindings.jsonInterfaceCodec, InterfaceNamedCodec("yaml"))
         }
-        val contributionForkRegistry = contributionFork.interfaceCodecRegistry()
+        val contributionForkRegistry = contributionFork[InterfaceSetModule.Bindings.interfaceCodecRegistry]
         val serviceContributionFork = graph.fork {
-            appServices {
-                replaceServiceInterfaceCodec(InterfaceNamedCodec("service-fork"))
-            }
+            replace(binding(::serviceInterfaceCodec), InterfaceNamedCodec("service-fork"))
         }
-        val serviceContributionForkRegistry = serviceContributionFork.interfaceCodecRegistry()
+        val serviceContributionForkRegistry = serviceContributionFork[InterfaceSetModule.Bindings.interfaceCodecRegistry]
         val setFork = graph.fork {
-            interfaceSetModule {
-                replaceInterfaceCodecSet(setOf(InterfaceNamedCodec("only")))
-            }
+            replace(binding<Set<InterfaceCodec>>(), setOf(InterfaceNamedCodec("only")))
         }
-        val setForkRegistry = setFork.interfaceCodecRegistry()
+        val setForkRegistry = setFork[InterfaceSetModule.Bindings.interfaceCodecRegistry]
         val payload = graph.graphPayload()
 
         assertAll(
@@ -113,47 +108,37 @@ class InterfaceGraphTest {
             {
                 assertEquals(
                     "(kotlin.collections.Set<io.heapy.komok.tech.runtime.interfaces.InterfaceCodec>)",
-                    InterfaceSetModuleKeys.interfaceCodecRegistry.signature.valueParamsDescriptor,
+                    InterfaceSetModule.Bindings.interfaceCodecRegistry.id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
-                    payload.modules.single { it.fqn.endsWith(".InterfaceSetModule") }
-                        .bindings.any { it.endsWith(".InterfaceSetModule.interfaceCodecSet") },
+                    payload.modules.single { it.fqn == "komok.sets" }
+                        .bindings.contains(graph.binding<Set<InterfaceCodec>>().id.display()),
                 )
             },
             {
                 assertTrue(
                     payload.edges.contains(
                         EdgeDescriptor(
-                            InterfaceSetModuleKeys.interfaceCodecRegistry.display(),
-                            InterfaceSetModuleKeys.interfaceCodecSet.display(),
+                            InterfaceSetModule.Bindings.interfaceCodecRegistry.id.display(),
+                            graph.binding<Set<InterfaceCodec>>().id.display(),
                         ),
                     ),
                 )
             },
             {
                 assertTrue(
-                    payload.modules.single { it.fqn.endsWith(".AppServices") }
-                        .bindings.any { it.endsWith(".AppServices.serviceInterfaceCodec") },
+                    payload.modules.single { it.fqn == "io.heapy.komok.tech.runtime.services.Services" }
+                        .bindings.any { it.endsWith(".Services.serviceInterfaceCodec") },
                 )
             },
             {
                 assertTrue(
                     payload.edges.contains(
                         EdgeDescriptor(
-                            InterfaceSetModuleKeys.interfaceCodecSet.display(),
-                            InterfaceSetModuleKeys.jsonInterfaceCodec.display(),
-                        ),
-                    ),
-                )
-            },
-            {
-                assertTrue(
-                    payload.edges.contains(
-                        EdgeDescriptor(
-                            InterfaceSetModuleKeys.interfaceCodecSet.display(),
-                            InterfaceSetModuleKeys.xmlInterfaceCodec.display(),
+                            graph.binding<Set<InterfaceCodec>>().id.display(),
+                            InterfaceSetModule.Bindings.jsonInterfaceCodec.id.display(),
                         ),
                     ),
                 )
@@ -162,8 +147,18 @@ class InterfaceGraphTest {
                 assertTrue(
                     payload.edges.contains(
                         EdgeDescriptor(
-                            InterfaceSetModuleKeys.interfaceCodecSet.display(),
-                            AppServicesKeys.serviceInterfaceCodec.display(),
+                            graph.binding<Set<InterfaceCodec>>().id.display(),
+                            InterfaceSetModule.Bindings.xmlInterfaceCodec.id.display(),
+                        ),
+                    ),
+                )
+            },
+            {
+                assertTrue(
+                    payload.edges.contains(
+                        EdgeDescriptor(
+                            graph.binding<Set<InterfaceCodec>>().id.display(),
+                            binding(::serviceInterfaceCodec).id.display(),
                         ),
                     ),
                 )

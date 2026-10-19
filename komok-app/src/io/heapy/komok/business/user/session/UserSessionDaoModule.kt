@@ -6,12 +6,12 @@ import io.heapy.komok.tech.runtime.Module
 import io.heapy.komok.tech.time.TimeSourceModule
 
 @Module
-open class UserSessionDaoModule(
+class UserSessionDaoModule(
     private val mongoModule: MongoModule,
     private val timeSourceModule: TimeSourceModule,
 ) {
     context(_: KomokContext)
-    open suspend fun userSessionDao(): UserSessionDao =
+    suspend fun userSessionDao(): UserSessionDao =
         UserSessionDao(
             timeSource = timeSourceModule.timeSource(),
             database = mongoModule.komokDatabase(),

@@ -6,11 +6,11 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class EntityModule(
+class EntityModule(
     private val mongoModule: MongoModule,
 ) {
     context(_: KomokContext)
-    open suspend fun routes(): KomokRoutes =
+    suspend fun routes(): KomokRoutes =
         KomokRoutes(
             routes = listOf(
                 entityInsertRoute(),
@@ -20,25 +20,25 @@ open class EntityModule(
         )
 
     context(_: KomokContext)
-    open suspend fun entityDao(): MongoEntityDao =
+    suspend fun entityDao(): MongoEntityDao =
         MongoEntityDao(
             database = mongoModule.komokDatabase(),
         )
 
     context(_: KomokContext)
-    open suspend fun entityInsertRoute(): MongoEntityInsertRoute =
+    suspend fun entityInsertRoute(): MongoEntityInsertRoute =
         MongoEntityInsertRoute(
             mongoEntityDao = entityDao(),
         )
 
     context(_: KomokContext)
-    open suspend fun getLatestUnreadRoute(): MongoGetLatestUnreadRoute =
+    suspend fun getLatestUnreadRoute(): MongoGetLatestUnreadRoute =
         MongoGetLatestUnreadRoute(
             mongoEntityDao = entityDao(),
         )
 
     context(_: KomokContext)
-    open suspend fun updateStatusRoute(): MongoUpdateStatusRoute =
+    suspend fun updateStatusRoute(): MongoUpdateStatusRoute =
         MongoUpdateStatusRoute(
             mongoEntityDao = entityDao(),
         )

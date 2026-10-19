@@ -1,5 +1,6 @@
 package io.heapy.komok.tech.runtime.providershape
 
+import io.heapy.komok.tech.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,9 +13,9 @@ class ProviderShapeGraphTest {
     /** Provider-shape filtering: helpers are callable but not addressable bindings. */
     @Test
     fun `only public suspend value providers become generated bindings`() = runTest {
-        val graph = createProviderShapeModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<ProviderShapeModule> { dispatcher = Dispatchers.Default }
 
-        val service = graph.modules.providerShapeModule.service()
+        val service = graph.read { module<ProviderShapeModule>().service() }
         val module = graph
             .graphPayload()
             .modules

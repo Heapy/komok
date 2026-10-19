@@ -8,9 +8,9 @@ import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
 @Module
-open class MetricsModule {
+class MetricsModule {
     context(_: KomokContext)
-    open suspend fun meterRegistry(): PrometheusMeterRegistry {
+    suspend fun meterRegistry(): PrometheusMeterRegistry {
         InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE)
         return PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     }

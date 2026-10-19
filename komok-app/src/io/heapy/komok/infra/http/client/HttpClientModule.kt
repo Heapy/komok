@@ -9,9 +9,9 @@ import kotlinx.serialization.json.Json
 import io.ktor.client.engine.cio.CIO
 
 @Module
-open class HttpClientModule {
+class HttpClientModule {
     context(_: KomokContext)
-    open suspend fun httpClient(): HttpClient =
+    suspend fun httpClient(): HttpClient =
         HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(json = Json {

@@ -11,10 +11,6 @@ dependencies:
   - //komok-tech/komok-tech-runtime
 
 settings:
-  kotlin:
-    allOpen:
-      enabled: true
-      annotations: [io.heapy.komok.tech.runtime.Module]
   publishing:
     pom:
       name: "Komok Tech Time"

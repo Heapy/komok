@@ -12,43 +12,43 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 
 @Module
-open class LogModule {
+class LogModule {
     context(_: KomokContext)
-    open suspend fun events(): MutableList<String> =
+    suspend fun events(): MutableList<String> =
         CopyOnWriteArrayList()
 }
 
 @Module
-open class ConfigLifecycleModule(
+class ConfigLifecycleModule(
     private val log: LogModule,
 ) {
     @Startup
     context(_: KomokContext)
-    open suspend fun start() {
+    suspend fun start() {
         log.events().add("config.start")
     }
 
     @Shutdown
     context(_: KomokContext)
-    open suspend fun stop() {
+    suspend fun stop() {
         log.events().add("config.stop")
     }
 }
 
 @Module
-open class LifecycleModule(
+class LifecycleModule(
     private val config: ConfigLifecycleModule,
     private val log: LogModule,
 ) {
     @Startup
     context(_: KomokContext)
-    open suspend fun start() {
+    suspend fun start() {
         log.events().add("app.start")
     }
 
     @Shutdown
     context(_: KomokContext)
-    open suspend fun stop() {
+    suspend fun stop() {
         log.events().add("app.stop")
     }
 }
@@ -59,20 +59,20 @@ open class LifecycleModule(
  * and fail fast.
  */
 @Module
-open class FailingBootModule(
+class FailingBootModule(
     private val config: ConfigLifecycleModule,
     private val log: LogModule,
 ) {
     @Startup
     context(_: KomokContext)
-    open suspend fun start() {
+    suspend fun start() {
         log.events().add("failing.start")
         error("intentional boot failure")
     }
 
     @Shutdown
     context(_: KomokContext)
-    open suspend fun stop() {
+    suspend fun stop() {
         log.events().add("failing.stop")
     }
 }

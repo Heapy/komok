@@ -9,13 +9,13 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.routing.routing
 
 @Module
-open class ServerModule(
+class ServerModule(
     private val serverRoutingConfigurationModule: ServerRoutingConfigurationModule,
     private val serverApplicationConfigurationModule: ServerApplicationConfigurationModule,
     private val serverConfigurationModule: ServerConfigurationModule,
 ) {
     context(_: KomokContext)
-    open suspend fun server(): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
+    suspend fun server(): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
         val config = serverConfigurationModule.config()
         val features = serverApplicationConfigurationModule.features()
         val routes = serverRoutingConfigurationModule.routes()

@@ -8,7 +8,7 @@ import io.heapy.komok.tech.runtime.test.wrapper.AuditTrail
 /**
  * WrapperPlugin SPI sample: `@Audit` is a "third-party" wrapper the core processor has
  * never heard of — it is discovered via ServiceLoader from `komok-tech-runtime-test-wrapper`
- * on the ksp classpath. Same user model as built-ins: the wrapped method declares the
+ * through @CallWrapper metadata on the annotation. Same user model as built-ins: the wrapped method declares the
  * wrapper's context parameter, the caller provides it.
  */
 
@@ -24,8 +24,8 @@ class RealAccountService : AccountService {
 }
 
 @Module
-open class AuditModule {
+class AuditModule {
     context(_: KomokContext)
-    open suspend fun accountService(): AccountService =
+    suspend fun accountService(): AccountService =
         RealAccountService()
 }

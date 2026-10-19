@@ -4,8 +4,8 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class JvmUptimeModule {
+class JvmUptimeModule {
     context(_: KomokContext)
-    open suspend fun jvmUptime(): JvmUptime =
+    suspend fun jvmUptime(): JvmUptime =
         DefaultJvmUptime()
 }

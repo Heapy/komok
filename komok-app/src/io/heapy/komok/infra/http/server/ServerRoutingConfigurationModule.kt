@@ -7,13 +7,13 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class ServerRoutingConfigurationModule(
+class ServerRoutingConfigurationModule(
     private val serverConfigurationModule: ServerConfigurationModule,
     private val anonymousRoutesModule: AnonymousRoutesModule,
     private val authenticatedRoutesModule: AuthenticatedRoutesModule,
 ) {
     context(_: KomokContext)
-    open suspend fun routes(): KomokRoutes =
+    suspend fun routes(): KomokRoutes =
         KomokRoutes(
             listOf(
                 staticFilesRoute(),
@@ -23,7 +23,7 @@ open class ServerRoutingConfigurationModule(
         )
 
     context(_: KomokContext)
-    open suspend fun staticFilesRoute(): StaticFilesRoute =
+    suspend fun staticFilesRoute(): StaticFilesRoute =
         StaticFilesRoute(
             resources = serverConfigurationModule.config().resources,
         )

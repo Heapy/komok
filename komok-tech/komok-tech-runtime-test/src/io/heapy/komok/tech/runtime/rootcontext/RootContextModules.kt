@@ -19,8 +19,8 @@ class TenantElement(
 }
 
 @Module
-open class RootContextModule {
+class RootContextModule {
     context(_: KomokContext)
-    open suspend fun tenant(): String =
+    suspend fun tenant(): String =
         coroutineContext[TenantElement]?.name ?: "absent"
 }

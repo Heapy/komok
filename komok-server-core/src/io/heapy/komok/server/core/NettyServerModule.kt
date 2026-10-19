@@ -5,15 +5,15 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class NettyServerModule(
+class NettyServerModule(
     private val configurationModule: ConfigurationModule,
 ) {
     context(_: KomokContext)
-    open suspend fun ioHandlerFactoryProvider(): IoConfigurationProvider =
+    suspend fun ioHandlerFactoryProvider(): IoConfigurationProvider =
         SystemDependentIoConfigurationProvider()
 
     context(_: KomokContext)
-    open suspend fun config(): NettyServerConfiguration =
+    suspend fun config(): NettyServerConfiguration =
         configurationModule
             .config()
             .read(
@@ -22,7 +22,7 @@ open class NettyServerModule(
             )
 
     context(_: KomokContext)
-    open suspend fun rootHandler(): HttpHandler =
+    suspend fun rootHandler(): HttpHandler =
         object : HttpHandler {
             override suspend fun handleRequest(exchange: NettyHttpServerExchange) {
                 println("Calling handler")
@@ -32,7 +32,7 @@ open class NettyServerModule(
         }
 
     context(_: KomokContext)
-    open suspend fun nettyServer(): NettyServer =
+    suspend fun nettyServer(): NettyServer =
         NettyServer(
             config = config(),
             rootHandler = rootHandler(),

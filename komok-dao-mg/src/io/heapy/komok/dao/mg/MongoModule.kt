@@ -7,21 +7,21 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class MongoModule(
+class MongoModule(
     private val configurationModule: ConfigurationModule,
 ) {
     context(_: KomokContext)
-    open suspend fun client(): MongoClient {
+    suspend fun client(): MongoClient {
         val mc = mongoConfiguration()
         return MongoClient.create("mongodb://${mc.username}:${mc.password}@${mc.host}:${mc.port}")
     }
 
     context(_: KomokContext)
-    open suspend fun komokDatabase(): MongoDatabase =
+    suspend fun komokDatabase(): MongoDatabase =
         client().getDatabase("komok")
 
     context(_: KomokContext)
-    open suspend fun mongoConfiguration(): MongoConfiguration =
+    suspend fun mongoConfiguration(): MongoConfiguration =
         configurationModule
             .config()
             .read(

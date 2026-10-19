@@ -1,8 +1,2 @@
 apply:
-  - //templates/ksp.module-template.yaml
-
-settings:
-  kotlin:
-    ksp:
-      processors:
-        - //komok-tech/komok-tech-runtime-ksp
+  - //templates/runtime-compiler.module-template.yaml

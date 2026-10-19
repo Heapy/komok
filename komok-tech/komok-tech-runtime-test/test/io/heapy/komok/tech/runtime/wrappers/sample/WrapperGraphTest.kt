@@ -1,10 +1,8 @@
 package io.heapy.komok.tech.runtime.wrappers.sample
 
+import io.heapy.komok.tech.runtime.*
 import io.heapy.komok.tech.logging.LogEvent
 import io.heapy.komok.tech.logging.LoggingContext
-import io.heapy.komok.tech.runtime.fixtures.generatedKspMainSourceRoot
-import io.heapy.komok.tech.runtime.wrappers.MethodMeta
-import io.heapy.komok.tech.runtime.wrappers.ParameterMeta
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import kotlinx.coroutines.Dispatchers
@@ -25,8 +23,8 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val greeter = graph.modules.wrapperModule.greeter()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val greeter = graph.read { module<WrapperModule>().greeter() }
 
         val result = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Ada")
@@ -48,8 +46,8 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = {})
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val greeter = graph.modules.wrapperModule.greeter()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val greeter = graph.read { module<WrapperModule>().greeter() }
 
         val greeting = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Lin")
@@ -70,8 +68,8 @@ class WrapperGraphTest {
     /** #15 — @Retry decorator re-invokes the delegate until it succeeds. */
     @Test
     fun `retry decorator re-invokes the delegate until it succeeds`() = runTest {
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val flaky = graph.modules.wrapperModule.flakyService()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val flaky = graph.read { module<WrapperModule>().flakyService() }
 
         // RealFlaky fails on attempts 1 and 2, succeeds on attempt 3.
         val result = flaky.attempt()
@@ -87,8 +85,8 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val chained = graph.modules.wrapperModule.chainedService()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val chained = graph.read { module<WrapperModule>().chainedService() }
 
         val result = withWrapperContexts(loggingContext, registry) {
             chained.operation("Ivy")
@@ -110,41 +108,26 @@ class WrapperGraphTest {
         registry.close()
     }
 
-    /** #15 — method identity is generated static metadata, not runtime reflection. */
     @Test
-    fun `generated metadata describes the decorated method statically`() {
-        assertEquals(
-            MethodMeta(
-                owner = "io.heapy.komok.tech.runtime.wrappers.sample.ChainedService",
-                name = "operation",
-                parameters = listOf(ParameterMeta("name", "kotlin.String")),
-                returnType = "kotlin.String",
-                isSuspend = true,
-            ),
-            ChainedServiceMeta.operation,
-        )
-    }
-
-    /** #15 — generated runtime code does not use kotlin.reflect or bytecode proxy APIs. */
-    @Test
-    fun `generated decorator sources avoid reflection and proxy dependencies`() {
-        val generatedRoot = generatedKspMainSourceRoot()
-        val bannedTokens = listOf("kotlin.reflect", "KCallable", "KFunction", "KClass", "ByteBuddy")
-        val hits = Files.walk(generatedRoot).use { paths ->
-            paths
-                .filter { path -> Files.isRegularFile(path) }
-                .filter { path -> path.fileName.toString().endsWith(".kt") }
-                .flatMap { path ->
-                    val text = Files.readString(path)
-                    bannedTokens
-                        .filter { token -> text.contains(token) }
-                        .map { token -> "${generatedRoot.relativize(path)} contains $token" }
-                        .stream()
-                }
-                .toList()
+    fun `production compilation emits decorators without unsolicited mocks or reflection`() {
+        val root = java.nio.file.Path.of(WrapperModule::class.java.protectionDomain.codeSource.location.toURI())
+        val classes: Map<String, ByteArray> = if (Files.isDirectory(root)) {
+            Files.walk(root).use { paths -> paths.filter { it.toString().endsWith(".class") }
+                .toList().associate { it.fileName.toString() to Files.readAllBytes(it) } }
+        } else {
+            java.util.zip.ZipFile(root.toFile()).use { zip -> zip.entries().asSequence()
+                .filter { it.name.endsWith(".class") }
+                .associate { it.name to zip.getInputStream(it).use { input -> input.readBytes() } } }
         }
-
-        assertEquals(emptyList<String>(), hits)
+        val decorators = classes.filterKeys { it.contains("KomokDecorated_") }
+        assertTrue(decorators.isNotEmpty(), "No decorator classes in $root")
+        assertTrue(classes.keys.none { it.contains("KomokMock_") })
+        decorators.forEach { (key, value) ->
+            val bytecode = String(value, Charsets.ISO_8859_1)
+            listOf("kotlin/reflect/", "java/lang/reflect/Proxy", "ByteBuddy").forEach { banned ->
+                assertTrue(!bytecode.contains(banned), "$key references $banned")
+            }
+        }
     }
 
     /** replaceXWith {} swaps the raw provider body but keeps production decoration. */
@@ -154,11 +137,11 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
         val fork = graph.fork {
-            wrapperModule { replaceGreeterWith { RealGreeter() } }
+            replaceWith(WrapperModule.Bindings.greeter) { RealGreeter() }
         }
-        val greeter = fork.modules.wrapperModule.greeter()
+        val greeter = fork.read { module<WrapperModule>().greeter() }
 
         val result = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Eva")
@@ -181,12 +164,12 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
         val pinned = RealGreeter()
         val fork = graph.fork {
-            wrapperModule { replaceGreeter(pinned) }
+            replace(WrapperModule.Bindings.greeter, pinned)
         }
-        val greeter = fork.modules.wrapperModule.greeter()
+        val greeter = fork.read { module<WrapperModule>().greeter() }
 
         val result = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Mia")
@@ -208,22 +191,23 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val mock = greeterMock()
-        mock.everyGreet { name -> "mock:$name" }
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val mock = mock<Greeter>()
+        withWrapperContexts(loggingContext, registry) { mock.every { greet("") }.answers { "mock:${it.arguments[0]}" } }
         val fork = graph.fork {
-            wrapperModule { replaceGreeter(mock) }
+            replace(WrapperModule.Bindings.greeter, mock.value)
         }
-        val greeter = fork.modules.wrapperModule.greeter()
+        val greeter = fork.read { module<WrapperModule>().greeter() }
 
         val result = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Nia")
         }
 
+        val greetCalls = withWrapperContexts(loggingContext, registry) { mock.calls { greet("") } }
         assertAll(
             { assertEquals("mock:Nia", result) },
-            { mock.verifyGreet("Nia") },
-            { assertSame(mock, greeter) },
+            { assertEquals(listOf(listOf("Nia")), greetCalls.map { it.arguments }) },
+            { assertSame(mock.value, greeter) },
             { assertTrue(events.isEmpty(), "terminal mock replacement should not be decorated") },
         )
         fork.stop()
@@ -238,25 +222,26 @@ class WrapperGraphTest {
         val loggingContext = LoggingContext(handler = { events += it })
         val registry = SimpleMeterRegistry()
 
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val spy = greeterSpy(RealGreeter())
-        spy.everyFarewell { name -> "ciao:$name" }
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val spy = spy<Greeter>(RealGreeter())
+        spy.every { farewell("") }.answers { "ciao:${it.arguments[0]}" }
         val fork = graph.fork {
-            wrapperModule { replaceGreeter(spy) }
+            replace(WrapperModule.Bindings.greeter, spy.value)
         }
-        val greeter = fork.modules.wrapperModule.greeter()
+        val greeter = fork.read { module<WrapperModule>().greeter() }
 
         val greeting = withWrapperContexts(loggingContext, registry) {
             greeter.greet("Ira")
         }
         val farewell = greeter.farewell("Ira")
 
+        val greetCalls = withWrapperContexts(loggingContext, registry) { spy.calls { greet("") } }
         assertAll(
             { assertEquals("Hello, Ira", greeting) },
             { assertEquals("ciao:Ira", farewell) },
-            { spy.verifyGreet("Ira") },
-            { spy.verifyFarewell("Ira") },
-            { assertSame(spy, greeter) },
+            { assertEquals(listOf(listOf("Ira")), greetCalls.map { it.arguments }) },
+            { assertEquals(listOf(listOf("Ira")), spy.calls { farewell("") }.map { it.arguments }) },
+            { assertSame(spy.value, greeter) },
             { assertTrue(events.isEmpty(), "terminal spy replacement should not be decorated") },
         )
         fork.stop()
@@ -267,8 +252,8 @@ class WrapperGraphTest {
     /** An un-annotated method on a decoratable interface is overridden but plain-delegated. */
     @Test
     fun `unwrapped method is plain delegated`() = runTest {
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val greeter = graph.modules.wrapperModule.greeter()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val greeter = graph.read { module<WrapperModule>().greeter() }
 
         assertEquals("Bye, Bob", greeter.farewell("Bob"))
         graph.stop()
@@ -277,8 +262,8 @@ class WrapperGraphTest {
     /** A default interface method is delegated too: the implementation's override wins. */
     @Test
     fun `default interface method is delegated to the implementation override`() = runTest {
-        val graph = createWrapperModuleGraph { dispatcher = Dispatchers.Default }
-        val greeter = graph.modules.wrapperModule.greeter()
+        val graph = graph<WrapperModule> { dispatcher = Dispatchers.Default }
+        val greeter = graph.read { module<WrapperModule>().greeter() }
 
         // the interface default would produce "BYE, ZED!"; RealGreeter's override differs.
         assertEquals("HELLO, Zed!", greeter.shout("Zed"))

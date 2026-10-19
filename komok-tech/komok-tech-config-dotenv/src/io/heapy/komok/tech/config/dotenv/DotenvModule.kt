@@ -5,8 +5,8 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class DotenvModule {
+class DotenvModule {
     context(_: KomokContext)
-    open suspend fun dotenv(): Environment =
+    suspend fun dotenv(): Environment =
         io.heapy.komok.tech.config.dotenv.dotenv()
 }

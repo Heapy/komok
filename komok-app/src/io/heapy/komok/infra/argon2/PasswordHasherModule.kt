@@ -7,19 +7,19 @@ import java.security.SecureRandom
 import java.util.random.RandomGenerator
 
 @Module
-open class PasswordHasherModule {
+class PasswordHasherModule {
     context(_: KomokContext)
-    open suspend fun passwordHasher(): PasswordHasher =
+    suspend fun passwordHasher(): PasswordHasher =
         Argon2idPasswordHasher(
             json = json(),
             randomGenerator = randomGenerator(),
         )
 
     context(_: KomokContext)
-    open suspend fun randomGenerator(): RandomGenerator =
+    suspend fun randomGenerator(): RandomGenerator =
         SecureRandom()
 
     context(_: KomokContext)
-    open suspend fun json(): Json =
+    suspend fun json(): Json =
         Json
 }

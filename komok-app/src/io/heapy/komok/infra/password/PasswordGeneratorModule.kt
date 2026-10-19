@@ -5,13 +5,13 @@ import io.heapy.komok.tech.runtime.Module
 import java.security.SecureRandom
 
 @Module
-open class PasswordGeneratorModule {
+class PasswordGeneratorModule {
     context(_: KomokContext)
-    open suspend fun random(): SecureRandom =
+    suspend fun random(): SecureRandom =
         SecureRandom()
 
     context(_: KomokContext)
-    open suspend fun passwordGenerator(): PasswordGenerator =
+    suspend fun passwordGenerator(): PasswordGenerator =
         PasswordGenerator(
             random = random(),
         )

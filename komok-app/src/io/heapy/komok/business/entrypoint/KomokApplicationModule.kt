@@ -7,13 +7,13 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class KomokApplicationModule(
+class KomokApplicationModule(
     private val serverModule: ServerModule,
     private val jvmUptimeModule: JvmUptimeModule,
     private val startupTaskModule: StartupTaskModule,
 ) {
     context(_: KomokContext)
-    open suspend fun komokApplication(): KomokApplication =
+    suspend fun komokApplication(): KomokApplication =
         KomokApplication(
             server = serverModule.server(),
             jvmUptime = jvmUptimeModule.jvmUptime(),

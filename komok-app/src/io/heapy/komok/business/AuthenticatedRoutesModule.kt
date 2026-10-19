@@ -9,12 +9,12 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class AuthenticatedRoutesModule(
+class AuthenticatedRoutesModule(
     private val entityModule: EntityModule,
     private val meModule: MeModule,
 ) {
     context(_: KomokContext)
-    open suspend fun routes(): KomokRoute =
+    suspend fun routes(): KomokRoute =
         KomokRoutes(
             routes = listOf(
                 meModule.meRoute(),
@@ -23,7 +23,7 @@ open class AuthenticatedRoutesModule(
         )
 
     context(_: KomokContext)
-    open suspend fun authenticatedRoutes(): KomokRoute =
+    suspend fun authenticatedRoutes(): KomokRoute =
         AuthenticatedRoutes(
             routes = routes(),
         )

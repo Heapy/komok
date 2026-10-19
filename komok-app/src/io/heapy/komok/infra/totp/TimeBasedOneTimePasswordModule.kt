@@ -7,23 +7,23 @@ import io.heapy.komok.tech.time.TimeSourceModule
 import java.security.SecureRandom
 
 @Module
-open class TimeBasedOneTimePasswordModule(
+class TimeBasedOneTimePasswordModule(
     private val base32Module: Base32Module,
     private val timeSourceModule: TimeSourceModule,
 ) {
     context(_: KomokContext)
-    open suspend fun timeBasedOneTimePasswordService(): TimeBasedOneTimePasswordService =
+    suspend fun timeBasedOneTimePasswordService(): TimeBasedOneTimePasswordService =
         TimeBasedOneTimePasswordService(
             base32 = base32Module.base32(),
             timeSource = timeSourceModule.timeSource(),
         )
 
     context(_: KomokContext)
-    open suspend fun random(): SecureRandom =
+    suspend fun random(): SecureRandom =
         SecureRandom()
 
     context(_: KomokContext)
-    open suspend fun generateTimeBasedOneTimeKeyService(): GenerateTimeBasedOneTimeKeyService =
+    suspend fun generateTimeBasedOneTimeKeyService(): GenerateTimeBasedOneTimeKeyService =
         GenerateTimeBasedOneTimeKeyService(
             base32 = base32Module.base32(),
             random = random(),

@@ -1,12 +1,9 @@
 package io.heapy.komok.tech.runtime
 
-/**
- * Binary carrier read by KSP from dependency jars to merge bindings across compilations.
- */
+/** Versioned binary metadata consumed by the compiler when wiring downstream graphs. */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
 annotation class KomokBindingIndex(
     val bindings: Array<String> = [],
-    val setContributions: Array<String> = [],
-    val setConsumers: Array<String> = [],
+    val version: Int = 1,
 )

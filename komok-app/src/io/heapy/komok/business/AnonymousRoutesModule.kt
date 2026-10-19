@@ -8,11 +8,11 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class AnonymousRoutesModule(
+class AnonymousRoutesModule(
     private val loginModule: LoginModule,
 ) {
     context(_: KomokContext)
-    open suspend fun anonymousRoutes(): KomokRoute =
+    suspend fun anonymousRoutes(): KomokRoute =
         KomokRoutes(
             routes = listOf(
                 healthCheckRoute(),

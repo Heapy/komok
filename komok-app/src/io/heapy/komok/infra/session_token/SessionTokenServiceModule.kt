@@ -5,13 +5,13 @@ import io.heapy.komok.tech.runtime.Module
 import java.security.SecureRandom
 
 @Module
-open class SessionTokenServiceModule {
+class SessionTokenServiceModule {
     context(_: KomokContext)
-    open suspend fun random(): SecureRandom =
+    suspend fun random(): SecureRandom =
         SecureRandom()
 
     context(_: KomokContext)
-    open suspend fun sessionTokenService(): SessionTokenService =
+    suspend fun sessionTokenService(): SessionTokenService =
         SecureRandomSessionTokenService(
             random = random(),
         )

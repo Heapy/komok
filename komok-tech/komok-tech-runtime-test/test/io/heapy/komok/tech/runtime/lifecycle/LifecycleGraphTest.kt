@@ -1,5 +1,6 @@
 package io.heapy.komok.tech.runtime.lifecycle
 
+import io.heapy.komok.tech.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,11 +12,11 @@ class LifecycleGraphTest {
     /** #14 — generated graph runs @Startup deps-first and @Shutdown in strict reverse. */
     @Test
     fun `lifecycle order - generated graph runs startup deps-first and shutdown reverse`() = runTest {
-        val graph = createLifecycleModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<LifecycleModule> { dispatcher = Dispatchers.Default }
 
+        val events = graph.read { module<LogModule>().events() }
         graph.start()
         graph.stop()
-        val events = graph.modules.logModule.events()
 
         assertEquals(
             listOf("config.start", "app.start", "app.stop", "config.stop"),
@@ -30,12 +31,13 @@ class LifecycleGraphTest {
      */
     @Test
     fun `generated startup compensation - failing hook rolls back and fails fast`() = runTest {
-        val graph = createFailingBootModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<FailingBootModule> { dispatcher = Dispatchers.Default }
 
         val failure = runCatching { graph.start() }.exceptionOrNull()
-        val events = graph.modules.logModule.events().toList()
+        val eventLog = graph.read { module<LogModule>().events() }
+        val events = eventLog.toList()
         graph.stop()
-        val eventsAfterStop = graph.modules.logModule.events().toList()
+        val eventsAfterStop = eventLog.toList()
 
         assertAll(
             { assertInstanceOf<IllegalStateException>(failure) },
@@ -50,13 +52,13 @@ class LifecycleGraphTest {
      *  are a root concern, so the recorded events stay exactly the root's startup+shutdown. */
     @Test
     fun `fork stop - releases overlay without re-running shutdown hooks`() = runTest {
-        val graph = createLifecycleModuleGraph { dispatcher = Dispatchers.Default }
+        val graph = graph<LifecycleModule> { dispatcher = Dispatchers.Default }
 
+        val events = graph.read { module<LogModule>().events() }
         graph.start()
         val fork = graph.fork { }
         fork.stop()
         graph.stop()
-        val events = graph.modules.logModule.events()
 
         assertEquals(
             listOf("config.start", "app.start", "app.stop", "config.stop"),

@@ -7,21 +7,21 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 
 @Module
-open class StartupTaskModule(
+class StartupTaskModule(
     private val autoRegisterStartupTaskModule: AutoRegisterStartupTaskModule,
 ) {
     context(_: KomokContext)
-    open suspend fun startupTasks(): List<StartupTask> =
+    suspend fun startupTasks(): List<StartupTask> =
         listOf(
             autoRegisterStartupTaskModule.autoRegisterStartupTask(),
         )
 
     context(_: KomokContext)
-    open suspend fun applicationJob(): Job =
+    suspend fun applicationJob(): Job =
         SupervisorJob()
 
     context(_: KomokContext)
-    open suspend fun startupTaskExecutor(): StartupTaskExecutor =
+    suspend fun startupTaskExecutor(): StartupTaskExecutor =
         StartupTaskExecutor(
             startupTasks = startupTasks(),
             applicationJob = applicationJob(),

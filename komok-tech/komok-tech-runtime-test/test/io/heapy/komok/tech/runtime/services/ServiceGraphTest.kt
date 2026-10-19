@@ -1,8 +1,8 @@
 package io.heapy.komok.tech.runtime.services
 
-import io.heapy.komok.tech.runtime.fixtures.generatedKspMainSourceRoot
+import io.heapy.komok.tech.runtime.*
 import io.heapy.komok.tech.runtime.EdgeDescriptor
-import io.heapy.komok.tech.time.TimeCodec
+import io.heapy.komok.tech.time.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,16 +12,15 @@ import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import java.nio.file.Files
 
 class ServiceGraphTest {
     /** #20 — @Service functions/classes are realized through the synthetic module. */
     @Test
     fun `service function and class providers resolve parameters through the synthetic module`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val service = graph.classBackedServiceProvider()
-        val serviceAgain = graph.modules.appServices.classBackedServiceProvider()
+        val service = graph.resolve<ClassBackedServiceProvider>()
+        val serviceAgain = graph.resolve<ClassBackedServiceProvider>()
         val edges = graph.graphPayload().edges
 
         assertAll(
@@ -30,23 +29,23 @@ class ServiceGraphTest {
             {
                 assertTrue(
                     edges.any {
-                        it.from.endsWith(".AppServices.classBackedServiceProvider") &&
-                            it.to.endsWith(".AppServices.functionRepository")
+                        it.from.endsWith(".Services.classBackedServiceProvider") &&
+                            it.to.endsWith(".Services.functionRepository")
                     },
                 )
             },
             {
                 assertTrue(
                     edges.any {
-                        it.from.endsWith(".AppServices.functionRepository") &&
-                            it.to.endsWith(".AppServices.serviceConfig")
+                        it.from.endsWith(".Services.functionRepository") &&
+                            it.to.endsWith(".Services.serviceConfig")
                     },
                 )
             },
             {
                 assertEquals(
                     "(io.heapy.komok.tech.runtime.services.FunctionRepository)",
-                    AppServicesKeys.classBackedServiceProvider.signature.valueParamsDescriptor,
+                    graph.binding<ClassBackedServiceProvider>().id.signature.valueParamsDescriptor,
                 )
             },
         )
@@ -56,15 +55,13 @@ class ServiceGraphTest {
     /** #20 — synthetic providers are replaceable in the generated ForkScope. */
     @Test
     fun `service fork replacement recomputes dependent synthetic providers`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val rootService = graph.classBackedServiceProvider()
+        val rootService = graph.resolve<ClassBackedServiceProvider>()
         val fork = graph.fork {
-            appServices {
-                replaceServiceConfig(ServiceConfig("fork"))
-            }
+                replace(binding<ServiceConfig>(), ServiceConfig("fork"))
         }
-        val forkService = fork.classBackedServiceProvider()
+        val forkService = fork.resolve<ClassBackedServiceProvider>()
 
         assertAll(
             { assertEquals("class:root", rootService.value()) },
@@ -78,11 +75,11 @@ class ServiceGraphTest {
     /** #20 — @Service bind/value contributes under an interface for exact-match resolution. */
     @Test
     fun `service bind and value annotations expose providers under interface types`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val client = graph.paymentClient()
-        val gateway = graph.modules.appServices.realPaymentGateway()
-        val settings = graph.modules.appServices.paymentSettings()
+        val client = graph.resolve<PaymentClient>()
+        val gateway = graph.resolve<PaymentGateway>()
+        val settings = graph.resolve<PaymentSettings>()
         val edges = graph.graphPayload().edges
 
         assertAll(
@@ -93,15 +90,15 @@ class ServiceGraphTest {
                 assertEquals(
                     "(io.heapy.komok.tech.runtime.services.PaymentGateway, " +
                         "io.heapy.komok.tech.runtime.services.PaymentSettings)",
-                    AppServicesKeys.paymentClient.signature.valueParamsDescriptor,
+                    graph.binding<PaymentClient>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.paymentClient.display(),
-                            AppServicesKeys.realPaymentGateway.display(),
+                            graph.binding<PaymentClient>().id.display(),
+                            graph.binding<PaymentGateway>().id.display(),
                         ),
                     ),
                 )
@@ -110,8 +107,8 @@ class ServiceGraphTest {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.paymentClient.display(),
-                            AppServicesKeys.paymentSettings.display(),
+                            graph.binding<PaymentClient>().id.display(),
+                            graph.binding<PaymentSettings>().id.display(),
                         ),
                     ),
                 )
@@ -123,10 +120,10 @@ class ServiceGraphTest {
     /** #21 — synthetic service dependencies can resolve from a dependency jar's binding index. */
     @Test
     fun `service dependency resolves from classpath binding index`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val consumer = graph.indexedTimeZoneConsumer()
-        val indexedProviderValue = graph.modules.appServices.indexedTimeZone()
+        val consumer = graph.resolve<IndexedTimeZoneConsumer>()
+        val indexedProviderValue = graph.resolve<IndexedTimeZone>()
         val edges = graph.graphPayload().edges
 
         assertAll(
@@ -135,15 +132,15 @@ class ServiceGraphTest {
             {
                 assertEquals(
                     "(io.heapy.komok.tech.time.IndexedTimeZone)",
-                    AppServicesKeys.indexedTimeZoneConsumer.signature.valueParamsDescriptor,
+                    graph.binding<IndexedTimeZoneConsumer>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.indexedTimeZoneConsumer.display(),
-                            AppServicesKeys.indexedTimeZone.display(),
+                            graph.binding<IndexedTimeZoneConsumer>().id.display(),
+                            graph.binding<IndexedTimeZone>().id.display(),
                         ),
                     ),
                 )
@@ -155,12 +152,11 @@ class ServiceGraphTest {
     /** #27 — @ProvidersFrom imports provider-shaped functions into the binding index. */
     @Test
     fun `providers-from imports dependency object providers into the synthetic graph and index`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val consumer = graph.providersFromTimeZoneConsumer()
-        val providerValue = graph.modules.appServices.providersFromTimeZone()
+        val consumer = graph.resolve<ProvidersFromTimeZoneConsumer>()
+        val providerValue = graph.resolve<ProvidersFromTimeZone>()
         val edges = graph.graphPayload().edges
-        val generatedIndex = Files.readString(generatedKspMainSourceRoot().resolve("komok/index/__KOMOK__Index__.kt"))
 
         assertAll(
             { assertEquals("providers-from", consumer.zoneId()) },
@@ -168,21 +164,19 @@ class ServiceGraphTest {
             {
                 assertEquals(
                     "(io.heapy.komok.tech.time.ProvidersFromTimeZone)",
-                    AppServicesKeys.providersFromTimeZoneConsumer.signature.valueParamsDescriptor,
+                    graph.binding<ProvidersFromTimeZoneConsumer>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.providersFromTimeZoneConsumer.display(),
-                            AppServicesKeys.providersFromTimeZone.display(),
+                            graph.binding<ProvidersFromTimeZoneConsumer>().id.display(),
+                            graph.binding<ProvidersFromTimeZone>().id.display(),
                         ),
                     ),
                 )
             },
-            { assertTrue(generatedIndex.contains("objectFunction|providersFromTimeZone"), generatedIndex) },
-            { assertTrue(generatedIndex.contains("io.heapy.komok.tech.time.LegacyTimeProviders"), generatedIndex) },
         )
         graph.stop()
     }
@@ -190,10 +184,10 @@ class ServiceGraphTest {
     /** #22 — exact type resolution includes whole generic type arguments. */
     @Test
     fun `service exact type resolution distinguishes whole generic type keys`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val stringConsumer = graph.genericStringItemsConsumer()
-        val intConsumer = graph.genericIntItemsConsumer()
+        val stringConsumer = graph.resolve<GenericStringItemsConsumer>()
+        val intConsumer = graph.resolve<GenericIntItemsConsumer>()
         val edges = graph.graphPayload().edges
 
         assertAll(
@@ -202,21 +196,21 @@ class ServiceGraphTest {
             {
                 assertEquals(
                     "(kotlin.collections.List<kotlin.String>)",
-                    AppServicesKeys.genericStringItemsConsumer.signature.valueParamsDescriptor,
+                    graph.binding<GenericStringItemsConsumer>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertEquals(
                     "(kotlin.collections.List<kotlin.Int>)",
-                    AppServicesKeys.genericIntItemsConsumer.signature.valueParamsDescriptor,
+                    graph.binding<GenericIntItemsConsumer>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.genericStringItemsConsumer.display(),
-                            AppServicesKeys.stringItems.display(),
+                            graph.binding<GenericStringItemsConsumer>().id.display(),
+                            graph.binding<List<String>>().id.display(),
                         ),
                     ),
                 )
@@ -225,8 +219,8 @@ class ServiceGraphTest {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.genericIntItemsConsumer.display(),
-                            AppServicesKeys.intItems.display(),
+                            graph.binding<GenericIntItemsConsumer>().id.display(),
+                            graph.binding<List<Int>>().id.display(),
                         ),
                     ),
                 )
@@ -238,22 +232,18 @@ class ServiceGraphTest {
     /** #20 — @IntoSet service functions aggregate into Set<T> and remain replaceable. */
     @Test
     fun `service into-set contributions aggregate and preserve fork replacement semantics`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val registry = graph.codecRegistry()
-        val aggregate = graph.modules.appServices.codecSet()
+        val registry = graph.resolve<CodecRegistry>()
+        val aggregate = graph.resolve<Set<Codec>>()
         val forkWithContributionReplacement = graph.fork {
-            appServices {
-                replaceJsonCodec(NamedCodec("yaml"))
-            }
+                replace(binding(::jsonCodec), NamedCodec("yaml"))
         }
-        val forkRegistry = forkWithContributionReplacement.codecRegistry()
+        val forkRegistry = forkWithContributionReplacement.resolve<CodecRegistry>()
         val forkWithSetReplacement = graph.fork {
-            appServices {
-                replaceCodecSet(setOf(NamedCodec("only")))
-            }
+                replace(binding<Set<Codec>>(), setOf(NamedCodec("only")))
         }
-        val setReplacementRegistry = forkWithSetReplacement.codecRegistry()
+        val setReplacementRegistry = forkWithSetReplacement.resolve<CodecRegistry>()
         val edges = graph.graphPayload().edges
 
         assertAll(
@@ -266,15 +256,15 @@ class ServiceGraphTest {
             {
                 assertEquals(
                     "(kotlin.collections.Set<io.heapy.komok.tech.runtime.services.Codec>)",
-                    AppServicesKeys.codecRegistry.signature.valueParamsDescriptor,
+                    graph.binding<CodecRegistry>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.codecRegistry.display(),
-                            AppServicesKeys.codecSet.display(),
+                            graph.binding<CodecRegistry>().id.display(),
+                            graph.binding<Set<Codec>>().id.display(),
                         ),
                     ),
                 )
@@ -283,8 +273,8 @@ class ServiceGraphTest {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.codecSet.display(),
-                            AppServicesKeys.jsonCodec.display(),
+                            graph.binding<Set<Codec>>().id.display(),
+                            binding(::jsonCodec).id.display(),
                         ),
                     ),
                 )
@@ -293,8 +283,8 @@ class ServiceGraphTest {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.codecSet.display(),
-                            AppServicesKeys.xmlCodec.display(),
+                            graph.binding<Set<Codec>>().id.display(),
+                            binding(::xmlCodec).id.display(),
                         ),
                     ),
                 )
@@ -308,24 +298,18 @@ class ServiceGraphTest {
     /** #24 + #25 — classpath @IntoSet contributions close in the downstream root aggregate. */
     @Test
     fun `set aggregation consumes classpath contributions and preserves fork replacement semantics`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
-        val registry = graph.timeCodecRegistry()
-        val aggregate = graph.modules.appServices.timeCodecSet()
+        val registry = graph.resolve<TimeCodecRegistry>()
+        val aggregate = graph.resolve<Set<TimeCodec>>()
         val replacement = object : TimeCodec {
             override val name: String = "override"
         }
         val fork = graph.fork {
-            appServices {
-                replaceZoneTimeCodec(replacement)
-            }
+                replace(binding(::zoneTimeCodec), replacement)
         }
-        val forkRegistry = fork.timeCodecRegistry()
+        val forkRegistry = fork.resolve<TimeCodecRegistry>()
         val edges = graph.graphPayload().edges
-        val timeIndex = Files.readString(
-            generatedKspMainSourceRoot("komok-tech-time").resolve("komok/index/__KOMOK__Index__.kt"),
-        )
-        val timeGeneratedSources = generatedKspMainSources("komok-tech-time")
 
         assertAll(
             { assertEquals(listOf("zone"), registry.names()) },
@@ -335,15 +319,15 @@ class ServiceGraphTest {
             {
                 assertEquals(
                     "(kotlin.collections.Set<io.heapy.komok.tech.time.TimeCodec>)",
-                    AppServicesKeys.timeCodecRegistry.signature.valueParamsDescriptor,
+                    graph.binding<TimeCodecRegistry>().id.signature.valueParamsDescriptor,
                 )
             },
             {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.timeCodecRegistry.display(),
-                            AppServicesKeys.timeCodecSet.display(),
+                            graph.binding<TimeCodecRegistry>().id.display(),
+                            graph.binding<Set<TimeCodec>>().id.display(),
                         ),
                     ),
                 )
@@ -352,14 +336,12 @@ class ServiceGraphTest {
                 assertTrue(
                     edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.timeCodecSet.display(),
-                            AppServicesKeys.zoneTimeCodec.display(),
+                            graph.binding<Set<TimeCodec>>().id.display(),
+                            binding(::zoneTimeCodec).id.display(),
                         ),
                     ),
                 )
             },
-            { assertTrue(timeIndex.contains("setContributions = [\"function|zoneTimeCodec"), timeIndex) },
-            { assertFalse(timeGeneratedSources.contains("timeCodecSet"), timeGeneratedSources) },
         )
         fork.stop()
         graph.stop()
@@ -368,17 +350,15 @@ class ServiceGraphTest {
     /** #8 + #20 — replacement bodies read other synthetic providers and record edges. */
     @Test
     fun `service provider replacement body reads forked dependencies and records edges`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
         val fork = graph.fork {
-            appServices {
-                replaceServiceConfig(ServiceConfig("fork"))
-                replaceFunctionRepositoryWith {
-                    FunctionRepository(config = serviceConfig(), source = "replacement")
+                replace(binding<ServiceConfig>(), ServiceConfig("fork"))
+                replaceWith(binding<FunctionRepository>()) {
+                    FunctionRepository(config = provider<ServiceConfig>(), source = "replacement")
                 }
-            }
         }
-        val repository = fork.functionRepository()
+        val repository = fork.resolve<FunctionRepository>()
 
         assertAll(
             { assertEquals(FunctionRepository(ServiceConfig("fork"), "replacement"), repository) },
@@ -386,8 +366,8 @@ class ServiceGraphTest {
                 assertTrue(
                     graph.graphPayload().edges.contains(
                         EdgeDescriptor(
-                            AppServicesKeys.functionRepository.display(),
-                            AppServicesKeys.serviceConfig.display(),
+                            graph.binding<FunctionRepository>().id.display(),
+                            graph.binding<ServiceConfig>().id.display(),
                         ),
                     ),
                 )
@@ -400,11 +380,11 @@ class ServiceGraphTest {
     /** #28 — @Service-class lifecycle hooks run in synthetic-module dependency order. */
     @Test
     fun `service lifecycle hooks run deps-first on startup and reverse on shutdown`() = runTest {
-        val graph = createAppServicesGraph { dispatcher = Dispatchers.Default }
+        val graph = services { dispatcher = Dispatchers.Default }
 
+        val events = graph.resolve<LifecycleEvents>().entries
         graph.start()
         graph.stop()
-        val events = graph.modules.appServices.lifecycleEvents().entries
 
         assertEquals(
             listOf(
@@ -417,15 +397,3 @@ class ServiceGraphTest {
         )
     }
 }
-
-private fun generatedKspMainSources(
-    projectName: String,
-): String =
-    Files.walk(generatedKspMainSourceRoot(projectName)).use { paths ->
-        paths
-            .filter { path -> Files.isRegularFile(path) }
-            .filter { path -> path.fileName.toString().endsWith(".kt") }
-            .map { path -> Files.readString(path) }
-            .toList()
-            .joinToString("\n")
-    }

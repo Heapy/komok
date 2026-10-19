@@ -5,11 +5,11 @@ import io.heapy.komok.tech.runtime.KomokContext
 import io.heapy.komok.tech.runtime.Module
 
 @Module
-open class UserDaoModule(
+class UserDaoModule(
     private val mongoModule: MongoModule,
 ) {
     context(_: KomokContext)
-    open suspend fun userDao(): UserDao =
+    suspend fun userDao(): UserDao =
         UserDao(
             database = mongoModule.komokDatabase(),
         )

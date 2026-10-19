@@ -28,63 +28,13 @@ public final class io/heapy/komok/tech/config/dotenv/DotenvKt {
 	public static synthetic fun dotenv$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/config/common/Environment;
 }
 
-public class io/heapy/komok/tech/config/dotenv/DotenvModule {
+public final class io/heapy/komok/tech/config/dotenv/DotenvModule {
 	public fun <init> ()V
-	public fun dotenv (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun dotenv (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleForkScope {
-	public fun <init> (Ljava/util/Map;)V
-	public final fun replaceDotenv (Lio/heapy/komok/tech/config/common/Environment;)V
-	public final fun replaceDotenvWith (Lkotlin/jvm/functions/Function3;)V
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraph {
-	public final fun dotenv (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun fork (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraph;
-	public final fun getModules ()Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraphModules;
-	public final fun graphPayload ()Lio/heapy/komok/tech/runtime/GraphPayload;
-	public final fun realizeAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraphApi {
-	public fun <init> (Lio/heapy/komok/tech/runtime/RealmHandle;Lio/heapy/komok/tech/config/dotenv/DotenvModule_Komok;)V
-	public final fun dotenv (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraphBuilder {
-	public fun <init> ()V
-	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public final fun getRootContext ()Lkotlin/coroutines/CoroutineContext;
-	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
-	public final fun setRootContext (Lkotlin/coroutines/CoroutineContext;)V
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraphForkScope {
-	public final fun dotenvModule (Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraphKt {
-	public static final fun createDotenvModuleGraph (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraph;
-	public static synthetic fun createDotenvModuleGraph$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraph;
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleGraphModules {
-	public final fun getDotenvModule ()Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraphApi;
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleKeys {
-	public static final field INSTANCE Lio/heapy/komok/tech/config/dotenv/DotenvModuleKeys;
-	public final fun getDotenv ()Lio/heapy/komok/tech/runtime/BindingId;
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModuleProviderScope {
-}
-
-public final class io/heapy/komok/tech/config/dotenv/DotenvModule_Komok : io/heapy/komok/tech/config/dotenv/DotenvModule {
-	public fun <init> (Lio/heapy/komok/tech/runtime/KomokRuntime;)V
-	public fun dotenv (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class io/heapy/komok/tech/config/dotenv/DotenvModule$Bindings {
+	public static final field INSTANCE Lio/heapy/komok/tech/config/dotenv/DotenvModule$Bindings;
+	public final fun getDotenv ()Lio/heapy/komok/tech/runtime/Binding;
 }
 

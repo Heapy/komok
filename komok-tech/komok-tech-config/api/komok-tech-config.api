@@ -1,92 +1,19 @@
-public class io/heapy/komok/tech/config/ConfigurationModule {
+public final class io/heapy/komok/tech/config/ConfigurationModule {
 	public fun <init> (Lio/heapy/komok/tech/config/dotenv/DotenvModule;)V
-	public fun config (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun effectiveEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun environmentOverrides (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun hoconConfig (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun systemEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun config (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun effectiveEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun environmentOverrides (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun hoconConfig (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun systemEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class io/heapy/komok/tech/config/ConfigurationModuleForkScope {
-	public fun <init> (Ljava/util/Map;Lio/heapy/komok/tech/config/ConfigurationModule_Komok;)V
-	public final fun replaceConfig (Lio/heapy/komok/tech/config/KomokConfiguration;)V
-	public final fun replaceConfigWith (Lkotlin/jvm/functions/Function3;)V
-	public final fun replaceEffectiveEnvironment (Ljava/util/Map;)V
-	public final fun replaceEffectiveEnvironmentWith (Lkotlin/jvm/functions/Function3;)V
-	public final fun replaceEnvironmentOverrides (Ljava/util/Map;)V
-	public final fun replaceEnvironmentOverridesWith (Lkotlin/jvm/functions/Function3;)V
-	public final fun replaceHoconConfig (Lcom/typesafe/config/Config;)V
-	public final fun replaceHoconConfigWith (Lkotlin/jvm/functions/Function3;)V
-	public final fun replaceSystemEnvironment (Ljava/util/Map;)V
-	public final fun replaceSystemEnvironmentWith (Lkotlin/jvm/functions/Function3;)V
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraph {
-	public final fun config (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun effectiveEnvironment (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun environmentOverrides (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun fork (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/ConfigurationModuleGraph;
-	public final fun getModules ()Lio/heapy/komok/tech/config/ConfigurationModuleGraphModules;
-	public final fun graphPayload ()Lio/heapy/komok/tech/runtime/GraphPayload;
-	public final fun hoconConfig (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun realizeAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun systemEnvironment (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraphApi {
-	public fun <init> (Lio/heapy/komok/tech/runtime/RealmHandle;Lio/heapy/komok/tech/config/ConfigurationModule_Komok;)V
-	public final fun config (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun effectiveEnvironment (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun environmentOverrides (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun hoconConfig (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun systemEnvironment (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraphBuilder {
-	public fun <init> ()V
-	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-	public final fun getRootContext ()Lkotlin/coroutines/CoroutineContext;
-	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
-	public final fun setRootContext (Lkotlin/coroutines/CoroutineContext;)V
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraphForkScope {
-	public final fun configurationModule (Lkotlin/jvm/functions/Function1;)V
-	public final fun dotenvModule (Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraphKt {
-	public static final fun createConfigurationModuleGraph (Lkotlin/jvm/functions/Function1;)Lio/heapy/komok/tech/config/ConfigurationModuleGraph;
-	public static synthetic fun createConfigurationModuleGraph$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/heapy/komok/tech/config/ConfigurationModuleGraph;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleGraphModules {
-	public final fun getConfigurationModule ()Lio/heapy/komok/tech/config/ConfigurationModuleGraphApi;
-	public final fun getDotenvModule ()Lio/heapy/komok/tech/config/dotenv/DotenvModuleGraphApi;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleKeys {
-	public static final field INSTANCE Lio/heapy/komok/tech/config/ConfigurationModuleKeys;
-	public final fun getConfig ()Lio/heapy/komok/tech/runtime/BindingId;
-	public final fun getEffectiveEnvironment ()Lio/heapy/komok/tech/runtime/BindingId;
-	public final fun getEnvironmentOverrides ()Lio/heapy/komok/tech/runtime/BindingId;
-	public final fun getHoconConfig ()Lio/heapy/komok/tech/runtime/BindingId;
-	public final fun getSystemEnvironment ()Lio/heapy/komok/tech/runtime/BindingId;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModuleProviderScope {
-	public final fun getDotenvModule ()Lio/heapy/komok/tech/config/dotenv/DotenvModule_Komok;
-}
-
-public final class io/heapy/komok/tech/config/ConfigurationModule_Komok : io/heapy/komok/tech/config/ConfigurationModule {
-	public fun <init> (Lio/heapy/komok/tech/runtime/KomokRuntime;Lio/heapy/komok/tech/config/dotenv/DotenvModule_Komok;)V
-	public fun config (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun effectiveEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun environmentOverrides (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun hoconConfig (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun systemEnvironment (Lio/heapy/komok/tech/runtime/KomokContext;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class io/heapy/komok/tech/config/ConfigurationModule$Bindings {
+	public static final field INSTANCE Lio/heapy/komok/tech/config/ConfigurationModule$Bindings;
+	public final fun getConfig ()Lio/heapy/komok/tech/runtime/Binding;
+	public final fun getEffectiveEnvironment ()Lio/heapy/komok/tech/runtime/Binding;
+	public final fun getEnvironmentOverrides ()Lio/heapy/komok/tech/runtime/Binding;
+	public final fun getHoconConfig ()Lio/heapy/komok/tech/runtime/Binding;
+	public final fun getSystemEnvironment ()Lio/heapy/komok/tech/runtime/Binding;
 }
 
 public final class io/heapy/komok/tech/config/HoconKomokConfigurationKt {

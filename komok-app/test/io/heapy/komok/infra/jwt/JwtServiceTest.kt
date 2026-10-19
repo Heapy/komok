@@ -1,9 +1,12 @@
 package io.heapy.komok.infra.jwt
 
+import io.heapy.komok.tech.runtime.*
 import io.heapy.komok.KomokBaseTest
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.UserContext
+import io.heapy.komok.tech.config.ConfigurationModule
 import io.heapy.komok.tech.config.buildMockKomokConfiguration
+import io.heapy.komok.tech.time.TimeSourceModule
 import io.heapy.komok.tech.time.TestTimeSource
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -30,20 +33,16 @@ class JwtServiceTest : KomokBaseTest {
             }
         }
 
-        val graph = createJwtModuleGraph().fork {
-            timeSourceModule {
-                replaceTimeSource(timeSource)
-            }
-            configurationModule {
-                replaceConfig(mockConfig())
-            }
+        val graph = graph<JwtModule>().fork {
+            replace(TimeSourceModule.Bindings.timeSource, timeSource)
+            replace(ConfigurationModule.Bindings.config, mockConfig())
         }
 
         timeSource.reset(
             new = Instant.ofEpochSecond(1720159128),
         )
 
-        val token = graph.jwtService().createToken(
+        val token = graph { jwtService() }.createToken(
             UserContext(id = "1"),
         )
 
@@ -70,15 +69,13 @@ class JwtServiceTest : KomokBaseTest {
             }
         }
 
-        val graph = createJwtModuleGraph().fork {
-            configurationModule {
-                replaceConfig(mockConfig())
-            }
+        val graph = graph<JwtModule>().fork {
+            replace(ConfigurationModule.Bindings.config, mockConfig())
         }
 
         val exception = assertThrows<IllegalArgumentException> {
             runTest {
-                val _ = graph.jwtService()
+                val _ = graph { jwtService() }
             }
         }
 

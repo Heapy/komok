@@ -6,12 +6,12 @@ import io.heapy.komok.tech.runtime.Module
 import io.heapy.komok.tech.time.TimeSourceModule
 
 @Module
-open class JwtModule(
+class JwtModule(
     private val configurationModule: ConfigurationModule,
     private val timeSourceModule: TimeSourceModule,
 ) {
     context(_: KomokContext)
-    open suspend fun jwtConfiguration(): JwtConfiguration =
+    suspend fun jwtConfiguration(): JwtConfiguration =
         configurationModule
             .config()
             .read(
@@ -25,7 +25,7 @@ open class JwtModule(
             }
 
     context(_: KomokContext)
-    open suspend fun jwtService(): JwtService =
+    suspend fun jwtService(): JwtService =
         DefaultJwtService(
             jwtConfiguration = jwtConfiguration(),
             timeSource = timeSourceModule.timeSource(),
