@@ -2,7 +2,7 @@ package io.heapy.komok.tech.runtime.wrappers
 
 /**
  * Static, generated metadata for one wrapped service method — the reflection-free
- * replacement for `KCallable`/`KFunction`. The KSP processor emits one [MethodMeta] per
+ * replacement for `KCallable`/`KFunction`. The compiler emits one static [MethodMeta] per
  * wrapped method; wrapper helpers ([logCall], [metricCall], [retryCall]) read it instead
  * of looking anything up at runtime.
  */

@@ -7,6 +7,7 @@ apply:
 description: "Production method-call wrappers (@Log/@Metric/@Retry) for komok-tech-runtime"
 
 dependencies:
+  - //komok-tech/komok-tech-runtime: exported
   - //komok-tech/komok-tech-logging-api: exported
   - $libs.micrometer.core: exported
   - $libs.kotlinx.coroutines.jdk8: exported

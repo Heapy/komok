@@ -7,6 +7,7 @@ package io.heapy.komok.tech.runtime
 class KomokContext internal constructor(
     internal val realm: Realm,
     val callerStack: List<BindingId>,
+    internal val bypassBinding: BindingId? = null,
 ) {
     internal fun enter(id: BindingId): KomokContext =
         KomokContext(realm, callerStack + id)

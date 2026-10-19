@@ -62,7 +62,7 @@ suspend fun <T> logCall(
 context(registry: MeterRegistry)
 suspend fun <T> metricCall(
     meta: MethodMeta,
-    name: String,
+    name: String = "",
     call: suspend () -> T,
 ): T {
     val metricName = name.ifEmpty { "${meta.owner}.${meta.name}" }
@@ -81,8 +81,8 @@ suspend fun <T> metricCall(
 /** `@Retry`: re-invokes the call up to [maxAttempts] times; never retries cancellation. */
 suspend fun <T> retryCall(
     meta: MethodMeta,
-    maxAttempts: Int,
-    delayMillis: Long,
+    maxAttempts: Int = 3,
+    delayMillis: Long = 0,
     call: suspend () -> T,
 ): T {
     var attempt = 1
@@ -118,3 +118,13 @@ private inline fun Logger.at(
         Level.OFF -> {}
     }
 }
+
+/** Compiler entry with defaults matching [Log]; also usable by custom wrappers. */
+context(_: LoggingContext)
+suspend fun <T> compiledLogCall(
+    meta: MethodMeta,
+    level: Level = Level.DEBUG,
+    includeResult: Boolean = true,
+    includeDuration: Boolean = true,
+    call: suspend () -> T,
+): T = logCall(io.heapy.komok.tech.logging.logger(meta.owner), meta, level, includeResult, includeDuration, call)

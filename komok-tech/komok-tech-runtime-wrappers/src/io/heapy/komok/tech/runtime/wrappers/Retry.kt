@@ -7,6 +7,7 @@ package io.heapy.komok.tech.runtime.wrappers
  * Innermost of the production wrapper chain: `@Log` -> `@Metric` -> `@Retry` -> delegate,
  * so only the delegate call is retried — one public call is logged once.
  */
+@io.heapy.komok.tech.runtime.CallWrapper("io.heapy.komok.tech.runtime.wrappers.retryCall", 300)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
 annotation class Retry(
