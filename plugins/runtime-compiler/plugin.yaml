@@ -1,0 +1,13 @@
+tasks:
+  prepare:
+    action: !io.heapy.komok.build.prepareCompiler
+      compilerJar:
+        from: //komok-tech/komok-tech-runtime-compiler
+        kind: jar
+      configuredCompilerJar: ${project.rootDir}/build/tasks/_komok-tech-runtime-compiler_jarJvm/komok-tech-runtime-compiler-jvm.jar
+      sourcesDirectory: ${taskOutputDir}/sources
+
+generated:
+  sources:
+    - language: kotlin
+      directory: ${tasks.prepare.action.sourcesDirectory}

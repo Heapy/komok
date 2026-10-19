@@ -1,0 +1,10 @@
+product: jvm/amper-plugin
+
+description: Build the local Komok compiler plugin before compiling runtime consumers.
+
+pluginInfo:
+  id: runtime-compiler
+
+settings:
+  jvm:
+    release: 17

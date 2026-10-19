@@ -16,6 +16,8 @@ modules:
   - komok-tech/komok-tech-logging-slf4j
   - komok-tech/komok-tech-runtime
   - komok-tech/komok-tech-runtime-ksp
+  - komok-tech/komok-tech-runtime-compiler
+  - komok-tech/komok-tech-runtime-compiler-test
   - komok-tech/komok-tech-runtime-test
   - komok-tech/komok-tech-runtime-test-wrapper
   - komok-tech/komok-tech-runtime-wrappers
@@ -26,8 +28,10 @@ modules:
   - plugins/application
   - plugins/bcv
   - plugins/kover
+  - plugins/runtime-compiler
 
 plugins:
   - //plugins/bcv
   - //plugins/kover
   - //plugins/application
+  - //plugins/runtime-compiler

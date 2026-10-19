@@ -1,0 +1,19 @@
+product: jvm/lib
+
+apply:
+  - //templates/jvm.module-template.yaml
+  - //templates/runtime-compiler.module-template.yaml
+
+dependencies:
+  - //komok-tech/komok-tech-runtime
+  - //komok-tech/komok-tech-runtime-wrappers
+
+test-dependencies:
+  - $libs.junit.jupiter
+  - $libs.kotlinx.coroutines.test
+  - $libs.junit.platform.launcher: runtime-only
+
+settings:
+  kotlin:
+    freeCompilerArgs:
+      - -Xverify-ir=error
