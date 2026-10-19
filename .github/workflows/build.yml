@@ -34,7 +34,7 @@ jobs:
         run: |
           ./ktc-plugins sync
           ./ktc-plugins verify
-      - uses: Heapy/ktc-check@4575484d8e2596bde65d671991e72fadc42ad47b # v1.1.0
+      - uses: Heapy/ktc-check@2f2dea35c8738d5c14446c56fe23da2d37aa1796 # v1.1.1
         with:
           platforms: jvm
       - run: ./kotlin 'do' distTar -m komok-app
