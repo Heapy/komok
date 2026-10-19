@@ -15,7 +15,6 @@ modules:
   - komok-tech/komok-tech-logging-jul
   - komok-tech/komok-tech-logging-slf4j
   - komok-tech/komok-tech-runtime
-  - komok-tech/komok-tech-runtime-ksp
   - komok-tech/komok-tech-runtime-compiler
   - komok-tech/komok-tech-runtime-compiler-test
   - komok-tech/komok-tech-runtime-test
