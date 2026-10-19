@@ -79,7 +79,7 @@ used in commercial projects, encouraging broader adoption and innovation.
 List of libraries:
 
 - `io.heapy.komol:komok-tech-runtime`
-- `io.heapy.komol:komok-tech-runtime-ksp`
+- `io.heapy.komok:komok-tech-runtime-compiler`
 - `io.heapy.komol:komok-tech-runtime-wrappers`
 
 ### Application Code

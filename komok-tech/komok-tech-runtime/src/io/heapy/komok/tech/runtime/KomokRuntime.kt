@@ -50,8 +50,7 @@ class KomokRuntime(
         RealmHandle(this, rootRealm)
 
     /**
-     * The realization boundary, wrapped by every generated provider override as
-     * `rt.binding(id) { super.x() }`. In order: record the caller edge (before any cache
+     * The realization boundary, emitted into each provider body by the compiler. In order: record the caller edge (before any cache
      * lookup, so memo-hits still record), detect cycles against the caller-stack, then
      * resolve once per realm — computing [body] on realm-scope under the entered context.
      */

@@ -1,14 +1,12 @@
 package io.heapy.komok.tech.runtime
 
 /**
- * Marks a class as a Komok runtime module.
- *
- * The KSP processor generates a `${Module}_Komok` subclass that wraps each
- * provider-shape function (`context(_: KomokContext) suspend fun` without value
- * parameters) in a runtime binding boundary, plus `${Module}Keys`, fork-scope and
- * graph handles. Cross-module dependencies are constructor parameters referencing
- * other `@Module` classes.
+ * A module whose provider bodies are instrumented by the Komok FIR/IR compiler plugin.
+ * Classes remain final. Public suspend non-Unit functions with context(KomokContext)
+ * and no value parameters are providers; interface providers may additionally take
+ * dependencies resolved by exact type. Constructor parameters reference other modules.
+ * FIR exposes typed keys as `ModuleName.Bindings.provider` for reads and replacements.
  */
 @Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 annotation class Module
