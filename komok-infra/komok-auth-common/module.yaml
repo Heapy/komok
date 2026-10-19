@@ -5,7 +5,7 @@ apply:
   - //templates/serialization.module-template.yaml
 
 dependencies:
-  - //komok-tech/komok-tech-config
+  - $libs.kotomi.config
   - $libs.kotlinx.coroutines.jdk8
   - $libs.kotlinx.serialization.json
   - $libs.junit.platform.launcher: runtime-only

@@ -6,9 +6,9 @@ apply:
   - //templates/runtime.module-template.yaml
 
 dependencies:
-  - //komok-tech/komok-tech-config
-  - //komok-tech/komok-tech-config-dotenv
-  - //komok-tech/komok-tech-runtime
+  - $libs.kotomi.config
+  - $libs.kotomi.config.dotenv
+  - $libs.kotomi.runtime
   - $libs.kotlinx.coroutines.jdk8
   - $libs.kotlinx.serialization.json
   - $libs.mongo: exported

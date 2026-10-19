@@ -3,8 +3,8 @@ package io.heapy.komok.business.entrypoint
 import io.heapy.komok.infra.http.server.ServerModule
 import io.heapy.komok.infra.startup_tasks.StartupTaskModule
 import io.heapy.komok.infra.uptime.JvmUptimeModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class KomokApplicationModule(
@@ -12,7 +12,7 @@ class KomokApplicationModule(
     private val jvmUptimeModule: JvmUptimeModule,
     private val startupTaskModule: StartupTaskModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun komokApplication(): KomokApplication =
         KomokApplication(
             server = serverModule.server(),

@@ -5,15 +5,15 @@ import io.heapy.komok.business.user.me.MeModule
 import io.heapy.komok.infra.http.server.AuthenticatedRoutes
 import io.heapy.komok.server.common.KomokRoute
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class AuthenticatedRoutesModule(
     private val entityModule: EntityModule,
     private val meModule: MeModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun routes(): KomokRoute =
         KomokRoutes(
             routes = listOf(
@@ -22,7 +22,7 @@ class AuthenticatedRoutesModule(
             ),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun authenticatedRoutes(): KomokRoute =
         AuthenticatedRoutes(
             routes = routes(),

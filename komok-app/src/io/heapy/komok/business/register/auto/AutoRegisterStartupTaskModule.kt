@@ -4,9 +4,9 @@ import io.heapy.komok.business.user.UserDaoModule
 import io.heapy.komok.infra.argon2.PasswordHasherModule
 import io.heapy.komok.infra.password.PasswordGeneratorModule
 import io.heapy.komok.infra.totp.TimeBasedOneTimePasswordModule
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class AutoRegisterStartupTaskModule(
@@ -16,7 +16,7 @@ class AutoRegisterStartupTaskModule(
     private val configurationModule: ConfigurationModule,
     private val timeBasedOneTimePasswordModule: TimeBasedOneTimePasswordModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun autoRegisterStartupTask(): AutoRegisterStartupTask =
         AutoRegisterStartupTask(
             userDao = userDaoModule.userDao(),
@@ -26,7 +26,7 @@ class AutoRegisterStartupTaskModule(
             generateTimeBasedOneTimeKeyService = timeBasedOneTimePasswordModule.generateTimeBasedOneTimeKeyService(),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun autoRegisterStartupTaskConfiguration(): AutoRegisterStartupTaskConfiguration =
         configurationModule
             .config()

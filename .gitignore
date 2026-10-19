@@ -22,3 +22,6 @@ komok-app/resources/application.conf
 publish.sh
 # ktc-plugins managed entries
 /.ktc-plugins/
+
+# Pinned Kotomi checkout used by CI
+/.kotomi/

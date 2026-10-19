@@ -66,7 +66,7 @@ Federation has no central server. Friends can exchange selected podcast collecti
 
 The target is Kotlin throughout the product: Kinetica on the frontend, a Kotlin backend framework and reusable KMP libraries. Existing software and services can deliver a feature now; a separate technical backlog records opportunities for a Kotlin port or independent implementation.
 
-Local models and external LLM providers are equally important. One provider-neutral interface should expose real capability differences, without making one vendor's API the product model. See [the ecosystem plan](technology.md).
+Local models and external LLM providers are equally important. One provider-neutral interface should expose real capability differences, without making one vendor's API the product model. See [the ecosystem plan](https://github.com/Heapy/kotomi/blob/main/docs/technology.md).
 
 ## Boundaries of this edition
 

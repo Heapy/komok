@@ -1,16 +1,16 @@
 package io.heapy.komok.infra.jwt
 
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
-import io.heapy.komok.tech.time.TimeSourceModule
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
+import io.heapy.kotomi.time.TimeSourceModule
 
 @Module
 class JwtModule(
     private val configurationModule: ConfigurationModule,
     private val timeSourceModule: TimeSourceModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun jwtConfiguration(): JwtConfiguration =
         configurationModule
             .config()
@@ -24,7 +24,7 @@ class JwtModule(
                 }
             }
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun jwtService(): JwtService =
         DefaultJwtService(
             jwtConfiguration = jwtConfiguration(),

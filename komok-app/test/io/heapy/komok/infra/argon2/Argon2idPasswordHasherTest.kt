@@ -1,6 +1,6 @@
 package io.heapy.komok.infra.argon2
 
-import io.heapy.komok.tech.runtime.*
+import io.heapy.kotomi.runtime.*
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue

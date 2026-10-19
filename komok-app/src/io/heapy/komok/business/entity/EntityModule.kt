@@ -2,14 +2,14 @@ package io.heapy.komok.business.entity
 
 import io.heapy.komok.dao.mg.MongoModule
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class EntityModule(
     private val mongoModule: MongoModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun routes(): KomokRoutes =
         KomokRoutes(
             routes = listOf(
@@ -19,25 +19,25 @@ class EntityModule(
             ),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun entityDao(): MongoEntityDao =
         MongoEntityDao(
             database = mongoModule.komokDatabase(),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun entityInsertRoute(): MongoEntityInsertRoute =
         MongoEntityInsertRoute(
             mongoEntityDao = entityDao(),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun getLatestUnreadRoute(): MongoGetLatestUnreadRoute =
         MongoGetLatestUnreadRoute(
             mongoEntityDao = entityDao(),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun updateStatusRoute(): MongoUpdateStatusRoute =
         MongoUpdateStatusRoute(
             mongoEntityDao = entityDao(),

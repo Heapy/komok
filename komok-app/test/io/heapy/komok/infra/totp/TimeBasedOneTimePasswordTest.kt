@@ -1,9 +1,9 @@
 package io.heapy.komok.infra.totp
 
-import io.heapy.komok.tech.runtime.*
+import io.heapy.kotomi.runtime.*
 import io.heapy.komok.UnitTest
-import io.heapy.komok.tech.time.TimeSourceModule
-import io.heapy.komok.tech.time.TestTimeSource
+import io.heapy.kotomi.time.TimeSourceModule
+import io.heapy.kotomi.time.TestTimeSource
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import java.time.Instant

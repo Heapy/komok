@@ -1,13 +1,13 @@
 package io.heapy.komok.infra.jwt
 
-import io.heapy.komok.tech.runtime.*
+import io.heapy.kotomi.runtime.*
 import io.heapy.komok.KomokBaseTest
 import io.heapy.komok.UnitTest
 import io.heapy.komok.auth.common.UserContext
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.config.buildMockKomokConfiguration
-import io.heapy.komok.tech.time.TimeSourceModule
-import io.heapy.komok.tech.time.TestTimeSource
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.config.buildMockKotomiConfiguration
+import io.heapy.kotomi.time.TimeSourceModule
+import io.heapy.kotomi.time.TestTimeSource
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
@@ -19,7 +19,7 @@ class JwtServiceTest : KomokBaseTest {
     fun `jwt token generated using configuration`() = runTest {
         val timeSource = TestTimeSource()
         val mockConfig = {
-            buildMockKomokConfiguration {
+            buildMockKotomiConfiguration {
                 add(
                     deserializer = JwtConfiguration.serializer(),
                     value = JwtConfiguration(
@@ -55,7 +55,7 @@ class JwtServiceTest : KomokBaseTest {
     @UnitTest
     fun `jwt require minimum secret size`() {
         val mockConfig = {
-            buildMockKomokConfiguration {
+            buildMockKotomiConfiguration {
                 add(
                     deserializer = JwtConfiguration.serializer(),
                     value = JwtConfiguration(

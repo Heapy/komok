@@ -3,8 +3,8 @@ package io.heapy.komok.infra.http.server
 import io.heapy.komok.business.AnonymousRoutesModule
 import io.heapy.komok.business.AuthenticatedRoutesModule
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class ServerRoutingConfigurationModule(
@@ -12,7 +12,7 @@ class ServerRoutingConfigurationModule(
     private val anonymousRoutesModule: AnonymousRoutesModule,
     private val authenticatedRoutesModule: AuthenticatedRoutesModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun routes(): KomokRoutes =
         KomokRoutes(
             listOf(
@@ -22,7 +22,7 @@ class ServerRoutingConfigurationModule(
             ),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun staticFilesRoute(): StaticFilesRoute =
         StaticFilesRoute(
             resources = serverConfigurationModule.config().resources,

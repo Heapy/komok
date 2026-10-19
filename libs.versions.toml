@@ -1,4 +1,5 @@
 [versions]
+kotomi = "1.2.0"
 bouncycastle = "1.86"
 commonmark = "0.30.0"
 json-schema-validator = "3.0.8"
@@ -74,3 +75,12 @@ netty-epoll = { module = "io.netty:netty-transport-native-epoll", version.ref = 
 netty-iouring = { module = "io.netty:netty-transport-native-io_uring", version.ref = "netty" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+# Reusable libraries and compiler plugin from Heapy/kotomi.
+kotomi-config = { module = "io.heapy.kotomi:kotomi-config", version.ref = "kotomi" }
+kotomi-config-dotenv = { module = "io.heapy.kotomi:kotomi-config-dotenv", version.ref = "kotomi" }
+kotomi-runtime = { module = "io.heapy.kotomi:kotomi-runtime", version.ref = "kotomi" }
+kotomi-runtime-compiler = { module = "io.heapy.kotomi:kotomi-runtime-compiler", version.ref = "kotomi" }
+kotomi-time = { module = "io.heapy.kotomi:kotomi-time", version.ref = "kotomi" }
+kotomi-time-test-fixtures = { module = "io.heapy.kotomi:kotomi-time-test-fixtures", version.ref = "kotomi" }
+kotomi-utils-slf4j = { module = "io.heapy.kotomi:kotomi-utils-slf4j", version.ref = "kotomi" }

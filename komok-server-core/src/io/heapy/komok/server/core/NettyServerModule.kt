@@ -1,18 +1,18 @@
 package io.heapy.komok.server.core
 
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class NettyServerModule(
     private val configurationModule: ConfigurationModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun ioHandlerFactoryProvider(): IoConfigurationProvider =
         SystemDependentIoConfigurationProvider()
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun config(): NettyServerConfiguration =
         configurationModule
             .config()
@@ -21,7 +21,7 @@ class NettyServerModule(
                 path = "netty",
             )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun rootHandler(): HttpHandler =
         object : HttpHandler {
             override suspend fun handleRequest(exchange: NettyHttpServerExchange) {
@@ -31,7 +31,7 @@ class NettyServerModule(
             }
         }
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun nettyServer(): NettyServer =
         NettyServer(
             config = config(),

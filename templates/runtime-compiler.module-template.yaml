@@ -1,10 +1,5 @@
-plugins:
-  runtime-compiler: enabled
-
 settings:
   kotlin:
-    # Toolchain 0.13 cannot model a local compiler-plugin dependency. The build task
-    # orders its JAR before consumers; full compilation avoids stale plugin output.
-    compileIncrementally: false
-    freeCompilerArgs:
-      - -Xplugin=build/tasks/_komok-tech-runtime-compiler_jarJvm/komok-tech-runtime-compiler-jvm.jar
+    compilerPlugins:
+      - id: io.heapy.kotomi.runtime
+        dependency: $libs.kotomi.runtime.compiler

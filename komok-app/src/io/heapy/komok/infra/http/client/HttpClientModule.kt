@@ -1,7 +1,7 @@
 package io.heapy.komok.infra.http.client
 
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
@@ -10,7 +10,7 @@ import io.ktor.client.engine.cio.CIO
 
 @Module
 class HttpClientModule {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun httpClient(): HttpClient =
         HttpClient(CIO) {
             install(ContentNegotiation) {

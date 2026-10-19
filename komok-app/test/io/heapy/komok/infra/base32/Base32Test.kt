@@ -1,6 +1,6 @@
 package io.heapy.komok.infra.base32
 
-import io.heapy.komok.tech.runtime.*
+import io.heapy.kotomi.runtime.*
 import io.heapy.komok.UnitTest
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*

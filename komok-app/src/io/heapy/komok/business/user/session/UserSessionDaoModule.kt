@@ -1,16 +1,16 @@
 package io.heapy.komok.business.user.session
 
 import io.heapy.komok.dao.mg.MongoModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
-import io.heapy.komok.tech.time.TimeSourceModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
+import io.heapy.kotomi.time.TimeSourceModule
 
 @Module
 class UserSessionDaoModule(
     private val mongoModule: MongoModule,
     private val timeSourceModule: TimeSourceModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun userSessionDao(): UserSessionDao =
         UserSessionDao(
             timeSource = timeSourceModule.timeSource(),

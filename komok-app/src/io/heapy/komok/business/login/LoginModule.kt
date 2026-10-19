@@ -5,8 +5,8 @@ import io.heapy.komok.business.user.session.UserSessionDaoModule
 import io.heapy.komok.infra.argon2.PasswordHasherModule
 import io.heapy.komok.infra.session_token.SessionTokenServiceModule
 import io.heapy.komok.infra.totp.TimeBasedOneTimePasswordModule
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
 class LoginModule(
@@ -16,7 +16,7 @@ class LoginModule(
     private val timeBasedOneTimePasswordModule: TimeBasedOneTimePasswordModule,
     private val passwordHasherModule: PasswordHasherModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun loginService(): LoginService =
         LoginService(
             userDao = userDaoModule.userDao(),
@@ -26,7 +26,7 @@ class LoginModule(
             passwordHasher = passwordHasherModule.passwordHasher(),
         )
 
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun loginRoute(): LoginRoute =
         LoginRoute(
             loginService = loginService(),

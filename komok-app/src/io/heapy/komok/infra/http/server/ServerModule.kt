@@ -1,7 +1,7 @@
 package io.heapy.komok.infra.http.server
 
-import io.heapy.komok.tech.runtime.KomokContext
-import io.heapy.komok.tech.runtime.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import io.ktor.server.cio.CIO
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
@@ -14,7 +14,7 @@ class ServerModule(
     private val serverApplicationConfigurationModule: ServerApplicationConfigurationModule,
     private val serverConfigurationModule: ServerConfigurationModule,
 ) {
-    context(_: KomokContext)
+    context(_: KotomiContext)
     suspend fun server(): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
         val config = serverConfigurationModule.config()
         val features = serverApplicationConfigurationModule.features()

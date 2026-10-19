@@ -16,49 +16,33 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
+      - name: Read Kotomi revision
+        id: kotomi
+        run: echo "revision=$(cat kotomi.ref)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7
+        with:
+          repository: Heapy/kotomi
+          ref: ${{ steps.kotomi.outputs.revision }}
+          path: .kotomi
+      - name: Build pinned Kotomi dependencies
+        working-directory: .kotomi
+        run: |
+          ./ktc-plugins sync
+          ./ktc-plugins verify
+          ./publish-local
       - name: "Restore locked build plugins"
         run: |
           ./ktc-plugins sync
           ./ktc-plugins verify
       - uses: Heapy/ktc-check@4575484d8e2596bde65d671991e72fadc42ad47b # v1.1.0
         with:
-          platforms: jvm, linuxX64, wasmJs
+          platforms: jvm
       - run: ./kotlin 'do' distTar -m komok-app
       - uses: actions/upload-artifact@v7
         with:
           name: "Backend Application"
           path: "build/tasks/_komok-app_distTar@application/komok-app.tar"
           retention-days: 1
-  check-native:
-    name: "Check Native Library (${{ matrix.platform }})"
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-15
-            platform: macosArm64
-          - os: windows-latest
-            platform: mingwX64
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v7
-      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
-      - name: "Restore locked build plugins (Unix)"
-        if: runner.os != 'Windows'
-        run: |
-          ./ktc-plugins sync
-          ./ktc-plugins verify
-      - name: "Restore locked build plugins (Windows)"
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          ./ktc-plugins.bat sync
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          ./ktc-plugins.bat verify
-      - uses: Heapy/ktc-check@4575484d8e2596bde65d671991e72fadc42ad47b # v1.1.0
-        with:
-          modules: komok-tech-to-be-injected
-          platforms: ${{ matrix.platform }}
   build-and-push-backend-image:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
@@ -67,7 +51,6 @@ jobs:
         packages: write
     needs:
       - build-backend
-      - check-native
     steps:
       - name: "Checkout"
         uses: actions/checkout@v7
