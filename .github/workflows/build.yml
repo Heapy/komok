@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - name: "Restore locked build plugins"
+        uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
       - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
       - name: Read Kotomi revision
         id: kotomi
@@ -24,16 +26,13 @@ jobs:
           repository: Heapy/kotomi
           ref: ${{ steps.kotomi.outputs.revision }}
           path: .kotomi
+      - name: Restore pinned Kotomi build plugins
+        uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+        with:
+          working-directory: .kotomi
       - name: Build pinned Kotomi dependencies
         working-directory: .kotomi
-        run: |
-          ./ktc-plugins sync
-          ./ktc-plugins verify
-          ./publish-local
-      - name: "Restore locked build plugins"
-        run: |
-          ./ktc-plugins sync
-          ./ktc-plugins verify
+        run: ./publish-local
       - uses: Heapy/ktc-check@2f2dea35c8738d5c14446c56fe23da2d37aa1796 # v1.1.1
         with:
           platforms: jvm
