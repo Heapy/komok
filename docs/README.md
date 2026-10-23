@@ -11,4 +11,6 @@ Add or refine product ideas in **Features**, preserving their IDs. Keep reusable
 
 These documents describe intended capabilities. Deferred ideas are outside the current plan; architecture choices remain proposals. See the [implementation baseline](architecture.md#implementation-baseline) for what exists today.
 
-The public website uses only [landing.md](landing.md), with its build and layout in [landing/](../landing/README.md). The feature catalogue and technical documents are not published on the landing.
+The public website is maintained in [Heapy/heapy-landing](https://github.com/Heapy/heapy-landing),
+with Komok at https://heapy.io/komok/. [landing.md](landing.md) remains the product
+narrative reference. The feature catalogue and technical documents are not published on the landing.

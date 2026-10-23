@@ -49,19 +49,10 @@ for the intended scope and current implementation baseline.
 
 ## Website
 
-The heapy.io landing is generated from `docs/landing.md` with a small Kotlin
-script. The project guide stays in the repository and is not included in the
-public website. See [landing/README.md](landing/README.md) for build and preview instructions.
-
-```sh
-kotlinr landing/build.main.kts
-kotlinr landing/check.main.kts
-kotlinr landing/serve.main.kts
-```
-
-This builds a local preview. The [landing module](landing/README.md) also contains
-the Docker image and its smoke check. The Landing workflow publishes approved
-main-branch changes to `ghcr.io/heapy/komok:landing-main` for heapy.io.
+The public website is maintained in [Heapy/heapy-landing](https://github.com/Heapy/heapy-landing).
+It serves the ecosystem story at https://heapy.io/ and Komok at https://heapy.io/komok/.
+Product copy remains in [docs/landing.md](docs/landing.md); the website source,
+screenshots, container image and publication workflow live in the landing repository.
 
 ## License
 
