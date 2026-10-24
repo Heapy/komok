@@ -2,43 +2,44 @@ package io.heapy.komok.business.entity
 
 import io.heapy.komok.dao.mg.MongoModule
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class EntityModule(
+class EntityModule(
     private val mongoModule: MongoModule,
 ) {
-    open val routes by lazy {
+    context(_: KotomiContext)
+    suspend fun routes(): KomokRoutes =
         KomokRoutes(
             routes = listOf(
-                entityInsertRoute,
-                getLatestUnreadRoute,
-                updateStatusRoute,
+                entityInsertRoute(),
+                getLatestUnreadRoute(),
+                updateStatusRoute(),
             ),
         )
-    }
 
-    open val entityDao by lazy {
+    context(_: KotomiContext)
+    suspend fun entityDao(): MongoEntityDao =
         MongoEntityDao(
-            database = mongoModule.komokDatabase,
+            database = mongoModule.komokDatabase(),
         )
-    }
 
-    open val entityInsertRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun entityInsertRoute(): MongoEntityInsertRoute =
         MongoEntityInsertRoute(
-            mongoEntityDao = entityDao,
+            mongoEntityDao = entityDao(),
         )
-    }
 
-    open val getLatestUnreadRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun getLatestUnreadRoute(): MongoGetLatestUnreadRoute =
         MongoGetLatestUnreadRoute(
-            mongoEntityDao = entityDao,
+            mongoEntityDao = entityDao(),
         )
-    }
 
-    open val updateStatusRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun updateStatusRoute(): MongoUpdateStatusRoute =
         MongoUpdateStatusRoute(
-            mongoEntityDao = entityDao,
+            mongoEntityDao = entityDao(),
         )
-    }
 }

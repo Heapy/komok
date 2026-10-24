@@ -4,22 +4,22 @@ import io.heapy.komok.business.healthcheck.HealthCheckRoute
 import io.heapy.komok.business.login.LoginModule
 import io.heapy.komok.server.common.KomokRoute
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class AnonymousRoutesModule(
+class AnonymousRoutesModule(
     private val loginModule: LoginModule,
 ) {
-    open val anonymousRoutes: KomokRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun anonymousRoutes(): KomokRoute =
         KomokRoutes(
             routes = listOf(
-                healthCheckRoute,
-                loginModule.loginRoute,
+                healthCheckRoute(),
+                loginModule.loginRoute(),
             ),
         )
-    }
 
-    private val healthCheckRoute by lazy {
+    private fun healthCheckRoute(): HealthCheckRoute =
         HealthCheckRoute()
-    }
 }

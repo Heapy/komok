@@ -1,27 +1,29 @@
 package io.heapy.komok.infra.startup_tasks
 
 import io.heapy.komok.business.register.auto.AutoRegisterStartupTaskModule
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 
 @Module
-open class StartupTaskModule(
+class StartupTaskModule(
     private val autoRegisterStartupTaskModule: AutoRegisterStartupTaskModule,
 ) {
-    open val startupTasks by lazy {
+    context(_: KotomiContext)
+    suspend fun startupTasks(): List<StartupTask> =
         listOf(
-            autoRegisterStartupTaskModule.autoRegisterStartupTask,
+            autoRegisterStartupTaskModule.autoRegisterStartupTask(),
         )
-    }
 
-    open val applicationJob by lazy {
+    context(_: KotomiContext)
+    suspend fun applicationJob(): Job =
         SupervisorJob()
-    }
 
-    open val startupTaskExecutor by lazy {
+    context(_: KotomiContext)
+    suspend fun startupTaskExecutor(): StartupTaskExecutor =
         StartupTaskExecutor(
-            startupTasks = startupTasks,
-            applicationJob = applicationJob,
+            startupTasks = startupTasks(),
+            applicationJob = applicationJob(),
         )
-    }
 }

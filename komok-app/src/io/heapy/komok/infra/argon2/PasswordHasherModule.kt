@@ -1,24 +1,25 @@
 package io.heapy.komok.infra.argon2
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import kotlinx.serialization.json.Json
 import java.security.SecureRandom
 import java.util.random.RandomGenerator
 
 @Module
-open class PasswordHasherModule {
-    open val passwordHasher: PasswordHasher by lazy {
+class PasswordHasherModule {
+    context(_: KotomiContext)
+    suspend fun passwordHasher(): PasswordHasher =
         Argon2idPasswordHasher(
-            json = json,
-            randomGenerator = randomGenerator,
+            json = json(),
+            randomGenerator = randomGenerator(),
         )
-    }
 
-    open val randomGenerator: RandomGenerator by lazy {
+    context(_: KotomiContext)
+    suspend fun randomGenerator(): RandomGenerator =
         SecureRandom()
-    }
 
-    open val json: Json by lazy {
+    context(_: KotomiContext)
+    suspend fun json(): Json =
         Json
-    }
 }

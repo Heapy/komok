@@ -3,27 +3,28 @@ package io.heapy.komok.infra.http.server
 import io.heapy.komok.business.AnonymousRoutesModule
 import io.heapy.komok.business.AuthenticatedRoutesModule
 import io.heapy.komok.server.common.KomokRoutes
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class ServerRoutingConfigurationModule(
+class ServerRoutingConfigurationModule(
     private val serverConfigurationModule: ServerConfigurationModule,
     private val anonymousRoutesModule: AnonymousRoutesModule,
     private val authenticatedRoutesModule: AuthenticatedRoutesModule,
 ) {
-    open val routes: KomokRoutes by lazy {
+    context(_: KotomiContext)
+    suspend fun routes(): KomokRoutes =
         KomokRoutes(
             listOf(
-                staticFilesRoute,
-                anonymousRoutesModule.anonymousRoutes,
-                authenticatedRoutesModule.authenticatedRoutes,
+                staticFilesRoute(),
+                anonymousRoutesModule.anonymousRoutes(),
+                authenticatedRoutesModule.authenticatedRoutes(),
             ),
         )
-    }
 
-    open val staticFilesRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun staticFilesRoute(): StaticFilesRoute =
         StaticFilesRoute(
-            resources = serverConfigurationModule.config.resources,
+            resources = serverConfigurationModule.config().resources,
         )
-    }
 }

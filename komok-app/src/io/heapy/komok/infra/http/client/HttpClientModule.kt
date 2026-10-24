@@ -1,6 +1,7 @@
 package io.heapy.komok.infra.http.client
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
@@ -8,8 +9,9 @@ import kotlinx.serialization.json.Json
 import io.ktor.client.engine.cio.CIO
 
 @Module
-open class HttpClientModule {
-    open val httpClient by lazy {
+class HttpClientModule {
+    context(_: KotomiContext)
+    suspend fun httpClient(): HttpClient =
         HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(json = Json {
@@ -17,5 +19,4 @@ open class HttpClientModule {
                 })
             }
         }
-    }
 }

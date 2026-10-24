@@ -5,7 +5,6 @@ import io.heapy.komok.infra.argon2.PasswordHasher
 import io.heapy.komok.infra.password.PasswordGenerator
 import io.heapy.komok.infra.startup_tasks.StartupTask
 import io.heapy.komok.infra.totp.GenerateTimeBasedOneTimeKeyService
-import io.heapy.komok.tech.utils.slf4j.Logger
 
 /**
  * This task creates a new user if no users found in the database
@@ -18,13 +17,13 @@ class AutoRegisterStartupTask(
     private val autoRegisterStartupTaskConfiguration: AutoRegisterStartupTaskConfiguration,
 ) : StartupTask {
     override suspend fun execute() {
-        log.info("AutoRegisterStartupTask start")
+        println("AutoRegisterStartupTask start")
         if (userDao.getUserCount() == 0L) {
             val password = passwordGenerator.generate()
             val email = autoRegisterStartupTaskConfiguration.email
             val authenticatorKey = generateTimeBasedOneTimeKeyService
                 .generate(GenerateTimeBasedOneTimeKeyService.Algorithm.SHA512)
-            log.info(
+            println(
                 """
                 No users found, creating default user:
                 Email: $email
@@ -39,12 +38,10 @@ class AutoRegisterStartupTask(
                 authenticatorKey = authenticatorKey,
             )
 
-            log.info("Default user with id=$id created")
+            println("Default user with id=$id created")
         } else {
-            log.info("Users already found")
+            println("Users already found")
         }
-        log.info("AutoRegisterStartupTask end")
+        println("AutoRegisterStartupTask end")
     }
-
-    private companion object : Logger()
 }

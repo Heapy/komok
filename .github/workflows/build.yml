@@ -15,50 +15,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
       - name: "Restore locked build plugins"
-        run: |
-          ./ktc-plugins sync
-          ./ktc-plugins verify
+        uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
+      - name: Read Kotomi revision
+        id: kotomi
+        run: echo "revision=$(cat kotomi.ref)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7
+        with:
+          repository: Heapy/kotomi
+          ref: ${{ steps.kotomi.outputs.revision }}
+          path: .kotomi
+      - name: Restore pinned Kotomi build plugins
+        uses: Heapy/setup-ktc-plugins@5de74f161cb07ad74e72ee28bfad228f4cce3bb4 # v1.0.0
+        with:
+          working-directory: .kotomi
+      - name: Build pinned Kotomi dependencies
+        working-directory: .kotomi
+        run: ./publish-local
       - uses: Heapy/ktc-check@2f2dea35c8738d5c14446c56fe23da2d37aa1796 # v1.1.1
         with:
-          platforms: jvm, linuxX64, wasmJs
+          platforms: jvm
       - run: ./kotlin 'do' distTar -m komok-app
       - uses: actions/upload-artifact@v7
         with:
           name: "Backend Application"
           path: "build/tasks/_komok-app_distTar@application/komok-app.tar"
           retention-days: 1
-  check-native:
-    name: "Check Native Library (${{ matrix.platform }})"
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-15
-            platform: macosArm64
-          - os: windows-latest
-            platform: mingwX64
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v7
-      - uses: Heapy/setup-ktc@e0a603c477110083db0b44f302deb188d4991ea0 # v1.1.0
-      - name: "Restore locked build plugins (Unix)"
-        if: runner.os != 'Windows'
-        run: |
-          ./ktc-plugins sync
-          ./ktc-plugins verify
-      - name: "Restore locked build plugins (Windows)"
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          ./ktc-plugins.bat sync
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          ./ktc-plugins.bat verify
-      - uses: Heapy/ktc-check@2f2dea35c8738d5c14446c56fe23da2d37aa1796 # v1.1.1
-        with:
-          modules: komok-tech-to-be-injected
-          platforms: ${{ matrix.platform }}
   build-and-push-backend-image:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
@@ -67,7 +50,6 @@ jobs:
         packages: write
     needs:
       - build-backend
-      - check-native
     steps:
       - name: "Checkout"
         uses: actions/checkout@v7

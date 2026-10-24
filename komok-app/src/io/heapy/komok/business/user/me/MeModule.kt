@@ -2,23 +2,24 @@ package io.heapy.komok.business.user.me
 
 import io.heapy.komok.business.user.UserDaoModule
 import io.heapy.komok.business.user.session.UserSessionDaoModule
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class MeModule(
+class MeModule(
     private val userDaoModule: UserDaoModule,
     private val userSessionDaoModule: UserSessionDaoModule,
 ) {
-    open val meService by lazy {
+    context(_: KotomiContext)
+    suspend fun meService(): MeService =
         MeService(
-            userDao = userDaoModule.userDao,
-            userSessionDao = userSessionDaoModule.userSessionDao,
+            userDao = userDaoModule.userDao(),
+            userSessionDao = userSessionDaoModule.userSessionDao(),
         )
-    }
 
-    open val meRoute by lazy {
+    context(_: KotomiContext)
+    suspend fun meRoute(): MeRoute =
         MeRoute(
-            meService = meService,
+            meService = meService(),
         )
-    }
 }

@@ -1,30 +1,31 @@
 package io.heapy.komok.infra.totp
 
 import io.heapy.komok.infra.base32.Base32Module
-import io.heapy.komok.tech.di.lib.Module
-import io.heapy.komok.tech.time.TimeSourceModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
+import io.heapy.kotomi.time.TimeSourceModule
 import java.security.SecureRandom
 
 @Module
-open class TimeBasedOneTimePasswordModule(
+class TimeBasedOneTimePasswordModule(
     private val base32Module: Base32Module,
     private val timeSourceModule: TimeSourceModule,
 ) {
-    open val timeBasedOneTimePasswordService by lazy {
+    context(_: KotomiContext)
+    suspend fun timeBasedOneTimePasswordService(): TimeBasedOneTimePasswordService =
         TimeBasedOneTimePasswordService(
-            base32 = base32Module.base32,
-            timeSource = timeSourceModule.timeSource,
+            base32 = base32Module.base32(),
+            timeSource = timeSourceModule.timeSource(),
         )
-    }
 
-    open val random by lazy {
+    context(_: KotomiContext)
+    suspend fun random(): SecureRandom =
         SecureRandom()
-    }
 
-    open val generateTimeBasedOneTimeKeyService by lazy {
+    context(_: KotomiContext)
+    suspend fun generateTimeBasedOneTimeKeyService(): GenerateTimeBasedOneTimeKeyService =
         GenerateTimeBasedOneTimeKeyService(
-            base32 = base32Module.base32,
-            random = random,
+            base32 = base32Module.base32(),
+            random = random(),
         )
-    }
 }

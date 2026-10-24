@@ -1,28 +1,36 @@
 package io.heapy.komok.infra.http.server
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import io.ktor.server.cio.CIO
+import io.ktor.server.cio.CIOApplicationEngine
+import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.routing.routing
 
 @Module
-open class ServerModule(
+class ServerModule(
     private val serverRoutingConfigurationModule: ServerRoutingConfigurationModule,
     private val serverApplicationConfigurationModule: ServerApplicationConfigurationModule,
     private val serverConfigurationModule: ServerConfigurationModule,
 ) {
-    open val server by lazy {
-        embeddedServer(
+    context(_: KotomiContext)
+    suspend fun server(): EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration> {
+        val config = serverConfigurationModule.config()
+        val features = serverApplicationConfigurationModule.features()
+        val routes = serverRoutingConfigurationModule.routes()
+
+        return embeddedServer(
             factory = CIO,
-            port = serverConfigurationModule.config.port,
-            host = serverConfigurationModule.config.host,
+            port = config.port,
+            host = config.host,
         ) {
-            serverApplicationConfigurationModule.features.run {
+            features.run {
                 install()
             }
 
             routing {
-                serverRoutingConfigurationModule.routes.run {
+                routes.run {
                     install()
                 }
             }

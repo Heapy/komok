@@ -1,6 +1,6 @@
 # Features
 
-Product ideas from the GitHub issues, original README and product discussion. This is the scope catalogue, not a release schedule or a list of shipped features. IDs remain stable when names or priorities change. Technical work lives in [technology.md](technology.md); storage and sync proposals live in [architecture.md](architecture.md).
+Product ideas from the GitHub issues, original README and product discussion. This is the scope catalogue, not a release schedule or a list of shipped features. IDs remain stable when names or priorities change. Technical work lives in [technology.md](https://github.com/Heapy/kotomi/blob/main/docs/technology.md); storage and sync proposals live in [architecture.md](architecture.md).
 
 ## Daily planning
 

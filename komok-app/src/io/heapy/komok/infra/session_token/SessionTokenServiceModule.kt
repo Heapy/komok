@@ -1,17 +1,18 @@
 package io.heapy.komok.infra.session_token
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 import java.security.SecureRandom
 
 @Module
-open class SessionTokenServiceModule {
-    open val random by lazy {
+class SessionTokenServiceModule {
+    context(_: KotomiContext)
+    suspend fun random(): SecureRandom =
         SecureRandom()
-    }
 
-    open val sessionTokenService by lazy {
+    context(_: KotomiContext)
+    suspend fun sessionTokenService(): SessionTokenService =
         SecureRandomSessionTokenService(
-            random = random,
+            random = random(),
         )
-    }
 }

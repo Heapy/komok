@@ -12,8 +12,8 @@ models help organise information, extract knowledge and create views over your
 data. You control where it lives, what is available offline and what gets shared.
 
 Komok is in development. Its long-term direction is Kotlin throughout, with
-Kinetica for the frontend and reusable Kotlin Multiplatform libraries developed
-under Heapy. Existing tools can deliver features while that ecosystem grows.
+Kinetica for the frontend and reusable Kotlin libraries developed in
+[Kotomi](https://github.com/Heapy/kotomi). Existing tools can deliver features while that ecosystem grows.
 
 See the [feature catalogue](docs/features.md),
 [proposed architecture](docs/architecture.md) and [documentation](docs/README.md)
@@ -21,12 +21,24 @@ for the intended scope and current implementation baseline.
 
 ## Build
 
+Komok consumes `io.heapy.kotomi:kotomi-*` Maven artifacts. Until those artifacts
+have a public release, build the pinned Kotomi revision into Maven Local first:
+
+```sh
+git clone https://github.com/Heapy/kotomi.git ../kotomi
+git -C ../kotomi checkout "$(cat kotomi.ref)"
+(cd ../kotomi && ./ktc-plugins sync && ./publish-local)
+```
+
+If Kotomi is already checked out, use that checkout for the last two commands.
+The `kotomi.ref` commit and `libs.versions.toml` version are updated together.
+CI builds the same pinned revision before building Komok.
+
 ```sh
 ./ktc-plugins sync
 ./ktc-plugins verify
 ./kotlin build --platform jvm
 ./kotlin test --platform jvm
-./kotlin check apiCheck klibApiCheck
 ./kotlin check koverCheck -m komok-app
 ```
 
@@ -37,14 +49,6 @@ for the intended scope and current implementation baseline.
 ./kotlin do installDist -m komok-app
 ./kotlin do distTar -m komok-app
 ./kotlin do distZip -m komok-app
-```
-
-## Publish libraries
-
-```sh
-./kotlin publish mavenLocal
-./kotlin package -m komok-tech-api-dsl --format maven-central-bundle
-./kotlin publish mavenCentral
 ```
 
 ## Website
@@ -67,10 +71,7 @@ a better approach compared to existing solutions on the market.
 By using the Apache License 2.0, we ensure that these libraries can be freely
 used in commercial projects, encouraging broader adoption and innovation.
 
-List of libraries:
-
-- `io.heapy.komol:komok-tech-di`
-- `io.heapy.komol:komok-tech-di-lib`
+Reusable technology libraries are maintained in [Kotomi](https://github.com/Heapy/kotomi).
 
 ### Application Code
 
@@ -95,4 +96,3 @@ following links:
 
 By contributing to or using this project, you agree to adhere to the terms of
 the respective licenses.
-

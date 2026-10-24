@@ -3,7 +3,7 @@ package io.heapy.komok.infra.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.heapy.komok.auth.common.UserContext
-import io.heapy.komok.tech.time.TimeSource
+import io.heapy.kotomi.time.TimeSource
 import java.time.temporal.ChronoUnit
 
 interface JwtService {

@@ -1,28 +1,31 @@
 package io.heapy.komok.dao.mg
 
 import com.mongodb.kotlin.client.coroutine.MongoClient
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.di.lib.Module
+import com.mongodb.kotlin.client.coroutine.MongoDatabase
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class MongoModule(
+class MongoModule(
     private val configurationModule: ConfigurationModule,
 ) {
-    open val client by lazy {
-        val mc = mongoConfiguration
-        MongoClient.create("mongodb://${mc.username}:${mc.password}@${mc.host}:${mc.port}")
+    context(_: KotomiContext)
+    suspend fun client(): MongoClient {
+        val mc = mongoConfiguration()
+        return MongoClient.create("mongodb://${mc.username}:${mc.password}@${mc.host}:${mc.port}")
     }
 
-    open val komokDatabase by lazy {
-        client.getDatabase("komok")
-    }
+    context(_: KotomiContext)
+    suspend fun komokDatabase(): MongoDatabase =
+        client().getDatabase("komok")
 
-    open val mongoConfiguration: MongoConfiguration by lazy {
+    context(_: KotomiContext)
+    suspend fun mongoConfiguration(): MongoConfiguration =
         configurationModule
-            .config
+            .config()
             .read(
                 deserializer = MongoConfiguration.serializer(),
                 path = "mongo",
             )
-    }
 }

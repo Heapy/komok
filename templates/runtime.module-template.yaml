@@ -1,0 +1,2 @@
+apply:
+  - //templates/runtime-compiler.module-template.yaml

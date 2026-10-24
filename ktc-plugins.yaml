@@ -1,10 +1,5 @@
 schemaVersion: 1
 plugins:
-  'bcv':
-    repository: 'Heapy/ktc-bcv'
-    ref:
-      branch: 'main'
-    mode: downloaded
   'kover':
     repository: 'Heapy/ktc-kover'
     ref:

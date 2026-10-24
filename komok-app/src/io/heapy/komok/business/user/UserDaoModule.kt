@@ -1,15 +1,16 @@
 package io.heapy.komok.business.user
 
 import io.heapy.komok.dao.mg.MongoModule
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class UserDaoModule(
+class UserDaoModule(
     private val mongoModule: MongoModule,
 ) {
-    open val userDao by lazy {
+    context(_: KotomiContext)
+    suspend fun userDao(): UserDao =
         UserDao(
-            database = mongoModule.komokDatabase,
+            database = mongoModule.komokDatabase(),
         )
-    }
 }

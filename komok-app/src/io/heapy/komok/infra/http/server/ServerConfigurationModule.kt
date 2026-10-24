@@ -1,18 +1,19 @@
 package io.heapy.komok.infra.http.server
 
-import io.heapy.komok.tech.config.ConfigurationModule
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.config.ConfigurationModule
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class ServerConfigurationModule(
+class ServerConfigurationModule(
     private val configurationModule: ConfigurationModule,
 ) {
-    open val config: ServerConfiguration by lazy {
+    context(_: KotomiContext)
+    suspend fun config(): ServerConfiguration =
         configurationModule
-            .config
+            .config()
             .read(
                 deserializer = ServerConfiguration.serializer(),
                 path = "server",
             )
-    }
 }

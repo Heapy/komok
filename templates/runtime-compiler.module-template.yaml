@@ -1,0 +1,5 @@
+settings:
+  kotlin:
+    compilerPlugins:
+      - id: io.heapy.kotomi.runtime
+        dependency: $libs.kotomi.runtime.compiler

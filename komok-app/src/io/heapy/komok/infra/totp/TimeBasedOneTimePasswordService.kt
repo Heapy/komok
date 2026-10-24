@@ -1,7 +1,7 @@
 package io.heapy.komok.infra.totp
 
 import io.heapy.komok.infra.base32.Base32
-import io.heapy.komok.tech.time.TimeSource
+import io.heapy.kotomi.time.TimeSource
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import javax.crypto.Mac

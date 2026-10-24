@@ -1,10 +1,17 @@
 @file:JvmName("Application")
 package io.heapy.komok
 
-import io.heapy.komok.business.entrypoint.createKomokApplicationModule
+import io.heapy.kotomi.runtime.*
+import io.heapy.komok.business.entrypoint.KomokApplicationModule
+import kotlinx.coroutines.runBlocking
 
 fun main() {
-    createKomokApplicationModule {}
-        .komokApplication
-        .run()
+    runBlocking {
+        val graph = graph<KomokApplicationModule>()
+        try {
+            graph { komokApplication() }.run()
+        } finally {
+            graph.stop()
+        }
+    }
 }

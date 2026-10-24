@@ -1,10 +1,11 @@
 package io.heapy.komok.infra.base32
 
-import io.heapy.komok.tech.di.lib.Module
+import io.heapy.kotomi.runtime.KotomiContext
+import io.heapy.kotomi.runtime.Module
 
 @Module
-open class Base32Module {
-    open val base32: Base32 by lazy {
+class Base32Module {
+    context(_: KotomiContext)
+    suspend fun base32(): Base32 =
         Base32()
-    }
 }

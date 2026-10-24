@@ -1,5 +1,7 @@
 package io.heapy.komok.infra.argon2
 
+import io.heapy.kotomi.runtime.*
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -7,14 +9,12 @@ import java.util.random.RandomGenerator
 
 class Argon2idPasswordHasherTest {
     @Test
-    fun hash() {
-        val module = createPasswordHasherModule {
-            randomGenerator {
-                RandomGenerator { 4 }
-            }
+    fun hash() = runTest {
+        val graph = graph<PasswordHasherModule>().fork {
+            replace(PasswordHasherModule.Bindings.randomGenerator, RandomGenerator { 4 })
         }
 
-        val hash = module.passwordHasher.hash("password")
+        val hash = graph { passwordHasher() }.hash("password")
         assertEquals(
             """{"hash":"AUYsuzTXtmMHNvSjhZMcxvaX4i097sBWy8LmYh0ogZI=","salt":[4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0]}""",
             hash,
@@ -22,14 +22,12 @@ class Argon2idPasswordHasherTest {
     }
 
     @Test
-    fun verify() {
-        val module = createPasswordHasherModule {
-            randomGenerator {
-                RandomGenerator { 4 }
-            }
+    fun verify() = runTest {
+        val graph = graph<PasswordHasherModule>().fork {
+            replace(PasswordHasherModule.Bindings.randomGenerator, RandomGenerator { 4 })
         }
 
-        val result = module.passwordHasher.verify(
+        val result = graph { passwordHasher() }.verify(
             password = "password",
             hash = """{"hash":"AUYsuzTXtmMHNvSjhZMcxvaX4i097sBWy8LmYh0ogZI=","salt":[4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0]}""",
         )

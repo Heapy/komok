@@ -3,18 +3,18 @@ product: jvm/app
 apply:
   - //templates/jvm.module-template.yaml
   - //templates/serialization.module-template.yaml
-  - //templates/di.module-template.yaml
+  - //templates/runtime.module-template.yaml
 
 dependencies:
   - //komok-infra/komok-auth-common
-  - //komok-tech/komok-tech-config
-  - //komok-tech/komok-tech-config-dotenv
-  - //komok-tech/komok-tech-utils-slf4j
-  - //komok-tech/komok-tech-time
+  - $libs.kotomi.config
+  - $libs.kotomi.config.dotenv
+  - $libs.kotomi.utils.slf4j
+  - $libs.kotomi.time
   - //komok-dao-mg
   - //komok-server-common
   - $libs.bouncycastle.bcpkix
-  - //komok-tech/komok-tech-di-lib
+  - $libs.kotomi.runtime
   - $libs.kotlinx.coroutines.jdk8
   - $libs.kotlinx.serialization.json
   - $libs.netty
@@ -40,7 +40,7 @@ test-dependencies:
   - $libs.ktor.server.test.host
   - $libs.kotlinx.coroutines.test
   - $libs.mockk
-  - //komok-tech/komok-tech-time-test-fixtures
+  - $libs.kotomi.time.test.fixtures
 
 settings:
   jvm:
